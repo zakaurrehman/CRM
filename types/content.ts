@@ -1,0 +1,91 @@
+export type AlloyGroup = "nickel" | "cobalt" | "ferrous" | "refractory" | "non-ferrous";
+
+export interface AlloyGrade {
+  /** Grade designation exactly as published in the source technical table. */
+  name: string;
+  /** Composition values, positionally aligned with `AlloyCategory.elements`. */
+  values: string[];
+}
+
+export interface AlloyCategory {
+  slug: string;
+  name: string;
+  group: AlloyGroup;
+  summary: string;
+  properties: string[];
+  applications: string[];
+  image: string;
+  /** Element column headers for the composition table. */
+  elements: string[];
+  grades: AlloyGrade[];
+}
+
+export interface RecoveryStream {
+  slug: string;
+  name: string;
+  image: string;
+  /** Physical form, used for grouping and filtering. */
+  form: "Powder" | "Dust" | "Filtercake" | "Oxide" | "Solids" | "Sludge" | "Scale";
+}
+
+export interface TungstenForm {
+  slug: string;
+  name: string;
+  image: string;
+  note: string;
+}
+
+export interface Industry {
+  slug: string;
+  name: string;
+  strapline: string;
+  intro: string;
+  image: string;
+  capabilities: { title: string; body: string }[];
+  materials: string[];
+}
+
+export interface Article {
+  slug: string;
+  title: string;
+  standfirst: string;
+  description: string;
+  published: string;
+  updated?: string;
+  readingMinutes: number;
+  image: string;
+  imageAlt: string;
+  /** Original WordPress permalink, preserved for the 301 redirect map. */
+  legacyPath: string;
+  body: ArticleBlock[];
+}
+
+export type ArticleBlock =
+  | { type: "p"; text: string }
+  | { type: "h2"; text: string }
+  | { type: "ul"; items: string[] };
+
+export interface ProcessStep {
+  number: string;
+  title: string;
+  body: string;
+}
+
+/**
+ * Slim projection of a category, without the composition rows.
+ *
+ * Server components pass this to client components that only need to list or
+ * search categories, so the full grade tables stay out of the browser bundle.
+ */
+export interface AlloyCategorySummary {
+  slug: string;
+  name: string;
+  group: AlloyGroup;
+  summary: string;
+  properties: string[];
+  applications: string[];
+  image: string;
+  gradeCount: number;
+  /** Grade designations only — enough to search, without the element values. */
+  gradeNames: string[];
+}

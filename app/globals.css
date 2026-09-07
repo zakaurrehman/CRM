@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --header-h: 4.5rem;
+    --rule: theme(colors.steel.200);
+  }
+
+  * { @apply border-steel-200; }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 1.5rem);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-white text-steel-800 font-sans antialiased;
+    font-feature-settings: "cv05" 1, "cv08" 1, "ss03" 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5 { @apply font-display text-navy-900; text-wrap: balance; }
+  p { text-wrap: pretty; }
+
+  /* A single, consistent focus treatment across every interactive element. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-700 ring-offset-2 ring-offset-white rounded-sm;
+  }
+  .on-dark :focus-visible { @apply ring-brand-300 ring-offset-navy-950; }
+
+  ::selection { @apply bg-brand-700 text-white; }
+
+  /* Tabular figures wherever numbers must line up. */
+  table, .tnum { font-variant-numeric: tabular-nums; }
+}
+
+@layer components {
+  .container-ims {
+    @apply mx-auto w-full max-w-container px-5 sm:px-8 lg:px-12;
+  }
+
+  /* Thin rule used to separate editorial bands without heavy borders. */
+  .hairline { @apply border-t border-steel-200; }
+
+  .eyebrow {
+    @apply font-mono text-eyebrow uppercase text-brand-700;
+  }
+  .on-dark .eyebrow { @apply text-brand-300; }
+
+  /**
+   * Scroll reveal.
+   *
+   * The hidden state is scoped to `.js`, a class set on <html> by a blocking
+   * script before first paint. Without JavaScript — or before hydration — the
+   * content simply renders visible, so nothing depends on script execution to
+   * be readable. Reduced-motion users skip the animation entirely.
+   */
+  .reveal {
+    transition:
+      opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .js .reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  /* Printing never scrolls, so nothing below the fold would ever be observed. */
+  @media print {
+    .js .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+  /* Fine technical grid, used sparingly behind dark industrial sections. */
+  .tech-grid {
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  /* Horizontal scroll affordance for wide technical tables. */
+  .scroll-x {
+    @apply overflow-x-auto;
+    scrollbar-width: thin;
+    scrollbar-color: theme(colors.steel.300) transparent;
+    overscroll-behavior-x: contain;
+  }
+  .scroll-x::-webkit-scrollbar { height: 10px; }
+  .scroll-x::-webkit-scrollbar-track { @apply bg-steel-100; }
+  .scroll-x::-webkit-scrollbar-thumb {
+    @apply bg-steel-300 rounded-full border-2 border-solid border-steel-100;
+  }
+  .scroll-x::-webkit-scrollbar-thumb:hover { @apply bg-steel-400; }
+
+  /* Editorial body copy for migrated articles. */
+  .prose-ims { @apply text-[1.0625rem] leading-[1.75] text-steel-700; }
+  .prose-ims > * + * { @apply mt-6; }
+  .prose-ims h2 {
+    @apply mt-14 mb-0 font-display text-2xl font-semibold tracking-tight text-navy-900;
+  }
+  .prose-ims ul { @apply space-y-3 pl-0; }
+  .prose-ims li { @apply relative pl-6; }
+  .prose-ims li::before {
+    content: "";
+    @apply absolute left-0 top-[0.7em] h-1.5 w-1.5 -translate-y-1/2 bg-brand-700;
+  }
+  .prose-ims strong { @apply font-semibold text-navy-900; }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  /* Masks the trailing edge of a scrollable region to hint at more content. */
+  .fade-r {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+  }
+}
