@@ -137,6 +137,34 @@ those rules run before Next's own normaliser — see the comment in `next.config
 
 ---
 
+## Dependencies and security
+
+Pinned to **Next 15.5.25** — the patched release on the 15.5 line. The original
+15.5.4 carried a critical advisory (CVE-2025-66478). `sharp` is held at `^0.35.4`
+through an `overrides` entry to clear the libvips CVEs; Next 15.5.25 declares
+`^0.34.3 || ^0.35.4`, so this stays inside its supported range.
+
+`npm audit` still reports **one high and one moderate** advisory. Both come from
+the copy of `postcss` vendored inside Next, and both are only resolved by moving
+to **Next 16.3.4**, a breaking major. That postcss runs at build time against our
+own stylesheet — it never sees attacker-controlled input at runtime — so the
+practical exposure here is low.
+
+Upgrading to Next 16 is worth scheduling deliberately, with the QA suite re-run
+against it. It is not a drop-in change and should not be done as part of a
+content deployment.
+
+### `NEXT_PUBLIC_SITE_URL`
+
+Next inlines `NEXT_PUBLIC_*` at build time and substitutes an **empty string**
+when the variable is absent from the build environment — which is different from
+it being `undefined` locally. `lib/site.ts` therefore normalises the value rather
+than relying on `??`: empty, whitespace, a missing protocol or an unparseable
+value all fall back to the production origin. Leaving the variable blank in a
+deploy dashboard is safe.
+
+---
+
 ## Before launch
 
 1. Configure an inquiry transport (see Configuration).

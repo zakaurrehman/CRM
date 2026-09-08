@@ -7,11 +7,35 @@
  * leak into the UI. See /docs/content-verification.md for the open items.
  */
 
+const PRODUCTION_URL = "https://ims-metals.com";
+
+/**
+ * Resolves the canonical origin, tolerating anything the deploy environment
+ * might supply.
+ *
+ * Next inlines `NEXT_PUBLIC_*` at build time and substitutes an empty string
+ * when the variable is absent from the build environment, so `??` is not enough
+ * — `new URL("")` throws and takes the whole build down. This normalises the
+ * value, adds a missing protocol, drops a trailing slash, and falls back to the
+ * production origin if what it is given cannot be parsed.
+ */
+function resolveSiteUrl(): string {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (!raw) return PRODUCTION_URL;
+
+  const withProtocol = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+  try {
+    return new URL(withProtocol).origin;
+  } catch {
+    return PRODUCTION_URL;
+  }
+}
+
 export const site = {
   name: "IMS Metals & Alloys",
   legalName: "IMS Metals & Alloys OÜ",
   shortName: "IMS",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://ims-metals.com",
+  url: resolveSiteUrl(),
   description:
     "IMS Metals & Alloys OÜ sources, processes and certifies metals, alloys and metal-bearing residues for the aerospace, oil & gas, industrial gas turbine and stainless steel industries.",
   locale: "en",
