@@ -34,11 +34,26 @@
   h1, h2, h3, h4, h5 { @apply font-display text-navy-900; text-wrap: balance; }
   p { text-wrap: pretty; }
 
-  /* A single, consistent focus treatment across every interactive element. */
+  /**
+   * Focus treatment.
+   *
+   * Links and buttons take an offset ring, which reads clearly against the page.
+   * Form controls take a tight ring hugging the field instead: browsers match
+   * `:focus-visible` on text inputs even for mouse clicks, and an offset ring
+   * around a full-width field looks like a stray floating box rather than a
+   * focus indicator. Both remain well above the 3:1 contrast the guidance asks
+   * for against their unfocused state.
+   */
   :focus-visible {
     @apply outline-none ring-2 ring-brand-700 ring-offset-2 ring-offset-white rounded-sm;
   }
   .on-dark :focus-visible { @apply ring-brand-300 ring-offset-navy-950; }
+
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    @apply border-brand-700 ring-2 ring-brand-700/25 ring-offset-0;
+  }
 
   ::selection { @apply bg-brand-700 text-white; }
 

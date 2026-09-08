@@ -69,7 +69,9 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
         onKeyDown={onKeyDown}
         className="relative mt-[8vh] flex w-full max-w-2xl flex-col overflow-hidden rounded-lg bg-white shadow-lift"
       >
-        <div className="flex items-center gap-3 border-b border-steel-200 px-5">
+        {/* The field itself is borderless and transparent, so focus is shown on
+            this row's underline rather than as a ring floating around the input. */}
+        <div className="flex items-center gap-3 border-b border-steel-200 px-5 transition-colors has-[input:focus-visible]:border-brand-700">
           <svg viewBox="0 0 18 18" aria-hidden className="h-4 w-4 shrink-0 text-steel-500">
             <circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.6" />
             <path d="M12.5 12.5L16 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -84,7 +86,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search alloys, grades, streams and pages"
-            className="h-14 w-full bg-transparent text-[1.0625rem] text-navy-900 outline-none placeholder:text-steel-500"
+            className="h-14 w-full border-0 bg-transparent text-[1.0625rem] text-navy-900 outline-none placeholder:text-steel-500 focus-visible:border-0 focus-visible:ring-0"
           />
           <button
             type="button"
