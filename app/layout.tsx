@@ -3,6 +3,7 @@ import { Archivo, IBM_Plex_Mono, Inter } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
+import { CompareTray } from "@/components/materials/CompareTray";
 import { JsonLd, organizationSchema, websiteSchema } from "@/lib/schema";
 import { navigation } from "@/lib/navigation";
 import { site } from "@/lib/site";
@@ -80,6 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
         <Footer />
         <WhatsAppButton />
+        <CompareTray />
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
       </body>
     </html>

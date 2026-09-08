@@ -41,6 +41,17 @@ function materialColumns(): NavColumn[] {
   }));
 }
 
+/** The catalogue tools, promoted alongside the categories rather than buried in a page. */
+const toolsColumn: NavColumn = {
+  heading: "Tools",
+  links: [
+    { label: "Alloy Finder", href: "/materials/finder", description: "Search by element content" },
+    { label: "Compare Grades", href: "/materials/compare", description: "Up to four side by side" },
+    { label: "Saved Materials", href: "/materials/saved", description: "Your shortlist" },
+    { label: "Request a Quotation", href: "/rfq", description: "Line-by-line RFQ" },
+  ],
+};
+
 export const navigation: NavItem[] = [
   {
     label: "About",
@@ -72,12 +83,12 @@ export const navigation: NavItem[] = [
   {
     label: "Materials",
     href: "/materials",
-    columns: materialColumns(),
+    columns: [...materialColumns(), toolsColumn],
     feature: {
-      title: "Materials directory",
-      body: "Search 295 alloy grades across 15 categories by name, element or application.",
-      href: "/materials",
-      cta: "Browse all materials",
+      title: "Alloy finder",
+      body: "Search every grade by element content — \"cobalt free, chromium above 20\" — and compare the shortlist side by side.",
+      href: "/materials/finder",
+      cta: "Search by composition",
       image: "/images/metals/steel-rods.jpg",
     },
   },

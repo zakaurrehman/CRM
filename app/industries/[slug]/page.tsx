@@ -8,6 +8,7 @@ import { Section, SectionHeader } from "@/components/ui/Section";
 import { CtaSection } from "@/components/shared/CtaSection";
 import { Reveal } from "@/components/ui/Reveal";
 import { MaterialCard } from "@/components/materials/MaterialCard";
+import { Button } from "@/components/ui/Button";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 
@@ -46,6 +47,13 @@ export default async function IndustryPage({ params }: Params) {
   const materials = industry.materials
     .map((materialSlug) => alloyCategoryBySlug.get(materialSlug))
     .filter((category): category is NonNullable<typeof category> => Boolean(category));
+
+  /* Counted from the catalogue rather than stated, so the figure on a sector
+     page cannot drift away from the tables it summarises. */
+  const sectorGradeCount = materials.reduce((total, category) => total + category.grades.length, 0);
+  const sectorElements = [
+    ...new Set(materials.flatMap((category) => category.elements.filter((e) => e !== "Others"))),
+  ];
 
   return (
     <>
@@ -92,6 +100,32 @@ export default async function IndustryPage({ params }: Params) {
               <MaterialCard key={category.slug} category={category} className="border-0" />
             ))}
           </div>
+
+          {/* What is actually available for this sector, in numbers, with a
+              route straight into the catalogue tools rather than a dead end. */}
+          <div className="mt-12 rounded-lg border border-steel-200 bg-white p-7 lg:p-9">
+            <div className="grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-12">
+              <div className="lg:col-span-7">
+                <h3 className="font-display text-xl font-semibold tracking-tight text-navy-900">
+                  {sectorGradeCount} grades documented for {industry.name.toLowerCase()}
+                </h3>
+                <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-600">
+                  Across {materials.length}{" "}
+                  {materials.length === 1 ? "category" : "categories"}, covering{" "}
+                  {sectorElements.slice(0, 8).join(", ")}
+                  {sectorElements.length > 8 ? ` and ${sectorElements.length - 8} more elements` : ""}. Search
+                  them by composition, line up candidates side by side, or send a specification straight through
+                  for pricing.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3 lg:col-span-5 lg:justify-end">
+                <Button href="/materials/finder">Search by composition</Button>
+                <Button href="/rfq" variant="secondary">
+                  Request a quotation
+                </Button>
+              </div>
+            </div>
+          </div>
         </Section>
       ) : null}
 
@@ -120,8 +154,8 @@ export default async function IndustryPage({ params }: Params) {
       <CtaSection
         title={"Talk to us about " + industry.name.toLowerCase() + " material."}
         body="Supply, recovery or both — tell us the specification and the volume and we will come back with a route for it."
-        primary={{ href: "/contact", label: "Request an inquiry" }}
-        secondary={{ href: "/materials", label: "Explore materials" }}
+        primary={{ href: "/rfq", label: "Request a quotation" }}
+        secondary={{ href: "/materials/finder", label: "Search by composition" }}
       />
 
       <JsonLd data={breadcrumbSchema(trail)} />

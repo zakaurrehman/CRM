@@ -128,6 +128,50 @@
       opacity: 1 !important;
       transform: none !important;
     }
+
+    /* "Print / PDF" on the composition and comparison tables is the PDF export.
+       The browser already paginates real text far better than a bundled PDF
+       writer would, so the job here is to get the page furniture out of the way
+       and let a wide table print in full rather than clipped to its scroller. */
+    header,
+    footer,
+    nav[aria-label="Breadcrumb"],
+    [aria-label="Material comparison"],
+    [href^="https://wa.me"] {
+      display: none !important;
+    }
+
+    .scroll-x,
+    .scroll-x > div,
+    [class*="max-h-"] {
+      overflow: visible !important;
+      max-height: none !important;
+    }
+
+    table {
+      /* Sticky cells print stacked on the first page otherwise. */
+      position: static !important;
+    }
+    table th,
+    table td {
+      position: static !important;
+      background: transparent !important;
+    }
+    thead {
+      display: table-header-group;
+    }
+    tr {
+      break-inside: avoid;
+    }
+
+    /* Ink, not screen colour. */
+    body {
+      background: #fff !important;
+      color: #000 !important;
+    }
+    a[href]::after {
+      content: "";
+    }
   }
 
   /* Fine technical grid, used sparingly behind dark industrial sections. */

@@ -65,6 +65,7 @@ const config: Config = {
         "slide-down": { from: { opacity: "0", transform: "translateY(-6px)" }, to: { opacity: "1", transform: "none" } },
         "slow-zoom": { from: { transform: "scale(1)" }, to: { transform: "scale(1.08)" } },
         indicator: { from: { transform: "scaleX(0)" }, to: { transform: "scaleX(1)" } },
+        "slide-up": { from: { opacity: "0", transform: "translateY(100%)" }, to: { opacity: "1", transform: "none" } },
       },
       animation: {
         "fade-up": "fade-up 0.6s cubic-bezier(0.22,1,0.36,1) both",
@@ -73,6 +74,7 @@ const config: Config = {
         "slow-zoom": "slow-zoom 24s ease-out both",
         /* Duration is set per use — it has to match the carousel dwell time. */
         indicator: "indicator linear both",
+        "slide-up": "slide-up 0.28s cubic-bezier(0.22,1,0.36,1) both",
       },
     },
   },

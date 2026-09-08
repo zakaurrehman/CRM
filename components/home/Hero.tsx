@@ -1,7 +1,9 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { HeroSlideshow, type HeroSlide } from "./HeroSlideshow";
 import { companyFacts } from "@/lib/site";
+import { alloyCategoryCount, totalGradeCount } from "@/data/alloy-index";
 
 /**
  * The backdrop walks through the four sectors the headline names, in the order
@@ -52,14 +54,24 @@ export function Hero() {
             sectors &mdash; returning them to the melt as air-melt or vacuum grade material.
           </p>
 
+          {/* The catalogue is the reason to be here, so it leads. "Talk to IMS"
+              stays reachable from the header on every page. */}
           <div className="mt-10 flex animate-fade-up flex-col gap-3 [animation-delay:240ms] sm:flex-row">
-            <Button href="/contact" variant="onDark" size="lg">
-              Talk to IMS
+            <Button href="/materials/finder" variant="onDark" size="lg">
+              Search {totalGradeCount} alloy grades
             </Button>
-            <Button href="/materials" variant="onDarkGhost" size="lg">
-              Explore materials
+            <Button href="/rfq" variant="onDarkGhost" size="lg">
+              Request a quotation
             </Button>
           </div>
+
+          <p className="mt-6 animate-fade-up text-[0.875rem] text-steel-400 [animation-delay:280ms]">
+            Search by composition &mdash; &ldquo;cobalt free, chromium above 20&rdquo; &mdash; or{" "}
+            <Link href="/materials" className="text-steel-300 underline decoration-white/25 underline-offset-4 transition-colors hover:text-white hover:decoration-white">
+              browse all {alloyCategoryCount} categories
+            </Link>
+            .
+          </p>
         </div>
 
         {/* Specialist metals ticker: concrete and specific, straight from company content. */}

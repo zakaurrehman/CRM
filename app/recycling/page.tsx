@@ -4,13 +4,13 @@ import Link from "next/link";
 import { PageHero } from "@/components/shared/PageHero";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { StreamsGrid } from "@/components/materials/StreamsGrid";
-import { ProcessSteps } from "@/components/shared/ProcessSteps";
+import { ProcessExplorer } from "@/components/recycling/ProcessExplorer";
 import { CtaSection } from "@/components/shared/CtaSection";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArrowLink } from "@/components/ui/Button";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
-import { recoveryStreams } from "@/data/recovery";
+import { recoveryStreams, processSteps } from "@/data/recovery";
 import { companyFacts } from "@/lib/site";
 
 const trail = [
@@ -120,16 +120,27 @@ export default function RecyclingPage() {
         </div>
       </Section>
 
-      <Section tone="navy" id="process">
+      <Section tone="muted" id="process">
         <SectionHeader
           eyebrow="Recovery process"
           title="How material moves through IMS."
-          description="Every stream follows the same route, whatever form it arrives in."
+          description="Every stream follows the same route, whatever form it arrives in. Step through it below — or use the arrow keys."
           align="split"
-          className="[&_h2]:text-white"
         />
         <div className="mt-14">
-          <ProcessSteps tone="dark" />
+          {/* Six steps against real photography of the operation; the two stages
+              with no photograph of their own simply render without one. */}
+          <ProcessExplorer
+            steps={processSteps}
+            images={[
+              "/images/company/scrap-yard.jpg",
+              undefined,
+              "/images/company/claw-crane.jpg",
+              "/images/company/recycling-operations.jpg",
+              undefined,
+              "/images/company/port-terminal.jpg",
+            ]}
+          />
         </div>
       </Section>
 

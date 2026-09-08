@@ -330,6 +330,52 @@ closest match to "like the original". If they do not, this is A or C.
 
 ---
 
+### 18. Material availability indicators — BLOCKED, NEEDS DATA
+
+Requested as part of the platform build: an availability or stock indicator against
+each grade.
+
+**Not built, deliberately.** IMS has supplied no stock, lead-time or availability
+data, and none exists anywhere in the audited site. Any indicator rendered today
+would be invented — and unlike a vague marketing claim, "In stock" is a commercial
+representation a buyer will act on. A wrong one costs an order and, on aerospace or
+oil & gas material, potentially a production stoppage.
+
+**What would unblock it,** in rough order of effort:
+
+| Option | What IMS supplies | What appears on the site |
+| --- | --- | --- |
+| **A — per-grade flag** | A spreadsheet with one row per grade and a status (`stocked` / `to order` / `enquire`) | A badge on the grade row, table and finder result |
+| **B — lead-time band** | The same, plus an indicative lead time per status | "Typically 2–4 weeks" under the badge |
+| **C — live feed** | A URL or export from the stock system, refreshed on a schedule | Live indicator, with a "last updated" timestamp |
+
+The data model already has a stable id for every grade (`categorySlug:grade-name`,
+see `lib/alloy-ids.ts`), so any of the three drops in against that key without a
+schema change.
+
+---
+
+### 19. Interactive global supply and recycling map — BLOCKED, NEEDS DATA
+
+Requested as a premium feature: a map of supply and recycling locations.
+
+**Not built, deliberately.** The only location the audit could substantiate is the
+registered office in Tallinn, Estonia. The brief forbids inventing locations and
+countries, and a world map is a claim about physical presence — arguably the single
+easiest thing on a website for a prospective customer or a regulator to check.
+
+The legacy site says IMS trades "internationally" and holds "joint-partnerships with
+several of the largest leading companies in the world" but names no country, city,
+facility or partner. That is not enough to place a single pin beyond Tallinn, and a
+map with one pin is worse than no map.
+
+**What would unblock it:** a list of locations IMS is willing to publish, each with a
+role — office, processing site, partner site, or market served. Even "markets served"
+at country level would support a credible map, and is a much lower bar than claiming
+facilities. Until then the site describes reach in the words IMS itself uses.
+
+---
+
 ## Claims deliberately NOT made on the new site
 
 Recorded so it is clear these were choices, not oversights. Each was either
