@@ -101,7 +101,11 @@ export function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
 
       {slides.length > 1 ? (
         <div
-          className="absolute right-5 top-6 z-10 flex items-center gap-3 lg:right-8 lg:top-8"
+          /* Out of the picture until you reach for them: revealed on hover, and
+             on keyboard focus so tabbing still finds the pause control. Pointer
+             events go with the opacity so there is no invisible tap target on
+             touch, where reduced-motion is the fallback for stopping motion. */
+          className="pointer-events-none absolute right-5 top-6 z-10 flex items-center gap-3 opacity-0 transition-opacity duration-300 ease-swift focus-within:pointer-events-auto focus-within:opacity-100 group-hover:pointer-events-auto group-hover:opacity-100 lg:right-8 lg:top-8"
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
           onFocusCapture={() => setHovered(true)}

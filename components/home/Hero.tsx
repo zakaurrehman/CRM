@@ -23,7 +23,9 @@ const heroSlides: HeroSlide[] = [
  */
 export function Hero() {
   return (
-    <section className="on-dark relative isolate flex min-h-[38rem] items-end overflow-hidden bg-navy-950 text-white lg:min-h-[44rem]">
+    /* `group` so the slideshow controls can stay hidden until the hero is
+       hovered — they are a necessary affordance, not part of the picture. */
+    <section className="group on-dark relative isolate flex min-h-[38rem] items-end overflow-hidden bg-navy-950 text-white lg:min-h-[44rem]">
       <HeroSlideshow slides={heroSlides} />
       <div
         aria-hidden
