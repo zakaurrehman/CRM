@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { deliverInquiry, validateInquiry, type InquiryPayload } from "@/lib/inquiry";
+import { validateInquiry, type InquiryPayload } from "@/lib/inquiry";
+import { deliverInquiry } from "@/lib/inquiry-delivery";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

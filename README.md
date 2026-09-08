@@ -34,17 +34,23 @@ Copy `.env.example` to `.env.local`. Nothing is required for local development.
 | Variable | Purpose |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Canonical URLs, sitemap, Open Graph. Defaults to the production domain. |
+| `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASSWORD` | Server-side. Sends through an existing mailbox. Usually the quickest route. |
 | `INQUIRY_WEBHOOK_URL` | Server-side. POSTs each inquiry as JSON to a CRM/Zapier/Make endpoint. |
-| `RESEND_API_KEY` | Server-side. Alternative transport — sends the inquiry by email via the Resend HTTP API. |
-| `INQUIRY_TO_EMAIL` | Recipient when using Resend. Defaults to `info@ims-metals.com`. |
-| `INQUIRY_FROM_EMAIL` | Sender when using Resend. |
+| `RESEND_API_KEY` | Server-side. Sends via the Resend HTTP API. |
+| `INQUIRY_TO_EMAIL` | Where enquiries land. Defaults to `info@ims-metals.com`. |
+| `INQUIRY_FROM_EMAIL` | Address the notification is sent from. |
 
-**The inquiry form needs one of `INQUIRY_WEBHOOK_URL` or `RESEND_API_KEY` before launch.**
-Without either, the API returns a clear error and the form tells the visitor to email
-directly — an enquiry is never silently dropped. In development, submissions are logged
-to the server console instead.
+**The inquiry form needs one of the three transports above before launch.** Set it in
+the Vercel project settings and redeploy — no code change is required.
 
-No key is ever exposed to the browser; all delivery happens in `app/api/inquiry/route.ts`.
+Without one, the API returns a clear error and the form hands the visitor a **pre-filled
+email** containing everything they typed, so an enquiry is never dropped and nobody has
+to retype a long technical message. In development, submissions are logged to the server
+console instead.
+
+No credential reaches the browser. Delivery lives in `lib/inquiry-delivery.ts`, which is
+kept separate from `lib/inquiry.ts` precisely so the client bundle never pulls in Node
+built-ins. The SMTP path is verified end to end against a live SMTP server.
 
 ---
 
@@ -64,7 +70,8 @@ lib/
   navigation.ts       Information architecture
   search.ts           Site-wide search index
   seo.ts / schema.tsx Metadata helpers and JSON-LD
-  inquiry.ts          Inquiry validation + delivery transports
+  inquiry.ts          Inquiry validation + options (shared with the client)
+  inquiry-delivery.ts Delivery transports (server-only)
 data/
   alloys.ts           295 alloy grades with full composition (generated — do not hand-edit)
   alloy-index.ts      Slim companion: names only, for client-side browse/search

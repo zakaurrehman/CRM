@@ -24,6 +24,7 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<Status>("idle");
   const [formError, setFormError] = useState<string | null>(null);
+  const [fallbackHref, setFallbackHref] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   const field = (name: string) => `${id}-${name}`;
@@ -64,9 +65,11 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
       }
 
       setFormError(result.error ?? "Something went wrong. Please try again.");
+      setFallbackHref(composeMailto(data));
       setStatus("error");
     } catch {
       setFormError("We could not reach the server. Please check your connection and try again.");
+      setFallbackHref(composeMailto(data));
       setStatus("error");
     }
   }
@@ -106,10 +109,10 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
         <div className="border-l-2 border-danger-500 bg-danger-50 p-5">
           <p className="text-[0.9375rem] text-navy-900">{formError}</p>
           <a
-            href={"mailto:" + contact.email}
+            href={fallbackHref ?? "mailto:" + contact.email}
             className="mt-2 inline-block text-[0.9375rem] font-medium text-brand-700 underline underline-offset-4"
           >
-            Email {contact.email} instead
+            Send it by email instead &mdash; your details are already filled in
           </a>
         </div>
       ) : null}
@@ -337,5 +340,34 @@ function Field({
         </p>
       ) : null}
     </div>
+  );
+}
+
+/**
+ * Builds a mailto containing everything the visitor typed.
+ *
+ * If delivery fails, the worst outcome is making someone re-enter a long
+ * technical enquiry. This hands them a pre-composed message instead, so the
+ * fallback costs them one click rather than five minutes.
+ */
+function composeMailto(data: Record<string, string>): string {
+  const line = (label: string, value?: string) =>
+    value?.trim() ? `${label}: ${value.trim()}\n` : "";
+  const body =
+    line("Name", data.name) +
+    line("Company", data.company) +
+    line("Email", data.email) +
+    line("Phone", data.phone) +
+    line("Country", data.country) +
+    line("Requirement", data.requirementType) +
+    line("Industry", data.industry) +
+    line("Material / alloy", data.material) +
+    line("Quantity", data.quantity) +
+    `\n${(data.message ?? "").trim()}\n`;
+  const subject = "Inquiry: " + (data.requirementType || "Materials") + (data.company ? " — " + data.company : "");
+  return (
+    "mailto:" + contact.email +
+    "?subject=" + encodeURIComponent(subject) +
+    "&body=" + encodeURIComponent(body)
   );
 }

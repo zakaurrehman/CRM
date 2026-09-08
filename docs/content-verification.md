@@ -70,17 +70,32 @@ Header, footer, contact page and structured data all pick it up automatically.
 
 ### 3. Inquiry form has no delivery transport configured
 
-The new inquiry endpoint validates and rate-limits, but needs somewhere to send to.
+The endpoint validates, rate-limits and is proven to deliver — it just has nowhere to
+send to yet. This is configuration, not code: the credential can only come from IMS,
+and it must not live in the repository.
 
-**Current state:** with no transport configured the API returns a clear error and the
-form tells the user to email `info@ims-metals.com` directly — an enquiry is never
-silently lost. In development, submissions are logged to the server console.
-**To fix:** set **one** of these server-side environment variables (see `.env.example`):
+**Current state:** with no transport set the API returns a clear error, and the form
+hands the visitor a **pre-filled email** containing everything they typed, so an
+enquiry is never lost and nobody has to retype a long technical message. In
+development, submissions are logged to the server console.
 
-- `INQUIRY_WEBHOOK_URL` — POSTs the JSON payload to a CRM, Zapier or Make endpoint
-- `RESEND_API_KEY` + `INQUIRY_TO_EMAIL` — sends via the Resend HTTP API
+**To fix:** set **one** of the following in the Vercel project settings
+(Settings → Environment Variables), then redeploy. Full notes in `.env.example`.
 
-Neither is ever exposed to the browser.
+| Option | Variables | When it suits |
+| --- | --- | --- |
+| **A — existing mailbox** | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD` | Usually quickest. Uses the SMTP details for `info@ims-metals.com` from your email host. No new account, and mail leaves from an address recipients already trust. |
+| **B — CRM / automation** | `INQUIRY_WEBHOOK_URL` | The enquiry is POSTed as JSON to Zapier, Make or a CRM, creating a record rather than an email. |
+| **C — Resend** | `RESEND_API_KEY` | Best deliverability and a log of every message, but needs an account and domain verification. |
+
+Option A is normally a two-minute job — the details are the same ones used to set up
+`info@ims-metals.com` in a mail client.
+
+None of these ever reaches the browser; delivery happens entirely in
+`lib/inquiry-delivery.ts`, which the client bundle never imports.
+
+**Verified:** the SMTP path was tested end to end against a live SMTP server —
+`POST /api/inquiry` returned `200 {"ok":true}` with the message accepted for delivery.
 
 ---
 
