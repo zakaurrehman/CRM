@@ -9,11 +9,14 @@ const base =
   "disabled:pointer-events-none disabled:opacity-50 whitespace-nowrap";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-brand-700 text-white shadow-subtle hover:bg-brand-800 active:bg-brand-900",
+  primary:
+    "bg-brand-700 text-white shadow-subtle hover:bg-brand-800 hover:shadow-card active:bg-brand-900 " +
+    "motion-safe:hover:-translate-y-px motion-safe:active:translate-y-0",
   secondary:
-    "border border-steel-300 bg-white text-navy-900 hover:border-brand-700 hover:text-brand-700 hover:shadow-subtle",
+    "border border-steel-300 bg-white text-navy-900 hover:border-brand-700 hover:text-brand-700 hover:shadow-subtle " +
+    "motion-safe:hover:-translate-y-px",
   ghost: "text-navy-900 hover:bg-steel-100",
-  onDark: "bg-white text-navy-900 hover:bg-brand-50 active:bg-brand-100",
+  onDark: "bg-white text-navy-900 hover:bg-brand-50 active:bg-brand-100 motion-safe:hover:-translate-y-px",
   onDarkGhost: "border border-white/25 text-white hover:border-white/60 hover:bg-white/5",
 };
 

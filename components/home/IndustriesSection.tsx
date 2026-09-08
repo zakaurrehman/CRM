@@ -21,7 +21,7 @@ export function IndustriesSection() {
           <Reveal key={industry.slug} delay={i * 80}>
             <Link
               href={"/industries/" + industry.slug}
-              className="group relative flex min-h-[17rem] sm:min-h-[22rem] flex-col justify-end overflow-hidden rounded-md border border-white/10 p-7 transition-colors duration-300 hover:border-white/25 lg:min-h-[26rem] lg:p-9"
+              className="group relative flex min-h-[17rem] sm:min-h-[22rem] flex-col justify-end overflow-hidden rounded-md border border-white/10 p-7 transition-all duration-300 hover:border-white/25 motion-safe:hover:-translate-y-1 lg:min-h-[26rem] lg:p-9"
             >
               <Image
                 src={industry.image}

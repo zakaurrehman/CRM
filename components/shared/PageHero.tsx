@@ -60,20 +60,20 @@ export function PageHero({
           <Breadcrumbs trail={trail} tone={dark ? "dark" : "light"} />
           <div className={cn("mt-8", align === "left" ? "max-w-3xl" : "max-w-4xl")}>
             {eyebrow ? (
-              <p className={cn("eyebrow mb-4", dark && "text-brand-300")}>{eyebrow}</p>
+              <p className={cn("eyebrow mb-4 animate-fade-up", dark && "text-brand-300")}>{eyebrow}</p>
             ) : null}
-            <h1 className={cn("text-display-lg", dark && "text-white")}>{title}</h1>
+            <h1 className={cn("animate-fade-up text-display-lg [animation-delay:70ms]", dark && "text-white")}>{title}</h1>
             {intro ? (
               <div
                 className={cn(
-                  "mt-6 text-lg leading-relaxed sm:text-xl",
+                  "mt-6 animate-fade-up text-lg leading-relaxed [animation-delay:140ms] sm:text-xl",
                   dark ? "text-steel-300" : "text-steel-600",
                 )}
               >
                 {intro}
               </div>
             ) : null}
-            {children ? <div className="mt-9">{children}</div> : null}
+            {children ? <div className="mt-9 animate-fade-up [animation-delay:210ms]">{children}</div> : null}
           </div>
         </div>
       </Container>
