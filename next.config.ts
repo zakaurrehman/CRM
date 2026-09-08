@@ -70,8 +70,8 @@ const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
   images: {
     formats: ["image/avif", "image/webp"],
-    deviceSizes: [360, 480, 640, 828, 1080, 1280, 1600, 1920, 2560],
-    imageSizes: [64, 96, 128, 200, 256, 384],
+    deviceSizes: [400, 640, 828, 1200, 1600, 2048],
+    imageSizes: [64, 96, 128, 256, 384],
   },
   async redirects() {
     const legacy = LEGACY_MAP.flatMap(([from, to]) => [

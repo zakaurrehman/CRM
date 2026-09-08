@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { AlloyCategorySummary } from "@/types/content";
+import type { AlloyCategoryTeaser } from "@/types/content";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
@@ -20,7 +20,7 @@ export function MaterialsIndex({
   categories,
   totalGrades,
 }: {
-  categories: AlloyCategorySummary[];
+  categories: AlloyCategoryTeaser[];
   totalGrades: number;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);

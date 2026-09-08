@@ -9,7 +9,7 @@ import { QualityBand } from "@/components/home/QualityBand";
 import { InsightsSection } from "@/components/home/InsightsSection";
 import { CtaSection } from "@/components/shared/CtaSection";
 import { pageMetadata } from "@/lib/seo";
-import { alloyCategorySummaries, totalGradeCount } from "@/data/alloy-index";
+import { alloyCategoryTeasers, totalGradeCount } from "@/data/alloy-index";
 
 export const metadata: Metadata = pageMetadata({
   title: "Metals, Alloys & Recycling Solutions for Global Industry",
@@ -24,7 +24,7 @@ export default function HomePage() {
       <Hero />
       <CredibilityStrip />
       <Pillars />
-      <MaterialsIndex categories={alloyCategorySummaries} totalGrades={totalGradeCount} />
+      <MaterialsIndex categories={alloyCategoryTeasers} totalGrades={totalGradeCount} />
       <IndustriesSection />
       <RecyclingStory />
       <QualityBand />

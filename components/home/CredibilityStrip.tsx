@@ -1,11 +1,13 @@
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
+import { CountUp } from "@/components/ui/CountUp";
 import { alloyCategoryCount, totalGradeCount } from "@/data/alloy-index";
 import { recoveryStreams } from "@/data/recovery";
 import { companyFacts, experience } from "@/lib/site";
 
 interface Fact {
-  value: string;
+  value: number;
+  suffix?: string;
   label: string;
   detail: string;
 }
@@ -23,29 +25,30 @@ export function CredibilityStrip() {
     ...(experience.verified && experience.years
       ? [
           {
-            value: `${experience.years}+`,
+            value: experience.years,
+            suffix: "+",
             label: "Years in the metals industry",
             detail: "Trading from Eastern Europe into an international network",
           },
         ]
       : []),
     {
-      value: String(totalGradeCount),
+      value: totalGradeCount,
       label: "Alloy grades documented",
       detail: `Across ${alloyCategoryCount} material categories with full composition data`,
     },
     {
-      value: String(recoveryStreams.length),
+      value: recoveryStreams.length,
       label: "Recovery streams handled",
       detail: "From coarse solids to extremely fine metallic dusts and powders",
     },
     {
-      value: String(companyFacts.specialistMetals.length),
+      value: companyFacts.specialistMetals.length,
       label: "Specialist metals",
       detail: "Nickel and cobalt through to hafnium, rhenium and precious metals",
     },
     {
-      value: String(companyFacts.sectors.length),
+      value: companyFacts.sectors.length,
       label: "Sectors supplied",
       detail: "Aerospace and energy through to medical and additive manufacturing",
     },
@@ -59,9 +62,11 @@ export function CredibilityStrip() {
             <Reveal key={fact.label} delay={i * 70} className="bg-white p-7 lg:p-8">
               <dt className="sr-only">{fact.label}</dt>
               <dd>
-                <span className="block font-display text-4xl font-bold tracking-tight text-brand-700 tabular-nums lg:text-5xl">
-                  {fact.value}
-                </span>
+                <CountUp
+                  value={fact.value}
+                  suffix={fact.suffix}
+                  className="block font-display text-4xl font-bold tracking-tight text-brand-700 tabular-nums lg:text-5xl"
+                />
                 <span className="mt-3 block font-display text-[0.9375rem] font-semibold text-navy-900">
                   {fact.label}
                 </span>

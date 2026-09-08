@@ -89,3 +89,19 @@ export interface AlloyCategorySummary {
   /** Grade designations only — enough to search, without the element values. */
   gradeNames: string[];
 }
+
+/**
+ * The narrowest projection the homepage index needs.
+ *
+ * Props passed to a client component are serialised into the page's RSC payload
+ * and shipped inside the HTML. Passing the full summary put all 295 grade names
+ * into every homepage response for no reason; this carries only what renders.
+ */
+export interface AlloyCategoryTeaser {
+  slug: string;
+  name: string;
+  summary: string;
+  applications: string[];
+  image: string;
+  gradeCount: number;
+}

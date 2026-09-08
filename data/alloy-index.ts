@@ -3,7 +3,7 @@
 // Slim companion to the full alloy dataset: category metadata plus grade
 // designations, without the composition values. Client components import from
 // here so that browsing and searching never ships the composition tables.
-import type { AlloyCategorySummary } from "@/types/content";
+import type { AlloyCategorySummary, AlloyCategoryTeaser } from "@/types/content";
 
 /** Footnote reproduced verbatim from the source technical tables. */
 export const compositionFootnote =
@@ -180,3 +180,13 @@ export const alloyCategorySummaries: AlloyCategorySummary[] = [
 export const totalGradeCount = alloyCategorySummaries.reduce((n, c) => n + c.gradeCount, 0);
 
 export const alloyCategoryCount = alloyCategorySummaries.length;
+
+/** Homepage teasers: no grade names, which the index never renders. */
+export const alloyCategoryTeasers: AlloyCategoryTeaser[] = alloyCategorySummaries.map((c) => ({
+  slug: c.slug,
+  name: c.name,
+  summary: c.summary,
+  applications: c.applications,
+  image: c.image,
+  gradeCount: c.gradeCount,
+}));

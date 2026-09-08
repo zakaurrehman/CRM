@@ -21,7 +21,7 @@ export function Hero() {
         fetchPriority="high"
         sizes="100vw"
         quality={78}
-        className="-z-10 object-cover"
+        className="-z-10 object-cover motion-safe:animate-slow-zoom"
       />
       <div
         aria-hidden

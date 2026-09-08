@@ -59,11 +59,13 @@ const config: Config = {
         "fade-up": { from: { opacity: "0", transform: "translateY(14px)" }, to: { opacity: "1", transform: "none" } },
         "fade-in": { from: { opacity: "0" }, to: { opacity: "1" } },
         "slide-down": { from: { opacity: "0", transform: "translateY(-6px)" }, to: { opacity: "1", transform: "none" } },
+        "slow-zoom": { from: { transform: "scale(1)" }, to: { transform: "scale(1.08)" } },
       },
       animation: {
         "fade-up": "fade-up 0.6s cubic-bezier(0.22,1,0.36,1) both",
         "fade-in": "fade-in 0.5s ease both",
         "slide-down": "slide-down 0.18s cubic-bezier(0.22,1,0.36,1) both",
+        "slow-zoom": "slow-zoom 24s ease-out both",
       },
     },
   },
