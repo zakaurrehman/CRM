@@ -165,6 +165,32 @@ deploy dashboard is safe.
 
 ---
 
+## Multiple languages — deliberately not built
+
+The site is English-only, which matches the legacy site and the working language
+of the trade. A machine-translation widget was considered and rejected:
+
+- The copy carries ~14 terms of art — *arisings, revert, air-melt, vacuum grade,
+  mill scale, filtercake, swarf, AOD dust, EAF dust, Densalloy, CP-W, turnings,
+  moly oxide, pelletizer*. Machine translation renders these literally or as
+  nonsense, which reads as inexperience to the exact audience the site is for.
+- 295 alloy grade designations (`Hastelloy C276`, `MAR M-509`, `Nimonic 80`)
+  must never be altered. Translation layers sometimes transliterate them, and a
+  wrong grade name in a specification context is a commercial problem.
+- Client-side widgets produce no indexable pages and no `hreflang`, so they add
+  nothing for buyers searching in another language — usually the actual goal.
+
+**If it is revisited**, the version worth building is real i18n: locale routes
+(`/ru/`, `/zh/`, `/de/`), `hreflang`, and professionally translated prose, with
+the composition tables left untouched since they are numbers and element
+symbols. Scope per language is roughly **15,700 words across 1,244 strings**.
+
+Priority markets, per the business: **Russian** (the company's own history
+begins with Eastern European routes), **Chinese (Simplified)** (tungsten and
+refractory metals) and **German** (aerospace and IGT manufacturing).
+
+---
+
 ## Before launch
 
 1. Configure an inquiry transport (see Configuration).

@@ -31,21 +31,21 @@ export function SearchTrigger() {
 
   return (
     <>
+      {/* Icon only, matching the mobile menu button, so the header stays calm.
+          The keyboard shortcut moves to the tooltip and is repeated in the
+          overlay footer, so it is still discoverable without costing width. */}
       <button
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Search materials and pages"
         aria-expanded={open}
-        className="inline-flex h-10 items-center gap-2 rounded border border-steel-300 px-3 text-steel-500 transition-colors hover:border-brand-700 hover:text-brand-700"
+        title="Search (Ctrl+K)"
+        className="inline-flex h-10 w-10 items-center justify-center rounded text-steel-600 transition-colors hover:bg-steel-100 hover:text-brand-700"
       >
-        <svg viewBox="0 0 18 18" aria-hidden className="h-4 w-4">
+        <svg viewBox="0 0 18 18" aria-hidden className="h-[1.125rem] w-[1.125rem]">
           <circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.6" />
           <path d="M12.5 12.5L16 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
         </svg>
-        <span className="hidden text-[0.875rem] xl:inline">Search</span>
-        <kbd className="hidden rounded-xs border border-steel-300 px-1.5 font-mono text-[0.6875rem] text-steel-500 xl:inline">
-          &#8984;K
-        </kbd>
       </button>
       {open ? <SearchOverlay onClose={() => setOpen(false)} /> : null}
     </>
