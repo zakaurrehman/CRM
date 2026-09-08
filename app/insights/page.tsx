@@ -76,7 +76,7 @@ export default function InsightsPage() {
           <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
             More insights
           </h2>
-          <ul className="mt-8 grid gap-px bg-steel-200 sm:grid-cols-2">
+          <ul className="mt-8 grid grid-rule sm:grid-cols-2">
             {rest.map((article, i) => (
               <Reveal as="li" key={article.slug} delay={i * 70} className="bg-white">
                 <Link href={"/insights/" + article.slug} className="group flex h-full flex-col">

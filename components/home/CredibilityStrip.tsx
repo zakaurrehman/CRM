@@ -54,7 +54,7 @@ export function CredibilityStrip() {
   return (
     <section className="border-b border-steel-200 bg-white">
       <Container>
-        <dl className="grid gap-px bg-steel-200 sm:grid-cols-2 lg:grid-cols-4">
+        <dl className="grid grid-rule sm:grid-cols-2 lg:grid-cols-4">
           {facts.slice(0, 4).map((fact, i) => (
             <Reveal key={fact.label} delay={i * 70} className="bg-white p-7 lg:p-8">
               <dt className="sr-only">{fact.label}</dt>

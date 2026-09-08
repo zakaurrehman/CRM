@@ -90,7 +90,7 @@ export default function RecyclingPage() {
           </div>
 
           <div className="lg:col-span-6 lg:col-start-7">
-            <ul className="grid gap-px bg-steel-200 sm:grid-cols-2">
+            <ul className="grid grid-rule sm:grid-cols-2">
               {capabilities.map((capability, i) => (
                 <Reveal as="li" key={capability.title} delay={i * 70} className="bg-white p-6 lg:p-7">
                   <h3 className="font-display text-base font-semibold text-navy-900">{capability.title}</h3>

@@ -44,7 +44,7 @@ export function Pillars() {
         align="split"
       />
 
-      <div className="mt-14 grid gap-px bg-steel-200 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-14 grid grid-rule sm:grid-cols-2 lg:grid-cols-4">
         {pillars.map((pillar, i) => (
           <Reveal key={pillar.title} delay={i * 80}>
             <Link

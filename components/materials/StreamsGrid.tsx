@@ -61,7 +61,7 @@ export function StreamsGrid() {
         {streams.length} of {recoveryStreams.length} streams
       </p>
 
-      <ul className="mt-4 grid grid-cols-2 gap-px bg-steel-200 sm:grid-cols-3 lg:grid-cols-5">
+      <ul className="mt-4 grid grid-cols-2 grid-rule sm:grid-cols-3 lg:grid-cols-5">
         {streams.map((stream) => (
           <li key={stream.slug} id={"stream-" + stream.slug} className="group bg-white">
             <div className="flex h-full flex-col items-center p-5 transition-colors group-hover:bg-steel-50">

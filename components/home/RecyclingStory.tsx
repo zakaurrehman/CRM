@@ -38,7 +38,7 @@ export function RecyclingStory() {
           <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
             Streams we treat
           </p>
-          <ul className="mt-6 grid grid-cols-2 gap-px bg-steel-200 sm:grid-cols-3 lg:grid-cols-5">
+          <ul className="mt-6 grid grid-cols-2 grid-rule sm:grid-cols-3 lg:grid-cols-5">
             {featured.map((stream, i) => (
               <Reveal as="li" key={stream.slug} delay={i * 40} className="bg-white">
                 <div className="flex flex-col items-center px-2 py-4">

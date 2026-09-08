@@ -64,7 +64,7 @@ export default async function IndustryPage({ params }: Params) {
           title={"What we do for " + industry.name.toLowerCase() + "."}
           align="split"
         />
-        <ul className="mt-14 grid gap-px bg-steel-200 sm:grid-cols-2">
+        <ul className="mt-14 grid grid-rule sm:grid-cols-2">
           {industry.capabilities.map((capability, i) => (
             <Reveal as="li" key={capability.title} delay={i * 70} className="bg-white p-7 lg:p-9">
               <span className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-brand-700 tabular-nums">
@@ -87,7 +87,7 @@ export default async function IndustryPage({ params }: Params) {
             description="Each category carries its published nominal composition for every grade."
             align="split"
           />
-          <div className="mt-12 grid gap-px bg-steel-200 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid grid-rule sm:grid-cols-2 lg:grid-cols-4">
             {materials.map((category) => (
               <MaterialCard key={category.slug} category={category} className="border-0" />
             ))}

@@ -62,7 +62,7 @@ export default function SustainabilityPage() {
           align="split"
         />
 
-        <ul className="mt-14 grid gap-px bg-steel-200 sm:grid-cols-2">
+        <ul className="mt-14 grid grid-rule sm:grid-cols-2">
           {effects.map((effect, i) => (
             <Reveal as="li" key={effect.title} delay={i * 70} className="bg-white p-7 lg:p-9">
               <span className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-brand-700 tabular-nums">

@@ -129,7 +129,7 @@ export default async function ArticlePage({ params }: Params) {
           <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
             More insights
           </h2>
-          <ul className="mt-8 grid gap-px bg-steel-200 sm:grid-cols-2">
+          <ul className="mt-8 grid grid-rule sm:grid-cols-2">
             {more.map((item) => (
               <li key={item.slug} className="bg-white">
                 <Link href={"/insights/" + item.slug} className="group flex h-full flex-col">

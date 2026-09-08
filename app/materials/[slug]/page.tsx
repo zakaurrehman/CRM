@@ -45,7 +45,20 @@ export default async function MaterialPage({ params }: Params) {
     { name: category.name, href: "/materials/" + category.slug },
   ];
 
-  const related = alloyCategories.filter((c) => c.group === category.group && c.slug !== category.slug).slice(0, 3);
+  /**
+   * Always three related materials, in decreasing order of relevance: same
+   * alloy group first, then anything sharing an application, then the largest
+   * remaining categories. Group alone is not enough — cobalt and non-ferrous
+   * hold only two categories each, which would leave the row a third full.
+   */
+  const others = alloyCategories.filter((c) => c.slug !== category.slug);
+  const sharesApplication = (c: (typeof others)[number]) =>
+    c.applications.some((a) => category.applications.includes(a));
+  const related = [
+    ...others.filter((c) => c.group === category.group),
+    ...others.filter((c) => c.group !== category.group && sharesApplication(c)),
+    ...others.filter((c) => c.group !== category.group && !sharesApplication(c)).sort((a, b) => b.grades.length - a.grades.length),
+  ].slice(0, 3);
   const servedIndustries = industries.filter((i) => i.materials.includes(category.slug));
 
   return (
@@ -153,7 +166,7 @@ export default async function MaterialPage({ params }: Params) {
       {related.length > 0 ? (
         <Section tone="white">
           <h2 className="text-display-sm">Related materials</h2>
-          <ul className="mt-8 grid gap-px bg-steel-200 sm:grid-cols-3">
+          <ul className="mt-8 grid grid-rule sm:grid-cols-3">
             {related.map((item) => (
               <li key={item.slug}>
                 <Link href={"/materials/" + item.slug} className="group flex h-full flex-col bg-white p-6">

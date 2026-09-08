@@ -68,7 +68,7 @@ export default function TungstenPage() {
           align="split"
         />
 
-        <ul className="mt-14 grid gap-px bg-steel-200 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-14 grid grid-rule sm:grid-cols-2 lg:grid-cols-3">
           {tungstenForms.map((form, i) => (
             <Reveal as="li" key={form.slug} delay={i * 60} id={"form-" + form.slug} className="group bg-white">
               <figure className="flex h-full flex-col">

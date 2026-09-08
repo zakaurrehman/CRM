@@ -146,8 +146,11 @@ export function MaterialsBrowser({ categories: all }: { categories: AlloyCategor
         {q ? <> matching &ldquo;{query}&rdquo;</> : null}
       </p>
 
+      {/* The grid carries no outer border: filtering can leave the last row
+          partly empty, and a frame around that gap draws the eye to nothing.
+          The cell hairlines already give it structure, as elsewhere on the site. */}
       {categories.length > 0 ? (
-        <ul className="mt-5 grid gap-px overflow-hidden border border-steel-200 bg-steel-200 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-5 grid grid-rule sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((category, i) => (
             <li key={category.slug} className="bg-white">
               <Link

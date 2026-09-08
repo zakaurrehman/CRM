@@ -93,7 +93,7 @@ export default function IndustriesPage() {
             </p>
           </div>
           <div className="lg:col-span-6 lg:col-start-7">
-            <ul className="grid gap-px bg-steel-200 sm:grid-cols-2">
+            <ul className="grid grid-rule sm:grid-cols-2">
               {companyFacts.sectors.map((sector) => (
                 <li key={sector} className="bg-steel-50 px-5 py-4 text-[0.9375rem] text-navy-900">
                   {sector}

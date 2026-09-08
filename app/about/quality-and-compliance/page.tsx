@@ -64,7 +64,7 @@ export default function QualityPage() {
           align="split"
         />
 
-        <ol className="mt-14 grid gap-px bg-steel-200 sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-14 grid grid-rule sm:grid-cols-2 lg:grid-cols-4">
           {stages.map((item, i) => (
             <Reveal as="li" key={item.title} delay={i * 70} className="bg-white p-7">
               <p className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-brand-700">{item.stage}</p>

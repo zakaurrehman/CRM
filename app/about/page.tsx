@@ -137,7 +137,7 @@ export default function AboutPage() {
             <p className="mt-5 text-[0.9375rem] leading-relaxed text-steel-600">
               A full range of ferro-alloys, available in all sizes, packings and specifications.
             </p>
-            <ul className="mt-5 grid grid-cols-2 gap-px bg-steel-200">
+            <ul className="mt-5 grid grid-cols-2 grid-rule">
               {companyFacts.ferroAlloys.map((ferro) => (
                 <li key={ferro} className="bg-white px-4 py-4 text-center font-mono text-[0.9375rem] text-navy-900">
                   {ferro}
@@ -174,7 +174,7 @@ export default function AboutPage() {
       {/* What makes IMS different */}
       <Section tone="white">
         <SectionHeader eyebrow="What makes us different" title="Four things we do not compromise on." align="split" />
-        <ul className="mt-14 grid gap-px bg-steel-200 sm:grid-cols-2">
+        <ul className="mt-14 grid grid-rule sm:grid-cols-2">
           {differentiators.map((item, i) => (
             <Reveal as="li" key={item.title} delay={i * 70} className="bg-white p-7 lg:p-9">
               <span className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-brand-700 tabular-nums">

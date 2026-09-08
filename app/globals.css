@@ -69,6 +69,27 @@
   /* Thin rule used to separate editorial bands without heavy borders. */
   .hairline { @apply border-t border-steel-200; }
 
+  /**
+   * Hairline grid.
+   *
+   * Separators are drawn as an outline on each cell, not as a container
+   * background showing through 1px gaps. That matters whenever the last row is
+   * incomplete — a filtered list, or a category with fewer siblings — where the
+   * background approach paints the empty cells as a slab of grey. An outline
+   * only exists where a cell exists, so leftover space stays blank.
+   *
+   * Outlines are painted after every background in the stacking context, so
+   * neighbouring cells share one crisp line instead of overpainting each other.
+   * `overflow: hidden` trims the outline that would otherwise ring the outside.
+   */
+  .grid-rule {
+    gap: 1px;
+    overflow: hidden;
+  }
+  .grid-rule > * {
+    outline: 1px solid theme(colors.steel.200);
+  }
+
   .eyebrow {
     @apply font-mono text-eyebrow uppercase text-brand-700;
   }
