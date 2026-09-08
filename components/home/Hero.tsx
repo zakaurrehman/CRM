@@ -1,28 +1,30 @@
-import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { HeroSlideshow, type HeroSlide } from "./HeroSlideshow";
 import { companyFacts } from "@/lib/site";
+
+/**
+ * The backdrop walks through the four sectors the headline names, in the order
+ * it names them. Only the first frame is server-rendered — it is the LCP element,
+ * so it stays `priority` at 100vw with no blur placeholder, and the rest are
+ * mounted after it has loaded. See HeroSlideshow for the rotation itself.
+ */
+const heroSlides: HeroSlide[] = [
+  { src: "/images/hero/turnings.jpg", label: "Alloy turnings" },
+  { src: "/images/turbine/turbine-manufacturing.jpg", label: "Industrial gas turbine" },
+  { src: "/images/oil-gas/steel-pipes.jpg", label: "Oil and gas" },
+  { src: "/images/metals/steel-rods.jpg", label: "Stainless steel" },
+];
 
 /**
  * Homepage hero.
  *
- * The image is the LCP element, so it is `priority` with an explicit `sizes` of
- * 100vw and no blur placeholder — the overlay already covers the decode gap.
  * Everything above the fold is server-rendered; no JavaScript gates the headline.
  */
 export function Hero() {
   return (
     <section className="on-dark relative isolate flex min-h-[38rem] items-end overflow-hidden bg-navy-950 text-white lg:min-h-[44rem]">
-      <Image
-        src="/images/hero/turnings.jpg"
-        alt=""
-        fill
-        priority
-        fetchPriority="high"
-        sizes="100vw"
-        quality={78}
-        className="-z-10 object-cover motion-safe:animate-slow-zoom"
-      />
+      <HeroSlideshow slides={heroSlides} />
       <div
         aria-hidden
         className="absolute inset-0 -z-10 bg-gradient-to-tr from-navy-950 via-navy-950/88 to-navy-900/55"

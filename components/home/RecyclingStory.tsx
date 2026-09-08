@@ -3,6 +3,7 @@ import { recoveryStreams } from "@/data/recovery";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { ArrowLink, Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { ImageCarousel } from "@/components/ui/ImageCarousel";
 
 /**
  * Recovery and sustainability band.
@@ -68,15 +69,15 @@ export function RecyclingStory() {
         </div>
 
         <div className="lg:col-span-5">
-          <figure className="relative aspect-[4/3] overflow-hidden">
-            <Image
-              src="/images/company/recycling-operations.jpg"
-              alt="Sorted metal arisings being handled at a recycling operation"
-              fill
-              sizes="(min-width: 1024px) 34vw, 100vw"
-              className="object-cover"
-            />
-          </figure>
+          <ImageCarousel
+            aspect="aspect-[4/3]"
+            slides={[
+              { src: "/images/company/recycling-operations.jpg", alt: "Sorted metal arisings being handled at a recycling operation", caption: "Arisings received and staged" },
+              { src: "/images/company/claw-crane.jpg", alt: "Grab crane moving mixed metal scrap", caption: "Sorting and segregation" },
+              { src: "/images/hero/hot-metal-plate.jpg", alt: "Hot metal plate at a steel mill", caption: "Back into the melt" },
+              { src: "/images/company/port-terminal.jpg", alt: "Recovered metal at a port terminal", caption: "Supplied to customers worldwide" },
+            ]}
+          />
           <blockquote className="mt-6 border-l-2 border-brand-700 pl-5">
             <p className="text-[0.9375rem] leading-relaxed text-steel-700">
               Our recycling process enables us to revalorise thousands of tons of material destined for

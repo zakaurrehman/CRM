@@ -37,7 +37,10 @@ export function Breadcrumbs({ trail, tone = "light" }: { trail: Crumb[]; tone?: 
                 </Link>
               )}
               {!last && (
-                <span aria-hidden className={tone === "dark" ? "text-steel-500" : "text-steel-300"}>
+                /* Decorative, and hidden from assistive tech — but it still has
+                   to be seen, so both tones clear 4.5:1 rather than relying on
+                   the exemption for punctuation. */
+                <span aria-hidden className={tone === "dark" ? "text-steel-400" : "text-steel-500"}>
                   /
                 </span>
               )}

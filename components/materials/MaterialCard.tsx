@@ -32,9 +32,11 @@ export function MaterialCard({
         />
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-navy-950/55 via-navy-950/5 to-transparent"
+          /* Matches MaterialsBrowser: deep enough at the foot to carry the count
+             over a bright photograph as well as a dark one. */
+          className="absolute inset-0 bg-gradient-to-t from-navy-950/75 via-navy-950/10 to-transparent"
         />
-        <span className="absolute bottom-3 left-4 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-white/85 tabular-nums">
+        <span className="absolute bottom-3 left-4 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-white tabular-nums">
           {category.grades.length} grades
         </span>
       </div>

@@ -18,10 +18,14 @@ const config: Config = {
           400: "#5EB4EB", 500: "#3897DE", 600: "#1E79C7", 700: "#0068B0",
           800: "#0A5490", 900: "#0F4577", 950: "#0A2C4E",
         },
+        /* Anchored on the colours the existing ims-metals.com uses in its own
+           stylesheet — #14215B for dark grounds, #152A68 for headings. The
+           previous ramp bottomed out near black, which read colder and much
+           heavier than the site this replaces. */
         navy: {
           50: "#F1F4FA", 100: "#E1E8F4", 200: "#C6D3EA", 300: "#9CB2DA",
-          400: "#6B89C5", 500: "#4767AE", 600: "#2E4C90", 700: "#103878",
-          800: "#142C63", 900: "#101F45", 950: "#0A142E",
+          400: "#6B89C5", 500: "#4767AE", 600: "#2E4C90", 700: "#1B3A86",
+          800: "#193072", 900: "#152A68", 950: "#14215B",
         },
         steel: {
           50: "#F7F9FB", 100: "#EEF2F6", 200: "#DFE5EC", 300: "#C7D1DC",
@@ -60,12 +64,15 @@ const config: Config = {
         "fade-in": { from: { opacity: "0" }, to: { opacity: "1" } },
         "slide-down": { from: { opacity: "0", transform: "translateY(-6px)" }, to: { opacity: "1", transform: "none" } },
         "slow-zoom": { from: { transform: "scale(1)" }, to: { transform: "scale(1.08)" } },
+        indicator: { from: { transform: "scaleX(0)" }, to: { transform: "scaleX(1)" } },
       },
       animation: {
         "fade-up": "fade-up 0.6s cubic-bezier(0.22,1,0.36,1) both",
         "fade-in": "fade-in 0.5s ease both",
         "slide-down": "slide-down 0.18s cubic-bezier(0.22,1,0.36,1) both",
         "slow-zoom": "slow-zoom 24s ease-out both",
+        /* Duration is set per use — it has to match the carousel dwell time. */
+        indicator: "indicator linear both",
       },
     },
   },

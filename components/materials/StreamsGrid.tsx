@@ -48,7 +48,7 @@ export function StreamsGrid() {
                 )}
               >
                 {form === "all" ? "All streams" : form}
-                <span className={cn("font-mono text-[0.6875rem] tabular-nums", selected ? "text-white/70" : "text-steel-500")}>
+                <span className={cn("font-mono text-[0.6875rem] tabular-nums", selected ? "text-white/90" : "text-steel-500")}>
                   {counts.get(form)}
                 </span>
               </button>
