@@ -49,24 +49,6 @@ export function Footer() {
               ) : null}
             </address>
 
-            {contact.social.length > 0 ? (
-              <ul className="mt-7 flex items-center gap-2">
-                {contact.social.map((profile) => (
-                  <li key={profile.href}>
-                    <a
-                      href={profile.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={"IMS on " + profile.label}
-                      title={profile.label}
-                      className="inline-flex h-10 w-10 items-center justify-center rounded border border-white/15 text-steel-300 transition-colors hover:border-white/40 hover:text-white"
-                    >
-                      <SocialIcon name={profile.icon} />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
           </div>
 
           <div className="grid gap-10 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-4 lg:gap-8">
@@ -92,17 +74,48 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-white/10 py-7 sm:flex-row sm:items-center sm:justify-between">
+        {/*
+          Social sits in the bottom bar rather than at the foot of the first
+          column. There it was the only thing below the nav columns, leaving a
+          lone icon with the section's whole bottom padding under it and nothing
+          beside it — which read as a hole rather than as breathing room.
+        */}
+        {/* pr on the wide breakpoints keeps this row clear of the floating
+            WhatsApp button, which sits over the bottom-right corner and covered
+            the social link outright between 768px and 1024px. */}
+        <div className="flex flex-col gap-4 border-t border-white/10 py-7 sm:flex-row sm:items-center sm:justify-between sm:pr-20">
           <p className="text-[0.8125rem] text-steel-400">
             &copy; {year} {site.legalName}. All rights reserved.
           </p>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[0.8125rem]">
-            <Link href="/contact" className="rounded-sm text-steel-400 transition-colors hover:text-white">
-              Contact
-            </Link>
-            <Link href="/materials" className="rounded-sm text-steel-400 transition-colors hover:text-white">
-              Materials
-            </Link>
+
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[0.8125rem]">
+              <Link href="/contact" className="rounded-sm text-steel-400 transition-colors hover:text-white">
+                Contact
+              </Link>
+              <Link href="/materials" className="rounded-sm text-steel-400 transition-colors hover:text-white">
+                Materials
+              </Link>
+            </div>
+
+            {contact.social.length > 0 ? (
+              <ul className="flex items-center gap-2">
+                {contact.social.map((profile) => (
+                  <li key={profile.href}>
+                    <a
+                      href={profile.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={"IMS on " + profile.label}
+                      title={profile.label}
+                      className="inline-flex h-9 w-9 items-center justify-center rounded border border-white/15 text-steel-300 transition-colors hover:border-white/40 hover:text-white"
+                    >
+                      <SocialIcon name={profile.icon} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </div>
         </div>
       </Container>

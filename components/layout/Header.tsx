@@ -66,6 +66,30 @@ export function Header({ items }: { items: NavItem[] }) {
 
   return (
     <>
+      {/*
+        Utility strip. Outside the sticky header on purpose: it introduces the
+        company and the contact route on arrival, then scrolls away.
+
+        Inside the header it was stuck at the top of the viewport forever, so it
+        cost its full height on every page at every scroll position — and it put
+        the real header height (109px) above the 96px `scroll-padding-top`
+        derived from `--header-h`, which left every deep-linked heading sitting
+        behind the bar it had just scrolled to.
+      */}
+      <div className="hidden border-b border-steel-200 bg-navy-950 text-steel-300 lg:block">
+        <Container className="flex h-9 items-center justify-between text-[0.75rem]">
+          <p className="font-mono uppercase tracking-[0.14em] text-steel-400">
+            Metals, alloys &amp; recovery &mdash; Tallinn, Estonia
+          </p>
+          <a
+            href="mailto:info@ims-metals.com"
+            className="on-dark rounded-sm text-steel-300 transition-colors hover:text-white"
+          >
+            info@ims-metals.com
+          </a>
+        </Container>
+      </div>
+
       <header
         ref={headerRef}
         className={cn(
@@ -73,21 +97,6 @@ export function Header({ items }: { items: NavItem[] }) {
           scrolled || openIndex !== null ? "shadow-subtle" : "",
         )}
       >
-        {/* Utility strip: keeps the contact route one click from every page. */}
-        <div className="hidden border-b border-steel-200 bg-navy-950 text-steel-300 lg:block">
-          <Container className="flex h-9 items-center justify-between text-[0.75rem]">
-            <p className="font-mono uppercase tracking-[0.14em] text-steel-400">
-              Metals, alloys &amp; recovery &mdash; Tallinn, Estonia
-            </p>
-            <a
-              href="mailto:info@ims-metals.com"
-              className="on-dark rounded-sm text-steel-300 transition-colors hover:text-white"
-            >
-              info@ims-metals.com
-            </a>
-          </Container>
-        </div>
-
         <Container>
           <div className="flex h-[var(--header-h)] items-center justify-between gap-6">
             <Link href="/" className="shrink-0 rounded-sm" aria-label="IMS Metals and Alloys, home">
