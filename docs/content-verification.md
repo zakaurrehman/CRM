@@ -303,6 +303,33 @@ Footer read "Copyright © 2024" throughout.
 
 ---
 
+### 17. Display font on the original site is commercially licensed — DECISION NEEDED
+
+The existing ims-metals.com sets its headings in **Ethnocentric** (loaded via
+`post-28.css`, alongside TT Commons, Barlow and Inter). Ethnocentric is a paid
+commercial typeface, not a webfont that can be self-hosted without a licence.
+
+**Current state:** the rebuild uses **Archivo** for display headings. It is not a
+match for Ethnocentric's wide techno character.
+
+**Why this is not a decision I can make:** self-hosting Ethnocentric requires
+proof that IMS holds a web licence for it. Shipping it without one would be an
+infringement, and the licence cannot be inferred from the fact that the current
+site uses it — the current site may itself be out of compliance.
+
+**Options, for IMS to choose:**
+
+| Option | What it needs |
+| --- | --- |
+| **A — keep Archivo** | Nothing. Cleaner and more legible at small sizes; does not evoke the original masthead. |
+| **B — self-host Ethnocentric** | IMS supplies the web licence (or buys one) plus the WOFF2 files. Closest to the original. |
+| **C — free lookalike** | Nothing. Michroma or Orbitron sit near Ethnocentric's proportions without the licence question, but neither is an exact match. |
+
+Ask IMS whether they hold a web licence for Ethnocentric. If they do, B is the
+closest match to "like the original". If they do not, this is A or C.
+
+---
+
 ## Claims deliberately NOT made on the new site
 
 Recorded so it is clear these were choices, not oversights. Each was either
