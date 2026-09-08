@@ -6,6 +6,7 @@ import { MaterialsIndex } from "@/components/home/MaterialsIndex";
 import { IndustriesSection } from "@/components/home/IndustriesSection";
 import { RecyclingStory } from "@/components/home/RecyclingStory";
 import { QualityBand } from "@/components/home/QualityBand";
+import { WhyIms } from "@/components/home/WhyIms";
 import { InsightsSection } from "@/components/home/InsightsSection";
 import { CtaSection } from "@/components/shared/CtaSection";
 import { pageMetadata } from "@/lib/seo";
@@ -28,6 +29,7 @@ export default function HomePage() {
       <IndustriesSection />
       <RecyclingStory />
       <QualityBand />
+      <WhyIms />
       <InsightsSection />
       <CtaSection secondary={{ href: "/materials", label: "Explore materials" }} />
     </>

@@ -332,7 +332,7 @@ export const alloyCategories: AlloyCategory[] = [
     summary: "High-permeability cobalt-iron and cobalt-vanadium alloys used in transformer laminations, magnetic cores and electronic assemblies.",
     properties: ["Magnetic Properties (High Permeability)"],
     applications: ["Electronics Industry"],
-    image: "/images/metals/stamped-components.jpg",
+    image: "/images/company/recycling-operations.jpg",
     elements: ["Co", "Cr", "Ni", "Fe", "Mo", "V", "Cu", "Al", "W", "C", "Others"],
     grades: [
       { name: "Permendur", values: ["50", "", "", "49", "", "", "", "", "", "", "0.4 Mn"] },
@@ -377,7 +377,7 @@ export const alloyCategories: AlloyCategory[] = [
     summary: "Commercially pure titanium and alpha, alpha-beta and beta alloys offering an exceptional strength-to-weight ratio with strong corrosion resistance.",
     properties: ["High Strength to Weight Ratio", "Good Corrosion Resistance"],
     applications: ["Aerospace", "Power Generation"],
-    image: "/images/aerospace/aero-engines.jpg",
+    image: "/images/company/scrap-yard.jpg",
     elements: ["Ti", "Al", "V", "Sn", "Mn", "Zr", "Mo", "Cu", "Cr", "Si", "Others"],
     grades: [
       { name: "IMI 115-160 (C.P.) Grade 1", values: ["BAL", "", "", "", "", "", "", "", "", "", "0.18 O2"] },
@@ -443,7 +443,7 @@ export const alloyCategories: AlloyCategory[] = [
     summary: "Alnico and related permanent magnet alloys built on aluminium, nickel, cobalt and iron for stable magnetic performance.",
     properties: ["Magnetic Properties"],
     applications: ["Permanent Magnets"],
-    image: "/images/metals/stamped-components.jpg",
+    image: "/images/company/claw-crane.jpg",
     elements: ["Co", "Cr", "Ni", "Fe", "Mo", "V", "Cu", "Al", "W", "C", "Others"],
     grades: [
       { name: "Alni 1", values: ["", "", "24.5", "BAL", "", "", "6", "12.5", "", "", ""] },
@@ -468,7 +468,7 @@ export const alloyCategories: AlloyCategory[] = [
     summary: "Zircaloy and related zirconium grades valued for low neutron absorption and corrosion resistance in nuclear and chemical plant.",
     properties: ["Corrosion Resistant"],
     applications: ["Nuclear Industry"],
-    image: "/images/oil-gas/steel-pipes.jpg",
+    image: "/images/tungsten/w-crucibles.jpg",
     elements: ["Ti", "Al", "V", "Sn", "Mn", "Zr", "Mo", "Cu", "Cr", "Si", "Others"],
     grades: [
       { name: "Zr 10 (C.P.)", values: ["", "", "", "", "", "100", "", "", "", "", ""] },

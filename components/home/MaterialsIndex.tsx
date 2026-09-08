@@ -1,20 +1,24 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { AlloyCategoryTeaser } from "@/types/content";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
-import { cn } from "@/lib/utils";
+import { Reveal } from "@/components/ui/Reveal";
 
 /**
- * Material index with a linked preview.
+ * The full material range as a photo grid.
  *
- * Pointer users get an image that tracks the row under the cursor; the preview
- * is decorative and the list itself is a plain set of links, so keyboard and
- * touch users lose nothing. All 15 images are rendered and cross-faded rather
- * than swapped by src, which avoids a flash of empty frame on hover.
+ * Every category is visible at once, which is what a buyer scanning for their
+ * alloy family expects. Five across on desktop keeps all fifteen to three rows,
+ * so the section stays dense rather than dominating the page.
+ *
+ * A heavy navy wash sits over each photograph. It ties the grid together, keeps
+ * the category name legible over any image, and stops the backdrops competing
+ * with one another — these are industrial scenes, not specimen photography, and
+ * should read as texture behind the label.
+ *
+ * Now a server component: the previous version needed client-side hover state
+ * to show a preview, which meant nothing at all on touch.
  */
 export function MaterialsIndex({
   categories,
@@ -23,17 +27,15 @@ export function MaterialsIndex({
   categories: AlloyCategoryTeaser[];
   totalGrades: number;
 }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-
   return (
     <Section tone="white">
       <SectionHeader
         eyebrow="Metals & alloys"
-        title="A working index of the alloys we handle."
+        title="The full range, with the data behind it."
         description={
           <>
-            {totalGrades} grades across {categories.length} categories, each with its published
-            nominal composition. Search by grade, element or application.
+            {totalGrades} grades across {categories.length} categories, each published with its nominal
+            composition. Open any category for the full table.
           </>
         }
         align="split"
@@ -44,73 +46,44 @@ export function MaterialsIndex({
         }
       />
 
-      <div className="mt-14 grid gap-10 lg:grid-cols-12 lg:gap-14">
-        <div className="lg:col-span-7">
-          <ul className="border-t border-steel-200">
-            {categories.map((category, i) => (
-              <li key={category.slug}>
-                <Link
-                  href={"/materials/" + category.slug}
-                  onMouseEnter={() => setActiveIndex(i)}
-                  onFocus={() => setActiveIndex(i)}
-                  className="group flex items-baseline gap-4 border-b border-steel-200 py-4 transition-colors hover:bg-steel-50"
-                >
-                  <span className="w-7 shrink-0 font-mono text-[0.6875rem] text-steel-500 tabular-nums">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="flex-1 font-display text-lg font-semibold tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
-                    {category.name}
-                  </span>
-                  <span className="hidden max-w-[16rem] flex-1 truncate text-[0.8125rem] text-steel-500 xl:block">
-                    {category.applications.join(", ")}
-                  </span>
-                  <span className="shrink-0 font-mono text-[0.75rem] text-steel-500 tabular-nums">
-                    {category.gradeCount}
-                  </span>
-                  <span
-                    aria-hidden
-                    className="shrink-0 text-steel-300 transition-all duration-200 ease-swift group-hover:translate-x-1 group-hover:text-brand-700"
-                  >
-                    &rarr;
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div aria-hidden className="hidden lg:col-span-5 lg:block">
-          <div className="sticky top-28">
-            <div className="relative aspect-[4/5] overflow-hidden bg-steel-100">
-              {categories.map((category, i) => (
-                <Image
-                  key={category.slug}
-                  src={category.image}
-                  alt=""
-                  fill
-                  sizes="(min-width: 1024px) 34vw, 0px"
-                  className={cn(
-                    "object-cover transition-opacity duration-500 ease-swift",
-                    i === activeIndex ? "opacity-100" : "opacity-0",
-                  )}
-                />
-              ))}
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-6">
-                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-brand-300">
-                  {categories[activeIndex].gradeCount} grades
+      <ul className="mt-14 grid grid-rule grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+        {categories.map((category, i) => (
+          <Reveal as="li" key={category.slug} delay={(i % 5) * 60} className="bg-navy-950">
+            <Link
+              href={"/materials/" + category.slug}
+              className="group relative flex aspect-[4/3] flex-col justify-end overflow-hidden p-4"
+            >
+              <Image
+                src={category.image}
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+                className="object-cover transition-transform duration-700 ease-swift group-hover:scale-[1.07]"
+              />
+              <div
+                aria-hidden
+                /* Dark enough at the foot to carry the label, light enough above
+                   that the photograph still reads. */
+                className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/55 to-navy-950/10 transition-all duration-500 group-hover:via-navy-950/40 group-hover:to-transparent"
+              />
+              <div className="relative">
+                <p className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-brand-300 tabular-nums">
+                  {category.gradeCount} grades
                 </p>
-                <p className="mt-2 font-display text-2xl font-semibold text-white">
-                  {categories[activeIndex].name}
-                </p>
-                <p className="mt-2 text-[0.875rem] leading-relaxed text-steel-300">
-                  {categories[activeIndex].summary}
-                </p>
+                <h3 className="mt-1.5 font-display text-[0.9375rem] font-semibold leading-tight text-white">
+                  {category.name}
+                </h3>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              <span
+                aria-hidden
+                className="absolute right-4 top-4 text-white/0 transition-all duration-300 ease-swift group-hover:translate-x-0.5 group-hover:text-white/80"
+              >
+                &rarr;
+              </span>
+            </Link>
+          </Reveal>
+        ))}
+      </ul>
     </Section>
   );
 }
