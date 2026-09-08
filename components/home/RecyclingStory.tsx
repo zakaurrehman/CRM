@@ -12,7 +12,10 @@ import { Reveal } from "@/components/ui/Reveal";
  * sustainability stock photograph would be.
  */
 export function RecyclingStory() {
-  const featured = recoveryStreams.slice(0, 10);
+  /* Fifteen fills three clean rows of five, which balances the column beside
+     it. Ten left the grid ending well short of the image and quote, opening a
+     half-screen hole on the left. */
+  const featured = recoveryStreams.slice(0, 15);
 
   return (
     <Section tone="light">
@@ -38,17 +41,17 @@ export function RecyclingStory() {
           <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
             Streams we treat
           </p>
-          <ul className="mt-6 grid grid-cols-2 grid-rule sm:grid-cols-3 lg:grid-cols-5">
+          <ul className="mt-6 grid grid-cols-2 grid-rule sm:grid-cols-3 lg:grid-cols-5 [&>li:nth-child(n+11)]:hidden lg:[&>li:nth-child(n+11)]:block">
             {featured.map((stream, i) => (
               <Reveal as="li" key={stream.slug} delay={i * 40} className="bg-white">
                 <div className="flex flex-col items-center px-2 py-4">
-                  <div className="relative h-16 w-16">
+                  <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-steel-100">
                     <Image
                       src={stream.image}
                       alt=""
                       fill
-                      sizes="64px"
-                      className="object-contain mix-blend-multiply"
+                      sizes="80px"
+                      className="scale-[0.82] object-contain mix-blend-multiply"
                     />
                   </div>
                   <span className="mt-3 text-center text-[0.75rem] font-medium leading-tight text-steel-700">
@@ -65,7 +68,7 @@ export function RecyclingStory() {
         </div>
 
         <div className="lg:col-span-5">
-          <figure className="relative aspect-[4/3] overflow-hidden lg:aspect-[3/4]">
+          <figure className="relative aspect-[4/3] overflow-hidden">
             <Image
               src="/images/company/recycling-operations.jpg"
               alt="Sorted metal arisings being handled at a recycling operation"

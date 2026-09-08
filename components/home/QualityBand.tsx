@@ -26,54 +26,54 @@ const controls = [
 export function QualityBand() {
   return (
     <>
+      {/* Header, then a full-width band of controls, then the note. The earlier
+          two-column version pinned the copy in a sticky left column that ran
+          taller than the cards beside it, leaving half a screen of dead space
+          under them. This follows the same rhythm as every other section. */}
       <Section tone="white" id="quality">
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <SectionHeader
+          eyebrow="Quality & compliance"
+          title="A metallurgical laboratory at the centre of the operation."
+          description={
+            <>
+              Whether it is receiving new samples, testing daily feed stock or analysing our production
+              line, laboratory results provide essential data to all areas of plant operations. We work
+              with customers to make sure material is well sampled and tested against their requirement.
+            </>
+          }
+          align="split"
+          action={<ArrowLink href="/about/quality-and-compliance">How we control quality</ArrowLink>}
+        />
+
+        <ul className="mt-14 grid grid-rule sm:grid-cols-2 lg:grid-cols-4">
+          {controls.map((control, i) => (
+            <Reveal as="li" key={control.title} delay={i * 70} className="bg-white p-6 lg:p-7">
+              <h3 className="font-display text-base font-semibold text-navy-900">{control.title}</h3>
+              <p className="mt-2.5 text-[0.875rem] leading-relaxed text-steel-600">{control.body}</p>
+            </Reveal>
+          ))}
+        </ul>
+
+        <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
+          <figure className="relative hidden aspect-[16/9] overflow-hidden lg:col-span-7 lg:block lg:aspect-[21/9]">
+            <Image
+              src="/images/hero/hot-metal-plate.jpg"
+              alt="Hot metal plate at a steel mill"
+              fill
+              sizes="(min-width: 1024px) 58vw, 100vw"
+              className="object-cover"
+            />
+          </figure>
           <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-28">
-              <p className="eyebrow mb-4">Quality &amp; compliance</p>
-              <h2 className="text-display-md">A metallurgical laboratory at the centre of the operation.</h2>
-              <p className="mt-6 text-lg leading-relaxed text-steel-600">
-                Whether it is receiving new samples, testing daily feed stock or analysing our production
-                line, laboratory results provide essential data to all areas of plant operations. We work
-                with customers to make sure material is well sampled and tested against their requirement.
-              </p>
-              <p className="mt-5 text-[0.9375rem] leading-relaxed text-steel-600">
-                IMS is committed to a policy of continuously improving quality performance throughout the
-                business, to ensure the highest standards of product and service are achieved.
-              </p>
-              <div className="mt-8">
-                <ArrowLink href="/about/quality-and-compliance">How we control quality</ArrowLink>
-              </div>
-
-              <figure className="relative mt-10 hidden aspect-[16/10] overflow-hidden lg:block">
-                <Image
-                  src="/images/hero/hot-metal-plate.jpg"
-                  alt="Hot metal plate at a steel mill"
-                  fill
-                  sizes="(min-width: 1024px) 34vw, 0px"
-                  className="object-cover"
-                />
-              </figure>
-            </div>
-          </div>
-
-          <div className="lg:col-span-6 lg:col-start-7">
-            <ul className="grid grid-rule sm:grid-cols-2">
-              {controls.map((control, i) => (
-                <Reveal as="li" key={control.title} delay={i * 70} className="bg-white p-6 lg:p-7">
-                  <h3 className="font-display text-base font-semibold text-navy-900">{control.title}</h3>
-                  <p className="mt-2.5 text-[0.875rem] leading-relaxed text-steel-600">{control.body}</p>
-                </Reveal>
-              ))}
-            </ul>
-
-            <div className="mt-8 border-l-2 border-steel-300 bg-steel-50 p-6">
-              <p className="text-[0.875rem] leading-relaxed text-steel-600">
-                Certification accompanies material supplied by IMS. Specific standards and scheme
-                accreditations are confirmed per contract &mdash; ask us for the documentation that applies
-                to your requirement.
-              </p>
-            </div>
+            <p className="text-[0.9375rem] leading-relaxed text-steel-600">
+              IMS is committed to a policy of continuously improving quality performance throughout the
+              business, to ensure the highest standards of product and service are achieved.
+            </p>
+            <p className="mt-5 border-l-2 border-steel-300 pl-5 text-[0.875rem] leading-relaxed text-steel-600">
+              Certification accompanies material supplied by IMS. Specific standards and scheme
+              accreditations are confirmed per contract &mdash; ask us for the documentation that applies
+              to your requirement.
+            </p>
           </div>
         </div>
       </Section>

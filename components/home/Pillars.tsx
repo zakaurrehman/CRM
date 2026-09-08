@@ -51,7 +51,7 @@ export function Pillars() {
               href={pillar.href}
               className="group flex h-full flex-col bg-white transition-colors duration-300 hover:bg-navy-950"
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-[16/9] overflow-hidden sm:aspect-[4/3]">
                 <Image
                   src={pillar.image}
                   alt=""

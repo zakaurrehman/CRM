@@ -65,13 +65,13 @@ export function StreamsGrid() {
         {streams.map((stream) => (
           <li key={stream.slug} id={"stream-" + stream.slug} className="group bg-white">
             <div className="flex h-full flex-col items-center p-5 transition-colors group-hover:bg-steel-50">
-              <div className="relative h-24 w-24 sm:h-28 sm:w-28">
+              <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-steel-100 sm:h-28 sm:w-28">
                 <Image
                   src={stream.image}
                   alt={stream.name + " recovery stream"}
                   fill
                   sizes="112px"
-                  className="object-contain mix-blend-multiply transition-transform duration-500 ease-swift group-hover:scale-105"
+                  className="scale-[0.82] object-contain mix-blend-multiply transition-transform duration-500 ease-swift group-hover:scale-[0.88]"
                 />
               </div>
               <h3 className="mt-4 text-center font-display text-[0.9375rem] font-semibold leading-tight text-navy-900">
