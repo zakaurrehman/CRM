@@ -154,6 +154,17 @@ Upgrading to Next 16 is worth scheduling deliberately, with the QA suite re-run
 against it. It is not a drop-in change and should not be done as part of a
 content deployment.
 
+### WhatsApp contact button
+
+A floating WhatsApp link is built and ready but renders nothing until a verified
+number is set. It is a plain `wa.me` link rather than the official widget script,
+so it ships no JavaScript, no third-party tracking and needs no cookie consent.
+To switch it on, set the business number in `lib/site.ts` (digits only, no "+"):
+
+```ts
+whatsapp: "3725551234",
+```
+
 ### `NEXT_PUBLIC_SITE_URL`
 
 Next inlines `NEXT_PUBLIC_*` at build time and substitutes an **empty string**

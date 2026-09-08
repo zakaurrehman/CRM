@@ -62,6 +62,20 @@ export const contact = {
    * profile URL.
    */
   social: [] as { label: string; href: string }[],
+
+  /**
+   * VERIFY — WhatsApp is a working channel across international metals trading,
+   * so the floating contact button is built and ready. It stays hidden until a
+   * real number is supplied, for the same reason the telephone number is
+   * withheld: the only number the legacy site published was a demo placeholder.
+   *
+   * Set this to the WhatsApp business number in international format, digits
+   * only, no "+" or spaces — e.g. "3725551234". Nothing else needs changing.
+   */
+  whatsapp: null as string | null,
+
+  /** Prefilled into the WhatsApp thread so an enquiry opens with context. */
+  whatsappMessage: "Hello IMS — I have a materials enquiry.",
 } as const;
 
 /**

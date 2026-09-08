@@ -175,6 +175,24 @@ statement) was migrated to the Quality & Compliance page under a correct heading
 
 ---
 
+### 9b. WhatsApp number, to enable the floating contact button
+
+WhatsApp is a working channel across much of international metals trading, so a
+floating contact button is built into the site. It renders nothing until a number
+is supplied — the same discipline applied to the telephone number, since the only
+number the legacy site published was a demo placeholder.
+
+It is a plain `wa.me` link, not the official WhatsApp widget: no third-party
+script, no tracking, no cookie consent requirement.
+
+**Current state:** hidden. `contact.whatsapp` is `null`.
+**To fix:** set the WhatsApp business number in `lib/site.ts`, digits only, no
+"+" or spaces — e.g. `whatsapp: "3725551234"`.
+**Or:** if IMS does not use WhatsApp commercially, say so and the component is
+deleted in one step.
+
+---
+
 ### 10. Missing company registration details
 
 For an Estonian OÜ trading internationally, the site publishes no registry code, no VAT

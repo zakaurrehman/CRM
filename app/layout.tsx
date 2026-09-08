@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Archivo, IBM_Plex_Mono, Inter } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { JsonLd, organizationSchema, websiteSchema } from "@/lib/schema";
 import { navigation } from "@/lib/navigation";
 import { site } from "@/lib/site";
@@ -78,6 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
+        <WhatsAppButton />
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
       </body>
     </html>
