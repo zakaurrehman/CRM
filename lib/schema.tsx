@@ -28,7 +28,13 @@ export function organizationSchema(): Json {
       addressCountry: contact.address.countryCode,
     },
     ...(contact.phone ? { telephone: contact.phone } : {}),
-    ...(contact.social.length ? { sameAs: contact.social.map((s) => s.href) } : {}),
+    /* Only company-owned profiles. `sameAs` asserts that each URL is another
+       presence of this organisation, so an individual's profile does not belong
+       here even though it is linked in the footer. */
+    ...(() => {
+      const owned = contact.social.filter((s) => s.isCompanyProfile).map((s) => s.href);
+      return owned.length ? { sameAs: owned } : {};
+    })(),
   };
 }
 

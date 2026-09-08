@@ -57,22 +57,34 @@ export const contact = {
    */
   phone: null as string | null,
   /**
-   * VERIFY — the only social link on the legacy site points at a personal
-   * LinkedIn profile rather than a company page. Left empty pending a company
-   * profile URL.
+   * Social profiles shown in the footer.
+   *
+   * `isCompanyProfile` gates inclusion in the Organization `sameAs` structured
+   * data. That field asserts "these profiles are this organisation", so listing
+   * an individual's profile there tells search engines the company and the
+   * person are one entity. The link is still displayed either way — this only
+   * governs what is claimed in machine-readable markup.
    */
-  social: [] as { label: string; href: string }[],
+  social: [
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/sharon-bashan-355a1272/",
+      icon: "linkedin",
+      // Personal profile, supplied by IMS. Flip to true once a company page exists.
+      isCompanyProfile: false,
+    },
+  ] as { label: string; href: string; icon: "linkedin"; isCompanyProfile: boolean }[],
 
   /**
-   * VERIFY — WhatsApp is a working channel across international metals trading,
-   * so the floating contact button is built and ready. It stays hidden until a
-   * real number is supplied, for the same reason the telephone number is
-   * withheld: the only number the legacy site published was a demo placeholder.
+   * WhatsApp business number, supplied by IMS: +972 54-907-0254.
+   * Stored as digits only in international format, which is what wa.me expects.
    *
-   * Set this to the WhatsApp business number in international format, digits
-   * only, no "+" or spaces — e.g. "3725551234". Nothing else needs changing.
+   * Note this is deliberately separate from `phone` above. Publishing a number
+   * as the company's general telephone — in the header, footer and Organization
+   * schema — is a wider commitment than making it reachable on WhatsApp, so it
+   * is not assumed. Set `phone` as well if it should be shown as both.
    */
-  whatsapp: null as string | null,
+  whatsapp: "972549070254" as string | null,
 
   /** Prefilled into the WhatsApp thread so an enquiry opens with context. */
   whatsappMessage: "Hello IMS — I have a materials enquiry.",

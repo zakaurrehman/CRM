@@ -77,18 +77,22 @@ public/images/        46 assets recovered from the legacy site, organised by sub
 
 ### Editing company information
 
-`lib/site.ts` is the single place that defines company facts. Two values are deliberately
-withheld until verified:
+`lib/site.ts` is the single place that defines company facts. Two values are still
+deliberately withheld, because the legacy site's versions were contradictory or
+placeholder:
 
 ```ts
-export const contact = { phone: null, social: [], ... };
+export const contact = { phone: null, /* email, address, whatsapp, social set */ };
 export const experience = { years: null, verified: false };
 ```
 
 Setting `phone` publishes it across the header, footer, contact page and Organization
 schema. Setting `experience` to `{ years: 30, verified: true }` adds the years stat to the
-homepage. Nothing else needs changing. See `docs/content-verification.md` for why both are
-currently empty.
+homepage. Nothing else needs changing — no page hard-codes either value. See
+`docs/content-verification.md` for why both are still empty.
+
+Note that `phone` and `whatsapp` are separate on purpose: being reachable on WhatsApp is
+a narrower commitment than publishing a number as the company's general telephone.
 
 ### The alloy dataset
 
@@ -156,13 +160,13 @@ content deployment.
 
 ### WhatsApp contact button
 
-A floating WhatsApp link is built and ready but renders nothing until a verified
-number is set. It is a plain `wa.me` link rather than the official widget script,
-so it ships no JavaScript, no third-party tracking and needs no cookie consent.
-To switch it on, set the business number in `lib/site.ts` (digits only, no "+"):
+Live on every page, pointing at the number IMS supplied. It is a plain `wa.me`
+link rather than the official widget script, so it ships no JavaScript, no
+third-party tracking and needs no cookie consent. The number lives in
+`lib/site.ts` as digits only, which is the format wa.me expects:
 
 ```ts
-whatsapp: "3725551234",
+whatsapp: "972549070254",   // +972 54-907-0254
 ```
 
 ### `NEXT_PUBLIC_SITE_URL`

@@ -150,14 +150,22 @@ properly. If not, the article sentence should be amended.
 
 ---
 
-### 8. Company social link is a personal LinkedIn profile
+### 8. LinkedIn link is a personal profile, not a company page — SUPPLIED
 
-The only social link on the site points to an individual's personal LinkedIn profile
-(`linkedin.com/in/sharon-bashan-...`), labelled as the company's social presence.
+The legacy site's only social link pointed at an individual's LinkedIn profile.
+IMS has confirmed this is the link to use, and it is now live as an icon in the
+footer: `linkedin.com/in/sharon-bashan-355a1272/`.
 
-**Current state:** omitted. `contact.social` is an empty array.
-**To fix:** supply the LinkedIn **company page** URL and add it to `lib/site.ts`; it
-will appear in the footer and in `sameAs` on the Organization schema.
+**One deliberate limit.** It is shown in the footer but **excluded from the
+Organization `sameAs`** structured data. `sameAs` asserts that each URL is
+another presence *of this organisation*; listing a person's profile there tells
+search engines the company and the individual are the same entity, which can
+distort how the business is represented in search results.
+
+**Still worth doing:** create a LinkedIn **company page**. It carries the
+business rather than an individual, survives staff changes, and can then be
+claimed in structured data. Once it exists, add it in `lib/site.ts` with
+`isCompanyProfile: true` and the schema picks it up automatically.
 
 ---
 
@@ -175,21 +183,27 @@ statement) was migrated to the Quality & Compliance page under a correct heading
 
 ---
 
-### 9b. WhatsApp number, to enable the floating contact button
+### 9b. WhatsApp contact button — SUPPLIED, one question outstanding
 
-WhatsApp is a working channel across much of international metals trading, so a
-floating contact button is built into the site. It renders nothing until a number
-is supplied — the same discipline applied to the telephone number, since the only
-number the legacy site published was a demo placeholder.
+IMS supplied **+972 54-907-0254**. The floating WhatsApp button is live on every
+page, opening a thread prefilled with "Hello IMS — I have a materials enquiry."
+It is a plain `wa.me` link, not the official widget: no third-party script, no
+tracking, no cookie-consent requirement.
 
-It is a plain `wa.me` link, not the official WhatsApp widget: no third-party
-script, no tracking, no cookie consent requirement.
+**Outstanding — should this also be the company's published telephone number?**
+It is currently used for WhatsApp only. Publishing it as `contact.phone` puts it
+in the header, footer, contact page and Organization structured data, which is a
+wider commitment, so it was not assumed. Item 2 above remains open until this is
+decided.
 
-**Current state:** hidden. `contact.whatsapp` is `null`.
-**To fix:** set the WhatsApp business number in `lib/site.ts`, digits only, no
-"+" or spaces — e.g. `whatsapp: "3725551234"`.
-**Or:** if IMS does not use WhatsApp commercially, say so and the component is
-deleted in one step.
+Two things worth confirming:
+
+- It is an Israeli mobile (+972) for an Estonian-registered company. That is
+  perfectly normal in international trading, but if a local Estonian line exists
+  it may read better as the general contact number, with WhatsApp kept separate.
+- A public floating button attracts volume, including scrap sellers and
+  time-wasters. WhatsApp Business supports multiple operators — routing it to a
+  shared trading inbox is worth considering over a personal handset.
 
 ---
 
