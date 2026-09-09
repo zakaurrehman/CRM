@@ -376,6 +376,55 @@ facilities. Until then the site describes reach in the words IMS itself uses.
 
 ---
 
+
+---
+
+### 20. Photography — six alloy families have no image of the metal
+
+The site ships with 20 photographs. Nine alloy families have one that genuinely
+depicts the metal or its established end use. Six do not, and until this audit
+they carried a photograph of something else entirely:
+
+| Family | Was showing | Problem |
+| --- | --- | --- |
+| Titanium Alloys | a general scrap yard | not titanium |
+| Zirconium Alloys | tungsten crucibles | a different refractory metal |
+| Tool Steels | tungsten-carbide mining bits | carbide, not tool steel |
+| Magnet Alloys | a claw crane moving scrap | not a magnet alloy |
+| Cobalt Iron Alloys | a recycling operations scene | not the material |
+| Copper Nickel Alloys | a port terminal | not the material |
+
+**Current state:** those six render a *specimen card* instead — the family's
+dominant element large, with its characteristic elements and their typical
+percentages, computed from the published composition tables. It is derived from
+real data rather than decorative, so it identifies the family at a glance, and
+it is visibly a designed panel rather than a photograph pretending to be one.
+
+A wrong photograph is worse than no photograph on a technical site. The buyers
+this site is for can tell tungsten carbide from tool steel at a glance, and one
+mismatched image undermines the composition data sitting beside it.
+
+**To replace them with photography,** supply any of the following. Landscape,
+2000px wide or more, and ideally IMS's own material rather than stock:
+
+| Family | What to photograph |
+| --- | --- |
+| Titanium Alloys | Ti bar, plate, sponge or machining turnings |
+| Zirconium Alloys | Zr sponge, tube or bar |
+| Tool Steels | tool-steel blocks, dies or forged billets |
+| Magnet Alloys | Alnico magnets, cast or sintered |
+| Cobalt Iron Alloys | transformer laminations or magnetic cores |
+| Copper Nickel Alloys | cupro-nickel tube, plate or condenser bundles |
+
+Dropping one in is a two-field change in `data/alloys.ts` — set `image` to the
+new file and `cardArt` back to `"photo"`. Nothing else needs touching.
+
+**Also worth supplying,** to replace defensible-but-generic stand-ins: nickel
+alloy bar or billet (currently generic steel rods) and stainless product
+(currently turnings, which is an arising rather than a product).
+
+---
+
 ## Claims deliberately NOT made on the new site
 
 Recorded so it is clear these were choices, not oversights. Each was either

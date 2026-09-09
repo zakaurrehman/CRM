@@ -15,6 +15,14 @@ export interface AlloyCategory {
   properties: string[];
   applications: string[];
   image: string;
+  /**
+   * Whether the card shows a photograph or the derived specimen artwork.
+   *
+   * "specimen" means IMS has no photograph of this family, and a generic
+   * industrial shot standing in for it was doing more harm than good. See
+   * components/materials/SpecimenArt.tsx.
+   */
+  cardArt: "photo" | "specimen";
   /** Element column headers for the composition table. */
   elements: string[];
   grades: AlloyGrade[];
@@ -85,6 +93,14 @@ export interface AlloyCategorySummary {
   properties: string[];
   applications: string[];
   image: string;
+  /**
+   * Whether the card shows a photograph or the derived specimen artwork.
+   *
+   * "specimen" means IMS has no photograph of this family, and a generic
+   * industrial shot standing in for it was doing more harm than good. See
+   * components/materials/SpecimenArt.tsx.
+   */
+  cardArt: "photo" | "specimen";
   gradeCount: number;
   /** Grade designations only — enough to search, without the element values. */
   gradeNames: string[];
@@ -103,5 +119,13 @@ export interface AlloyCategoryTeaser {
   summary: string;
   applications: string[];
   image: string;
+  /**
+   * Whether the card shows a photograph or the derived specimen artwork.
+   *
+   * "specimen" means IMS has no photograph of this family, and a generic
+   * industrial shot standing in for it was doing more harm than good. See
+   * components/materials/SpecimenArt.tsx.
+   */
+  cardArt: "photo" | "specimen";
   gradeCount: number;
 }

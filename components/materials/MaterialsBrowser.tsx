@@ -6,6 +6,8 @@ import Link from "next/link";
 import { alloyGroupLabels, alloyGroupOrder } from "@/lib/navigation";
 import { cn, normalise } from "@/lib/utils";
 import type { AlloyCategorySummary, AlloyGroup } from "@/types/content";
+import type { ElementShare } from "@/lib/alloy-profile";
+import { SpecimenArt } from "./SpecimenArt";
 
 type Filter = AlloyGroup | "all";
 
@@ -20,7 +22,15 @@ type Filter = AlloyGroup | "all";
  * that holds it. Matching grades are surfaced directly as deep links, which is
  * the fastest route for someone who already knows the grade they need.
  */
-export function MaterialsBrowser({ categories: all }: { categories: AlloyCategorySummary[] }) {
+export function MaterialsBrowser({
+  categories: all,
+  profiles,
+}: {
+  categories: AlloyCategorySummary[];
+  /* Passed in rather than imported: lib/alloy-profile reads the full
+     composition tables, and this component runs in the browser. */
+  profiles: Record<string, ElementShare[]>;
+}) {
   const [query, setQuery] = useState("");
   const [group, setGroup] = useState<Filter>("all");
 
@@ -158,21 +168,30 @@ export function MaterialsBrowser({ categories: all }: { categories: AlloyCategor
                 className="group flex h-full flex-col transition-colors hover:bg-steel-50"
               >
                 <div className="relative aspect-[16/10] overflow-hidden bg-steel-100">
-                  <Image
-                    src={category.image}
-                    alt=""
-                    fill
-                    priority={i < 3}
-                    sizes="(min-width: 1280px) 24rem, (min-width: 640px) 33vw, 100vw"
-                    className="object-cover transition-transform duration-700 ease-swift group-hover:scale-[1.04]"
-                  />
-                  <div
-                    aria-hidden
-                    /* Deep enough at the foot to carry the count over a bright
-                       photograph as well as a dark one — the pipes and the
-                       aero-engine shots sit at opposite ends of that range. */
-                    className="absolute inset-0 bg-gradient-to-t from-navy-950/75 via-navy-950/10 to-transparent"
-                  />
+                  {category.cardArt === "specimen" ? (
+                    <SpecimenArt
+                      profile={profiles[category.slug] ?? []}
+                      className="absolute inset-0 transition-transform duration-700 ease-swift group-hover:scale-[1.04]"
+                    />
+                  ) : (
+                    <>
+                      <Image
+                        src={category.image}
+                        alt=""
+                        fill
+                        priority={i < 3}
+                        sizes="(min-width: 1280px) 24rem, (min-width: 640px) 33vw, 100vw"
+                        className="object-cover transition-transform duration-700 ease-swift group-hover:scale-[1.04]"
+                      />
+                      <div
+                        aria-hidden
+                        /* Deep enough at the foot to carry the count over a bright
+                           photograph as well as a dark one — the pipes and the
+                           aero-engine shots sit at opposite ends of that range. */
+                        className="absolute inset-0 bg-gradient-to-t from-navy-950/75 via-navy-950/10 to-transparent"
+                      />
+                    </>
+                  )}
                   <span className="absolute bottom-3 left-4 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-white tabular-nums">
                     {category.gradeCount} grades
                   </span>

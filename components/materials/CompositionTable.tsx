@@ -136,9 +136,30 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
         </ul>
       ) : null}
 
-      {/* ---------- table view ---------- */}
-      <div className={cn("mt-6 overflow-hidden rounded-md border border-steel-200", view === "cards" && "hidden sm:block")}>
-        <div className="scroll-x max-h-[min(70vh,44rem)] overflow-y-auto">
+      {/*
+        ---------- table view ----------
+
+        Two sticky strategies, because CSS forces the choice. Horizontal
+        scrolling needs `overflow-x: auto`, and the spec makes the other axis
+        compute to `auto` with it — so the box becomes the scrollport and a
+        sticky header can only pin to the box, not the page. Scroll the page
+        past the box and the headers leave with it, which left 17 rows of
+        numbers on screen with no column labels.
+
+        From xl up the table (~1080px) fits the container, so no scroll
+        container is created at all and the header pins to the viewport under
+        the site header — headers stay put however far down the page you read.
+
+        Below xl horizontal scrolling is unavoidable, so the box keeps its own
+        scrollport and the header pins inside it; the card view covers phones.
+      */}
+      <div
+        className={cn(
+          "mt-6 rounded-md border border-steel-200 overflow-hidden xl:overflow-visible",
+          view === "cards" && "hidden sm:block",
+        )}
+      >
+        <div className="scroll-x max-h-[min(70vh,44rem)] overflow-y-auto xl:max-h-none xl:overflow-visible">
           <table className="w-full min-w-[46rem] border-collapse text-left">
             <caption className="sr-only">
               Nominal chemical composition of {category.name} grades handled by IMS, in percentage by weight.
@@ -149,7 +170,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
               <tr>
                 <th
                   scope="col"
-                  className="sticky left-0 top-0 z-30 min-w-[15rem] border-b border-r border-steel-200 bg-steel-100 px-4 py-3 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-steel-600"
+                  className="sticky left-0 top-0 z-30 min-w-[15rem] border-b border-r border-steel-200 bg-steel-100 px-4 py-3 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-steel-600 xl:top-[var(--header-h)]"
                 >
                   Grade
                 </th>
@@ -159,7 +180,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
                     scope="col"
                     className={cn(
                       /* No `uppercase` here: element symbols are case-significant — Co is cobalt, CO is carbon monoxide. */
-                      "sticky top-0 z-20 border-b border-steel-200 bg-steel-100 px-3 py-3 font-mono text-[0.6875rem] font-medium tracking-[0.1em] text-steel-600",
+                      "sticky top-0 z-20 border-b border-steel-200 bg-steel-100 px-3 py-3 font-mono text-[0.6875rem] font-medium tracking-[0.1em] text-steel-600 xl:top-[var(--header-h)]",
                       el === "Others" ? "min-w-[10rem] text-left" : "min-w-[4.25rem] text-right",
                     )}
                   >

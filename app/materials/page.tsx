@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/shared/PageHero";
 import { Section } from "@/components/ui/Section";
 import { MaterialsBrowser } from "@/components/materials/MaterialsBrowser";
+import { categoryProfiles } from "@/lib/alloy-profile";
 import { CtaSection } from "@/components/shared/CtaSection";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
@@ -19,6 +20,12 @@ export const metadata: Metadata = pageMetadata({
   path: "/materials",
   image: "/images/metals/steel-rods.jpg",
 });
+
+const specimenProfiles = Object.fromEntries(
+  alloyCategorySummaries
+    .filter((c) => c.cardArt === "specimen")
+    .map((c) => [c.slug, categoryProfiles[c.slug] ?? []]),
+);
 
 export default function MaterialsPage() {
   return (
@@ -39,7 +46,7 @@ export default function MaterialsPage() {
       />
 
       <Section tone="white">
-        <MaterialsBrowser categories={alloyCategorySummaries} />
+        <MaterialsBrowser categories={alloyCategorySummaries} profiles={specimenProfiles} />
       </Section>
 
       <Section tone="light">

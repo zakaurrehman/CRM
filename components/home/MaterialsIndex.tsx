@@ -4,6 +4,8 @@ import type { AlloyCategoryTeaser } from "@/types/content";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { categoryProfiles } from "@/lib/alloy-profile";
+import { SpecimenArt } from "@/components/materials/SpecimenArt";
 
 /**
  * The full material range as a photo grid.
@@ -53,19 +55,29 @@ export function MaterialsIndex({
               href={"/materials/" + category.slug}
               className="group relative flex aspect-[4/3] flex-col justify-end overflow-hidden p-4"
             >
-              <Image
-                src={category.image}
-                alt=""
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
-                className="object-cover transition-transform duration-700 ease-swift group-hover:scale-[1.07]"
-              />
-              <div
-                aria-hidden
-                /* Dark enough at the foot to carry the label, light enough above
-                   that the photograph still reads. */
-                className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/55 to-navy-950/10 transition-all duration-500 group-hover:via-navy-950/40 group-hover:to-transparent"
-              />
+              {category.cardArt === "specimen" ? (
+                <SpecimenArt
+                  compact
+                  profile={categoryProfiles[category.slug] ?? []}
+                  className="absolute inset-0 transition-transform duration-700 ease-swift group-hover:scale-[1.07]"
+                />
+              ) : (
+                <>
+                  <Image
+                    src={category.image}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+                    className="object-cover transition-transform duration-700 ease-swift group-hover:scale-[1.07]"
+                  />
+                  <div
+                    aria-hidden
+                    /* Dark enough at the foot to carry the label, light enough
+                       above that the photograph still reads. */
+                    className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/55 to-navy-950/10 transition-all duration-500 group-hover:via-navy-950/40 group-hover:to-transparent"
+                  />
+                </>
+              )}
               <div className="relative">
                 <p className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-brand-300 tabular-nums">
                   {category.gradeCount} grades

@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { AlloyCategory } from "@/types/content";
 import { cn } from "@/lib/utils";
+import { categoryProfiles } from "@/lib/alloy-profile";
+import { SpecimenArt } from "./SpecimenArt";
 
 /** Material category card used on the homepage and in the materials directory. */
 export function MaterialCard({
@@ -22,20 +24,29 @@ export function MaterialCard({
       )}
     >
       <div className="relative aspect-[16/10] overflow-hidden bg-steel-100">
-        <Image
-          src={category.image}
-          alt=""
-          fill
-          priority={priority}
-          sizes="(min-width: 1280px) 24rem, (min-width: 768px) 33vw, 100vw"
-          className="object-cover transition-transform duration-700 ease-swift group-hover:scale-[1.04]"
-        />
-        <div
-          aria-hidden
-          /* Matches MaterialsBrowser: deep enough at the foot to carry the count
-             over a bright photograph as well as a dark one. */
-          className="absolute inset-0 bg-gradient-to-t from-navy-950/75 via-navy-950/10 to-transparent"
-        />
+        {category.cardArt === "specimen" ? (
+          <SpecimenArt
+            profile={categoryProfiles[category.slug] ?? []}
+            className="absolute inset-0 transition-transform duration-700 ease-swift group-hover:scale-[1.04]"
+          />
+        ) : (
+          <>
+            <Image
+              src={category.image}
+              alt=""
+              fill
+              priority={priority}
+              sizes="(min-width: 1280px) 24rem, (min-width: 768px) 33vw, 100vw"
+              className="object-cover transition-transform duration-700 ease-swift group-hover:scale-[1.04]"
+            />
+            <div
+              aria-hidden
+              /* Matches MaterialsBrowser: deep enough at the foot to carry the
+                 count over a bright photograph as well as a dark one. */
+              className="absolute inset-0 bg-gradient-to-t from-navy-950/75 via-navy-950/10 to-transparent"
+            />
+          </>
+        )}
         <span className="absolute bottom-3 left-4 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-white tabular-nums">
           {category.grades.length} grades
         </span>
