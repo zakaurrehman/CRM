@@ -5,6 +5,7 @@ import { industryOptions, requirementTypes, validateInquiry, type FieldErrors } 
 import { ButtonEl } from "@/components/ui/Button";
 import { contact } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { useP } from "@/lib/i18n/phrases/client";
 
 type Status = "idle" | "submitting" | "sent" | "error";
 
@@ -20,6 +21,7 @@ const inputBase =
  * a live region and each field is wired to its message with aria-describedby.
  */
 export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }) {
+  const p = useP();
   const id = useId();
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<Status>("idle");
@@ -64,11 +66,11 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
         return;
       }
 
-      setFormError(result.error ?? "Something went wrong. Please try again.");
+      setFormError(result.error ?? p("Something went wrong. Please try again."));
       setFallbackHref(composeMailto(data));
       setStatus("error");
     } catch {
-      setFormError("We could not reach the server. Please check your connection and try again.");
+      setFormError(p("We could not reach the server. Please check your connection and try again."));
       setFallbackHref(composeMailto(data));
       setStatus("error");
     }
@@ -77,17 +79,16 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
   if (status === "sent") {
     return (
       <div role="status" className="border-t-2 border-success-500 bg-success-50 p-8">
-        <h2 className="font-display text-2xl font-semibold text-navy-900">Inquiry received</h2>
+        <h2 className="font-display text-2xl font-semibold text-navy-900">{p("Inquiry received")}</h2>
         <p className="mt-3 content-en text-[1.0625rem] leading-relaxed text-steel-700">
-          Thank you &mdash; your inquiry is with our team. We will come back to you with a route for your
-          material.
+          {p("Thank you — your inquiry is with our team. We will come back to you with a route for your material.")}
         </p>
         <button
           type="button"
           onClick={() => setStatus("idle")}
           className="mt-6 inline-flex h-11 items-center rounded border border-steel-300 bg-white px-5 text-[0.9375rem] font-medium text-navy-900 transition-colors hover:border-brand-700 hover:text-brand-700"
         >
-          Send another inquiry
+          {p("Send another inquiry")}
         </button>
       </div>
     );
@@ -101,12 +102,12 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
           "behind" the reading direction, which gave every RTL page a 9999px
           horizontal scroll. */}
       <div aria-hidden className="sr-only">
-        <label htmlFor={field("website")}>Website</label>
+        <label htmlFor={field("website")}>{p("Website")}</label>
         <input id={field("website")} name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
       <div aria-live="assertive" className="sr-only">
-        {formError ?? (Object.keys(errors).length > 0 ? "The form has errors. Please review the fields." : "")}
+        {formError ?? (Object.keys(errors).length > 0 ? p("The form has errors. Please review the fields.") : "")}
       </div>
 
       {formError ? (
@@ -116,22 +117,22 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
             href={fallbackHref ?? "mailto:" + contact.email}
             className="mt-2 inline-block text-[0.9375rem] font-medium text-brand-700 underline underline-offset-4"
           >
-            Send it by email instead &mdash; your details are already filled in
+            {p("Send it by email instead — your details are already filled in")}
           </a>
         </div>
       ) : null}
 
       <fieldset className="space-y-6">
         <legend className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
-          Your details
+          {p("Your details")}
         </legend>
 
         <div className="grid gap-6 sm:grid-cols-2">
-          <Field id={field("name")} name="name" label="Name" required error={errors.name} autoComplete="name" />
+          <Field id={field("name")} name="name" label={p("Name")} required error={errors.name} autoComplete="name" />
           <Field
             id={field("company")}
             name="company"
-            label="Company"
+            label={p("Company")}
             required
             error={errors.company}
             autoComplete="organization"
@@ -139,7 +140,7 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
           <Field
             id={field("email")}
             name="email"
-            label="Email"
+            label={p("Email")}
             type="email"
             required
             error={errors.email}
@@ -148,20 +149,20 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
           <Field
             id={field("phone")}
             name="phone"
-            label="Phone"
+            label={p("Phone")}
             type="tel"
             error={errors.phone}
             autoComplete="tel"
-            hint="Optional"
+            hint={p("Optional")}
           />
           <div className="sm:col-span-2 sm:max-w-xs">
             <Field
               id={field("country")}
               name="country"
-              label="Country"
+              label={p("Country")}
               error={errors.country}
               autoComplete="country-name"
-              hint="Optional"
+              hint={p("Optional")}
             />
           </div>
         </div>
@@ -169,12 +170,12 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
 
       <fieldset className="space-y-6 border-t border-steel-200 pt-6">
         <legend className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
-          Your requirement
+          {p("Your requirement")}
         </legend>
 
         <div>
           <label htmlFor={field("requirementType")} className="block text-[0.9375rem] font-medium text-navy-900">
-            What do you need? <span className="text-danger-500">*</span>
+            {p("What do you need?")} <span className="text-danger-500">*</span>
           </label>
           <select
             id={field("requirementType")}
@@ -186,17 +187,17 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
             className={cn(inputBase, "mt-2", errors.requirementType ? "border-danger-500" : "border-steel-300")}
           >
             <option value="" disabled>
-              Select an option
+              {p("Select an option")}
             </option>
             {requirementTypes.map((type) => (
               <option key={type} value={type}>
-                {type}
+                {p(type)}
               </option>
             ))}
           </select>
           {errors.requirementType ? (
             <p id={field("requirementType") + "-error"} className="mt-2 text-[0.8125rem] text-danger-600">
-              {errors.requirementType}
+              {p(errors.requirementType)}
             </p>
           ) : null}
         </div>
@@ -204,14 +205,14 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
         <div className="grid gap-6 sm:grid-cols-2">
           <div>
             <label htmlFor={field("material")} className="block text-[0.9375rem] font-medium text-navy-900">
-              Material or alloy <span className="font-normal text-steel-500">(optional)</span>
+              {p("Material or alloy")} <span className="font-normal text-steel-500">({p("optional")})</span>
             </label>
             <input
               id={field("material")}
               name="material"
               type="text"
               list={field("materials-list")}
-              placeholder="e.g. Inconel 718, EAF dust, tungsten carbide"
+              placeholder={p("e.g. Inconel 718, EAF dust, tungsten carbide")}
               aria-invalid={Boolean(errors.material)}
               className={cn(inputBase, "mt-2", errors.material ? "border-danger-500" : "border-steel-300")}
             />
@@ -224,7 +225,7 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
 
           <div>
             <label htmlFor={field("industry")} className="block text-[0.9375rem] font-medium text-navy-900">
-              Industry <span className="font-normal text-steel-500">(optional)</span>
+              {p("Industry")} <span className="font-normal text-steel-500">({p("optional")})</span>
             </label>
             <select
               id={field("industry")}
@@ -232,10 +233,10 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
               defaultValue=""
               className={cn(inputBase, "mt-2 border-steel-300")}
             >
-              <option value="">Select an industry</option>
+              <option value="">{p("Select an industry")}</option>
               {industryOptions.map((option) => (
                 <option key={option} value={option}>
-                  {option}
+                  {p(option)}
                 </option>
               ))}
             </select>
@@ -245,23 +246,23 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
             <Field
               id={field("quantity")}
               name="quantity"
-              label="Quantity"
+              label={p("Quantity")}
               error={errors.quantity}
-              hint="Optional — e.g. 20 t per month"
+              hint={p("Optional — e.g. 20 t per month")}
             />
           </div>
         </div>
 
         <div>
           <label htmlFor={field("message")} className="block text-[0.9375rem] font-medium text-navy-900">
-            Tell us about your requirement <span className="text-danger-500">*</span>
+            {p("Tell us about your requirement")} <span className="text-danger-500">*</span>
           </label>
           <textarea
             id={field("message")}
             name="message"
             rows={6}
             required
-            placeholder="Specification, form, volume, timing — whatever is relevant."
+            placeholder={p("Specification, form, volume, timing — whatever is relevant.")}
             aria-invalid={Boolean(errors.message)}
             aria-describedby={errors.message ? field("message") + "-error" : field("message") + "-hint"}
             className={cn(
@@ -272,15 +273,15 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
           />
           {errors.message ? (
             <p id={field("message") + "-error"} className="mt-2 text-[0.8125rem] text-danger-600">
-              {errors.message}
+              {p(errors.message)}
             </p>
           ) : (
             <p id={field("message") + "-hint"} className="mt-2 text-[0.8125rem] text-steel-500">
-              Have a material analysis or specification sheet? Email it to{" "}
+              {p("Have a material analysis or specification sheet? Email it to")}{" "}
               <a href={"mailto:" + contact.email} className="underline underline-offset-2 hover:text-brand-700">
                 {contact.email}
               </a>{" "}
-              and reference your company name.
+              {p("and reference your company name.")}
             </p>
           )}
         </div>
@@ -288,11 +289,10 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
 
       <div className="flex flex-col gap-4 border-t border-steel-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-[0.8125rem] text-steel-500">
-          <span className="text-danger-500">*</span> Required. We use your details only to respond to this
-          inquiry.
+          <span className="text-danger-500">*</span> {p("Required. We use your details only to respond to this inquiry.")}
         </p>
         <ButtonEl type="submit" size="lg" disabled={status === "submitting"}>
-          {status === "submitting" ? "Sending…" : "Send inquiry"}
+          {status === "submitting" ? p("Sending…") : p("Send inquiry")}
         </ButtonEl>
       </div>
     </form>
@@ -318,6 +318,7 @@ function Field({
   hint?: string;
   autoComplete?: string;
 }) {
+  const p = useP();
   return (
     <div>
       <label htmlFor={id} className="block text-[0.9375rem] font-medium text-navy-900">
@@ -340,7 +341,7 @@ function Field({
       />
       {error ? (
         <p id={id + "-error"} className="mt-2 text-[0.8125rem] text-danger-600">
-          {error}
+          {p(error)}
         </p>
       ) : null}
     </div>

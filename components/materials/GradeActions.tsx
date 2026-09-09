@@ -1,6 +1,7 @@
 "use client";
 
 import { useCompare, useSaved } from "@/lib/alloy-client";
+import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
 
 /**
@@ -23,6 +24,7 @@ export function GradeActions({
   size?: "sm" | "md";
   className?: string;
 }) {
+  const { t } = useI18n();
   const compare = useCompare();
   const saved = useSaved();
 
@@ -42,10 +44,10 @@ export function GradeActions({
         aria-pressed={inCompare}
         title={
           compareBlocked
-            ? `Comparison holds ${compare.max} grades. Remove one to add another.`
+            ? t("compare", "full", { max: compare.max })
             : inCompare
-              ? `Remove ${name} from comparison`
-              : `Add ${name} to comparison`
+              ? t("compare", "removeFromComparison", { name })
+              : t("compare", "addToComparison", { name })
         }
         className={cn(
           "inline-flex items-center justify-center rounded border transition-colors duration-200",
@@ -57,7 +59,7 @@ export function GradeActions({
         )}
       >
         <span className="sr-only">
-          {inCompare ? `Remove ${name} from comparison` : `Add ${name} to comparison`}
+          {inCompare ? t("compare", "removeFromComparison", { name }) : t("compare", "addToComparison", { name })}
         </span>
         {/* Two columns with a divider: a comparison, not a generic plus. */}
         <svg viewBox="0 0 16 16" aria-hidden className={icon}>
@@ -70,7 +72,7 @@ export function GradeActions({
         type="button"
         onClick={() => saved.toggle(id)}
         aria-pressed={isSaved}
-        title={isSaved ? `Remove ${name} from saved materials` : `Save ${name}`}
+        title={isSaved ? t("savedList", "removeName", { name }) : t("savedList", "saveName", { name })}
         className={cn(
           "inline-flex items-center justify-center rounded border transition-colors duration-200",
           box,
@@ -79,7 +81,7 @@ export function GradeActions({
             : "border-steel-300 bg-white text-steel-600 hover:border-brand-700 hover:text-brand-700",
         )}
       >
-        <span className="sr-only">{isSaved ? `Remove ${name} from saved materials` : `Save ${name}`}</span>
+        <span className="sr-only">{isSaved ? t("savedList", "removeName", { name }) : t("savedList", "saveName", { name })}</span>
         <svg viewBox="0 0 16 16" aria-hidden className={icon}>
           <path
             d="M4 2h8a1 1 0 011 1v11l-5-3.2L3 14V3a1 1 0 011-1z"

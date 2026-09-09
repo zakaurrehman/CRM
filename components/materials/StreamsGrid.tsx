@@ -2,8 +2,10 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import { recoveryStreams, recoveryForms } from "@/data/recovery";
+import { recoveryForms } from "@/data/recovery";
+import type { RecoveryStream } from "@/types/content";
 import { cn } from "@/lib/utils";
+import { useP } from "@/lib/i18n/phrases/client";
 
 type Filter = (typeof recoveryForms)[number] | "all";
 
@@ -14,24 +16,28 @@ type Filter = (typeof recoveryForms)[number] | "all";
  * filtercake and a dry powder arrive and are processed differently, even when
  * they carry the same metal.
  */
-export function StreamsGrid() {
+export function StreamsGrid({ allStreams }: { allStreams: RecoveryStream[] }) {
+  const p = useP();
   const [filter, setFilter] = useState<Filter>("all");
 
+  /* Passed in rather than imported so the page can hand over names already in
+     the reader's language. The slugs, images and physical forms are unchanged —
+     only the display name is localised. */
   const streams = useMemo(
-    () => (filter === "all" ? recoveryStreams : recoveryStreams.filter((s) => s.form === filter)),
-    [filter],
+    () => (filter === "all" ? allStreams : allStreams.filter((s) => s.form === filter)),
+    [filter, allStreams],
   );
 
   const counts = useMemo(() => {
-    const map = new Map<Filter, number>([["all", recoveryStreams.length]]);
-    for (const form of recoveryForms) map.set(form, recoveryStreams.filter((s) => s.form === form).length);
+    const map = new Map<Filter, number>([["all", allStreams.length]]);
+    for (const form of recoveryForms) map.set(form, allStreams.filter((s) => s.form === form).length);
     return map;
-  }, []);
+  }, [allStreams]);
 
   return (
     <div>
       <div className="scroll-x -mx-5 px-5 sm:mx-0 sm:px-0">
-        <div role="group" aria-label="Filter streams by physical form" className="flex w-max gap-2 pb-1 sm:w-auto sm:flex-wrap">
+        <div role="group" aria-label={p("Filter streams by physical form")} className="flex w-max gap-2 pb-1 sm:w-auto sm:flex-wrap">
           {(["all", ...recoveryForms] as Filter[]).map((form) => {
             const selected = filter === form;
             return (
@@ -47,7 +53,7 @@ export function StreamsGrid() {
                     : "border-steel-300 bg-white text-steel-700 hover:border-brand-700 hover:text-brand-700",
                 )}
               >
-                {form === "all" ? "All streams" : form}
+                {form === "all" ? p("All streams") : p(form)}
                 <span className={cn("font-mono text-[0.6875rem] tabular-nums", selected ? "text-white/90" : "text-steel-500")}>
                   {counts.get(form)}
                 </span>
@@ -58,7 +64,7 @@ export function StreamsGrid() {
       </div>
 
       <p aria-live="polite" className="mt-6 text-[0.875rem] text-steel-500">
-        {streams.length} of {recoveryStreams.length} streams
+        {p("{shown} of {total} streams", { shown: streams.length, total: allStreams.length })}
       </p>
 
       <ul className="mt-4 grid grid-cols-2 grid-rule sm:grid-cols-3 lg:grid-cols-5">
@@ -78,7 +84,7 @@ export function StreamsGrid() {
                 {stream.name}
               </h3>
               <p className="mt-1.5 font-mono text-[0.625rem] uppercase tracking-[0.1em] text-steel-500">
-                {stream.form}
+                {p(stream.form)}
               </p>
             </div>
           </li>

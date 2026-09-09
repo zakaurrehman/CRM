@@ -5,10 +5,12 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { searchSite, kindLabels, type SearchKind } from "@/lib/search";
 import { cn } from "@/lib/utils";
+import { useP } from "@/lib/i18n/phrases/client";
 
 const groupOrder: SearchKind[] = ["page", "material", "industry", "grade", "stream", "tungsten", "article"];
 
 export function SearchResults() {
+  const p = useP();
   const router = useRouter();
   const params = useSearchParams();
   const initial = params.get("q") ?? "";
@@ -36,7 +38,7 @@ export function SearchResults() {
         }}
       >
         <label htmlFor="site-search" className="sr-only">
-          Search the site
+          {p("Search the site")}
         </label>
         <div className="relative">
           <svg
@@ -53,7 +55,7 @@ export function SearchResults() {
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search alloys, grades, streams and pages"
+            placeholder={p("Search alloys, grades, streams and pages")}
             className="h-14 w-full rounded border border-steel-300 bg-white ps-12 pe-4 text-[1.0625rem] text-navy-900 transition-colors placeholder:text-steel-400 hover:border-steel-400 focus:border-brand-700"
           />
         </div>
@@ -112,16 +114,15 @@ export function SearchResults() {
         </div>
       ) : query.trim().length >= 2 ? (
         <div className="mt-10 border border-steel-200 bg-steel-50 px-6 py-16 text-center">
-          <p className="font-display text-lg font-semibold text-navy-900">Nothing matched that search</p>
+          <p className="font-display text-lg font-semibold text-navy-900">{p("Nothing matched that search")}</p>
           <p className="mx-auto mt-2 max-w-md text-[0.9375rem] text-steel-600">
-            We handle a wider range of material than the site documents. Tell us what you are looking for
-            and we will confirm whether we can source or recover it.
+            {p("We handle a wider range of material than the site documents. Tell us what you are looking for and we will confirm whether we can source or recover it.")}
           </p>
           <Link
             href="/contact"
             className="mt-6 inline-flex h-11 items-center rounded bg-brand-700 px-5 text-[0.9375rem] font-medium text-white transition-colors hover:bg-brand-800"
           >
-            Ask our team
+            {p("Ask our team")}
           </Link>
         </div>
       ) : null}

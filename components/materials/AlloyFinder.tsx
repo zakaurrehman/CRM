@@ -11,6 +11,8 @@ import { GradeActions } from "./GradeActions";
 import { ButtonEl } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n/provider";
+import { categoryNameFor } from "@/lib/i18n/content";
+import { useP } from "@/lib/i18n/phrases/client";
 
 const OPERATORS: { op: Comparator; label: string }[] = [
   { op: "gte", label: "≥" },
@@ -34,7 +36,8 @@ const PAGE = 40;
  * per query, so the whole thing works at the speed of typing.
  */
 export function AlloyFinder() {
-  const { t } = useI18n();
+  const p = useP();
+  const { t, locale } = useI18n();
   const { index, error } = useAlloyIndex();
   const [text, setText] = useState("");
   const [rows, setRows] = useState<ElementConstraint[]>([]);
@@ -89,8 +92,7 @@ export function AlloyFinder() {
           {t("finder", "describe")}
         </label>
         <p className="mt-1 text-[0.875rem] text-steel-600">
-          Plain English or symbols — &ldquo;cobalt free, chromium above 20&rdquo; and &ldquo;Cr &gt;= 20 no Co&rdquo;
-          are read the same way.
+          {p("Plain English or symbols — “cobalt free, chromium above 20” and “Cr >= 20 no Co” are read the same way.")}
         </p>
 
         <div className="relative mt-3">
@@ -164,7 +166,7 @@ export function AlloyFinder() {
 
           {rows.length === 0 ? (
             <p className="mt-2 text-[0.875rem] text-steel-500">
-              No composition filter set. Add one to bound an element by percentage.
+              {p("No composition filter set. Add one to bound an element by percentage.")}
             </p>
           ) : (
             <ul className="mt-3 space-y-2">
@@ -220,7 +222,7 @@ export function AlloyFinder() {
                     onClick={() => setRows((r) => r.filter((_, j) => j !== i))}
                     className="ms-auto inline-flex h-10 items-center rounded px-3 text-[0.875rem] text-steel-600 transition-colors hover:bg-steel-100 hover:text-danger-600 sm:ms-0"
                   >
-                    Remove
+                {p("Remove")}
                   </button>
                 </li>
               ))}
@@ -248,7 +250,7 @@ export function AlloyFinder() {
                         : "border-steel-300 bg-white text-steel-700 hover:border-brand-700 hover:text-brand-700",
                     )}
                   >
-                    {alloyGroupLabels[g]}
+                    {p(alloyGroupLabels[g])}
                   </button>
                 );
               })}
@@ -261,12 +263,12 @@ export function AlloyFinder() {
       <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
         <p className="text-[0.9375rem] text-steel-700" aria-live="polite">
           {!index ? (
-            "Loading the catalogue…"
+            p("Loading the catalogue…")
           ) : (
             <>
-              <span className="font-display text-lg font-semibold text-navy-900 tabular-nums">{results.length}</span>{" "}
-              {results.length === 1 ? "grade" : "grades"}
-              {filtering ? " match your filter" : " in the catalogue"}
+              {filtering
+                ? p("{n} grades match your filter", { n: results.length })
+                : p("{n} grades in the catalogue", { n: results.length })}
             </>
           )}
         </p>
@@ -305,10 +307,10 @@ export function AlloyFinder() {
 
       {index && results.length === 0 ? (
         <p className="mt-6 rounded-md border border-steel-200 bg-steel-50 px-5 py-10 text-center text-[0.9375rem] text-steel-600">
-          No grade in the catalogue meets every condition.
+          {p("No grade in the catalogue meets every condition.")}
           <br className="hidden sm:block" /> Try relaxing one of the filters above, or{" "}
           <Link href="/contact" className="font-medium text-brand-700 hover:underline">
-            ask us directly
+            {p("ask us directly")}
           </Link>{" "}
           — we handle material beyond what is published here.
         </p>
@@ -325,7 +327,7 @@ export function AlloyFinder() {
       {results.length > limit ? (
         <div className="mt-8 text-center">
           <ButtonEl type="button" variant="secondary" onClick={() => setLimit((l) => l + PAGE)}>
-            Show {Math.min(PAGE, results.length - limit)} more
+            {p("Show {n} more", { n: Math.min(PAGE, results.length - limit) })}
           </ButtonEl>
         </div>
       ) : null}
@@ -334,6 +336,8 @@ export function AlloyFinder() {
 }
 
 function GradeResult({ grade, reasons }: { grade: ClientGrade; reasons: string[] }) {
+  const { locale } = useI18n();
+  const p = useP();
   // The four largest constituents identify an alloy at a glance.
   const headline = grade.composition.slice(0, 4);
 
@@ -346,7 +350,7 @@ function GradeResult({ grade, reasons }: { grade: ClientGrade; reasons: string[]
               {grade.name}
             </Link>
           </h3>
-          <p className="mt-1 text-[0.8125rem] text-steel-500">{grade.categoryName}</p>
+          <p className="mt-1 text-[0.8125rem] text-steel-500">{categoryNameFor(grade.categorySlug, grade.categoryName, locale)}</p>
         </div>
         <GradeActions id={grade.id} name={grade.name} size="sm" className="shrink-0" />
       </div>
@@ -361,14 +365,14 @@ function GradeResult({ grade, reasons }: { grade: ClientGrade; reasons: string[]
       </dl>
 
       {reasons.length > 0 ? (
-        <p className="mt-3 text-[0.75rem] text-steel-500">Matched on {reasons.join(", ")}</p>
+        <p className="mt-3 text-[0.75rem] text-steel-500">{p("Matched on {reasons}", { reasons: reasons.join(", ") })}</p>
       ) : null}
 
       <Link
         href={grade.href}
         className="mt-auto pt-4 text-[0.8125rem] font-medium text-brand-700 transition-colors hover:text-brand-900"
       >
-        Full composition <span className="dir-arrow">&rarr;</span>
+        {p("Full composition")} <span className="dir-arrow">&rarr;</span>
       </Link>
     </div>
   );

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getP } from "@/lib/i18n/server";
 import { cn } from "@/lib/utils";
 
 export interface Crumb {
@@ -10,7 +11,11 @@ export interface Crumb {
  * Breadcrumb trail. The final crumb is the current page and is not a link.
  * Pair with `breadcrumbSchema` for the matching structured data.
  */
-export function Breadcrumbs({ trail, tone = "light" }: { trail: Crumb[]; tone?: "light" | "dark" }) {
+export async function Breadcrumbs({ trail, tone = "light" }: { trail: Crumb[]; tone?: "light" | "dark" }) {
+  /* Crumb labels are page names defined at module scope; wrapping them here
+     translates the trail without every page having to do it. */
+  const p = await getP();
+
   return (
     <nav aria-label="Breadcrumb">
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8125rem]">
@@ -23,7 +28,7 @@ export function Breadcrumbs({ trail, tone = "light" }: { trail: Crumb[]; tone?: 
                   aria-current="page"
                   className={cn("font-medium", tone === "dark" ? "text-white" : "text-navy-900")}
                 >
-                  {crumb.name}
+                  {p(crumb.name)}
                 </span>
               ) : (
                 <Link
@@ -33,7 +38,7 @@ export function Breadcrumbs({ trail, tone = "light" }: { trail: Crumb[]; tone?: 
                     tone === "dark" ? "text-steel-300 hover:text-white" : "text-steel-500 hover:text-brand-700",
                   )}
                 >
-                  {crumb.name}
+                  {p(crumb.name)}
                 </Link>
               )}
               {!last && (

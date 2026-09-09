@@ -1,5 +1,7 @@
 "use client";
 
+import { useP } from "@/lib/i18n/phrases/client";
+
 import { useEffect, useId, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -64,6 +66,7 @@ export function Header({ items }: { items: NavItem[] }) {
   };
 
   const { t } = useI18n();
+  const p = useP();
 
   const isActive = (item: NavItem) =>
     item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
@@ -83,7 +86,7 @@ export function Header({ items }: { items: NavItem[] }) {
       <div className="hidden border-b border-steel-200 bg-navy-950 text-steel-300 lg:block">
         <Container className="flex h-9 items-center justify-between text-[0.75rem]">
           <p className="font-mono uppercase tracking-[0.14em] text-steel-400">
-            Metals, alloys &amp; recovery &mdash; Tallinn, Estonia
+            {p("Metals, alloys & recovery — Tallinn, Estonia")}
           </p>
           <a
             href="mailto:info@ims-metals.com"
@@ -129,7 +132,7 @@ export function Header({ items }: { items: NavItem[] }) {
               />
             </Link>
 
-            <nav aria-label="Main" className="hidden lg:block">
+            <nav aria-label={p("Main")} className="hidden lg:block">
               <ul className="flex items-center gap-1">
                 {items.map((item, i) => {
                   const hasMenu = Boolean(item.columns);
@@ -266,6 +269,8 @@ function MegaMenu({
   onLeave: () => void;
   onNavigate: () => void;
 }) {
+  const p = useP();
+
   if (!item.columns) return null;
   const wide = item.columns.length > 2;
 
@@ -294,7 +299,7 @@ function MegaMenu({
             {item.columns.map((col) => (
               <div key={col.heading}>
                 <p className="mb-4 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
-                  {col.heading}
+                  {p(col.heading)}
                 </p>
                 <ul className="space-y-0.5">
                   {col.links.map((link) => (
@@ -305,11 +310,11 @@ function MegaMenu({
                         className="group -mx-2 block rounded px-2 py-1.5 transition-colors hover:bg-steel-50"
                       >
                         <span className="block text-[0.9375rem] font-medium text-navy-900 group-hover:text-brand-700">
-                          {link.label}
+                          {p(link.label)}
                         </span>
                         {link.description ? (
                           <span className="mt-0.5 block text-[0.8125rem] leading-snug text-steel-500">
-                            {link.description}
+                            {p(link.description)}
                           </span>
                         ) : null}
                       </Link>
@@ -338,10 +343,10 @@ function MegaMenu({
                 className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/70 to-transparent"
               />
               <div className="relative">
-                <p className="font-display text-lg font-semibold leading-tight text-white">{item.feature.title}</p>
-                <p className="mt-2 text-[0.8125rem] leading-snug text-steel-300">{item.feature.body}</p>
+                <p className="font-display text-lg font-semibold leading-tight text-white">{p(item.feature.title)}</p>
+                <p className="mt-2 text-[0.8125rem] leading-snug text-steel-300">{p(item.feature.body)}</p>
                 <p className="mt-4 inline-flex items-center gap-1.5 text-[0.8125rem] font-medium text-brand-300">
-                  {item.feature.cta}
+                  {p(item.feature.cta)}
                   <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-1">
                     <span className="dir-arrow">&rarr;</span>
                   </span>

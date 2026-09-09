@@ -4,9 +4,10 @@ import type { AlloyCategory } from "@/types/content";
 import { cn } from "@/lib/utils";
 import { categoryProfiles } from "@/lib/alloy-profile";
 import { SpecimenArt } from "./SpecimenArt";
+import { getP } from "@/lib/i18n/server";
 
 /** Material category card used on the homepage and in the materials directory. */
-export function MaterialCard({
+export async function MaterialCard({
   category,
   priority = false,
   className,
@@ -15,6 +16,7 @@ export function MaterialCard({
   priority?: boolean;
   className?: string;
 }) {
+  const p = await getP();
   return (
     <Link
       href={"/materials/" + category.slug}
@@ -48,7 +50,7 @@ export function MaterialCard({
           </>
         )}
         <span className="absolute bottom-3 start-4 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-white tabular-nums">
-          {category.grades.length} grades
+          {p("{n} grades", { n: category.grades.length })}
         </span>
       </div>
 
@@ -70,7 +72,7 @@ export function MaterialCard({
         </ul>
 
         <span className="mt-5 inline-flex items-center gap-1.5 text-[0.875rem] font-medium text-brand-700">
-          View composition
+          {p("View composition")}
           <span aria-hidden className="transition-transform duration-200 ease-swift group-hover:translate-x-1">
             <span className="dir-arrow">&rarr;</span>
           </span>

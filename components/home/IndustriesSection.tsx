@@ -1,23 +1,30 @@
+import { getP } from "@/lib/i18n/server";
 import Image from "next/image";
 import Link from "next/link";
 import { industries } from "@/data/industries";
+import { getLocale } from "@/lib/i18n/server";
+import { localiseIndustry } from "@/lib/i18n/content";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 
 /** Premium industry cards. Each states the sector, the IMS capability and a route in. */
-export function IndustriesSection() {
+export async function IndustriesSection() {
+  const p = await getP();
+  const locale = await getLocale();
+  const sectors = industries.map((i) => localiseIndustry(i, locale));
+
   return (
     <Section tone="navy">
       <SectionHeader
-        eyebrow="Industries served"
-        title="Built around the sectors with the tightest specifications."
-        description="Aerospace, energy and process industries run alloys at the limit of what the material will take. We work to the specification those sectors demand, in both directions of the supply chain."
+        eyebrow={p("Industries served")}
+        title={p("Built around the sectors with the tightest specifications.")}
+        description={p("Aerospace, energy and process industries run alloys at the limit of what the material will take. We work to the specification those sectors demand, in both directions of the supply chain.")}
         align="split"
         className="[&_h2]:text-white"
       />
 
       <div className="mt-14 grid gap-6 sm:grid-cols-2">
-        {industries.map((industry, i) => (
+        {sectors.map((industry, i) => (
           <Reveal key={industry.slug} delay={i * 80}>
             <Link
               href={"/industries/" + industry.slug}
@@ -48,9 +55,7 @@ export function IndustriesSection() {
                     </li>
                   ))}
                 </ul>
-                <span className="mt-6 inline-flex items-center gap-1.5 text-[0.875rem] font-medium text-white">
-                  Sector capabilities
-                  <span aria-hidden className="transition-transform duration-200 ease-swift group-hover:translate-x-1">
+                <span className="mt-6 inline-flex items-center gap-1.5 text-[0.875rem] font-medium text-white">{p("Sector capabilities")}<span aria-hidden className="transition-transform duration-200 ease-swift group-hover:translate-x-1">
                     <span className="dir-arrow">&rarr;</span>
                   </span>
                 </span>

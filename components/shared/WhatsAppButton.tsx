@@ -1,4 +1,5 @@
 import { contact } from "@/lib/site";
+import { getP } from "@/lib/i18n/server";
 
 /**
  * Floating WhatsApp contact.
@@ -13,7 +14,8 @@ import { contact } from "@/lib/site";
  * Sits at z-40: above page content, below the mobile drawer (50) and the search
  * overlay (60), so an open dialog is never competing with it.
  */
-export function WhatsAppButton() {
+export async function WhatsAppButton() {
+  const p = await getP();
   if (!contact.whatsapp) return null;
 
   const href =
@@ -27,8 +29,8 @@ export function WhatsAppButton() {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Message IMS on WhatsApp"
-      title="Message us on WhatsApp"
+      aria-label={p("Message IMS on WhatsApp")}
+      title={p("Message us on WhatsApp")}
       className="group fixed bottom-5 end-5 z-40 inline-flex h-13 w-13 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lift transition-transform duration-200 ease-swift hover:-translate-y-0.5 focus-visible:ring-offset-2 motion-reduce:transition-none sm:bottom-6 sm:end-6 print:hidden"
     >
       <svg viewBox="0 0 24 24" aria-hidden className="h-7 w-7" fill="currentColor">

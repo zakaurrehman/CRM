@@ -1,4 +1,6 @@
 import { processSteps } from "@/data/recovery";
+import { getLocale } from "@/lib/i18n/server";
+import { localiseProcessStep } from "@/lib/i18n/content";
 import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/utils";
 
@@ -7,12 +9,14 @@ import { cn } from "@/lib/utils";
  * so the sequence itself is legible. The connector is decorative and hidden from
  * assistive technology; the list markup carries the real order.
  */
-export function ProcessSteps({ tone = "light" }: { tone?: "light" | "dark" }) {
+export async function ProcessSteps({ tone = "light" }: { tone?: "light" | "dark" }) {
   const dark = tone === "dark";
+  const locale = await getLocale();
+  const steps = processSteps.map((s) => localiseProcessStep(s, locale));
 
   return (
     <ol className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-      {processSteps.map((step, i) => (
+      {steps.map((step, i) => (
         <Reveal as="li" key={step.number} delay={i * 60} className="relative">
           <div className="flex items-center gap-4">
             <span

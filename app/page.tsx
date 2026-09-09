@@ -11,27 +11,36 @@ import { InsightsSection } from "@/components/home/InsightsSection";
 import { CtaSection } from "@/components/shared/CtaSection";
 import { pageMetadata } from "@/lib/seo";
 import { alloyCategoryTeasers, totalGradeCount } from "@/data/alloy-index";
+import { getLocale, getP } from "@/lib/i18n/server";
+import { localiseCategory } from "@/lib/i18n/content";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Metals, Alloys & Recycling Solutions for Global Industry",
+export async function generateMetadata(): Promise<Metadata> {
+  const p = await getP();
+  return pageMetadata({
+  title: p("Metals, Alloys & Recycling Solutions for Global Industry"),
   description:
-    "Specialist alloys and metal recovery for aerospace, oil & gas, industrial gas turbine and stainless steel. Sorted, certified and returned to the melt.",
+    p("Specialist alloys and metal recovery for aerospace, oil & gas, industrial gas turbine and stainless steel. Sorted, certified and returned to the melt."),
   path: "/",
 });
+}
 
-export default function HomePage() {
+export default async function HomePage() {
+  const locale = await getLocale();
+  const teasers = alloyCategoryTeasers.map((c) => localiseCategory(c, locale));
+  const p = await getP();
+
   return (
     <>
       <Hero />
       <CredibilityStrip />
       <Pillars />
-      <MaterialsIndex categories={alloyCategoryTeasers} totalGrades={totalGradeCount} />
+      <MaterialsIndex categories={teasers} totalGrades={totalGradeCount} />
       <IndustriesSection />
       <RecyclingStory />
       <QualityBand />
       <TrustSection />
       <InsightsSection />
-      <CtaSection secondary={{ href: "/materials", label: "Explore materials" }} />
+      <CtaSection secondary={{ href: "/materials", label: p("Explore materials") }} />
     </>
   );
 }

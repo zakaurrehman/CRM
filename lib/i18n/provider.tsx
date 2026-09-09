@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   DEFAULT_LOCALE,
   LOCALE_COOKIE,
@@ -33,39 +34,80 @@ interface I18nValue {
 
 const I18nContext = createContext<I18nValue | null>(null);
 
-/** Reads the stored choice. Falls back to English rather than guessing from Accept-Language. */
-function readStoredLocale(): Locale {
+/**
+ * Reads the stored choice, or null when nothing is stored.
+ *
+ * Returning null rather than English matters: "no preference recorded" and
+ * "English was chosen" are different states, and collapsing them made the client
+ * override a Russian cookie with English on first render.
+ */
+function readStoredLocale(): Locale | null {
   try {
     const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
-    if (isLocale(stored)) return stored;
+    return isLocale(stored) ? stored : null;
   } catch {
-    // Private mode or blocked storage: English it is.
+    // Private mode or blocked storage: defer to the server.
+    return null;
   }
-  return DEFAULT_LOCALE;
 }
 
 /**
- * Interface translation.
+ * Translation for client components.
  *
- * The URLs do not change with the language. Only the interface is translated —
- * the alloy data, category descriptions and articles stay in English — so a
- * per-locale URL would serve near-identical content and split its own ranking.
- * Keeping one canonical URL per page also leaves the legacy 301 map, the
- * sitemap and every existing link exactly as they are.
+ * The server is the source of truth: the middleware reads the language cookie,
+ * the layout renders in that language, and this provider is seeded with the
+ * same value. Client and server therefore agree from the first paint — there is
+ * no moment where a translated heading sits above an English button.
  *
- * The trade-off is that the server renders English and a non-English reader
- * sees the interface settle on the first client render. `dir` and `lang` are set
- * before paint by the script in the layout, so the *layout* never flips — only
- * the words change, and only once per page load.
+ * Changing language writes the cookie and calls router.refresh(), so the
+ * server-rendered part of the page comes back translated too. Most of this site
+ * is server components; without that refresh only the client islands would
+ * change, which was the original fault.
+ *
+ * URLs do not change with language. One canonical path per page keeps the
+ * legacy 301 map, the sitemap and every internal link untouched.
  */
-export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
+export function I18nProvider({
+  children,
+  initialLocale = DEFAULT_LOCALE,
+}: {
+  children: React.ReactNode;
+  /**
+   * Resolved on the server from the request cookie.
+   *
+   * Client components start on the same locale the server rendered, so there is
+   * never a moment where a translated heading sits above an English button.
+   */
+  initialLocale?: Locale;
+}) {
+  const [locale, setLocaleState] = useState<Locale>(initialLocale);
+  const router = useRouter();
 
-  // Adopt the stored choice as early as the client can run.
+  /*
+   * Reconcile with storage.
+   *
+   * Only an actual stored preference may override the server. Treating "nothing
+   * stored" as "English chosen" made every fresh visit with a language cookie
+   * render Russian on the server and then snap back to English on hydration —
+   * the navbar-and-content mismatch this whole system exists to prevent.
+   *
+   * When storage is empty and the cookie is not English, the cookie is mirrored
+   * into storage so the two agree from then on.
+   */
   useEffect(() => {
     const stored = readStoredLocale();
-    if (stored !== DEFAULT_LOCALE) setLocaleState(stored);
-  }, []);
+    if (stored && stored !== initialLocale) {
+      setLocaleState(stored);
+      return;
+    }
+    if (!stored && initialLocale !== DEFAULT_LOCALE) {
+      try {
+        window.localStorage.setItem(LOCALE_STORAGE_KEY, initialLocale);
+      } catch {
+        // Non-fatal; the cookie still carries the choice.
+      }
+    }
+  }, [initialLocale]);
 
   // Keep the document in step, for assistive tech, hyphenation and bidi.
   useEffect(() => {
@@ -74,17 +116,26 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     root.dir = dirOf(locale);
   }, [locale]);
 
-  const setLocale = useCallback((next: Locale) => {
-    setLocaleState(next);
-    try {
-      window.localStorage.setItem(LOCALE_STORAGE_KEY, next);
-    } catch {
-      // Non-fatal: the choice simply will not survive this session.
-    }
-    // Mirrored to a cookie so the pre-paint script can set `dir` without JS
-    // storage access, and so a future server-rendered variant could read it.
-    document.cookie = `${LOCALE_COOKIE}=${next};path=/;max-age=31536000;samesite=lax`;
-  }, []);
+  const setLocale = useCallback(
+    (next: Locale) => {
+      setLocaleState(next);
+      try {
+        window.localStorage.setItem(LOCALE_STORAGE_KEY, next);
+      } catch {
+        // Non-fatal: the choice simply will not survive this session.
+      }
+      /* The cookie is what the middleware reads, so it has to be written before
+         the refresh below or the server would render the previous language. */
+      document.cookie = `${LOCALE_COOKIE}=${next};path=/;max-age=31536000;samesite=lax`;
+
+      /* Most of the page is server-rendered, so switching language has to ask
+         the server for it again. Without this the client components would
+         translate and everything else would stay as it was — which is exactly
+         the "Russian navigation, English page" this replaced. */
+      router.refresh();
+    },
+    [router],
+  );
 
   const value = useMemo<I18nValue>(() => {
     const dict = dictionaries[locale];

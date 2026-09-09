@@ -107,6 +107,25 @@ const nextConfig: NextConfig = {
         source: "/images/:path*",
         headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
       },
+      /*
+       * The locale is read from a cookie, so an HTML response is only valid for
+       * the cookie that produced it.
+       *
+       * Next.js currently replaces Vary on RSC-rendered routes with its own
+       * router values, so this does not survive on most pages — verified
+       * against a running build. What actually prevents a shared cache from
+       * handing a Russian visitor an English render is the Cache-Control those
+       * pages already carry: `private, no-store`. This entry is kept so the
+       * requirement is expressed where caching is configured, and so it applies
+       * on any route where Next does not set Vary itself.
+       *
+       * Scoped away from static assets and images: those do not vary by cookie,
+       * and making them appear to would cost the CDN a hit for every visitor.
+       */
+      {
+        source: "/((?!_next/static|_next/image|images/).*)",
+        headers: [{ key: "Vary", value: "Cookie" }],
+      },
     ];
   },
 };

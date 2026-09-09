@@ -7,6 +7,8 @@ import { downloadCsv, gradesToCsv } from "@/lib/export";
 import { Button, ButtonEl } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n/provider";
+import { categoryNameFor } from "@/lib/i18n/content";
+import { useP } from "@/lib/i18n/phrases/client";
 
 /**
  * Saved materials.
@@ -16,7 +18,8 @@ import { useI18n } from "@/lib/i18n/provider";
  * than left for someone to discover when they open the site on another machine.
  */
 export function SavedMaterials() {
-  const { t } = useI18n();
+  const p = useP();
+  const { t, locale } = useI18n();
   const { index, error } = useAlloyIndex();
   const saved = useSaved();
   const compare = useCompare();
@@ -35,8 +38,7 @@ export function SavedMaterials() {
       <div className="rounded-lg border border-steel-200 bg-white px-6 py-16 text-center">
         <h2 className="font-display text-xl font-semibold text-navy-900">{t("savedList", "emptyTitle")}</h2>
         <p className="mx-auto mt-3 max-w-md content-en text-[0.9375rem] leading-relaxed text-steel-600">
-          Save a grade from any composition table or from the alloy finder and it will be kept here, ready to compare
-          or send through as a quotation request.
+          {p("Save a grade from any composition table or from the alloy finder and it will be kept here, ready to compare or send through as a quotation request.")}
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
           <Button href="/materials/finder">{t("common", "openFinder")}</Button>
@@ -46,7 +48,7 @@ export function SavedMaterials() {
     );
   }
 
-  if (!index) return <p className="text-[0.9375rem] text-steel-600">Loading composition data&hellip;</p>;
+  if (!index) return <p className="text-[0.9375rem] text-steel-600">{p("Loading composition data…")}</p>;
 
   return (
     <div>
@@ -86,7 +88,7 @@ export function SavedMaterials() {
                       {grade.name}
                     </Link>
                   </h2>
-                  <p className="mt-1 text-[0.8125rem] text-steel-500">{grade.categoryName}</p>
+                  <p className="mt-1 text-[0.8125rem] text-steel-500">{categoryNameFor(grade.categorySlug, grade.categoryName, locale)}</p>
                 </div>
                 <button
                   type="button"
@@ -131,8 +133,7 @@ export function SavedMaterials() {
       </ul>
 
       <p className="mt-6 text-[0.8125rem] leading-relaxed text-steel-500">
-        Saved materials are stored in this browser only. They are not sent to IMS and will not follow you to another
-        device &mdash; export the list or send it as a quotation request to keep it.
+        {p("Saved materials are stored in this browser only. They are not sent to IMS and will not follow you to another device — export the list or send it as a quotation request to keep it.")}
       </p>
     </div>
   );

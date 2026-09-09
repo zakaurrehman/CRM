@@ -8,6 +8,8 @@ import { Reveal } from "@/components/ui/Reveal";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 import { industries } from "@/data/industries";
+import { getLocale, getP } from "@/lib/i18n/server";
+import { localiseIndustry } from "@/lib/i18n/content";
 import { companyFacts } from "@/lib/site";
 
 const trail = [
@@ -15,21 +17,28 @@ const trail = [
   { name: "Industries", href: "/industries" },
 ];
 
-export const metadata: Metadata = pageMetadata({
-  title: "Industries Served",
+export async function generateMetadata(): Promise<Metadata> {
+  const p = await getP();
+  return pageMetadata({
+  title: p("Industries Served"),
   description:
-    "Specialist alloys supplied and recovered for aerospace, oil & gas, industrial gas turbine, and technology and mobility sectors.",
+    p("Specialist alloys supplied and recovered for aerospace, oil & gas, industrial gas turbine, and technology and mobility sectors."),
   path: "/industries",
   image: "/images/turbine/turbine-manufacturing.jpg",
 });
+}
 
-export default function IndustriesPage() {
+export default async function IndustriesPage() {
+  const p = await getP();
+  const locale = await getLocale();
+  const sectors = industries.map((i) => localiseIndustry(i, locale));
+
   return (
     <>
       <PageHero
-        eyebrow="Industries"
-        title="Industries served"
-        intro="Our arisings come from the petrochemical, oil and gas, industrial gas turbine and aerospace sectors, and the material we recover goes back to those same industries. Working in both directions is what keeps grade knowledge sharp."
+        eyebrow={p("Industries")}
+        title={p("Industries served")}
+        intro={p("Our arisings come from the petrochemical, oil and gas, industrial gas turbine and aerospace sectors, and the material we recover goes back to those same industries. Working in both directions is what keeps grade knowledge sharp.")}
         trail={trail}
         image="/images/turbine/turbine-manufacturing.jpg"
         imageAlt=""
@@ -37,7 +46,7 @@ export default function IndustriesPage() {
 
       <Section tone="white">
         <ul className="space-y-px bg-steel-200">
-          {industries.map((industry, i) => (
+          {sectors.map((industry, i) => (
             <Reveal as="li" key={industry.slug} delay={i * 60} className="bg-white">
               <Link
                 href={"/industries/" + industry.slug}
@@ -86,17 +95,16 @@ export default function IndustriesPage() {
       <Section tone="light">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
-            <h2 className="text-display-sm">Wider sectors supplied</h2>
+            <h2 className="text-display-sm">{p("Wider sectors supplied")}</h2>
             <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-600">
-              Beyond the four sectors above, our material and recovery services reach a broader set of
-              industries that depend on the same alloy families.
+              {p("Beyond the four sectors above, our material and recovery services reach a broader set of industries that depend on the same alloy families.")}
             </p>
           </div>
           <div className="lg:col-span-6 lg:col-start-7">
             <ul className="grid grid-rule sm:grid-cols-2">
               {companyFacts.sectors.map((sector) => (
                 <li key={sector} className="bg-steel-50 px-5 py-4 text-[0.9375rem] text-navy-900">
-                  {sector}
+                  {p(sector)}
                 </li>
               ))}
             </ul>
@@ -104,7 +112,7 @@ export default function IndustriesPage() {
         </div>
       </Section>
 
-      <CtaSection secondary={{ href: "/materials", label: "Explore materials" }} />
+      <CtaSection secondary={{ href: "/materials", label: p("Explore materials") }} />
 
       <JsonLd data={breadcrumbSchema(trail)} />
     </>

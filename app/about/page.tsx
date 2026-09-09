@@ -1,3 +1,4 @@
+import { getP } from "@/lib/i18n/server";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,13 +18,16 @@ const trail = [
   { name: "About", href: "/about" },
 ];
 
-export const metadata: Metadata = pageMetadata({
-  title: "About IMS",
+export async function generateMetadata(): Promise<Metadata> {
+  const p = await getP();
+  return pageMetadata({
+  title: p("About IMS"),
   description:
-    "A metals trading company sorting, processing and certifying arisings from the petrochemical, oil & gas, gas turbine and aerospace sectors.",
+    p("A metals trading company sorting, processing and certifying arisings from the petrochemical, oil & gas, gas turbine and aerospace sectors."),
   path: "/about",
   image: "/images/company/port-terminal.jpg",
 });
+}
 
 const differentiators = [
   {
@@ -44,13 +48,14 @@ const differentiators = [
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const p = await getP();
   return (
     <>
       <PageHero
-        eyebrow="About"
-        title="A trading company built on knowing exactly what the metal is."
-        intro="IMS Metals & Alloys OÜ trades and processes specialist metals and alloys. Our business began with routes in Eastern Europe and has grown into an international network, with joint partnerships alongside several of the largest leading companies in the world."
+        eyebrow={p("About")}
+        title={p("A trading company built on knowing exactly what the metal is.")}
+        intro={p("IMS Metals & Alloys OÜ trades and processes specialist metals and alloys. Our business began with routes in Eastern Europe and has grown into an international network, with joint partnerships alongside several of the largest leading companies in the world.")}
         trail={trail}
         image="/images/company/port-terminal.jpg"
         imageAlt=""
@@ -60,28 +65,22 @@ export default function AboutPage() {
       <Section tone="white">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
-            <h2 className="text-display-sm">Who we are</h2>
+            <h2 className="text-display-sm">{p("Who we are")}</h2>
             <div className="mt-6 space-y-5 content-en text-[1.0625rem] leading-relaxed text-steel-700">
               <p>
-                We handle a wide variety of stainless steel, low alloy steels, die steel, nickel, cobalt,
-                complex nickel superalloys, pure metals and ferro-alloys, which arise from the
-                petrochemical, oil and gas, industrial gas turbine and aerospace sectors.
+                {p("We handle a wide variety of stainless steel, low alloy steels, die steel, nickel, cobalt, complex nickel superalloys, pure metals and ferro-alloys, which arise from the petrochemical, oil and gas, industrial gas turbine and aerospace sectors.")}
               </p>
               <p>
-                These arisings are 100% sorted, segregated, processed and certified, then sold to end
-                customers around the world to be melted back into their parent alloys as either air-melt or
-                vacuum grade products.
+                {p("These arisings are 100% sorted, segregated, processed and certified, then sold to end customers around the world to be melted back into their parent alloys as either air-melt or vacuum grade products.")}
               </p>
               <p>
-                We serve a range of industries with environmental compliance and cost-effective recycling
-                solutions for stainless steel, soft metallic waste streams, superalloy reverts, high
-                temperature alloys and pure metals.
+                {p("We serve a range of industries with environmental compliance and cost-effective recycling solutions for stainless steel, soft metallic waste streams, superalloy reverts, high temperature alloys and pure metals.")}
               </p>
             </div>
 
             <div className="mt-10 border-s-2 border-brand-700 ps-6">
               <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
-                Registered office
+                {p("Registered office")}
               </p>
               <p className="mt-2 text-[0.9375rem] text-navy-900">
                 {contact.address.street}, {contact.address.city} {contact.address.postalCode},{" "}
@@ -94,7 +93,7 @@ export default function AboutPage() {
             <figure className="relative aspect-[3/4] overflow-hidden">
               <Image
                 src="/images/company/scrap-yard.jpg"
-                alt="Sorted metal arisings staged for processing"
+                alt={p("Sorted metal arisings staged for processing")}
                 fill
                 sizes="(min-width: 1024px) 30vw, 100vw"
                 className="object-cover"
@@ -107,26 +106,26 @@ export default function AboutPage() {
       {/* Capabilities */}
       <Section tone="light" id="capabilities">
         <SectionHeader
-          eyebrow="Our capabilities"
-          title="What we handle, in specifics."
-          description="The clearest way to describe this business is by the metals that pass through it."
+          eyebrow={p("Our capabilities")}
+          title={p("What we handle, in specifics.")}
+          description={p("The clearest way to describe this business is by the metals that pass through it.")}
           align="split"
         />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-3 lg:gap-12">
           <div>
             <h3 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
-              Specialist metals
+              {p("Specialist metals")}
             </h3>
             <ul className="mt-5 space-y-2.5">
               {companyFacts.specialistMetals.map((metal) => (
                 <li key={metal} className="border-b border-steel-200 pb-2.5 text-[0.9375rem] text-navy-900">
-                  {metal}
+                  {p(metal)}
                 </li>
               ))}
             </ul>
             <p className="mt-4 text-[0.875rem] text-steel-600">
-              Plus precious metals recovered from aerospace streams.
+              {p("Plus precious metals recovered from aerospace streams.")}
             </p>
           </div>
 
@@ -135,7 +134,7 @@ export default function AboutPage() {
               Ferro-alloys
             </h3>
             <p className="mt-5 content-en text-[0.9375rem] leading-relaxed text-steel-600">
-              A full range of ferro-alloys, available in all sizes, packings and specifications.
+              {p("A full range of ferro-alloys, available in all sizes, packings and specifications.")}
             </p>
             <ul className="mt-5 grid grid-cols-2 grid-rule">
               {companyFacts.ferroAlloys.map((ferro) => (
@@ -148,20 +147,18 @@ export default function AboutPage() {
 
           <div>
             <h3 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
-              Documented alloys
+              {p("Documented alloys")}
             </h3>
             <p className="mt-5 content-en text-[0.9375rem] leading-relaxed text-steel-600">
-              We publish nominal composition data for {totalGradeCount} grades across{" "}
-              {alloyCategoryCount} categories, so a specification can be checked before an enquiry is
-              even sent.
+              {p("We publish nominal composition data for {grades} grades across {cats} categories, so a specification can be checked before an enquiry is even sent.", { grades: totalGradeCount, cats: alloyCategoryCount })}
             </p>
             <div className="mt-6">
-              <ArrowLink href="/materials">Open the materials directory</ArrowLink>
+              <ArrowLink href="/materials">{p("Open the materials directory")}</ArrowLink>
             </div>
             <figure className="relative mt-8 aspect-[4/3] overflow-hidden">
               <Image
                 src="/images/metals/stamped-components.jpg"
-                alt="Stamped stainless steel components"
+                alt={p("Stamped stainless steel components")}
                 fill
                 sizes="(min-width: 1024px) 30vw, 100vw"
                 className="object-cover"
@@ -173,17 +170,17 @@ export default function AboutPage() {
 
       {/* What makes IMS different */}
       <Section tone="white">
-        <SectionHeader eyebrow="What makes us different" title="Four things we do not compromise on." align="split" />
+        <SectionHeader eyebrow={p("What makes us different")} title={p("Four things we do not compromise on.")} align="split" />
         <ul className="mt-14 grid grid-rule sm:grid-cols-2">
           {differentiators.map((item, i) => (
-            <Reveal as="li" key={item.title} delay={i * 70} className="bg-white p-7 lg:p-9">
+            <Reveal as="li" key={p(item.title)} delay={i * 70} className="bg-white p-7 lg:p-9">
               <span className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-brand-700 tabular-nums">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h3 className="mt-4 font-display text-xl font-semibold tracking-tight text-navy-900">
-                {item.title}
+                {p(item.title)}
               </h3>
-              <p className="mt-3 content-en text-[0.9375rem] leading-relaxed text-steel-600">{item.body}</p>
+              <p className="mt-3 content-en text-[0.9375rem] leading-relaxed text-steel-600">{p(item.body)}</p>
             </Reveal>
           ))}
         </ul>
@@ -192,8 +189,8 @@ export default function AboutPage() {
       {/* Process */}
       <Section tone="navy" id="process">
         <SectionHeader
-          eyebrow="How IMS works"
-          title="Six steps from arising to certified supply."
+          eyebrow={p("How IMS works")}
+          title={p("Six steps from arising to certified supply.")}
           align="split"
           className="[&_h2]:text-white"
         />
@@ -231,16 +228,16 @@ export default function AboutPage() {
               </div>
               <div className="p-7">
                 <h3 className="font-display text-xl font-semibold text-navy-900 transition-colors group-hover:text-brand-700">
-                  {card.title}
+                  {p(card.title)}
                 </h3>
-                <p className="mt-2.5 content-en text-[0.9375rem] leading-relaxed text-steel-600">{card.body}</p>
+                <p className="mt-2.5 content-en text-[0.9375rem] leading-relaxed text-steel-600">{p(card.body)}</p>
               </div>
             </Link>
           ))}
         </div>
       </Section>
 
-      <CtaSection secondary={{ href: "/materials", label: "Explore materials" }} />
+      <CtaSection secondary={{ href: "/materials", label: p("Explore materials") }} />
 
       <JsonLd data={breadcrumbSchema(trail)} />
     </>

@@ -1,3 +1,4 @@
+import { getP } from "@/lib/i18n/server";
 import Image from "next/image";
 import Link from "next/link";
 import { Section, SectionHeader } from "@/components/ui/Section";
@@ -34,19 +35,21 @@ const pillars = [
   },
 ];
 
-export function Pillars() {
+export async function Pillars() {
+  const p = await getP();
+
   return (
     <Section tone="light">
       <SectionHeader
-        eyebrow="What IMS does"
-        title="Four capabilities, one material chain."
-        description="We operate across the full life of a specialist alloy — supplying prime material, recovering it at end of life, and certifying it back into production."
+        eyebrow={p("What IMS does")}
+        title={p("Four capabilities, one material chain.")}
+        description={p("We operate across the full life of a specialist alloy — supplying prime material, recovering it at end of life, and certifying it back into production.")}
         align="split"
       />
 
       <div className="mt-14 grid grid-rule sm:grid-cols-2 lg:grid-cols-4">
         {pillars.map((pillar, i) => (
-          <Reveal key={pillar.title} delay={i * 80}>
+          <Reveal key={p(pillar.title)} delay={i * 80}>
             <Link
               href={pillar.href}
               className="group flex h-full flex-col bg-white transition-colors duration-300 hover:bg-navy-950"
@@ -66,13 +69,13 @@ export function Pillars() {
               </div>
               <div className="flex flex-1 flex-col p-6 lg:p-7">
                 <h3 className="font-display text-xl font-semibold tracking-tight text-navy-900 transition-colors group-hover:text-white">
-                  {pillar.title}
+                  {p(pillar.title)}
                 </h3>
                 <p className="mt-3 flex-1 content-en text-[0.9375rem] leading-relaxed text-steel-600 transition-colors group-hover:text-steel-300">
-                  {pillar.body}
+                  {p(pillar.body)}
                 </p>
                 <span className="mt-6 inline-flex items-center gap-1.5 text-[0.875rem] font-medium text-brand-700 transition-colors group-hover:text-brand-300">
-                  {pillar.cta}
+                  {p(pillar.cta)}
                   <span aria-hidden className="transition-transform duration-200 ease-swift group-hover:translate-x-1">
                     <span className="dir-arrow">&rarr;</span>
                   </span>

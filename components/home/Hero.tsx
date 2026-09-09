@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getP } from "@/lib/i18n/server";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { HeroSlideshow, type HeroSlide } from "./HeroSlideshow";
@@ -23,7 +24,9 @@ const heroSlides: HeroSlide[] = [
  *
  * Everything above the fold is server-rendered; no JavaScript gates the headline.
  */
-export function Hero() {
+export async function Hero() {
+  const p = await getP();
+
   return (
     /* `group` so the slideshow controls can stay hidden until the hero is
        hovered — they are a necessary affordance, not part of the picture. */
@@ -41,34 +44,34 @@ export function Hero() {
       <Container className="relative">
         <div className="py-20 lg:py-28">
           <p className="eyebrow animate-fade-up text-brand-300">
-            Metals &middot; Alloys &middot; Recovery
+            {p("Metals · Alloys · Recovery")}
           </p>
 
           <h1 className="mt-6 max-w-4xl animate-fade-up text-display-xl text-white [animation-delay:80ms]">
-            Advanced metals, alloys and recycling solutions for global industry.
+            {p("Advanced metals, alloys and recycling solutions for global industry.")}
           </h1>
 
           <p className="mt-7 max-w-2xl animate-fade-up text-lg leading-relaxed text-steel-300 [animation-delay:160ms] sm:text-xl">
-            IMS sources, sorts and certifies high-performance alloys and metal-bearing residues
-            arising from the aerospace, oil &amp; gas, industrial gas turbine and stainless steel
-            sectors &mdash; returning them to the melt as air-melt or vacuum grade material.
+            {p(
+              "IMS sources, sorts and certifies high-performance alloys and metal-bearing residues arising from the aerospace, oil & gas, industrial gas turbine and stainless steel sectors — returning them to the melt as air-melt or vacuum grade material.",
+            )}
           </p>
 
           {/* The catalogue is the reason to be here, so it leads. "Talk to IMS"
               stays reachable from the header on every page. */}
           <div className="mt-10 flex animate-fade-up flex-col gap-3 [animation-delay:240ms] sm:flex-row">
             <Button href="/materials/finder" variant="onDark" size="lg">
-              Search {totalGradeCount} alloy grades
+              {p("Search {count} alloy grades", { count: totalGradeCount })}
             </Button>
             <Button href="/rfq" variant="onDarkGhost" size="lg">
-              Request a quotation
+              {p("Request a quotation")}
             </Button>
           </div>
 
           <p className="mt-6 animate-fade-up text-[0.875rem] text-steel-400 [animation-delay:280ms]">
-            Search by composition &mdash; &ldquo;cobalt free, chromium above 20&rdquo; &mdash; or{" "}
+            {p("Search by composition — “cobalt free, chromium above 20” — or")}{" "}
             <Link href="/materials" className="text-steel-300 underline decoration-white/25 underline-offset-4 transition-colors hover:text-white hover:decoration-white">
-              browse all {alloyCategoryCount} categories
+              {p("browse all {count} categories", { count: alloyCategoryCount })}
             </Link>
             .
           </p>
@@ -79,8 +82,8 @@ export function Hero() {
           <div className="scroll-x fade-r -mx-5 px-5 sm:mx-0 sm:px-0">
             <ul className="flex w-max items-center gap-6 font-mono text-[0.75rem] uppercase tracking-[0.14em] text-steel-400 sm:w-auto sm:flex-wrap">
               {companyFacts.specialistMetals.map((metal) => (
-                <li key={metal} className="whitespace-nowrap">
-                  {metal}
+                <li key={p(metal)} className="whitespace-nowrap">
+                  {p(metal)}
                 </li>
               ))}
             </ul>

@@ -1,3 +1,4 @@
+import { getP } from "@/lib/i18n/server";
 import Link from "next/link";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
@@ -52,7 +53,7 @@ const practices = [
   },
   {
     title: "Published composition",
-    body: `Nominal chemistry for all ${totalGradeCount} grades is on the site — not behind a login or a sales call.`,
+    body: "Nominal chemistry for all {count} grades is on the site — not behind a login or a sales call.",
     href: "/materials",
   },
   {
@@ -62,12 +63,14 @@ const practices = [
   },
 ];
 
-export function TrustSection() {
+export async function TrustSection() {
+  const p = await getP();
+
   const stats = [
     {
       value: totalGradeCount,
       label: "Alloy grades published",
-      detail: `Full nominal composition across ${alloyCategoryCount} categories`,
+      detail: "Full nominal composition across {count} categories",
       href: "/materials",
     },
     {
@@ -93,9 +96,9 @@ export function TrustSection() {
   return (
     <Section tone="navy" id="credibility">
       <SectionHeader
-        eyebrow="Why buyers work with IMS"
-        title="Everything on this page can be checked."
-        description="No unverifiable claims and no rounded-up numbers — each figure below is countable from the catalogue itself, and links to where it comes from."
+        eyebrow={p("Why buyers work with IMS")}
+        title={p("Everything on this page can be checked.")}
+        description={p("No unverifiable claims and no rounded-up numbers — each figure below is countable from the catalogue itself, and links to where it comes from.")}
         align="split"
         /* Headings default to navy-900, which is invisible on a navy ground —
            the same override every dark section carries. */
@@ -104,26 +107,26 @@ export function TrustSection() {
 
       <dl className="mt-14 grid grid-rule sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, i) => (
-          <Reveal key={stat.label} delay={i * 70} className="bg-navy-950">
+          <Reveal key={p(stat.label)} delay={i * 70} className="bg-navy-950">
             <Link
               href={stat.href}
               className="group flex h-full flex-col p-7 transition-colors hover:bg-navy-900 lg:p-8"
             >
-              <dt className="sr-only">{stat.label}</dt>
+              <dt className="sr-only">{p(stat.label)}</dt>
               <dd>
                 <CountUp
                   value={stat.value}
                   className="block font-display text-4xl font-bold tracking-tight text-brand-300 tabular-nums lg:text-5xl"
                 />
                 <span className="mt-3 block font-display text-[0.9375rem] font-semibold text-white">
-                  {stat.label}
+                  {p(stat.label)}
                 </span>
-                <span className="mt-1.5 block text-[0.8125rem] leading-relaxed text-steel-400">{stat.detail}</span>
+                <span className="mt-1.5 block text-[0.8125rem] leading-relaxed text-steel-400">{p(stat.detail, { count: alloyCategoryCount })}</span>
                 <span
                   aria-hidden
                   className="mt-4 block text-[0.8125rem] font-medium text-brand-300 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
                 >
-                  See for yourself <span className="dir-arrow">&rarr;</span>
+                  {p("See for yourself")} <span className="dir-arrow">&rarr;</span>
                 </span>
               </dd>
             </Link>
@@ -133,15 +136,15 @@ export function TrustSection() {
 
       <div className="mt-16 grid gap-10 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-7">
-          <h3 className="font-display text-xl font-semibold text-white">How material is controlled</h3>
+          <h3 className="font-display text-xl font-semibold text-white">{p("How material is controlled")}</h3>
           <ul className="mt-6 grid gap-x-8 gap-y-6 sm:grid-cols-2">
             {practices.map((practice, i) => (
-              <Reveal as="li" key={practice.title} delay={i * 60}>
+              <Reveal as="li" key={p(practice.title)} delay={i * 60}>
                 <Link href={practice.href} className="group block">
                   <h4 className="font-display text-[0.9375rem] font-semibold text-white transition-colors group-hover:text-brand-300">
-                    {practice.title}
+                    {p(practice.title)}
                   </h4>
-                  <p className="mt-2 text-[0.875rem] leading-relaxed text-steel-400">{practice.body}</p>
+                  <p className="mt-2 text-[0.875rem] leading-relaxed text-steel-400">{p(practice.body, { count: totalGradeCount })}</p>
                 </Link>
               </Reveal>
             ))}
@@ -150,17 +153,17 @@ export function TrustSection() {
 
         <Reveal delay={120} className="lg:col-span-5">
           <div className="rounded-lg border border-white/15 bg-white/5 p-7">
-            <h3 className="font-display text-xl font-semibold text-white">The company</h3>
+            <h3 className="font-display text-xl font-semibold text-white">{p("The company")}</h3>
             <dl className="mt-6 space-y-4">
               <div>
                 <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-brand-300">
-                  Registered entity
+                  {p("Registered entity")}
                 </dt>
                 <dd className="mt-1 text-[0.9375rem] text-white">{site.legalName}</dd>
               </div>
               <div>
                 <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-brand-300">
-                  Registered office
+                  {p("Registered office")}
                 </dt>
                 <dd className="mt-1 text-[0.9375rem] text-white">
                   {contact.address.city}, {contact.address.country}
@@ -168,15 +171,15 @@ export function TrustSection() {
               </div>
               <div>
                 <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-brand-300">
-                  Material output
+                  {p("Material output")}
                 </dt>
                 <dd className="mt-1 text-[0.9375rem] text-white">
-                  {companyFacts.outputGrades.join(" and ")} material returned to the melt
+                  {p("{grades} material returned to the melt", { grades: companyFacts.outputGrades.join(p(" and ")) })}
                 </dd>
               </div>
               <div>
                 <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-brand-300">
-                  Direct contact
+                  {p("Direct contact")}
                 </dt>
                 <dd className="mt-1">
                   <a

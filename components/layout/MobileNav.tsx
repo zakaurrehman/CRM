@@ -1,5 +1,7 @@
 "use client";
 
+import { useP } from "@/lib/i18n/phrases/client";
+
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,6 +21,7 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: boolean; onClose: () => void }) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const { t } = useI18n();
+  const p = useP();
   const panelRef = useRef<HTMLDivElement>(null);
   const restoreTo = useRef<HTMLElement | null>(null);
 
@@ -117,7 +120,7 @@ export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: bo
           </div>
         </div>
 
-        <nav aria-label="Mobile" className="flex-1 overflow-y-auto overscroll-contain px-5 py-2">
+        <nav aria-label={p("Mobile")} className="flex-1 overflow-y-auto overscroll-contain px-5 py-2">
           <ul className="divide-y divide-steel-200">
             {items.map((item) => {
               const isOpen = expanded === item.label;
@@ -163,9 +166,9 @@ export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: bo
                       All {(item.i18nKey ? t("nav", item.i18nKey) : item.label).toLowerCase()}
                     </Link>
                     {item.columns.map((col) => (
-                      <div key={col.heading} className="mb-3 last:mb-0">
+                      <div key={p(col.heading)} className="mb-3 last:mb-0">
                         <p className="mb-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
-                          {col.heading}
+                          {p(col.heading)}
                         </p>
                         <ul>
                           {col.links.map((link) => (
@@ -175,7 +178,7 @@ export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: bo
                                 onClick={onClose}
                                 className="flex min-h-[2.75rem] items-center text-[0.9375rem] text-steel-700 hover:text-brand-700"
                               >
-                                {link.label}
+                                {p(link.label)}
                               </Link>
                             </li>
                           ))}
@@ -194,9 +197,7 @@ export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: bo
             href="/contact"
             onClick={onClose}
             className="flex h-12 w-full items-center justify-center rounded bg-brand-700 text-[0.9375rem] font-medium text-white"
-          >
-            Talk to IMS
-          </Link>
+          >{p("Talk to IMS")}</Link>
           <a
             href="mailto:info@ims-metals.com"
             className="block text-center text-[0.875rem] text-steel-600 hover:text-brand-700"

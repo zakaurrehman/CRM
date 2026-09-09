@@ -8,6 +8,8 @@ import { Badge } from "@/components/ui/Badge";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 import { tungstenForms, tungstenMaterials } from "@/data/recovery";
+import { getLocale, getP } from "@/lib/i18n/server";
+import { localiseTungstenForm } from "@/lib/i18n/content";
 
 const trail = [
   { name: "Home", href: "/" },
@@ -15,13 +17,16 @@ const trail = [
   { name: "Tungsten Recycling", href: "/recycling/tungsten" },
 ];
 
-export const metadata: Metadata = pageMetadata({
-  title: "Tungsten Recycling",
+export async function generateMetadata(): Promise<Metadata> {
+  const p = await getP();
+  return pageMetadata({
+  title: p("Tungsten Recycling"),
   description:
-    "Tungsten recycled in all forms — carbide, Densalloy, CP-W, powder and heavy metals — from almost any scrap or production waste.",
+    p("Tungsten recycled in all forms — carbide, Densalloy, CP-W, powder and heavy metals — from almost any scrap or production waste."),
   path: "/recycling/tungsten",
   image: "/images/tungsten/densalloy.jpg",
 });
+}
 
 const whyIms = [
   {
@@ -38,13 +43,17 @@ const whyIms = [
   },
 ];
 
-export default function TungstenPage() {
+export default async function TungstenPage() {
+  const p = await getP();
+  const locale = await getLocale();
+  const forms = tungstenForms.map((f) => localiseTungstenForm(f, locale));
+
   return (
     <>
       <PageHero
-        eyebrow="Recycling & recovery"
-        title="Tungsten recycling"
-        intro="We specialise in recycling tungsten in all forms, including tungsten carbide, Densalloy, CP-W, tungsten powder and heavy metals. We are able to handle tungsten from almost all forms of tungsten scrap and production waste."
+        eyebrow={p("Recycling & recovery")}
+        title={p("Tungsten recycling")}
+        intro={p("We specialise in recycling tungsten in all forms, including tungsten carbide, Densalloy, CP-W, tungsten powder and heavy metals. We are able to handle tungsten from almost all forms of tungsten scrap and production waste.")}
         trail={trail}
         image="/images/tungsten/swarf-bulk.jpg"
         imageAlt=""
@@ -62,14 +71,14 @@ export default function TungstenPage() {
 
       <Section tone="white">
         <SectionHeader
-          eyebrow="Forms we handle"
-          title="Tungsten arrives in more shapes than any other metal we take."
-          description="From indexable inserts and mining bits to grinding sludge and furnace crucibles — each of these is a distinct stream with its own recovery route."
+          eyebrow={p("Forms we handle")}
+          title={p("Tungsten arrives in more shapes than any other metal we take.")}
+          description={p("From indexable inserts and mining bits to grinding sludge and furnace crucibles — each of these is a distinct stream with its own recovery route.")}
           align="split"
         />
 
         <ul className="mt-14 grid grid-rule sm:grid-cols-2 lg:grid-cols-3">
-          {tungstenForms.map((form, i) => (
+          {forms.map((form, i) => (
             <Reveal as="li" key={form.slug} delay={i * 60} id={"form-" + form.slug} className="group bg-white">
               <figure className="flex h-full flex-col">
                 <div className="relative aspect-[4/3] overflow-hidden bg-steel-100">
@@ -83,7 +92,7 @@ export default function TungstenPage() {
                 </div>
                 <figcaption className="flex flex-1 flex-col p-6">
                   <h3 className="font-display text-lg font-semibold tracking-tight text-navy-900">{form.name}</h3>
-                  <p className="mt-2.5 text-[0.875rem] leading-relaxed text-steel-600">{form.note}</p>
+                  <p className="mt-2.5 text-[0.875rem] leading-relaxed text-steel-600">{p(form.note)}</p>
                 </figcaption>
               </figure>
             </Reveal>
@@ -93,17 +102,17 @@ export default function TungstenPage() {
 
       <Section tone="navy">
         <SectionHeader
-          eyebrow="Why IMS"
-          title="Why we can take tungsten others turn away."
+          eyebrow={p("Why IMS")}
+          title={p("Why we can take tungsten others turn away.")}
           align="split"
           className="[&_h2]:text-white"
         />
         <ul className="mt-14 grid gap-8 lg:grid-cols-3">
           {whyIms.map((reason, i) => (
-            <Reveal as="li" key={reason.title} delay={i * 80}>
+            <Reveal as="li" key={p(reason.title)} delay={i * 80}>
               <div className="border-t border-white/15 pt-6">
-                <h3 className="font-display text-xl font-semibold tracking-tight text-white">{reason.title}</h3>
-                <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-400">{reason.body}</p>
+                <h3 className="font-display text-xl font-semibold tracking-tight text-white">{p(reason.title)}</h3>
+                <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-400">{p(reason.body)}</p>
               </div>
             </Reveal>
           ))}
@@ -111,8 +120,8 @@ export default function TungstenPage() {
       </Section>
 
       <CtaSection
-        title="Send us your tungsten stream."
-        body="Carbide, heavy metal, powder or sludge — tell us the form and the volume and we will confirm what we can take and what it is worth."
+        title={p("Send us your tungsten stream.")}
+        body={p("Carbide, heavy metal, powder or sludge — tell us the form and the volume and we will confirm what we can take and what it is worth.")}
         primary={{ href: "/contact", label: "Discuss tungsten recycling" }}
         secondary={{ href: "/recycling", label: "All recovery streams" }}
       />

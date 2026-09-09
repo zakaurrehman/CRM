@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { articles, articleBySlug, articlesByDate } from "@/data/insights";
+import { getLocale, getP } from "@/lib/i18n/server";
+import { localiseArticle } from "@/lib/i18n/content";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -10,6 +12,7 @@ import { CtaSection } from "@/components/shared/CtaSection";
 import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
+import { localeMeta } from "@/lib/i18n/config";
 
 interface Params {
   params: Promise<{ slug: string }>;
@@ -21,8 +24,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const article = articleBySlug.get(slug);
-  if (!article) return {};
+  const base = articleBySlug.get(slug);
+  if (!base) return {};
+  const article = localiseArticle(base, await getLocale());
 
   return pageMetadata({
     title: article.title,
@@ -37,8 +41,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function ArticlePage({ params }: Params) {
   const { slug } = await params;
-  const article = articleBySlug.get(slug);
-  if (!article) notFound();
+  const locale = await getLocale();
+  const base = articleBySlug.get(slug);
+  if (!base) notFound();
+  const article = localiseArticle(base, locale);
+  const p = await getP();
 
   const trail = [
     { name: "Home", href: "/" },
@@ -57,9 +64,9 @@ export default async function ArticlePage({ params }: Params) {
               <Breadcrumbs trail={trail} />
               <div className="mt-8 max-w-3xl">
                 <p className="flex items-center gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500">
-                  <time dateTime={article.published}>{formatDate(article.published)}</time>
+                  <time dateTime={article.published}>{formatDate(article.published, localeMeta[locale].tag)}</time>
                   <span aria-hidden className="h-px w-6 bg-steel-300" />
-                  <span>{article.readingMinutes} min read</span>
+                  <span>{p("{n} min read", { n: article.readingMinutes })}</span>
                 </p>
                 <h1 className="mt-5 text-display-lg">{article.title}</h1>
                 <p className="mt-6 text-lg leading-relaxed text-steel-600 sm:text-xl">{article.standfirst}</p>
@@ -105,19 +112,14 @@ export default async function ArticlePage({ params }: Params) {
 
             <aside className="lg:col-span-3 lg:col-start-10">
               <div className="lg:sticky lg:top-28">
-                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
-                  Talk to IMS
-                </p>
+                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">{p("Talk to IMS")}</p>
                 <p className="mt-4 content-en text-[0.9375rem] leading-relaxed text-steel-600">
-                  If this touches on a material requirement of your own, our team can tell you what we can
-                  supply or recover.
+                  {p("If this touches on a material requirement of your own, our team can tell you what we can supply or recover.")}
                 </p>
                 <Link
                   href="/contact"
                   className="mt-5 inline-flex h-11 items-center rounded bg-brand-700 px-5 text-[0.9375rem] font-medium text-white transition-colors hover:bg-brand-800"
-                >
-                  Request an inquiry
-                </Link>
+                >{p("Request an inquiry")}</Link>
               </div>
             </aside>
           </div>
@@ -127,7 +129,7 @@ export default async function ArticlePage({ params }: Params) {
       {more.length > 0 ? (
         <Section tone="light">
           <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
-            More insights
+            {p("More insights")}
           </h2>
           <ul className="mt-8 grid grid-rule sm:grid-cols-2">
             {more.map((item) => (
@@ -160,7 +162,7 @@ export default async function ArticlePage({ params }: Params) {
         </Section>
       ) : null}
 
-      <CtaSection secondary={{ href: "/insights", label: "All insights" }} />
+      <CtaSection secondary={{ href: "/insights", label: p("All insights") }} />
 
       <JsonLd data={[breadcrumbSchema(trail), articleSchema(article)]} />
     </>

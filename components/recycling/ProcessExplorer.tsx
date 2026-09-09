@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import type { ProcessStep } from "@/types/content";
 import { cn } from "@/lib/utils";
+import { useP } from "@/lib/i18n/phrases/client";
 
 /**
  * The recovery workflow, walked one step at a time.
@@ -25,6 +26,7 @@ export function ProcessExplorer({
   /** Positionally aligned with `steps`; falls back to no image. */
   images?: (string | undefined)[];
 }) {
+  const p = useP();
   const [active, setActive] = useState(0);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [moved, setMoved] = useState(false);
@@ -52,7 +54,7 @@ export function ProcessExplorer({
       <div className="lg:col-span-5">
         <div
           role="tablist"
-          aria-label="Recovery process steps"
+          aria-label={p("Recovery process steps")}
           aria-orientation="vertical"
           onKeyDown={onKeyDown}
           className="flex flex-col"
@@ -128,7 +130,7 @@ export function ProcessExplorer({
                 </div>
               ) : null}
               <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-brand-700">
-                Step {step.number} of {String(steps.length).padStart(2, "0")}
+                {p("Step {n} of {total}", { n: step.number, total: String(steps.length).padStart(2, "0") })}
               </p>
               <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight text-navy-900">
                 {step.title}
@@ -145,7 +147,7 @@ export function ProcessExplorer({
                   disabled={active === 0}
                   className="inline-flex min-h-[2.75rem] items-center rounded px-2 text-[0.9375rem] font-medium text-brand-700 transition-colors hover:bg-brand-50 hover:text-brand-900 disabled:pointer-events-none disabled:text-steel-500"
                 >
-                  <span className="dir-arrow">&larr;</span> Previous
+                  <span className="dir-arrow">&larr;</span> {p("Previous")}
                 </button>
                 <button
                   type="button"
@@ -156,7 +158,7 @@ export function ProcessExplorer({
                   disabled={active === steps.length - 1}
                   className="inline-flex min-h-[2.75rem] items-center rounded px-2 text-[0.9375rem] font-medium text-brand-700 transition-colors hover:bg-brand-50 hover:text-brand-900 disabled:pointer-events-none disabled:text-steel-500"
                 >
-                  Next <span className="dir-arrow">&rarr;</span>
+                  {p("Next")} <span className="dir-arrow">&rarr;</span>
                 </button>
               </div>
             </div>

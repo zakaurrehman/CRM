@@ -7,6 +7,8 @@ import { downloadCsv, gradesToCsv } from "@/lib/export";
 import { ButtonEl, Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n/provider";
+import { categoryNameFor } from "@/lib/i18n/content";
+import { useP } from "@/lib/i18n/phrases/client";
 
 /**
  * Side-by-side composition comparison.
@@ -22,7 +24,8 @@ import { useI18n } from "@/lib/i18n/provider";
  * is itself information.
  */
 export function CompareTable() {
-  const { t } = useI18n();
+  const p = useP();
+  const { t, locale } = useI18n();
   const { index, error } = useAlloyIndex();
   const { ids, remove, clear } = useCompare();
   const saved = useSaved();
@@ -58,8 +61,7 @@ export function CompareTable() {
       <div className="rounded-lg border border-steel-200 bg-white px-6 py-16 text-center">
         <h2 className="font-display text-xl font-semibold text-navy-900">{t("compare", "emptyTitle")}</h2>
         <p className="mx-auto mt-3 max-w-md content-en text-[0.9375rem] leading-relaxed text-steel-600">
-          Add up to four grades from any category or from the alloy finder, and their compositions will line up here
-          for comparison.
+          {p("Add up to four grades from any category or from the alloy finder, and their compositions will line up here for comparison.")}
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
           <Button href="/materials/finder">{t("common", "openFinder")}</Button>
@@ -72,7 +74,7 @@ export function CompareTable() {
   }
 
   if (!index) {
-    return <p className="text-[0.9375rem] text-steel-600">Loading composition data&hellip;</p>;
+    return <p className="text-[0.9375rem] text-steel-600">{p("Loading composition data…")}</p>;
   }
 
   return (
@@ -108,8 +110,7 @@ export function CompareTable() {
         <div className="scroll-x">
           <table className="w-full border-collapse text-start">
             <caption className="sr-only">
-              Nominal composition of the selected grades, percentage by weight. Rows where the grades differ are
-              marked.
+              {p("Nominal composition of the selected grades, percentage by weight. Rows where the grades differ are marked.")}
             </caption>
             <thead>
               <tr>
@@ -117,7 +118,7 @@ export function CompareTable() {
                   scope="col"
                   className="sticky start-0 z-20 min-w-[7rem] border-b border-e border-steel-200 bg-steel-100 px-4 py-3 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-steel-600"
                 >
-                  Element
+               {p("Element")}
                 </th>
                 {grades.map((g) => (
                   <th
@@ -130,7 +131,7 @@ export function CompareTable() {
                         {g.name}
                       </Link>
                     </span>
-                    <span className="mt-1 block text-[0.75rem] font-normal text-steel-500">{g.categoryName}</span>
+                    <span className="mt-1 block text-[0.75rem] font-normal text-steel-500">{categoryNameFor(g.categorySlug, g.categoryName, locale)}</span>
                     <span className="mt-2 flex items-center gap-1.5 print:hidden">
                       <button
                         type="button"
@@ -150,7 +151,7 @@ export function CompareTable() {
                         onClick={() => remove(g.id)}
                         className="rounded-sm px-1.5 py-0.5 text-[0.6875rem] font-medium text-steel-600 transition-colors hover:bg-white hover:text-danger-600"
                       >
-                        Remove
+                    {p("Remove")}
                       </button>
                     </span>
                   </th>
@@ -185,7 +186,7 @@ export function CompareTable() {
                         row.differs && cell && cell.pct === row.highest && "font-semibold text-navy-900",
                       )}
                     >
-                      {cell ? formatAmount(cell) : <span aria-label="not specified">&ndash;</span>}
+                      {cell ? formatAmount(cell) : <span aria-label={p("not specified")}>&ndash;</span>}
                     </td>
                   ))}
                 </tr>
@@ -212,16 +213,13 @@ export function CompareTable() {
       </div>
 
       <p className="mt-4 text-[0.8125rem] leading-relaxed text-steel-500">
-        Percentage by weight. &ldquo;max&rdquo; is an upper limit rather than a nominal figure, and &ldquo;Bal.&rdquo;
-        is the balance of the alloy. A dash means the source table did not specify that element. Rows shaded grey are
-        identical across every grade shown. Confirm the specification against your own requirement before ordering.
+        {p("Percentage by weight. “max” is an upper limit rather than a nominal figure, and “Bal.” is the balance of the alloy. A dash means the source table did not specify that element. Rows shaded grey are identical across every grade shown. Confirm the specification against your own requirement before ordering.")}
       </p>
 
       <div className="mt-8 rounded-lg border border-brand-200 bg-brand-50 p-6 print:hidden">
         <h2 className="font-display text-lg font-semibold text-navy-900">{t("compare", "readyTitle")}</h2>
         <p className="mt-2 max-w-2xl text-[0.9375rem] leading-relaxed text-steel-700">
-          Send the selection straight through as a quotation request — the grades below travel with it, so nobody has
-          to retype a composition.
+          {p("Send the selection straight through as a quotation request — the grades below travel with it, so nobody has to retype a composition.")}
         </p>
         <div className="mt-5">
           <Button href={`/rfq?grades=${encodeURIComponent(ids.join(","))}`}>{t("common", "requestQuotation")}</Button>

@@ -8,6 +8,7 @@ import { useI18n } from "@/lib/i18n/provider";
 import { gradeId as makeGradeId } from "@/lib/alloy-ids";
 import { GradeActions } from "./GradeActions";
 import { ButtonEl } from "@/components/ui/Button";
+import { useP } from "@/lib/i18n/phrases/client";
 
 type View = "table" | "cards";
 
@@ -27,6 +28,7 @@ type View = "table" | "cards";
  * reader picks. The table stays the default because it is the reference view.
  */
 export function CompositionTable({ category }: { category: AlloyCategory }) {
+  const p = useP();
   const { t } = useI18n();
   const [query, setQuery] = useState("");
   const [view, setView] = useState<View>("table");
@@ -47,7 +49,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
             {t("table", "heading")}
           </h2>
           <p className="mt-2 text-[0.9375rem] text-steel-600">
-            {category.grades.length} grades &middot; percentage by weight
+            {p("{n} grades · percentage by weight", { n: category.grades.length })}
           </p>
         </div>
 
@@ -55,7 +57,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
           {category.grades.length > 8 ? (
             <div className="sm:w-72">
               <label htmlFor="grade-filter" className="sr-only">
-                Filter {category.name} grades by name
+                {t("table", "filterLabel", { category: category.name })}
               </label>
               <div className="relative">
                 <svg
@@ -101,7 +103,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
       </div>
 
       <p aria-live="polite" className="sr-only">
-        {filtering ? `${rows.length} of ${category.grades.length} grades shown` : ""}
+        {filtering ? t("table", "shownCount", { shown: rows.length, total: category.grades.length }) : ""}
       </p>
 
       {/* ---------- card view: phones only, and only when chosen ---------- */}
@@ -164,9 +166,9 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
         <div className="scroll-x max-h-[min(70vh,44rem)] overflow-y-auto xl:max-h-none xl:overflow-visible">
           <table className="w-full min-w-[46rem] border-collapse text-start">
             <caption className="sr-only">
-              Nominal chemical composition of {category.name} grades handled by IMS, in percentage by weight.
+              {p("Nominal chemical composition of {name} grades handled by IMS, in percentage by weight.", { name: category.name })}
               {" "}
-              {compositionFootnote}
+              {p(compositionFootnote)}
             </caption>
             <thead>
               <tr>
@@ -174,7 +176,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
                   scope="col"
                   className="sticky start-0 top-0 z-30 min-w-[15rem] border-b border-e border-steel-200 bg-steel-100 px-4 py-3 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-steel-600 xl:top-[var(--header-h)]"
                 >
-                  Grade
+             {p("Grade")}
                 </th>
                 {category.elements.map((el) => (
                   <th
@@ -186,7 +188,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
                       el === "Others" ? "min-w-[10rem] text-start" : "min-w-[4.25rem] text-end",
                     )}
                   >
-                    {el}
+                    {el === "Others" ? p("Others") : el}
                   </th>
                 ))}
               </tr>
@@ -244,16 +246,16 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
           {t("common", "printPdf")}
         </ButtonEl>
         <p className="text-[0.8125rem] text-steel-500">
-          Select grades to compare them side by side, or save them to a shortlist.
+          {p("Select grades to compare them side by side, or save them to a shortlist.")}
         </p>
       </div>
 
       <p className="mt-4 text-[0.8125rem] leading-relaxed text-steel-500">
-        {compositionFootnote} Values are reproduced from IMS technical data and are provided for
-        identification purposes; confirm the specification against your own requirement before ordering.
+        {p(compositionFootnote)}{" "}
+        {p("Values are reproduced from IMS technical data and are provided for identification purposes; confirm the specification against your own requirement before ordering.")}
       </p>
       <p className="mt-2 text-[0.8125rem] text-steel-500 sm:hidden">
-        Scroll the table sideways to see all elements, or switch to cards above.
+        {p("Scroll the table sideways to see all elements, or switch to cards above.")}
       </p>
     </div>
   );

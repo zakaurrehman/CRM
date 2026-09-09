@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useP } from "@/lib/i18n/phrases/client";
 
 export interface CarouselSlide {
   src: string;
@@ -32,6 +33,7 @@ export function ImageCarousel({
   intervalMs?: number;
   aspect?: string;
 }) {
+  const p = useP();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const reduced = useRef(false);
@@ -66,7 +68,7 @@ export function ImageCarousel({
       onBlurCapture={() => setPaused(false)}
       role="group"
       aria-roledescription="carousel"
-      aria-label="Operations gallery"
+      aria-label={p("Operations gallery")}
     >
       {slides.map((slide, i) => (
         <div
@@ -96,13 +98,13 @@ export function ImageCarousel({
 
       {slides[index].caption ? (
         <p className="absolute inset-x-5 bottom-14 text-[0.875rem] font-medium text-white drop-shadow">
-          {slides[index].caption}
+          {p(slides[index].caption)}
         </p>
       ) : null}
 
       {/* Announced to assistive tech; the visual change is obvious enough. */}
       <p aria-live="polite" className="sr-only">
-        {`Image ${index + 1} of ${slides.length}: ${slides[index].alt}`}
+        {p("Image {i} of {total}: {alt}", { i: index + 1, total: slides.length, alt: p(slides[index].alt) })}
       </p>
 
       {slides.length > 1 ? (
@@ -110,7 +112,7 @@ export function ImageCarousel({
           <button
             type="button"
             onClick={() => go(index - 1)}
-            aria-label="Previous image"
+            aria-label={p("Previous image")}
             className="absolute start-3 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-navy-950/50 text-white opacity-0 backdrop-blur-sm transition-opacity duration-200 hover:bg-navy-950/75 focus-visible:opacity-100 group-hover:opacity-100"
           >
             <svg viewBox="0 0 12 20" aria-hidden className="h-4 w-4 rtl:-scale-x-100">
@@ -120,7 +122,7 @@ export function ImageCarousel({
           <button
             type="button"
             onClick={() => go(index + 1)}
-            aria-label="Next image"
+            aria-label={p("Next image")}
             className="absolute end-3 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-navy-950/50 text-white opacity-0 backdrop-blur-sm transition-opacity duration-200 hover:bg-navy-950/75 focus-visible:opacity-100 group-hover:opacity-100"
           >
             <svg viewBox="0 0 12 20" aria-hidden className="h-4 w-4 rtl:-scale-x-100">

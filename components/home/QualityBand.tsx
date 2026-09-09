@@ -1,3 +1,4 @@
+import { getP } from "@/lib/i18n/server";
 import Image from "next/image";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { ProcessSteps } from "@/components/shared/ProcessSteps";
@@ -23,7 +24,9 @@ const controls = [
   },
 ];
 
-export function QualityBand() {
+export async function QualityBand() {
+  const p = await getP();
+
   return (
     <>
       {/* Header, then a full-width band of controls, then the note. The earlier
@@ -32,24 +35,22 @@ export function QualityBand() {
           under them. This follows the same rhythm as every other section. */}
       <Section tone="white" id="quality">
         <SectionHeader
-          eyebrow="Quality & compliance"
-          title="A metallurgical laboratory at the centre of the operation."
+          eyebrow={p("Quality & compliance")}
+          title={p("A metallurgical laboratory at the centre of the operation.")}
           description={
             <>
-              Whether it is receiving new samples, testing daily feed stock or analysing our production
-              line, laboratory results provide essential data to all areas of plant operations. We work
-              with customers to make sure material is well sampled and tested against their requirement.
+              {p("Whether it is receiving new samples, testing daily feed stock or analysing our production line, laboratory results provide essential data to all areas of plant operations. We work with customers to make sure material is well sampled and tested against their requirement.")}
             </>
           }
           align="split"
-          action={<ArrowLink href="/about/quality-and-compliance">How we control quality</ArrowLink>}
+          action={<ArrowLink href="/about/quality-and-compliance">{p("How we control quality")}</ArrowLink>}
         />
 
         <ul className="mt-14 grid grid-rule sm:grid-cols-2 lg:grid-cols-4">
           {controls.map((control, i) => (
-            <Reveal as="li" key={control.title} delay={i * 70} className="bg-white p-6 lg:p-7">
-              <h3 className="font-display text-base font-semibold text-navy-900">{control.title}</h3>
-              <p className="mt-2.5 text-[0.875rem] leading-relaxed text-steel-600">{control.body}</p>
+            <Reveal as="li" key={p(control.title)} delay={i * 70} className="bg-white p-6 lg:p-7">
+              <h3 className="font-display text-base font-semibold text-navy-900">{p(control.title)}</h3>
+              <p className="mt-2.5 text-[0.875rem] leading-relaxed text-steel-600">{p(control.body)}</p>
             </Reveal>
           ))}
         </ul>
@@ -58,7 +59,7 @@ export function QualityBand() {
           <figure className="relative hidden aspect-[16/9] overflow-hidden lg:col-span-7 lg:block lg:aspect-[21/9]">
             <Image
               src="/images/hero/hot-metal-plate.jpg"
-              alt="Hot metal plate at a steel mill"
+              alt={p("Hot metal plate at a steel mill")}
               fill
               sizes="(min-width: 1024px) 58vw, 100vw"
               className="object-cover"
@@ -66,13 +67,10 @@ export function QualityBand() {
           </figure>
           <div className="lg:col-span-5">
             <p className="content-en text-[0.9375rem] leading-relaxed text-steel-600">
-              IMS is committed to a policy of continuously improving quality performance throughout the
-              business, to ensure the highest standards of product and service are achieved.
+              {p("IMS is committed to a policy of continuously improving quality performance throughout the business, to ensure the highest standards of product and service are achieved.")}
             </p>
             <p className="mt-5 border-s-2 border-steel-300 ps-5 text-[0.875rem] leading-relaxed text-steel-600">
-              Certification accompanies material supplied by IMS. Specific standards and scheme
-              accreditations are confirmed per contract &mdash; ask us for the documentation that applies
-              to your requirement.
+              {p("Certification accompanies material supplied by IMS. Specific standards and scheme accreditations are confirmed per contract — ask us for the documentation that applies to your requirement.")}
             </p>
           </div>
         </div>
@@ -80,9 +78,9 @@ export function QualityBand() {
 
       <Section tone="muted" id="process">
         <SectionHeader
-          eyebrow="How IMS works"
-          title="From arising to certified supply."
-          description="Arisings are sorted, segregated, processed and certified, then sold to end customers around the world to be melted back into their parent alloys as either air-melt or vacuum grade products."
+          eyebrow={p("How IMS works")}
+          title={p("From arising to certified supply.")}
+          description={p("Arisings are sorted, segregated, processed and certified, then sold to end customers around the world to be melted back into their parent alloys as either air-melt or vacuum grade products.")}
           align="split"
         />
         <div className="mt-14">

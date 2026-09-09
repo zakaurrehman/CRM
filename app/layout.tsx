@@ -5,7 +5,8 @@ import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { CompareTray } from "@/components/materials/CompareTray";
 import { I18nProvider } from "@/lib/i18n/provider";
-import { LOCALE_STORAGE_KEY, localeMeta } from "@/lib/i18n/config";
+import { dirOf, localeMeta } from "@/lib/i18n/config";
+import { getLocale, getP } from "@/lib/i18n/server";
 import { JsonLd, organizationSchema, websiteSchema } from "@/lib/schema";
 import { navigation } from "@/lib/navigation";
 import { site } from "@/lib/site";
@@ -60,9 +61,18 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  /* Resolved on the server from the request, so the markup arrives in the right
+     language and direction. Nothing flips after hydration. */
+  const locale = await getLocale();
+  const p = await getP();
+
   return (
-    <html lang="en" className={`${inter.variable} ${archivo.variable} ${mono.variable}`}>
+    <html
+      lang={localeMeta[locale].tag}
+      dir={dirOf(locale)}
+      className={`${inter.variable} ${archivo.variable} ${mono.variable}`}
+    >
       <body className="flex min-h-screen flex-col">
         {/* Marks the document as script-enabled before first paint, so the
             scroll-reveal hidden state only ever applies where JavaScript can
@@ -71,23 +81,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
         />
-        {/* Applies the stored language's direction before the first paint, so a
-            Hebrew reader never sees the layout render left-to-right and then
-            flip. The words settle on hydration; the layout never moves. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var l=localStorage.getItem(${JSON.stringify(LOCALE_STORAGE_KEY)});if(!l)return;var m=${JSON.stringify(
-              Object.fromEntries(Object.entries(localeMeta).map(([code, meta]) => [code, [meta.tag, meta.dir]])),
-            )};var e=m[l];if(!e)return;var r=document.documentElement;r.lang=e[0];r.dir=e[1];}catch(_){}})()`,
-          }}
-        />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-[70] focus:rounded focus:bg-brand-700 focus:px-4 focus:py-2.5 focus:text-sm focus:font-medium focus:text-white"
         >
-          Skip to content
+          {p("Skip to content")}
         </a>
-        <I18nProvider>
+        <I18nProvider initialLocale={locale}>
           <Header items={navigation} />
           <main id="main" className="flex-1">
             {children}

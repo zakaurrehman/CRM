@@ -431,19 +431,64 @@ alloy bar or billet (currently generic steel rods) and stainless product
 ### 21. Translations need a native review before launch
 
 The site ships in English, Russian, French, Dutch and Hebrew. English is the
-default; the choice is remembered per browser.
+default; the choice is remembered per browser and applies to the whole
+application, not to the header alone.
 
-**What is translated:** the interface. Navigation, buttons, form labels and
-placeholders, filters, validation messages, system messages, the RFQ and the
-catalogue tools.
+**How it works.** Middleware reads the locale cookie and puts it on the request
+as `x-ims-locale`; server components read that through `getLocale()`. This is
+the part that matters: most of the site is server-rendered, and a server
+component cannot read a client-side React context, so a client-only
+implementation translates the navigation and leaves every page body in English.
+The cookie is mirrored into `localStorage` so the choice survives a cleared
+cookie, and changing language calls `router.refresh()` so the server tree
+re-renders in the new language without a full page load.
 
-**What is not, deliberately:** the technical content. Alloy designations
-(Inconel 718), element symbols and composition figures are international
-notation — translating them would be wrong, not helpful. Category descriptions
-and articles stay in English because a machine-grade translation of a material
-specification is a liability: get one term wrong and a buyer orders the wrong
-alloy. A short note under the language switcher says so, so nobody is left
-wondering why the tables are still English.
+**What is translated:** effectively all of it. Navigation and dropdowns,
+headings, body prose, buttons and calls to action, form labels, placeholders,
+hints, validation messages, success and error states, empty and loading states,
+search and filter controls, table captions and column labels, pagination,
+tooltips, breadcrumbs, screen-reader-only labels, the statistics and trust
+sections, the interactive recycling process, and the metadata (page titles,
+descriptions, `lang` and `dir`). Category, industry, recovery-stream, tungsten
+form and process-step descriptions are translated too, through a content
+overlay keyed by slug — all 19 streams, 15 categories, 4 industries, 9 tungsten
+forms and 6 process steps are covered in all four languages. Dates are
+formatted per locale rather than pinned to `en-GB`.
+
+**What is not, deliberately:**
+
+| Kept in English | Why |
+| --- | --- |
+| Alloy designations (Inconel 718, Hastelloy C276) | International identifiers; translating one would name a different material |
+| Element symbols (Ni, Cr, Co) | Case-significant notation — Co is cobalt, CO is carbon monoxide |
+| Composition values, `max`, `Bal.` | Numeric and notational |
+| Standards (ASTM, UNS, EN, AISI, AMS) | Standards bodies and their references |
+| Ferro-alloy codes (FeNiCr, FeW, FeMo) | Designations, not words |
+| Alloy-finder example queries | They are input to an English-language parser; a translated example would not run |
+| Article bodies | A machine-grade translation of a material specification is a liability — get one term wrong and a buyer orders the wrong alloy. Titles, standfirsts and descriptions are translated; the body falls back to English |
+| The RFQ email body sent to IMS | Addressed to the IMS team, not to the person filling the form in |
+
+**Measured coverage.** Residual English words per page, Russian, counting only
+words that are not in the keep-in-English list above:
+
+| Page | Before | After |
+| --- | --- | --- |
+| `/` | 558 | 16 |
+| `/about` | 414 | 9 |
+| `/materials/finder` | 331 | 40 |
+| `/materials/nickel-alloys` | 302 | 19 |
+| `/recycling` | 204 | 4 |
+| `/rfq` | 159 | 3 |
+| `/contact` | 150 | 4 |
+| `/materials` | 144 | 12 |
+| `/industries` | 105 | 7 |
+| `/recycling/tungsten` | 97 | 12 |
+| `/insights` | 79 | 3 |
+
+What remains is alloy names and composition notation — the rows in the table
+above. Hebrew tracks Russian almost exactly because both are measured the same
+way; French and Dutch cannot be measured this way at all, because the check
+cannot tell French from English by script alone.
 
 **These translations have not been reviewed by a native speaker.** They are
 competent but they were not written by someone who trades metal in these
@@ -457,25 +502,41 @@ languages, and that is exactly where the risk sits. Terms to check first:
 | filtercake | Specific residue form |
 | grade | "Nuance" in French, "kwaliteit" in Dutch — not "grade" |
 
-Files are `lib/i18n/dictionaries/{ru,fr,nl,he}.ts`. Each is a flat list of
-key/value pairs a translator can work through without touching code, and the
-types make a missing key a build failure rather than a blank label in
-production. Hebrew needs the most attention: metallurgical vocabulary is less
-settled there and several terms are descriptive rather than standard usage.
+Files are `lib/i18n/dictionaries/{ru,fr,nl,he}.ts` for short interface labels,
+`lib/i18n/phrases/{ru,fr,nl,he}.ts` for page prose (~590 entries each, keyed by
+the English source so a missing translation degrades to readable English rather
+than a blank or a raw key), and `lib/i18n/content/{ru,fr,nl,he}.ts` for the
+slug-keyed data overlays. All three are flat lists a translator can work
+through without touching code, and the dictionary types make a missing key a
+build failure rather than a blank label in production. Hebrew needs the most
+attention: metallurgical vocabulary is less settled there and several terms are
+descriptive rather than standard usage.
 
-**URLs do not change with language.** The content that would justify a
-per-language URL is the part that stays in English, so per-locale URLs would
-serve near-duplicate pages and split their own ranking. It also keeps the legacy
-301 map, the sitemap and every existing link untouched. If IMS later has the
-technical content professionally translated, per-locale routing becomes worth
-adding and should be revisited then.
+**URLs do not change with language.** The identifiers that would justify a
+per-language URL are exactly the part that stays in English, so per-locale URLs
+would serve near-duplicate pages and split their own ranking. It also keeps the
+legacy 301 map, the sitemap and every existing internal link untouched. The
+trade-off is that pages render per request and search engines, which do not
+send cookies, index the English version. If IMS later has the technical content
+professionally translated, per-locale routing becomes worth adding and should
+be revisited then.
+
+**Caching.** Because the locale comes from a cookie, an HTML response is only
+valid for the cookie that produced it. Pages are sent `private, no-store`,
+which is what actually prevents a shared cache from handing one visitor a page
+rendered for another. A `Vary: Cookie` header is declared in `next.config.ts`,
+but Next.js replaces `Vary` on RSC-rendered routes with its own router values,
+so it does not survive on most pages — verified against a running build. This
+is safe as it stands; it would need revisiting if these routes were ever made
+cacheable.
 
 **Right-to-left** is implemented for Hebrew through logical CSS properties, so
 the layout mirrors rather than being restyled: navigation, drawer, tables,
-forms, cards and the sticky grade column all flip. English paragraphs inside an
-RTL page are marked so their punctuation does not migrate to the wrong end of
-the sentence. Verified for layout mirroring and horizontal overflow at 1440,
-768 and 390px.
+forms, cards and the sticky grade column all flip, and the logo moves to the
+right of the header with the call to action on the left. English paragraphs
+inside an RTL page are marked so their punctuation does not migrate to the
+wrong end of the sentence. Verified for layout mirroring and horizontal
+overflow at 1440, 1024, 768 and 390px across seven pages.
 
 ---
 

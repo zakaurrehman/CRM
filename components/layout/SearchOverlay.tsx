@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { searchSite, kindLabels, type SearchDoc } from "@/lib/search";
 import { cn } from "@/lib/utils";
+import { useP } from "@/lib/i18n/phrases/client";
 
 /**
  * Search overlay.
@@ -14,6 +15,7 @@ import { cn } from "@/lib/utils";
  * Cmd/Ctrl-K opens it, arrow keys move the active row and Enter follows it.
  */
 export function SearchOverlay({ onClose }: { onClose: () => void }) {
+  const p = useP();
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
@@ -65,7 +67,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Site search"
+        aria-label={p("Site search")}
         onKeyDown={onKeyDown}
         className="relative mt-[8vh] flex w-full max-w-2xl flex-col overflow-hidden rounded-lg bg-white shadow-lift"
       >
@@ -85,7 +87,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
             aria-autocomplete="list"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search alloys, grades, streams and pages"
+            placeholder={p("Search alloys, grades, streams and pages")}
             className="h-14 w-full border-0 bg-transparent text-[1.0625rem] text-navy-900 outline-none placeholder:text-steel-500 focus-visible:border-0 focus-visible:ring-0"
           />
           <button
@@ -101,7 +103,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
           {query.trim().length < 2 ? (
             <div className="px-5 py-8">
               <p className="text-sm text-steel-500">
-                Search 295 alloy grades, 15 material categories, recovery streams and every page.
+                {p("Search 295 alloy grades, 15 material categories, recovery streams and every page.")}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {["Inconel 718", "Hastelloy", "Tungsten", "EAF Dust", "Aerospace"].map((suggestion) => (
@@ -159,7 +161,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
         <div className="hidden items-center gap-4 border-t border-steel-200 bg-steel-50 px-5 py-2.5 font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-steel-500 sm:flex">
           <span>&uarr;&darr; Navigate</span>
           <span>&crarr; Open</span>
-          <span>ESC Close</span>
+          <span>{p("ESC Close")}</span>
         </div>
       </div>
     </div>

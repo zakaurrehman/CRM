@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { industries, industryBySlug } from "@/data/industries";
+import { getLocale, getP } from "@/lib/i18n/server";
+import { localiseIndustry, localiseCategory } from "@/lib/i18n/content";
 import { alloyCategoryBySlug } from "@/data/alloys";
 import { PageHero } from "@/components/shared/PageHero";
 import { Section, SectionHeader } from "@/components/ui/Section";
@@ -22,8 +24,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const industry = industryBySlug.get(slug);
-  if (!industry) return {};
+  const base = industryBySlug.get(slug);
+  if (!base) return {};
+  const industry = localiseIndustry(base, await getLocale());
 
   return pageMetadata({
     title: industry.name,
@@ -34,9 +37,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 }
 
 export default async function IndustryPage({ params }: Params) {
+  const p = await getP();
   const { slug } = await params;
-  const industry = industryBySlug.get(slug);
-  if (!industry) notFound();
+  const locale = await getLocale();
+  const base = industryBySlug.get(slug);
+  if (!base) notFound();
+  const industry = localiseIndustry(base, locale);
 
   const trail = [
     { name: "Home", href: "/" },
@@ -46,7 +52,8 @@ export default async function IndustryPage({ params }: Params) {
 
   const materials = industry.materials
     .map((materialSlug) => alloyCategoryBySlug.get(materialSlug))
-    .filter((category): category is NonNullable<typeof category> => Boolean(category));
+    .filter((category): category is NonNullable<typeof category> => Boolean(category))
+    .map((category) => localiseCategory(category, locale));
 
   /* Counted from the catalogue rather than stated, so the figure on a sector
      page cannot drift away from the tables it summarises. */
@@ -68,7 +75,7 @@ export default async function IndustryPage({ params }: Params) {
 
       <Section tone="white">
         <SectionHeader
-          eyebrow="Capabilities"
+          eyebrow={p("Capabilities")}
           title={"What we do for " + industry.name.toLowerCase() + "."}
           align="split"
         />
@@ -90,9 +97,9 @@ export default async function IndustryPage({ params }: Params) {
       {materials.length > 0 ? (
         <Section tone="light">
           <SectionHeader
-            eyebrow="Materials"
-            title="Alloy families we supply into this sector."
-            description="Each category carries its published nominal composition for every grade."
+            eyebrow={p("Materials")}
+            title={p("Alloy families we supply into this sector.")}
+            description={p("Each category carries its published nominal composition for every grade.")}
             align="split"
           />
           <div className="mt-12 grid grid-rule sm:grid-cols-2 lg:grid-cols-4">
@@ -107,22 +114,21 @@ export default async function IndustryPage({ params }: Params) {
             <div className="grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-12">
               <div className="lg:col-span-7">
                 <h3 className="font-display text-xl font-semibold tracking-tight text-navy-900">
-                  {sectorGradeCount} grades documented for {industry.name.toLowerCase()}
+                  {p("{n} grades documented for {sector}", { n: sectorGradeCount, sector: industry.name.toLowerCase() })}
                 </h3>
                 <p className="mt-3 content-en text-[0.9375rem] leading-relaxed text-steel-600">
-                  Across {materials.length}{" "}
-                  {materials.length === 1 ? "category" : "categories"}, covering{" "}
-                  {sectorElements.slice(0, 8).join(", ")}
-                  {sectorElements.length > 8 ? ` and ${sectorElements.length - 8} more elements` : ""}. Search
-                  them by composition, line up candidates side by side, or send a specification straight through
-                  for pricing.
+                  {p("Across {cats} categories, covering {elements}{extra}. Search them by composition, line up candidates side by side, or send a specification straight through for pricing.", {
+                    cats: materials.length,
+                    elements: sectorElements.slice(0, 8).join(", "),
+                    extra: sectorElements.length > 8
+                      ? p(" and {n} more elements", { n: sectorElements.length - 8 })
+                      : "",
+                  })}
                 </p>
               </div>
               <div className="flex flex-wrap gap-3 lg:col-span-5 lg:justify-end">
-                <Button href="/materials/finder">Search by composition</Button>
-                <Button href="/rfq" variant="secondary">
-                  Request a quotation
-                </Button>
+                <Button href="/materials/finder">{p("Search by composition")}</Button>
+                <Button href="/rfq" variant="secondary">{p("Request a quotation")}</Button>
               </div>
             </div>
           </div>
@@ -132,10 +138,11 @@ export default async function IndustryPage({ params }: Params) {
       <Section tone="white">
         <div className="border-t border-steel-200 pt-10">
           <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
-            Other sectors
+            {p("Other sectors")}
           </h2>
           <ul className="mt-5 flex flex-wrap gap-3">
             {industries
+              .map((other) => localiseIndustry(other, locale))
               .filter((other) => other.slug !== industry.slug)
               .map((other) => (
                 <li key={other.slug}>
@@ -153,9 +160,9 @@ export default async function IndustryPage({ params }: Params) {
 
       <CtaSection
         title={"Talk to us about " + industry.name.toLowerCase() + " material."}
-        body="Supply, recovery or both — tell us the specification and the volume and we will come back with a route for it."
-        primary={{ href: "/rfq", label: "Request a quotation" }}
-        secondary={{ href: "/materials/finder", label: "Search by composition" }}
+        body={p("Supply, recovery or both — tell us the specification and the volume and we will come back with a route for it.")}
+        primary={{ href: "/rfq", label: p("Request a quotation") }}
+        secondary={{ href: "/materials/finder", label: p("Search by composition") }}
       />
 
       <JsonLd data={breadcrumbSchema(trail)} />

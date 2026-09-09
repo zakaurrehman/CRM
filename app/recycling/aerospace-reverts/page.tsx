@@ -1,3 +1,4 @@
+import { getP } from "@/lib/i18n/server";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHero } from "@/components/shared/PageHero";
@@ -16,23 +17,27 @@ const trail = [
   { name: "Aerospace Reverts", href: "/recycling/aerospace-reverts" },
 ];
 
-export const metadata: Metadata = pageMetadata({
-  title: "Aerospace Revert Solutions",
+export async function generateMetadata(): Promise<Metadata> {
+  const p = await getP();
+  return pageMetadata({
+  title: p("Aerospace Revert Solutions"),
   description:
-    "Engine teardown, onsite destruction of life-limited parts, superalloy sorting and grading, and precious metal recovery for the aviation industry.",
+    p("Engine teardown, onsite destruction of life-limited parts, superalloy sorting and grading, and precious metal recovery for the aviation industry."),
   path: "/recycling/aerospace-reverts",
   image: "/images/aerospace/aero-engines.jpg",
 });
+}
 
-export default function AerospaceRevertsPage() {
+export default async function AerospaceRevertsPage() {
+  const p = await getP();
   const aerospace = industryBySlug.get("aerospace");
 
   return (
     <>
       <PageHero
-        eyebrow="Recycling & recovery"
-        title="Aerospace revert solutions"
-        intro="IMS are leading global specialists providing recycling and revert solutions to the aviation and support industry. Led by an experienced team of aviation recycling experts, we offer completely bespoke services built around each customer's material, security and documentation requirements."
+        eyebrow={p("Recycling & recovery")}
+        title={p("Aerospace revert solutions")}
+        intro={p("IMS are leading global specialists providing recycling and revert solutions to the aviation and support industry. Led by an experienced team of aviation recycling experts, we offer completely bespoke services built around each customer's material, security and documentation requirements.")}
         trail={trail}
         image="/images/aerospace/aero-engines.jpg"
         imageAlt=""
@@ -40,9 +45,9 @@ export default function AerospaceRevertsPage() {
 
       <Section tone="white">
         <SectionHeader
-          eyebrow="Services"
-          title="A revert route that protects both the alloy and the part record."
-          description="Aerospace material carries two kinds of value: the metal itself, and the certainty that a retired part can never return to service. Our services address both."
+          eyebrow={p("Services")}
+          title={p("A revert route that protects both the alloy and the part record.")}
+          description={p("Aerospace material carries two kinds of value: the metal itself, and the certainty that a retired part can never return to service. Our services address both.")}
           align="split"
         />
 
@@ -64,11 +69,9 @@ export default function AerospaceRevertsPage() {
       <Section tone="light">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
-            <h2 className="text-display-sm">Precious metal recovery</h2>
+            <h2 className="text-display-sm">{p("Precious metal recovery")}</h2>
             <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-600">
-              Aerospace components carry more than their base alloy. Coatings and specialist assemblies
-              contain metals worth recovering in their own right, and they are routinely lost when parts are
-              treated as bulk scrap.
+              {p("Aerospace components carry more than their base alloy. Coatings and specialist assemblies contain metals worth recovering in their own right, and they are routinely lost when parts are treated as bulk scrap.")}
             </p>
             <ul className="mt-8 grid grid-cols-3 grid-rule">
               {companyFacts.preciousMetalsRecovered.map((metal) => (
@@ -80,7 +83,7 @@ export default function AerospaceRevertsPage() {
             <p className="mt-8 content-en text-[0.9375rem] leading-relaxed text-steel-600">
               Recovered superalloy returns to the melt as either air-melt or vacuum grade product, sorted
               and graded so it re-enters production as a known specification.{" "}
-              <ArrowLink href="/materials/complex-nickel-alloys">Complex nickel alloys</ArrowLink>
+              <ArrowLink href="/materials/complex-nickel-alloys">{p("Complex nickel alloys")}</ArrowLink>
             </p>
           </div>
 
@@ -88,7 +91,7 @@ export default function AerospaceRevertsPage() {
             <figure className="relative aspect-[3/4] overflow-hidden">
               <Image
                 src="/images/company/scrap-yard.jpg"
-                alt="Recovered material staged for sorting and grading"
+                alt={p("Recovered material staged for sorting and grading")}
                 fill
                 sizes="(min-width: 1024px) 34vw, 100vw"
                 className="object-cover"
@@ -99,8 +102,8 @@ export default function AerospaceRevertsPage() {
       </Section>
 
       <CtaSection
-        title="Talk to our aviation recycling team."
-        body="Engine teardown, onsite destruction, superalloy grading or precious metal recovery — tell us the programme and we will build the service around it."
+        title={p("Talk to our aviation recycling team.")}
+        body={p("Engine teardown, onsite destruction, superalloy grading or precious metal recovery — tell us the programme and we will build the service around it.")}
         primary={{ href: "/contact", label: "Discuss a revert programme" }}
         secondary={{ href: "/industries/aerospace", label: "Aerospace capabilities" }}
       />

@@ -8,6 +8,7 @@ import { cn, normalise } from "@/lib/utils";
 import type { AlloyCategorySummary, AlloyGroup } from "@/types/content";
 import type { ElementShare } from "@/lib/alloy-profile";
 import { SpecimenArt } from "./SpecimenArt";
+import { useP } from "@/lib/i18n/phrases/client";
 
 type Filter = AlloyGroup | "all";
 
@@ -31,6 +32,7 @@ export function MaterialsBrowser({
      composition tables, and this component runs in the browser. */
   profiles: Record<string, ElementShare[]>;
 }) {
+  const p = useP();
   const [query, setQuery] = useState("");
   const [group, setGroup] = useState<Filter>("all");
 
@@ -73,7 +75,7 @@ export function MaterialsBrowser({
       <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
         <div className="lg:w-96">
           <label htmlFor="material-search" className="sr-only">
-            Search materials and alloy grades
+            {p("Search materials and alloy grades")}
           </label>
           <div className="relative">
             <svg
@@ -89,14 +91,14 @@ export function MaterialsBrowser({
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search grades, e.g. Inconel 718, Stellite, Nimonic"
+              placeholder={p("Search grades, e.g. Inconel 718, Stellite, Nimonic")}
               className="h-12 w-full rounded border border-steel-300 bg-white ps-10 pe-4 text-[0.9375rem] text-navy-900 transition-colors placeholder:text-steel-500 hover:border-steel-400 focus:border-brand-700"
             />
           </div>
         </div>
 
         <div className="scroll-x -mx-5 px-5 lg:mx-0 lg:px-0">
-          <div role="group" aria-label="Filter by material group" className="flex w-max gap-2 pb-1 lg:w-auto">
+          <div role="group" aria-label={p("Filter by material group")} className="flex w-max gap-2 pb-1 lg:w-auto">
             {(["all", ...alloyGroupOrder] as Filter[]).map((g) => {
               const selected = group === g;
               return (
@@ -112,7 +114,7 @@ export function MaterialsBrowser({
                       : "border-steel-300 bg-white text-steel-700 hover:border-brand-700 hover:text-brand-700",
                   )}
                 >
-                  {g === "all" ? "All materials" : alloyGroupLabels[g]}
+                  {g === "all" ? p("All materials") : p(alloyGroupLabels[g])}
                   <span
                     className={cn(
                       "font-mono text-[0.6875rem] tabular-nums",
@@ -130,7 +132,7 @@ export function MaterialsBrowser({
 
       {gradeHits.length > 0 ? (
         <div className="mt-8 rounded-md border border-brand-200 bg-brand-50/60 p-5">
-          <p className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-brand-800">Matching grades</p>
+          <p className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-brand-800">{p("Matching grades")}</p>
           <ul className="mt-3 flex flex-wrap gap-2">
             {gradeHits.map((hit) => (
               <li key={hit.href}>
@@ -149,7 +151,7 @@ export function MaterialsBrowser({
 
       {/* Names the results region for assistive technology and keeps the heading
           order intact between the page h1 and the h3 on each card. */}
-      <h2 className="sr-only">Material categories</h2>
+      <h2 className="sr-only">{p("Material categories")}</h2>
 
       <p aria-live="polite" className="mt-8 text-[0.875rem] text-steel-500">
         {categories.length} {categories.length === 1 ? "category" : "categories"}
@@ -193,7 +195,7 @@ export function MaterialsBrowser({
                     </>
                   )}
                   <span className="absolute bottom-3 start-4 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-white tabular-nums">
-                    {category.gradeCount} grades
+                    {p("{n} grades", { n: category.gradeCount })}
                   </span>
                 </div>
                 <div className="flex flex-1 flex-col p-5">
@@ -214,7 +216,7 @@ export function MaterialsBrowser({
                     ))}
                   </ul>
                   <span className="mt-5 inline-flex items-center gap-1.5 text-[0.875rem] font-medium text-brand-700">
-                    View composition
+                    {p("View composition")}
                     <span
                       aria-hidden
                       className="transition-transform duration-200 ease-swift group-hover:translate-x-1"
@@ -229,16 +231,15 @@ export function MaterialsBrowser({
         </ul>
       ) : (
         <div className="mt-5 rounded-md border border-steel-200 bg-steel-50 px-6 py-16 text-center">
-          <p className="font-display text-lg font-semibold text-navy-900">No material matches that search</p>
+          <p className="font-display text-lg font-semibold text-navy-900">{p("No material matches that search")}</p>
           <p className="mx-auto mt-2 max-w-md text-[0.9375rem] text-steel-600">
-            We handle a wider range than is listed here, including pure metals and ferro-alloys. Tell us what
-            you are looking for and we will confirm whether we can source or recover it.
+            {p("We handle a wider range than is listed here, including pure metals and ferro-alloys. Tell us what you are looking for and we will confirm whether we can source or recover it.")}
           </p>
           <Link
             href="/contact"
             className="mt-6 inline-flex h-11 items-center rounded bg-brand-700 px-5 text-[0.9375rem] font-medium text-white transition-colors hover:bg-brand-800"
           >
-            Ask about a material
+            {p("Ask about a material")}
           </Link>
         </div>
       )}

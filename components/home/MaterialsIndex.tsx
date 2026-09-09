@@ -1,3 +1,4 @@
+import { getP } from "@/lib/i18n/server";
 import Image from "next/image";
 import Link from "next/link";
 import type { AlloyCategoryTeaser } from "@/types/content";
@@ -22,29 +23,28 @@ import { SpecimenArt } from "@/components/materials/SpecimenArt";
  * Now a server component: the previous version needed client-side hover state
  * to show a preview, which meant nothing at all on touch.
  */
-export function MaterialsIndex({
+export async function MaterialsIndex({
   categories,
   totalGrades,
 }: {
   categories: AlloyCategoryTeaser[];
   totalGrades: number;
 }) {
+  const p = await getP();
+
   return (
     <Section tone="white">
       <SectionHeader
-        eyebrow="Metals & alloys"
-        title="The full range, with the data behind it."
+        eyebrow={p("Metals & alloys")}
+        title={p("The full range, with the data behind it.")}
         description={
           <>
-            {totalGrades} grades across {categories.length} categories, each published with its nominal
-            composition. Open any category for the full table.
+            {p("{grades} grades across {cats} categories, each published with its nominal composition. Open any category for the full table.", { grades: totalGrades, cats: categories.length })}
           </>
         }
         align="split"
         action={
-          <Button href="/materials" variant="secondary">
-            Explore all materials
-          </Button>
+          <Button href="/materials" variant="secondary">{p("Explore all materials")}</Button>
         }
       />
 
@@ -80,7 +80,7 @@ export function MaterialsIndex({
               )}
               <div className="relative">
                 <p className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-brand-300 tabular-nums">
-                  {category.gradeCount} grades
+                  {p("{n} grades", { n: category.gradeCount })}
                 </p>
                 <h3 className="mt-1.5 font-display text-[0.9375rem] font-semibold leading-tight text-white">
                   {category.name}

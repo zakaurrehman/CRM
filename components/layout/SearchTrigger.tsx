@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { useP } from "@/lib/i18n/phrases/client";
 
 /**
  * Search entry point.
@@ -16,6 +17,7 @@ const SearchOverlay = dynamic(() => import("./SearchOverlay").then((m) => m.Sear
 });
 
 export function SearchTrigger() {
+  const p = useP();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export function SearchTrigger() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Search materials and pages"
+        aria-label={p("Search materials and pages")}
         aria-expanded={open}
         title="Search (Ctrl+K)"
         className="inline-flex h-10 w-10 items-center justify-center rounded text-steel-600 transition-colors hover:bg-steel-100 hover:text-brand-700"

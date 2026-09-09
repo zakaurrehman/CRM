@@ -1,10 +1,12 @@
+import { getP } from "@/lib/i18n/server";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { footerNavigation } from "@/lib/navigation";
 import { contact, site } from "@/lib/site";
 
-export function Footer() {
+export async function Footer() {
+  const p = await getP();
   const year = new Date().getFullYear();
 
   return (
@@ -21,12 +23,11 @@ export function Footer() {
               className="h-12 w-auto opacity-90 brightness-0 invert"
             />
             <p className="mt-6 max-w-sm text-[0.9375rem] leading-relaxed text-steel-400">
-              Sourcing, processing and certifying metals, alloys and metal-bearing residues for the
-              aerospace, oil &amp; gas, industrial gas turbine and stainless steel industries.
+              {p("Sourcing, processing and certifying metals, alloys and metal-bearing residues for the aerospace, oil & gas, industrial gas turbine and stainless steel industries.")}
             </p>
 
             <address className="mt-8 not-italic">
-              <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-400">Head office</p>
+              <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-400">{p("Head office")}</p>
               <p className="mt-2 text-[0.9375rem] leading-relaxed text-steel-300">
                 {contact.address.street}
                 <br />
@@ -71,9 +72,9 @@ export function Footer() {
 
           <div className="grid gap-10 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-4 lg:gap-8">
             {footerNavigation.map((col) => (
-              <nav key={col.heading} aria-label={col.heading}>
+              <nav key={p(col.heading)} aria-label={p(col.heading)}>
                 <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-400">
-                  {col.heading}
+                  {p(col.heading)}
                 </h2>
                 <ul className="mt-4 space-y-2.5">
                   {col.links.map((link) => (
@@ -82,7 +83,7 @@ export function Footer() {
                         href={link.href}
                         className="rounded-sm text-[0.9375rem] text-steel-300 transition-colors hover:text-white"
                       >
-                        {link.label}
+                        {p(link.label)}
                       </Link>
                     </li>
                   ))}
@@ -97,14 +98,14 @@ export function Footer() {
             row rather than the button so the button stays where it is. */}
         <div className="flex flex-col gap-4 border-t border-white/10 py-7 sm:flex-row sm:items-center sm:justify-between sm:pe-16">
           <p className="text-[0.8125rem] text-steel-400">
-            &copy; {year} {site.legalName}. All rights reserved.
+            &copy; {year} {site.legalName}. {p("All rights reserved.")}
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[0.8125rem]">
             <Link href="/contact" className="inline-flex min-h-[1.75rem] items-center rounded-sm text-steel-400 transition-colors hover:text-white">
-              Contact
+              {p("Contact")}
             </Link>
             <Link href="/materials" className="inline-flex min-h-[1.75rem] items-center rounded-sm text-steel-400 transition-colors hover:text-white">
-              Materials
+              {p("Materials")}
             </Link>
           </div>
         </div>

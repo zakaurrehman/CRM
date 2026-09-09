@@ -1,3 +1,4 @@
+import { getP } from "@/lib/i18n/server";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { CountUp } from "@/components/ui/CountUp";
@@ -20,7 +21,9 @@ interface Fact {
  * rendered once `experience.years` is set in lib/site.ts — the legacy site
  * published two contradictory numbers and neither is asserted here.
  */
-export function CredibilityStrip() {
+export async function CredibilityStrip() {
+  const p = await getP();
+
   const facts: Fact[] = [
     ...(experience.verified && experience.years
       ? [
@@ -35,7 +38,7 @@ export function CredibilityStrip() {
     {
       value: totalGradeCount,
       label: "Alloy grades documented",
-      detail: `Across ${alloyCategoryCount} material categories with full composition data`,
+      detail: p("Across {n} material categories with full composition data", { n: alloyCategoryCount }),
     },
     {
       value: recoveryStreams.length,
@@ -59,8 +62,8 @@ export function CredibilityStrip() {
       <Container>
         <dl className="grid grid-rule sm:grid-cols-2 lg:grid-cols-4">
           {facts.slice(0, 4).map((fact, i) => (
-            <Reveal key={fact.label} delay={i * 70} className="bg-white p-7 lg:p-8">
-              <dt className="sr-only">{fact.label}</dt>
+            <Reveal key={p(fact.label)} delay={i * 70} className="bg-white p-7 lg:p-8">
+              <dt className="sr-only">{p(fact.label)}</dt>
               <dd>
                 <CountUp
                   value={fact.value}
@@ -68,9 +71,9 @@ export function CredibilityStrip() {
                   className="block font-display text-4xl font-bold tracking-tight text-brand-700 tabular-nums lg:text-5xl"
                 />
                 <span className="mt-3 block font-display text-[0.9375rem] font-semibold text-navy-900">
-                  {fact.label}
+                  {p(fact.label)}
                 </span>
-                <span className="mt-1.5 block text-[0.8125rem] leading-relaxed text-steel-500">{fact.detail}</span>
+                <span className="mt-1.5 block text-[0.8125rem] leading-relaxed text-steel-500">{p(fact.detail)}</span>
               </dd>
             </Reveal>
           ))}

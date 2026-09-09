@@ -8,30 +8,38 @@ import { Reveal } from "@/components/ui/Reveal";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 import { articlesByDate } from "@/data/insights";
+import { getLocale, getP } from "@/lib/i18n/server";
+import { localiseArticle } from "@/lib/i18n/content";
 import { formatDate } from "@/lib/utils";
+import { localeMeta } from "@/lib/i18n/config";
 
 const trail = [
   { name: "Home", href: "/" },
   { name: "Insights", href: "/insights" },
 ];
 
-export const metadata: Metadata = pageMetadata({
-  title: "Insights",
+export async function generateMetadata(): Promise<Metadata> {
+  const p = await getP();
+  return pageMetadata({
+  title: p("Insights"),
   description:
-    "Articles from IMS Metals & Alloys on metal recovery, industry standards and the role of specialist alloys in global supply chains.",
+    p("Articles from IMS Metals & Alloys on metal recovery, industry standards and the role of specialist alloys in global supply chains."),
   path: "/insights",
   image: "/images/news/sustainable-metal-recovery.jpg",
 });
+}
 
-export default function InsightsPage() {
-  const [lead, ...rest] = articlesByDate;
+export default async function InsightsPage() {
+  const p = await getP();
+  const locale = await getLocale();
+  const [lead, ...rest] = articlesByDate.map((a) => localiseArticle(a, locale));
 
   return (
     <>
       <PageHero
-        eyebrow="Insights"
-        title="Perspective from the material chain"
-        intro="Notes on metal recovery, material standards and the alloys that global industry depends on."
+        eyebrow={p("Insights")}
+        title={p("Perspective from the material chain")}
+        intro={p("Notes on metal recovery, material standards and the alloys that global industry depends on.")}
         trail={trail}
       />
 
@@ -51,16 +59,16 @@ export default function InsightsPage() {
               </div>
               <div className="lg:col-span-5 lg:self-center">
                 <p className="flex items-center gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500">
-                  <span className="text-brand-700">Latest</span>
+                  <span className="text-brand-700">{p("Latest")}</span>
                   <span aria-hidden className="h-px w-6 bg-steel-300" />
-                  <time dateTime={lead.published}>{formatDate(lead.published)}</time>
+                  <time dateTime={lead.published}>{formatDate(lead.published, localeMeta[locale].tag)}</time>
                 </p>
                 <h2 className="mt-5 font-display text-display-sm text-navy-900 transition-colors group-hover:text-brand-700">
                   {lead.title}
                 </h2>
                 <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-600">{lead.standfirst}</p>
                 <span className="mt-7 inline-flex items-center gap-1.5 text-[0.9375rem] font-medium text-brand-700">
-                  Read article
+                  {p("Read article")}
                   <span aria-hidden className="transition-transform duration-200 ease-swift group-hover:translate-x-1">
                     <span className="dir-arrow">&rarr;</span>
                   </span>
@@ -74,7 +82,7 @@ export default function InsightsPage() {
       {rest.length > 0 ? (
         <Section tone="light">
           <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
-            More insights
+            {p("More insights")}
           </h2>
           <ul className="mt-8 grid grid-rule sm:grid-cols-2">
             {rest.map((article, i) => (
@@ -91,9 +99,9 @@ export default function InsightsPage() {
                   </div>
                   <div className="flex flex-1 flex-col p-7">
                     <p className="flex items-center gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500">
-                      <time dateTime={article.published}>{formatDate(article.published)}</time>
+                      <time dateTime={article.published}>{formatDate(article.published, localeMeta[locale].tag)}</time>
                       <span aria-hidden className="h-px w-5 bg-steel-300" />
-                      <span>{article.readingMinutes} min read</span>
+                      <span>{p("{n} min read", { n: article.readingMinutes })}</span>
                     </p>
                     <h3 className="mt-4 font-display text-xl font-semibold leading-snug tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
                       {article.title}
@@ -109,7 +117,7 @@ export default function InsightsPage() {
         </Section>
       ) : null}
 
-      <CtaSection secondary={{ href: "/materials", label: "Explore materials" }} />
+      <CtaSection secondary={{ href: "/materials", label: p("Explore materials") }} />
 
       <JsonLd data={breadcrumbSchema(trail)} />
     </>

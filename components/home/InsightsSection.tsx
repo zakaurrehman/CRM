@@ -1,28 +1,33 @@
+import { getLocale, getP } from "@/lib/i18n/server";
+import { localiseArticle } from "@/lib/i18n/content";
 import Image from "next/image";
 import Link from "next/link";
 import { articlesByDate } from "@/data/insights";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { formatDate } from "@/lib/utils";
+import { localeMeta } from "@/lib/i18n/config";
 
 /**
  * Editorial layout: one lead article at full bleed with the rest as a ruled
  * index beside it, rather than three equal-weight cards.
  */
-export function InsightsSection() {
-  const [lead, ...rest] = articlesByDate;
+export async function InsightsSection() {
+  const p = await getP();
+  const locale = await getLocale();
+
+  // Titles and standfirsts live in the content overlay, keyed by slug.
+  const [lead, ...rest] = articlesByDate.map((a) => localiseArticle(a, locale));
   if (!lead) return null;
 
   return (
     <Section tone="white">
       <SectionHeader
-        eyebrow="Insights"
-        title="Perspective from the material chain."
+        eyebrow={p("Insights")}
+        title={p("Perspective from the material chain.")}
         align="split"
         action={
-          <Button href="/insights" variant="secondary">
-            All insights
-          </Button>
+          <Button href="/insights" variant="secondary">{p("All insights")}</Button>
         }
       />
 
@@ -40,9 +45,9 @@ export function InsightsSection() {
             </div>
             <div className="mt-6">
               <p className="flex items-center gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500">
-                <time dateTime={lead.published}>{formatDate(lead.published)}</time>
+                <time dateTime={lead.published}>{formatDate(lead.published, localeMeta[locale].tag)}</time>
                 <span aria-hidden className="h-px w-6 bg-steel-300" />
-                <span>{lead.readingMinutes} min read</span>
+                <span>{p("{n} min read", { n: lead.readingMinutes })}</span>
               </p>
               <h3 className="mt-4 font-display text-2xl font-bold leading-tight tracking-tight text-navy-900 transition-colors group-hover:text-brand-700 lg:text-[2rem]">
                 {lead.title}
@@ -59,7 +64,7 @@ export function InsightsSection() {
                 <Link href={"/insights/" + article.slug} className="group flex gap-5 border-b border-steel-200 py-6">
                   <div className="min-w-0 flex-1">
                     <p className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500">
-                      <time dateTime={article.published}>{formatDate(article.published)}</time>
+                      <time dateTime={article.published}>{formatDate(article.published, localeMeta[locale].tag)}</time>
                     </p>
                     <h3 className="mt-2.5 font-display text-lg font-semibold leading-snug tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
                       {article.title}
