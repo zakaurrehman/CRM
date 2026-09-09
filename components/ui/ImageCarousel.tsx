@@ -128,19 +128,26 @@ export function ImageCarousel({
             </svg>
           </button>
 
-          <div className="absolute inset-x-0 bottom-5 flex justify-center gap-2">
+          <div className="absolute inset-x-0 bottom-5 flex justify-center gap-1">
             {slides.map((slide, i) => (
+              /* The bar stays 6px because that is the right visual weight, but
+                 the target around it is 24px tall — a 6px control is unhittable
+                 on a phone and fails WCAG 2.5.8. */
               <button
                 key={slide.src}
                 type="button"
                 onClick={() => go(i)}
                 aria-label={`Show image ${i + 1}`}
                 aria-current={i === index}
-                className={cn(
-                  "h-1.5 rounded-full transition-all duration-300 ease-swift",
-                  i === index ? "w-7 bg-white" : "w-1.5 bg-white/50 hover:bg-white/80",
-                )}
-              />
+                className="group/dot flex h-6 min-w-6 items-center justify-center px-1"
+              >
+                <span
+                  className={cn(
+                    "block h-1.5 rounded-full transition-all duration-300 ease-swift",
+                    i === index ? "w-7 bg-white" : "w-1.5 bg-white/50 group-hover/dot:bg-white/80",
+                  )}
+                />
+              </button>
             ))}
           </div>
         </>

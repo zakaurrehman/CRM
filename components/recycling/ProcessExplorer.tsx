@@ -143,7 +143,7 @@ export function ProcessExplorer({
                     setActive((a) => Math.max(0, a - 1));
                   }}
                   disabled={active === 0}
-                  className="text-[0.9375rem] font-medium text-brand-700 transition-colors hover:text-brand-900 disabled:pointer-events-none disabled:text-steel-500"
+                  className="inline-flex min-h-[2.75rem] items-center rounded px-2 text-[0.9375rem] font-medium text-brand-700 transition-colors hover:bg-brand-50 hover:text-brand-900 disabled:pointer-events-none disabled:text-steel-500"
                 >
                   <span className="dir-arrow">&larr;</span> Previous
                 </button>
@@ -154,7 +154,7 @@ export function ProcessExplorer({
                     setActive((a) => Math.min(steps.length - 1, a + 1));
                   }}
                   disabled={active === steps.length - 1}
-                  className="text-[0.9375rem] font-medium text-brand-700 transition-colors hover:text-brand-900 disabled:pointer-events-none disabled:text-steel-500"
+                  className="inline-flex min-h-[2.75rem] items-center rounded px-2 text-[0.9375rem] font-medium text-brand-700 transition-colors hover:bg-brand-50 hover:text-brand-900 disabled:pointer-events-none disabled:text-steel-500"
                 >
                   Next <span className="dir-arrow">&rarr;</span>
                 </button>

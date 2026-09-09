@@ -18,7 +18,7 @@ export function Footer() {
               width={3000}
               height={1455}
               sizes="200px"
-              className="h-10 w-auto brightness-0 invert"
+              className="h-12 w-auto opacity-90 brightness-0 invert"
             />
             <p className="mt-6 max-w-sm text-[0.9375rem] leading-relaxed text-steel-400">
               Sourcing, processing and certifying metals, alloys and metal-bearing residues for the
@@ -100,10 +100,10 @@ export function Footer() {
             &copy; {year} {site.legalName}. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[0.8125rem]">
-            <Link href="/contact" className="rounded-sm text-steel-400 transition-colors hover:text-white">
+            <Link href="/contact" className="inline-flex min-h-[1.75rem] items-center rounded-sm text-steel-400 transition-colors hover:text-white">
               Contact
             </Link>
-            <Link href="/materials" className="rounded-sm text-steel-400 transition-colors hover:text-white">
+            <Link href="/materials" className="inline-flex min-h-[1.75rem] items-center rounded-sm text-steel-400 transition-colors hover:text-white">
               Materials
             </Link>
           </div>

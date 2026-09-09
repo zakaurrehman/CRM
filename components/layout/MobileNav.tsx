@@ -99,7 +99,7 @@ export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: bo
               width={3000}
               height={1455}
               sizes="160px"
-              className="h-8 w-auto"
+              className="h-10 w-auto"
             />
           </Link>
           <div className="flex items-center gap-1">

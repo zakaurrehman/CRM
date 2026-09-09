@@ -87,7 +87,7 @@ export function Header({ items }: { items: NavItem[] }) {
           </p>
           <a
             href="mailto:info@ims-metals.com"
-            className="on-dark rounded-sm text-steel-300 transition-colors hover:text-white"
+            className="on-dark inline-flex min-h-[1.5rem] items-center rounded-sm text-steel-300 transition-colors hover:text-white"
           >
             info@ims-metals.com
           </a>
@@ -103,15 +103,29 @@ export function Header({ items }: { items: NavItem[] }) {
       >
         <Container>
           <div className="flex h-[var(--header-h)] items-center justify-between gap-6">
-            <Link href="/" className="shrink-0 rounded-sm" aria-label="IMS Metals and Alloys, home">
+            {/*
+              The mark itself is untouched — the gradient lockup as IMS drew it.
+              What changed is the presentation: it was set at 36–40px, which left
+              the "METALS & ALLOYS" line about five pixels tall and effectively
+              illegible, so half the logo was decoration. At 44–52px the full
+              lockup reads, and the header still has room above and below.
+
+              The hover is deliberately slight. A logo is a signature, not a
+              button; it should acknowledge the pointer, not perform.
+            */}
+            <Link
+              href="/"
+              className="group/logo shrink-0 rounded-sm"
+              aria-label="IMS Metals and Alloys, home"
+            >
               <Image
                 src="/images/branding/ims-logo.png"
                 alt="IMS Metals &amp; Alloys"
                 width={3000}
                 height={1455}
                 priority
-                sizes="180px"
-                className="h-9 w-auto sm:h-10"
+                sizes="220px"
+                className="h-11 w-auto transition-[transform,filter] duration-300 ease-swift motion-safe:group-hover/logo:scale-[1.03] group-hover/logo:[filter:drop-shadow(0_2px_10px_rgba(0,104,176,0.28))] sm:h-13"
               />
             </Link>
 

@@ -119,7 +119,7 @@ export function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
                 onClick={() => setIndex(i)}
                 aria-label={slide.label}
                 aria-current={i === index}
-                className="group/dot relative h-6 w-8 focus-visible:outline-none"
+                className="group/dot relative h-8 w-9 focus-visible:outline-none"
               >
                 <span
                   className={cn(

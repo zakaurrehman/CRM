@@ -70,7 +70,7 @@ export default function RfqPage() {
                 </p>
                 <a
                   href={"mailto:" + contact.email}
-                  className="mt-4 inline-block text-[0.9375rem] font-medium text-brand-700 underline underline-offset-4 hover:text-brand-900"
+                  className="mt-4 inline-flex min-h-[1.75rem] items-center text-[0.9375rem] font-medium text-brand-700 underline underline-offset-4 hover:text-brand-900"
                 >
                   {contact.email}
                 </a>
