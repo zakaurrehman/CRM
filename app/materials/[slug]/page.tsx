@@ -28,10 +28,15 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const base = alloyCategoryBySlug.get(slug);
   if (!base) return {};
   const category = localiseCategory(base, await getLocale());
+  const p = await getP();
 
   return pageMetadata({
     title: category.name,
-    description: `${category.grades.length} ${category.name.toLowerCase()} grades with nominal chemical composition, properties and applications. ${category.properties.join(", ")}.`,
+    description: p("{n} {name} grades with nominal chemical composition, properties and applications. {properties}.", {
+      n: category.grades.length,
+      name: category.name.toLowerCase(),
+      properties: category.properties.join(", "),
+    }),
     path: "/materials/" + category.slug,
     image: category.image,
   });

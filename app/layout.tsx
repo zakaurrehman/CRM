@@ -35,13 +35,21 @@ const mono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
-export const metadata: Metadata = {
+/*
+ * Generated rather than static so the default title and description follow the
+ * selected language. Every page sets its own, so these surface mainly on
+ * not-found and error routes — which are exactly the pages a visitor is most
+ * likely to hit in the wrong language if this were left in English.
+ */
+export async function generateMetadata(): Promise<Metadata> {
+  const p = await getP();
+  return {
   metadataBase: new URL(site.url),
   title: {
-    default: "IMS Metals & Alloys | Metals, Alloys & Recovery for Global Industry",
+    default: p("IMS Metals & Alloys | Metals, Alloys & Recovery for Global Industry"),
     template: "%s | IMS Metals & Alloys",
   },
-  description: site.description,
+  description: p(site.description),
   applicationName: site.name,
   authors: [{ name: site.legalName }],
   creator: site.legalName,
@@ -53,7 +61,8 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
-};
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#0A142E",

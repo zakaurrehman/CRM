@@ -597,4 +597,8 @@ export const nlPhrases: PhraseTable = {
   "Loading the catalogue…": "Catalogus laden…",
   "Full composition": "Volledige samenstelling",
   "Matched on {reasons}": "Overeenkomst op {reasons}",
+  "{n} {name} grades with nominal chemical composition, properties and applications. {properties}.": "{name}: {n} kwaliteiten met nominale chemische samenstelling, eigenschappen en toepassingen. {properties}.",
+  "Search {n} alloy grades by element content, material group or grade name. Filter by chemistry, compare grades side by side and export the data.": "Doorzoek {n} legeringskwaliteiten op elementgehalte, materiaalgroep of kwaliteitsnaam. Filter op chemie, vergelijk kwaliteiten naast elkaar en exporteer de gegevens.",
+  "{grades} alloy grades across {cats} categories — nickel, cobalt, stainless, tool steels, titanium, tungsten and zirconium — with nominal composition data.": "{grades} legeringskwaliteiten verdeeld over {cats} categorieën — nikkel, kobalt, roestvast, gereedschapsstaal, titaan, wolfraam en zirkonium — met nominale samenstellingsgegevens.",
+  "IMS Metals & Alloys | Metals, Alloys & Recovery for Global Industry": "IMS Metals & Alloys | Metalen, legeringen en terugwinning voor de wereldwijde industrie",
 };

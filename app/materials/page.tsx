@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const p = await getP();
   return pageMetadata({
   title: p("Metals & Alloys"),
-  description: `${totalGradeCount} alloy grades across ${alloyCategoryCount} categories — nickel, cobalt, stainless, tool steels, titanium, tungsten and zirconium — with nominal composition data.`,
+  description: p("{grades} alloy grades across {cats} categories — nickel, cobalt, stainless, tool steels, titanium, tungsten and zirconium — with nominal composition data.", { grades: totalGradeCount, cats: alloyCategoryCount }),
   path: "/materials",
   image: "/images/metals/steel-rods.jpg",
 });

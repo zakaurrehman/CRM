@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const p = await getP();
   return pageMetadata({
   title: p("Alloy Finder — Search by Composition"),
-  description: `Search ${totalGradeCount} alloy grades by element content, material group or grade name. Filter by chemistry, compare grades side by side and export the data.`,
+  description: p("Search {n} alloy grades by element content, material group or grade name. Filter by chemistry, compare grades side by side and export the data.", { n: totalGradeCount }),
   path: "/materials/finder",
 });
 }

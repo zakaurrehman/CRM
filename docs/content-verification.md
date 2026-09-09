@@ -490,6 +490,17 @@ above. Hebrew tracks Russian almost exactly because both are measured the same
 way; French and Dutch cannot be measured this way at all, because the check
 cannot tell French from English by script alone.
 
+**Numbers and grammatical agreement.** Russian selects one of three noun forms
+from a numeral's last digit (1 марка, 2 марки, 5 марок), and the phrase system
+does not implement plural rules. Where a count is a fixed site constant — 295
+grades, 15 categories, 19 streams — the wording is simply correct for that
+value. Where the count is a live result, the sentence is built so the number
+follows a colon ("Марок в каталоге: 52"), which is invariant. If a future change
+introduces a variable count in a position that requires agreement, it needs
+either the same treatment or real plural rules via `Intl.PluralRules`. Hebrew
+has a dual form that is likewise not implemented; technical Hebrew tolerates the
+plural at n=2, so this is left as it stands.
+
 **These translations have not been reviewed by a native speaker.** They are
 competent but they were not written by someone who trades metal in these
 languages, and that is exactly where the risk sits. Terms to check first:

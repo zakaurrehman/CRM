@@ -604,4 +604,8 @@ export const hePhrases: PhraseTable = {
   "Loading the catalogue…": "טוען את הקטלוג…",
   "Full composition": "הרכב מלא",
   "Matched on {reasons}": "התאמה לפי {reasons}",
+  "{n} {name} grades with nominal chemical composition, properties and applications. {properties}.": "{name}: {n} סוגים עם הרכב כימי נומינלי, תכונות ויישומים. {properties}.",
+  "Search {n} alloy grades by element content, material group or grade name. Filter by chemistry, compare grades side by side and export the data.": "חיפוש בין {n} סוגי סגסוגות לפי תכולת יסודות, קבוצת חומרים או שם הסוג. סננו לפי כימיה, השוו סוגים זה לצד זה וייצאו את הנתונים.",
+  "{grades} alloy grades across {cats} categories — nickel, cobalt, stainless, tool steels, titanium, tungsten and zirconium — with nominal composition data.": "{grades} סוגי סגסוגות ב-{cats} קטגוריות — ניקל, קובלט, אל-חלד, פלדות תבניות, טיטניום, טונגסטן וזירקוניום — עם נתוני הרכב נומינלי.",
+  "IMS Metals & Alloys | Metals, Alloys & Recovery for Global Industry": "IMS Metals & Alloys | מתכות, סגסוגות והשבה עבור התעשייה העולמית",
 };
