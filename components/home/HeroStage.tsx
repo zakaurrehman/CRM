@@ -6,7 +6,7 @@ import { useHeroMotion } from "./HeroMotion";
 type Phase = "idle" | "intro" | "leaving" | "done" | "returning";
 
 /** How long each state holds before the cycle moves on. */
-const WELCOME_MS = 3000;
+const WELCOME_MS = 6000;
 const HERO_MS = 9000;
 /** Long enough for the two layers to cross over without either snapping. */
 const CROSSFADE_MS = 800;

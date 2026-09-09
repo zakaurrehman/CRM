@@ -26,7 +26,7 @@ export function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className={cn("py-18 sm:py-22 lg:py-30", tones[tone], className)}>
+    <section id={id} className={cn("py-16 sm:py-20 lg:py-24", tones[tone], className)}>
       {bleed ? children : <Container>{children}</Container>}
     </section>
   );

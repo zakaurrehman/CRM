@@ -56,12 +56,12 @@ export async function Hero() {
                 height={1455}
                 priority
                 sizes="(min-width: 640px) 260px, 200px"
-                className="h-auto w-[12.5rem] brightness-0 invert sm:w-[16rem]"
+                className="h-auto w-[13rem] brightness-0 invert sm:w-[17rem] lg:w-[19rem]"
               />
-              <p className="mt-7 font-display text-[1.5rem] font-semibold uppercase leading-[1.15] tracking-[0.01em] text-white sm:text-[2rem] lg:text-[2.5rem]">
+              <p className="mt-7 font-display text-[clamp(1.75rem,4.4vw,3.5rem)] font-semibold uppercase leading-[1.1] tracking-[0.005em] text-white">
                 {p("Welcome to IMS Metals & Alloys")}
               </p>
-              <p className="mt-5 max-w-xl text-[1.0625rem] leading-relaxed text-steel-300">
+              <p className="mt-6 max-w-lg text-[1.0625rem] leading-relaxed text-steel-300">
                 {p("Our objective is to responsibly source the commodities which supplement our everyday life.")}
               </p>
             </>
@@ -79,7 +79,7 @@ export async function Hero() {
             {p("Advanced metals, alloys and recycling solutions for global industry.")}
           </h1>
 
-          <p className="mt-7 max-w-2xl animate-fade-up text-lg leading-relaxed text-steel-300 [animation-delay:160ms] sm:text-xl">
+          <p className="mt-7 max-w-xl animate-fade-up text-[1.0625rem] leading-relaxed text-steel-300 [animation-delay:160ms] sm:text-lg">
             {p(
               "IMS sources, sorts and certifies high-performance alloys and metal-bearing residues arising from the aerospace, oil & gas, industrial gas turbine and stainless steel sectors — returning them to the melt as air-melt or vacuum grade material.",
             )}

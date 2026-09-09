@@ -56,9 +56,9 @@ export function PageHero({
       ) : null}
 
       <Container>
-        <div className={cn("py-12 sm:py-16 lg:py-20", dark && "lg:py-24")}>
+        <div className={cn("py-10 sm:py-14 lg:py-16", dark && "lg:py-20")}>
           <Breadcrumbs trail={trail} tone={dark ? "dark" : "light"} />
-          <div className={cn("mt-8", align === "left" ? "max-w-3xl" : "max-w-4xl")}>
+          <div className={cn("mt-7", align === "left" ? "max-w-3xl" : "max-w-4xl")}>
             {eyebrow ? (
               <p className={cn("eyebrow mb-4 animate-fade-up", dark && "text-brand-300")}>{eyebrow}</p>
             ) : null}
