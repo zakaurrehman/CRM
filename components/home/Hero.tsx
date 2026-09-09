@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { HeroSlideshow, type HeroSlide } from "./HeroSlideshow";
 import { HeroStage } from "./HeroStage";
+import { HeroMotionProvider } from "./HeroMotion";
 import { companyFacts } from "@/lib/site";
 import { alloyCategoryCount, totalGradeCount } from "@/data/alloy-index";
 
@@ -33,6 +34,7 @@ export async function Hero() {
     /* `group` so the slideshow controls can stay hidden until the hero is
        hovered — they are a necessary affordance, not part of the picture. */
     <section className="group on-dark relative isolate flex min-h-[38rem] items-end overflow-hidden bg-navy-950 text-white lg:min-h-[44rem]">
+      <HeroMotionProvider>
       <HeroSlideshow slides={heroSlides} />
       <div
         aria-hidden
@@ -117,6 +119,7 @@ export async function Hero() {
         </div>
         </HeroStage>
       </Container>
+      </HeroMotionProvider>
     </section>
   );
 }

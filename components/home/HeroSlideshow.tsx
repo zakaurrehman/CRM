@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useHeroMotion } from "./HeroMotion";
 
 export interface HeroSlide {
   src: string;
@@ -29,17 +30,9 @@ const INTERVAL_MS = 6500;
 export function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
   const [index, setIndex] = useState(0);
   const [ready, setReady] = useState(false);
-  const [paused, setPaused] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReduced(query.matches);
-    sync();
-    query.addEventListener("change", sync);
-    return () => query.removeEventListener("change", sync);
-  }, []);
+  /* Shared with the welcome cycle, so the one pause control stops both rather
+     than the hero carrying two buttons that do nearly the same thing. */
+  const { paused, setPaused, hovered, setHovered, reduced } = useHeroMotion();
 
   /* Hold the other frames back until the hero image has had the network to
      itself. 600ms is past hydration on a slow connection without being a
@@ -154,7 +147,7 @@ export function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
           <button
             type="button"
             onClick={() => setPaused((p) => !p)}
-            aria-label={paused ? "Resume image rotation" : "Pause image rotation"}
+            aria-label={paused ? "Resume the hero animation" : "Pause the hero animation"}
             className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/25 text-white/70 transition-colors duration-200 hover:border-white/50 hover:text-white"
           >
             {paused ? (

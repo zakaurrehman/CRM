@@ -281,7 +281,8 @@
                 visibility 0s linear 0.55s;
   }
 
-  .hero-stage[data-phase="intro"] .hero-intro {
+  .hero-stage[data-phase="intro"] .hero-intro,
+  .hero-stage[data-phase="returning"] .hero-intro {
     opacity: 1;
     visibility: visible;
     transform: none;
@@ -310,10 +311,12 @@
    * the intro takes over leaves a frame or two with neither layer up. Crossing
    * the two over removes it.
    */
-  .hero-stage[data-phase="intro"] .hero-main {
+  .hero-stage[data-phase="intro"] .hero-main,
+  .hero-stage[data-phase="returning"] .hero-main {
     opacity: 0;
     transform: translateY(16px);
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .hero-stage[data-phase="leaving"] .hero-main,
@@ -330,6 +333,7 @@
    * the stagger plays once, on the way in, where it is legible.
    */
   .hero-stage[data-phase="intro"] .hero-main .animate-fade-up,
+  .hero-stage[data-phase="returning"] .hero-main .animate-fade-up,
   .hero-stage[data-phase="leaving"] .hero-main .animate-fade-up {
     animation: none;
   }
