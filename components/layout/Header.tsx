@@ -99,7 +99,8 @@ export function Header({ items }: { items: NavItem[] }) {
               in a 112px header, which is what makes the "METALS & ALLOYS" line
               legible and gives the header its weight; ours had shrunk to 44px,
               where that line is about five pixels tall and half the logo is
-              decoration. It now steps 48 → 64 → 92px with the viewport.
+              decoration. It now steps 44 → 56 → 76px with the viewport — a little under
+              the original's 92px, which sat tight in the 112px bar.
 
               The hover is deliberately slight. A logo is a signature, not a
               button; it should acknowledge the pointer, not perform.
@@ -115,8 +116,8 @@ export function Header({ items }: { items: NavItem[] }) {
                 width={3000}
                 height={1455}
                 priority
-                sizes="(min-width: 1280px) 300px, 220px"
-                className="h-12 w-auto transition-[transform,filter] duration-300 ease-swift motion-safe:group-hover/logo:scale-[1.03] group-hover/logo:[filter:drop-shadow(0_2px_10px_rgba(0,104,176,0.28))] sm:h-16 xl:h-[5.75rem]"
+                sizes="(min-width: 1280px) 250px, 200px"
+                className="h-11 w-auto transition-[transform,filter] duration-300 ease-swift motion-safe:group-hover/logo:scale-[1.03] group-hover/logo:[filter:drop-shadow(0_2px_10px_rgba(0,104,176,0.28))] sm:h-14 xl:h-[4.75rem]"
               />
             </Link>
 
