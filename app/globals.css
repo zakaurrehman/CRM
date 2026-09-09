@@ -253,6 +253,91 @@
   .prose-ims strong { @apply font-semibold text-navy-900; }
 }
 
+@layer components {
+  /**
+   * Homepage hero opening sequence. See components/home/HeroStage.tsx.
+   *
+   * Driven entirely by `data-phase` so the markup is identical in every state
+   * and hydration has nothing to disagree about. The default — no attribute, or
+   * "idle" — is the no-JavaScript state: hero content visible, intro hidden.
+   * Nothing here gates the headline on a script running.
+   */
+  .hero-stage { position: relative; }
+
+  .hero-intro {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                visibility 0s linear 0.55s;
+  }
+
+  .hero-stage[data-phase="intro"] .hero-intro {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  /* Lifts as it goes, so it reads as making way rather than blinking out. */
+  .hero-stage[data-phase="leaving"] .hero-intro {
+    opacity: 0;
+    visibility: visible;
+    transform: translateY(-18px);
+  }
+
+  /*
+   * The hero content waits behind the intro, then rises into place *while* the
+   * intro is still fading out — the two overlap deliberately.
+   *
+   * Getting this wrong is easy and looks broken: if the hero only becomes
+   * visible at "done", then for the whole of "leaving" both layers are heading
+   * to zero and the hero is blank. That window is short enough to miss on a
+   * fast desktop and obvious on a phone, where hydration lands later.
+   */
+  /*
+   * Fades out rather than cutting. Before hydration the hero is fully painted —
+   * that is the no-JavaScript state — so switching it off instantly the moment
+   * the intro takes over leaves a frame or two with neither layer up. Crossing
+   * the two over removes it.
+   */
+  .hero-stage[data-phase="intro"] .hero-main {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+
+  .hero-stage[data-phase="leaving"] .hero-main,
+  .hero-stage[data-phase="done"] .hero-main {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0s,
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0s;
+  }
+
+  /*
+   * While the intro plays, the hero's own staggered entrance would run behind
+   * it and be finished before anyone saw it. Holding those children still means
+   * the stagger plays once, on the way in, where it is legible.
+   */
+  .hero-stage[data-phase="intro"] .hero-main .animate-fade-up,
+  .hero-stage[data-phase="leaving"] .hero-main .animate-fade-up {
+    animation: none;
+  }
+
+  /* The backdrop's slow drift already comes from `animate-slow-zoom` on each
+     slideshow frame — see HeroSlideshow. Nothing to add here. */
+}
+
 @layer utilities {
   .text-balance { text-wrap: balance; }
   /* Masks the trailing edge of a scrollable region to hint at more content. */

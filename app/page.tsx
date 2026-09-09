@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { WelcomeBanner } from "@/components/home/WelcomeBanner";
 import { Hero } from "@/components/home/Hero";
 import { CredibilityStrip } from "@/components/home/CredibilityStrip";
 import { Pillars } from "@/components/home/Pillars";
@@ -32,7 +31,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <WelcomeBanner />
       <Hero />
       <CredibilityStrip />
       <Pillars />
