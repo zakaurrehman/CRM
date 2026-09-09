@@ -601,4 +601,8 @@ export const nlPhrases: PhraseTable = {
   "Search {n} alloy grades by element content, material group or grade name. Filter by chemistry, compare grades side by side and export the data.": "Doorzoek {n} legeringskwaliteiten op elementgehalte, materiaalgroep of kwaliteitsnaam. Filter op chemie, vergelijk kwaliteiten naast elkaar en exporteer de gegevens.",
   "{grades} alloy grades across {cats} categories — nickel, cobalt, stainless, tool steels, titanium, tungsten and zirconium — with nominal composition data.": "{grades} legeringskwaliteiten verdeeld over {cats} categorieën — nikkel, kobalt, roestvast, gereedschapsstaal, titaan, wolfraam en zirkonium — met nominale samenstellingsgegevens.",
   "IMS Metals & Alloys | Metals, Alloys & Recovery for Global Industry": "IMS Metals & Alloys | Metalen, legeringen en terugwinning voor de wereldwijde industrie",
+  "Contact us on WhatsApp": "Neem contact op via WhatsApp",
+  "Welcome to IMS Metals & Alloys": "Welkom bij IMS Metals & Alloys",
+  "Our objective is to responsibly source the commodities which supplement our everyday life.": "Ons doel is om op verantwoorde wijze de grondstoffen te betrekken die ons dagelijks leven ondersteunen.",
+  "Contact us": "Neem contact op",
 };

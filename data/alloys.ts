@@ -11,7 +11,7 @@ export const alloyCategories: AlloyCategory[] = [
     summary: "Corrosion- and heat-resistant nickel-base alloys, including the Hastelloy, Inconel, Incoloy and Nimonic families, used where chemical attack and elevated temperature occur together.",
     properties: ["Heat Resistant", "Corrosion Resistant", "Acid Resistant"],
     applications: ["Chemical and Food Industry", "Aero Engine Parts"],
-    image: "/images/metals/steel-rods.jpg",
+    image: "/images/aerospace/aero-engines.jpg",
     cardArt: "photo",
     elements: ["Ni", "Cr", "Co", "Mo", "W", "Fe", "Al", "Ti", "Cu", "Nb", "Others"],
     grades: [
@@ -136,7 +136,7 @@ export const alloyCategories: AlloyCategory[] = [
     summary: "Precipitation-hardened and cast nickel superalloys engineered for creep resistance in the hot section of gas turbines and aero engines.",
     properties: ["High Temperature Alloys", "Heat Resistant", "Corrosion Resistant", "Creep Resistant"],
     applications: ["Aero Engine Parts"],
-    image: "/images/aerospace/aero-engines.jpg",
+    image: "/images/turbine/turbine-manufacturing.jpg",
     cardArt: "photo",
     elements: ["Ni", "Cr", "Co", "Mo", "W", "Fe", "Al", "Ti", "Cu", "Nb", "Others"],
     grades: [
@@ -247,8 +247,8 @@ export const alloyCategories: AlloyCategory[] = [
     summary: "Cobalt-base wear, heat and corrosion resistant alloys — the Stellite and MAR-M families — used for hardfacing and turbine hot-section components.",
     properties: ["Heat Resistant", "Corrosion Resistant", "Wear Resistant"],
     applications: ["Aero Engine Parts"],
-    image: "/images/turbine/turbine-manufacturing.jpg",
-    cardArt: "photo",
+    image: "/images/company/recycling-operations.jpg",
+    cardArt: "specimen",
     elements: ["Co", "Cr", "Ni", "W", "Mo", "C", "Fe", "B", "Cu", "Ta", "Others"],
     grades: [
       { name: "Stellite® 1", values: ["50", "33", "", "13", "", "2.5", "", "", "", "", ""] },
@@ -290,7 +290,7 @@ export const alloyCategories: AlloyCategory[] = [
     summary: "Cupro-nickels and nickel silvers used for seawater piping, heat exchangers, condensers and decorative applications.",
     properties: ["Corrosion Resistant"],
     applications: ["Decorative", "Water/Heat Transfer"],
-    image: "/images/metals/steel-rods.jpg",
+    image: "/images/company/recycling-operations.jpg",
     cardArt: "specimen",
     elements: ["Ni", "Cr", "Cu", "Fe", "Al", "Ti", "Mn", "Si", "C", "Zn", "Others"],
     grades: [
@@ -318,8 +318,8 @@ export const alloyCategories: AlloyCategory[] = [
     summary: "Cold-work, hot-work and shock-resisting tool steels selected for hardness, toughness and dimensional stability in tooling and dies.",
     properties: ["Wear Resistant", "High Hardness"],
     applications: ["Tools and Dies (Cold Work)", "Hot Work Dies"],
-    image: "/images/hero/hot-metal-plate.jpg",
-    cardArt: "specimen",
+    image: "/images/metals/steel-rods.jpg",
+    cardArt: "photo",
     elements: ["Co", "Cr", "Ni", "Fe", "Mo", "V", "Cu", "Al", "W", "C", "Others"],
     grades: [
       { name: "D2", values: ["", "13", "", "BAL", "1", "0.5", "", "", "", "1.6", ""] },
@@ -341,7 +341,7 @@ export const alloyCategories: AlloyCategory[] = [
     summary: "High-permeability cobalt-iron and cobalt-vanadium alloys used in transformer laminations, magnetic cores and electronic assemblies.",
     properties: ["Magnetic Properties (High Permeability)"],
     applications: ["Electronics Industry"],
-    image: "/images/metals/stamped-components.jpg",
+    image: "/images/company/recycling-operations.jpg",
     cardArt: "specimen",
     elements: ["Co", "Cr", "Ni", "Fe", "Mo", "V", "Cu", "Al", "W", "C", "Others"],
     grades: [
@@ -388,7 +388,7 @@ export const alloyCategories: AlloyCategory[] = [
     summary: "Commercially pure titanium and alpha, alpha-beta and beta alloys offering an exceptional strength-to-weight ratio with strong corrosion resistance.",
     properties: ["High Strength to Weight Ratio", "Good Corrosion Resistance"],
     applications: ["Aerospace", "Power Generation"],
-    image: "/images/metals/steel-rods.jpg",
+    image: "/images/company/recycling-operations.jpg",
     cardArt: "specimen",
     elements: ["Ti", "Al", "V", "Sn", "Mn", "Zr", "Mo", "Cu", "Cr", "Si", "Others"],
     grades: [
@@ -456,7 +456,7 @@ export const alloyCategories: AlloyCategory[] = [
     summary: "Alnico and related permanent magnet alloys built on aluminium, nickel, cobalt and iron for stable magnetic performance.",
     properties: ["Magnetic Properties"],
     applications: ["Permanent Magnets"],
-    image: "/images/metals/stamped-components.jpg",
+    image: "/images/company/recycling-operations.jpg",
     cardArt: "specimen",
     elements: ["Co", "Cr", "Ni", "Fe", "Mo", "V", "Cu", "Al", "W", "C", "Others"],
     grades: [
@@ -482,7 +482,7 @@ export const alloyCategories: AlloyCategory[] = [
     summary: "Zircaloy and related zirconium grades valued for low neutron absorption and corrosion resistance in nuclear and chemical plant.",
     properties: ["Corrosion Resistant"],
     applications: ["Nuclear Industry"],
-    image: "/images/metals/steel-rods.jpg",
+    image: "/images/company/recycling-operations.jpg",
     cardArt: "specimen",
     elements: ["Ti", "Al", "V", "Sn", "Mn", "Zr", "Mo", "Cu", "Cr", "Si", "Others"],
     grades: [

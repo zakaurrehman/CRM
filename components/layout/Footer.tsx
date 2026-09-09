@@ -41,13 +41,9 @@ export async function Footer() {
               >
                 {contact.email}
               </a>
-              {/* Telephone intentionally omitted until a verified number replaces the
-                  placeholder published on the legacy site. See lib/site.ts. */}
-              {contact.phone ? (
-                <a href={"tel:" + contact.phone.replace(/[^+0-9]/g, "")} className="mt-1 block text-[0.9375rem] text-white">
-                  {contact.phone}
-                </a>
-              ) : null}
+              {/* No telephone anywhere, by client instruction (2026-09-11).
+                  The floating WhatsApp button carries reachability instead, and
+                  it puts the number in a link target rather than on the page. */}
             </address>
 
             {contact.social.length > 0 ? (

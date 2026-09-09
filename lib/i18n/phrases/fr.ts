@@ -601,4 +601,8 @@ export const frPhrases: PhraseTable = {
   "Search {n} alloy grades by element content, material group or grade name. Filter by chemistry, compare grades side by side and export the data.": "Recherchez parmi {n} nuances d’alliages par teneur en éléments, groupe de matières ou nom de nuance. Filtrez par chimie, comparez les nuances côte à côte et exportez les données.",
   "{grades} alloy grades across {cats} categories — nickel, cobalt, stainless, tool steels, titanium, tungsten and zirconium — with nominal composition data.": "{grades} nuances d’alliages réparties sur {cats} catégories — nickel, cobalt, inoxydable, aciers à outils, titane, tungstène et zirconium — avec les données de composition nominale.",
   "IMS Metals & Alloys | Metals, Alloys & Recovery for Global Industry": "IMS Metals & Alloys | Métaux, alliages et récupération pour l’industrie mondiale",
+  "Contact us on WhatsApp": "Contactez-nous sur WhatsApp",
+  "Welcome to IMS Metals & Alloys": "Bienvenue chez IMS Metals & Alloys",
+  "Our objective is to responsibly source the commodities which supplement our everyday life.": "Notre objectif est de nous approvisionner de manière responsable en matières premières qui accompagnent notre vie quotidienne.",
+  "Contact us": "Contactez-nous",
 };

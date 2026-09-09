@@ -51,12 +51,15 @@ export const contact = {
     countryCode: "EE",
   },
   /**
-   * Confirmed by IMS on 2026-09-10, replacing the legacy contact page's
-   * "+123-456-7890" — a Forminator demo placeholder that was never a real
-   * number. Israeli dialling code against an Estonian registered office is
-   * intentional and matches how the business is run.
+   * Deliberately null. IMS confirmed a number on 2026-09-10 and then asked on
+   * 2026-09-11 that it never be shown, so nothing publishes it: no header,
+   * footer, contact page, mobile menu or Organization schema.
+   *
+   * Reachability is via WhatsApp instead — see `whatsapp` below, which is a
+   * link target, not display text. Setting this string would put the number
+   * back on every page at once, which is exactly what was asked against.
    */
-  phone: "+972 54-907-0254" as string | null,
+  phone: null as string | null,
   /**
    * Social profiles shown in the footer.
    *

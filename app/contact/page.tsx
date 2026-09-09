@@ -86,12 +86,25 @@ export default async function ContactPage() {
                   >
                     {contact.email}
                   </a>
-                  {contact.phone ? (
+                  {/* No telephone by client instruction (2026-09-11). WhatsApp
+                      is the voice/chat route instead, and the number reaches
+                      wa.me through the link target rather than as page text. */}
+                  {contact.whatsapp ? (
                     <a
-                      href={"tel:" + contact.phone.replace(/[^+0-9]/g, "")}
-                      className="mt-2 block text-[0.9375rem] font-medium text-brand-700"
+                      href={
+                        "https://wa.me/" +
+                        contact.whatsapp.replace(/\D/g, "") +
+                        "?text=" +
+                        encodeURIComponent(p(contact.whatsappMessage))
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 inline-flex items-center gap-2 text-[0.9375rem] font-medium text-brand-700 underline decoration-brand-300 underline-offset-4 hover:decoration-brand-700"
                     >
-                      {contact.phone}
+                      <svg viewBox="0 0 24 24" aria-hidden className="h-4 w-4" fill="currentColor">
+                        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.23 8.23 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.82c0 4.54-3.69 8.23-8.24 8.23Z" />
+                      </svg>
+                      {p("Contact us on WhatsApp")}
                     </a>
                   ) : null}
                 </address>

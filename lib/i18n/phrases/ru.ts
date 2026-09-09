@@ -607,4 +607,8 @@ export const ruPhrases: PhraseTable = {
   "Search {n} alloy grades by element content, material group or grade name. Filter by chemistry, compare grades side by side and export the data.": "Поиск среди {n} марок сплавов по содержанию элементов, группе материалов или названию марки. Фильтруйте по химическому составу, сравнивайте марки бок о бок и экспортируйте данные.",
   "{grades} alloy grades across {cats} categories — nickel, cobalt, stainless, tool steels, titanium, tungsten and zirconium — with nominal composition data.": "{grades} марок сплавов в {cats} категориях — никель, кобальт, нержавеющая сталь, инструментальные стали, титан, вольфрам и цирконий — с данными о номинальном составе.",
   "IMS Metals & Alloys | Metals, Alloys & Recovery for Global Industry": "IMS Metals & Alloys | Металлы, сплавы и извлечение для мировой промышленности",
+  "Contact us on WhatsApp": "Написать нам в WhatsApp",
+  "Welcome to IMS Metals & Alloys": "Добро пожаловать в IMS Metals & Alloys",
+  "Our objective is to responsibly source the commodities which supplement our everyday life.": "Наша цель — ответственно добывать сырьё, которое дополняет нашу повседневную жизнь.",
+  "Contact us": "Связаться с нами",
 };

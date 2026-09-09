@@ -73,29 +73,16 @@ export function Header({ items }: { items: NavItem[] }) {
 
   return (
     <>
-      {/*
-        Utility strip. Outside the sticky header on purpose: it introduces the
-        company and the contact route on arrival, then scrolls away.
+      {/* No utility bar above the header. The original site puts the white
+          header at the very top of the page with nothing above it, and the
+          strip that used to sit here was the most visible departure from that.
+          The email it carried is still one tap away in the header's Contact
+          button, the footer and the contact page.
 
-        Inside the header it was stuck at the top of the viewport forever, so it
-        cost its full height on every page at every scroll position — and it put
-        the real header height (109px) above the 96px `scroll-padding-top`
-        derived from `--header-h`, which left every deep-linked heading sitting
-        behind the bar it had just scrolled to.
-      */}
-      <div className="hidden border-b border-steel-200 bg-navy-950 text-steel-300 lg:block">
-        <Container className="flex h-9 items-center justify-between text-[0.75rem]">
-          <p className="font-mono uppercase tracking-[0.14em] text-steel-400">
-            {p("Metals, alloys & recovery — Tallinn, Estonia")}
-          </p>
-          <a
-            href="mailto:info@ims-metals.com"
-            className="on-dark inline-flex min-h-[1.5rem] items-center rounded-sm text-steel-300 transition-colors hover:text-white"
-          >
-            info@ims-metals.com
-          </a>
-        </Container>
-      </div>
+          Removing it also makes the real header height equal `--header-h`
+          exactly, so `scroll-padding-top` now matches what a deep link needs to
+          clear — it used to be 13px short, leaving anchored headings tucked
+          behind the bar they had just scrolled to. */}
 
       <header
         ref={headerRef}
@@ -105,13 +92,14 @@ export function Header({ items }: { items: NavItem[] }) {
         )}
       >
         <Container>
-          <div className="flex h-[var(--header-h)] items-center justify-between gap-6">
+          <div className="flex h-[var(--header-h)] items-center justify-between gap-4">
             {/*
               The mark itself is untouched — the gradient lockup as IMS drew it.
-              What changed is the presentation: it was set at 36–40px, which left
-              the "METALS & ALLOYS" line about five pixels tall and effectively
-              illegible, so half the logo was decoration. At 44–52px the full
-              lockup reads, and the header still has room above and below.
+              What changed is the presentation. The original site sets it at 92px
+              in a 112px header, which is what makes the "METALS & ALLOYS" line
+              legible and gives the header its weight; ours had shrunk to 44px,
+              where that line is about five pixels tall and half the logo is
+              decoration. It now steps 48 → 64 → 92px with the viewport.
 
               The hover is deliberately slight. A logo is a signature, not a
               button; it should acknowledge the pointer, not perform.
@@ -127,12 +115,12 @@ export function Header({ items }: { items: NavItem[] }) {
                 width={3000}
                 height={1455}
                 priority
-                sizes="220px"
-                className="h-11 w-auto transition-[transform,filter] duration-300 ease-swift motion-safe:group-hover/logo:scale-[1.03] group-hover/logo:[filter:drop-shadow(0_2px_10px_rgba(0,104,176,0.28))] sm:h-13"
+                sizes="(min-width: 1280px) 300px, 220px"
+                className="h-12 w-auto transition-[transform,filter] duration-300 ease-swift motion-safe:group-hover/logo:scale-[1.03] group-hover/logo:[filter:drop-shadow(0_2px_10px_rgba(0,104,176,0.28))] sm:h-16 xl:h-[5.75rem]"
               />
             </Link>
 
-            <nav aria-label={p("Main")} className="hidden lg:block">
+            <nav aria-label={p("Main")} className="hidden lg:block lg:ms-6 lg:me-auto xl:ms-10">
               <ul className="flex items-center gap-1">
                 {items.map((item, i) => {
                   const hasMenu = Boolean(item.columns);

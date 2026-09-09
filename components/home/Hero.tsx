@@ -47,9 +47,13 @@ export async function Hero() {
             {p("Metals · Alloys · Recovery")}
           </p>
 
-          <h1 className="mt-6 max-w-4xl animate-fade-up text-display-xl text-white [animation-delay:80ms]">
+          {/* h2, not h1. The welcome block above opens the page and carries the
+              h1, as it does on the original site; two h1s would be one more than
+              the page should have, and putting this one first would mean the
+              document's headings run h2 before h1. */}
+          <h2 className="mt-6 max-w-4xl animate-fade-up text-display-xl text-white [animation-delay:80ms]">
             {p("Advanced metals, alloys and recycling solutions for global industry.")}
-          </h1>
+          </h2>
 
           <p className="mt-7 max-w-2xl animate-fade-up text-lg leading-relaxed text-steel-300 [animation-delay:160ms] sm:text-xl">
             {p(

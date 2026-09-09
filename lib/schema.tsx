@@ -27,7 +27,10 @@ export function organizationSchema(): Json {
       postalCode: contact.address.postalCode,
       addressCountry: contact.address.countryCode,
     },
-    ...(contact.phone ? { telephone: contact.phone } : {}),
+    /* No `telephone`. Structured data is published to search engines and shows
+       up in rich results, so it counts as displaying the number — which IMS
+       asked against on 2026-09-11. Removed outright rather than left behind a
+       null check, so it cannot come back by someone setting one field. */
     /* Only company-owned profiles. `sameAs` asserts that each URL is another
        presence of this organisation, so an individual's profile does not belong
        here even though it is linked in the footer. */

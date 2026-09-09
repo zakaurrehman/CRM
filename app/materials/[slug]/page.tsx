@@ -81,8 +81,14 @@ export default async function MaterialPage({ params }: Params) {
         title={category.name}
         intro={category.summary}
         trail={trail}
-        image={category.image}
-        imageAlt=""
+        /* Categories with no honest photograph get the typographic hero rather
+           than a picture of some other metal. PageHero already supports being
+           called without an image, so this is its light variant, not a gap.
+           `category.image` still feeds the social preview and structured data,
+           where it is an operations photo making no claim about the material. */
+        {...(category.cardArt === "specimen"
+          ? {}
+          : { image: category.image, imageAlt: "" })}
       >
         <dl className="flex flex-wrap gap-x-10 gap-y-4">
           <div>
