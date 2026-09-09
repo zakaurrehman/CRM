@@ -44,7 +44,7 @@ export async function Footer() {
               {/* Telephone intentionally omitted until a verified number replaces the
                   placeholder published on the legacy site. See lib/site.ts. */}
               {contact.phone ? (
-                <a href={"tel:" + contact.phone.replace(/\s/g, "")} className="mt-1 block text-[0.9375rem] text-white">
+                <a href={"tel:" + contact.phone.replace(/[^+0-9]/g, "")} className="mt-1 block text-[0.9375rem] text-white">
                   {contact.phone}
                 </a>
               ) : null}

@@ -13,9 +13,11 @@ Priority key: **P1** blocks launch · **P2** fix before launch · **P3** tidy-up
 
 ## P1 — Blocks launch
 
-### 1. Years of experience — two different numbers
+### 1. Years of experience — RESOLVED (15, confirmed 2026-09-10)
 
-The legacy site makes two incompatible claims:
+The legacy site made two incompatible claims, and its About page contradicted
+**itself** — the counter said 15 while its own body text said 30, three
+paragraphs apart:
 
 | Claim | Where |
 | --- | --- |
@@ -26,45 +28,34 @@ The legacy site makes two incompatible claims:
 | "With over **30** years of experience" | Article: *Meeting Industry Standards* |
 | "With over **30** years of experience" | Article: *The Essential Role of Metals* |
 
-Note the About page contradicts **itself**: its counter says 15 while its own body text
-says 30, three paragraphs apart.
+**IMS confirmed 15 on 2026-09-10.** `experience` in `lib/site.ts` is now
+`{ years: 15, verified: true }` and the homepage credibility strip renders the
+stat in every language. That file is the single source of truth — no other file
+hard-codes a number.
 
-**Current state:** no number is displayed anywhere on the new site.
-**To fix:** set `experience` in `lib/site.ts`:
-
-```ts
-export const experience = { years: 30, verified: true };
-```
-
-The homepage credibility strip will then render the stat automatically. This is the
-single source of truth — no other file hard-codes a number.
-
-> The migrated articles still contain "over 30 years" in their body copy, as they are
-> dated archive posts reproduced as published. If the correct figure is 15, those two
-> sentences in `data/insights.ts` need correcting too.
+The 30-year figure was therefore wrong wherever it appeared, including in the
+two migrated articles. Those sentences have been corrected in
+`data/insights.ts` and `lib/i18n/content/en.ts` rather than reproduced as
+published: leaving them would have put a claim IMS has told us is false on the
+site, contradicting the homepage on the same visit.
 
 ---
 
-### 2. Placeholder telephone number is live
+### 2. Telephone number — RESOLVED (confirmed 2026-09-10)
 
-The contact page publishes:
+The legacy contact page published `+123-456-7890`, a Forminator demo value.
+Its form placeholders were untouched defaults too — "E.g. John",
+"E.g. john@doe.com", "E.g. +1 3004005000".
 
-```
-+123-456-7890
-```
+**IMS confirmed +972 54-907-0254 on 2026-09-10**, the same number already
+supplied for WhatsApp (see 9b, now also closed). `contact.phone` in
+`lib/site.ts` is set, so the header, footer, contact page and Organization
+structured data all carry it. `tel:` links strip the visual separators, giving
+`tel:+972549070254`.
 
-This is a Forminator demo value. The form's placeholders are also untouched defaults —
-"E.g. John", "E.g. john@doe.com", "E.g. +1 3004005000".
-
-**Current state:** no telephone number is rendered anywhere, and none is emitted in the
-Organization schema. `contact.phone` is `null`.
-**To fix:** set the real number in `lib/site.ts`:
-
-```ts
-phone: "+372 XXXX XXXX",
-```
-
-Header, footer, contact page and structured data all pick it up automatically.
+An Israeli dialling code against an Estonian registered office is intentional
+and reflects how the business is run; it is recorded here so it is not later
+mistaken for a data-entry error.
 
 ---
 
@@ -198,27 +189,17 @@ statement) was migrated to the Quality & Compliance page under a correct heading
 
 ---
 
-### 9b. WhatsApp contact button — SUPPLIED, one question outstanding
+### 9b. WhatsApp contact button — RESOLVED
 
 IMS supplied **+972 54-907-0254**. The floating WhatsApp button is live on every
 page, opening a thread prefilled with "Hello IMS — I have a materials enquiry."
 It is a plain `wa.me` link, not the official widget: no third-party script, no
 tracking, no cookie-consent requirement.
 
-**Outstanding — should this also be the company's published telephone number?**
-It is currently used for WhatsApp only. Publishing it as `contact.phone` puts it
-in the header, footer, contact page and Organization structured data, which is a
-wider commitment, so it was not assumed. Item 2 above remains open until this is
-decided.
-
-Two things worth confirming:
-
-- It is an Israeli mobile (+972) for an Estonian-registered company. That is
-  perfectly normal in international trading, but if a local Estonian line exists
-  it may read better as the general contact number, with WhatsApp kept separate.
-- A public floating button attracts volume, including scrap sellers and
-  time-wasters. WhatsApp Business supports multiple operators — routing it to a
-  shared trading inbox is worth considering over a personal handset.
+**The open question — whether this should also be the published telephone
+number — was answered on 2026-09-10: yes.** IMS gave the same number when asked
+for a company telephone, so it is now set as `contact.phone` as well and
+appears in the header, footer, contact page and structured data. See item 2.
 
 ---
 

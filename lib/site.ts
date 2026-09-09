@@ -51,11 +51,12 @@ export const contact = {
     countryCode: "EE",
   },
   /**
-   * VERIFY — the legacy contact page publishes "+123-456-7890", a Forminator
-   * demo placeholder. No telephone number is displayed until the real one is
-   * supplied. Set this string to publish it site-wide.
+   * Confirmed by IMS on 2026-09-10, replacing the legacy contact page's
+   * "+123-456-7890" — a Forminator demo placeholder that was never a real
+   * number. Israeli dialling code against an Estonian registered office is
+   * intentional and matches how the business is run.
    */
-  phone: null as string | null,
+  phone: "+972 54-907-0254" as string | null,
   /**
    * Social profiles shown in the footer.
    *
@@ -91,14 +92,14 @@ export const contact = {
 } as const;
 
 /**
- * VERIFY — the legacy site makes two incompatible claims:
- *   "over 15 years of experience"  (homepage body copy, About counter widget)
- *   "over 30 years of experience"  (About body copy, About meta description, two articles)
- * No number is rendered anywhere until this is settled. Set `years` to publish.
+ * The legacy site made two incompatible claims — "over 15 years" (homepage,
+ * About counter) and "over 30 years" (About body, About meta description, two
+ * articles). IMS confirmed 15 on 2026-09-10, so the 30-year figure was wrong
+ * wherever it appeared and is not carried over.
  */
 export const experience: { years: number | null; verified: boolean } = {
-  years: null,
-  verified: false,
+  years: 15,
+  verified: true,
 };
 
 /** Facts that appeared consistently across the audited legacy pages. */

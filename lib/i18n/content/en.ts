@@ -470,7 +470,7 @@ export const enContent: ContentPack = {
         },
         {
           "type": "p",
-          "text": "One of the key strengths of IMS Metals & Alloys OÜ is our ability to manage a global supply chain. With over 30 years of experience, we have developed long-standing relationships with suppliers, manufacturers, and logistics companies worldwide. This enables us to deliver essential metals and alloys with precision, ensuring timely availability for production needs across industries."
+          "text": "One of the key strengths of IMS Metals & Alloys OÜ is our ability to manage a global supply chain. With over 15 years of experience, we have developed long-standing relationships with suppliers, manufacturers, and logistics companies worldwide. This enables us to deliver essential metals and alloys with precision, ensuring timely availability for production needs across industries."
         },
         {
           "type": "p",
@@ -731,7 +731,7 @@ export const enContent: ContentPack = {
         },
         {
           "type": "p",
-          "text": "With over 30 years of experience, IMS Metals & Alloys OÜ has earned a reputation for delivering high-quality metals that meet the most demanding industry standards. Our extensive network of suppliers, state-of-the-art testing facilities, and commitment to quality make us the trusted partner for industries across the globe."
+          "text": "With over 15 years of experience, IMS Metals & Alloys OÜ has earned a reputation for delivering high-quality metals that meet the most demanding industry standards. Our extensive network of suppliers, state-of-the-art testing facilities, and commitment to quality make us the trusted partner for industries across the globe."
         },
         {
           "type": "p",

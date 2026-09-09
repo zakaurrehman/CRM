@@ -88,7 +88,7 @@ export default async function ContactPage() {
                   </a>
                   {contact.phone ? (
                     <a
-                      href={"tel:" + contact.phone.replace(/\s/g, "")}
+                      href={"tel:" + contact.phone.replace(/[^+0-9]/g, "")}
                       className="mt-2 block text-[0.9375rem] font-medium text-brand-700"
                     >
                       {contact.phone}
