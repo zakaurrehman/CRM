@@ -362,50 +362,70 @@ facilities. Until then the site describes reach in the words IMS itself uses.
 
 ### 20. Photography — six alloy families have no image of the metal
 
-The site ships with 20 photographs. Nine alloy families have one that genuinely
-depicts the metal or its established end use. Six do not, and until this audit
-they carried a photograph of something else entirely:
+There are seven general metal photographs on the site and fifteen alloy
+families, so no assignment gives every family a true one. What was happening
+instead was one photograph standing in for several unrelated materials:
+`steel-rods.jpg` carried Nickel, Copper Nickel, Titanium **and** Zirconium, and
+`stamped-components.jpg` carried three more. Titanium is bright silver and
+cupronickel is coppery — a photograph of dark oxidised ferrous billet ends is
+not a picture of either.
 
-| Family | Was showing | Problem |
+**Each photograph is now used by exactly one family, on the family it genuinely
+depicts.** `scripts/verify-alloy-index.ts` fails the build check if that stops
+being true.
+
+| Family | Photograph | Why it is honest |
 | --- | --- | --- |
-| Titanium Alloys | a general scrap yard | not titanium |
-| Zirconium Alloys | tungsten crucibles | a different refractory metal |
-| Tool Steels | tungsten-carbide mining bits | carbide, not tool steel |
-| Magnet Alloys | a claw crane moving scrap | not a magnet alloy |
-| Cobalt Iron Alloys | a recycling operations scene | not the material |
-| Copper Nickel Alloys | a port terminal | not the material |
+| Nickel Alloys | aero engines | Inconel, Nimonic and Hastelloy are the aero-engine nickel alloys |
+| Complex Nickel Alloys | turbine hall | cast superalloys, gas turbine hot section |
+| Tungsten Alloys | Densalloy | actual tungsten heavy alloy |
+| High Speed Steels | drills and end mills | HSS cutting tools |
+| Stainless Steel | stainless turnings | the commonest stainless arising |
+| Nickel Copper | pipe stock | Monel: seawater and marine piping |
+| Tool Steels | ferrous billet ends | dark ferrous stock |
+| Alloy Irons | hot ferrous plate | rolling and casting |
+| Nickel Iron Alloys | stamped components | Invar and Nilo in precision stampings and laminations |
 
-**Current state:** those six render a *specimen card* instead — the family's
-dominant element large, with its characteristic elements and their typical
-percentages, computed from the published composition tables. It is derived from
-real data rather than decorative, so it identifies the family at a glance, and
-it is visibly a designed panel rather than a photograph pretending to be one.
+**The remaining six have no honest photograph and render a *specimen card*
+instead** — the family's dominant element large, with its characteristic
+elements and their typical percentages, computed from the published composition
+tables. It is derived from real data rather than decorative, so it identifies
+the family at a glance, and it is visibly a designed panel rather than a
+photograph pretending to be one. Their detail pages use the typographic hero
+rather than showing a picture of some other metal.
 
 A wrong photograph is worse than no photograph on a technical site. The buyers
 this site is for can tell tungsten carbide from tool steel at a glance, and one
 mismatched image undermines the composition data sitting beside it.
 
-**To replace them with photography,** supply any of the following. Landscape,
-2000px wide or more, and ideally IMS's own material rather than stock:
+**To replace a specimen card with photography,** supply any of the following.
+Landscape, 2000px wide or more, and ideally IMS's own material rather than
+stock:
 
 | Family | What to photograph |
 | --- | --- |
-| Titanium Alloys | Ti bar, plate, sponge or machining turnings |
-| Zirconium Alloys | Zr sponge, tube or bar |
-| Tool Steels | tool-steel blocks, dies or forged billets |
-| Magnet Alloys | Alnico magnets, cast or sintered |
-| Cobalt Iron Alloys | transformer laminations or magnetic cores |
+| Cobalt Alloys | Stellite hardfacing, cobalt-base valve seats or turbine wear parts |
 | Copper Nickel Alloys | cupro-nickel tube, plate or condenser bundles |
+| Cobalt Iron Alloys | transformer laminations or magnetic cores |
+| Titanium Alloys | Ti bar, plate, sponge or machining turnings |
+| Magnet Alloys | Alnico magnets, cast or sintered |
+| Zirconium Alloys | Zr sponge, tube or bar |
 
-Dropping one in is a two-field change in `data/alloys.ts` — set `image` to the
-new file and `cardArt` back to `"photo"`. Nothing else needs touching.
+Dropping one in is a two-field change — set `image` and `cardArt: "photo"` in
+`data/alloys.ts` **and the matching entry in `data/alloy-index.ts`**. The index
+is a generated companion with no generator checked in, so the two drift silently
+if only one is edited; that is what `scripts/verify-alloy-index.ts` exists to
+catch, and it is worth running after any image change.
 
 **Also worth supplying,** to replace defensible-but-generic stand-ins: nickel
-alloy bar or billet (currently generic steel rods) and stainless product
-(currently turnings, which is an arising rather than a product).
+alloy bar or billet, and a stainless *product* rather than turnings, which are
+an arising rather than something IMS sells.
 
----
-
+**Reuse across page types is intentional and honest.** The aero-engine photo
+appears on the Nickel Alloys category, the Aerospace industry page and the
+aerospace reverts page; the turbine photo on Complex Nickel Alloys and the
+Industrial Gas Turbine page. In each case the image depicts something true about
+both. What was removed was reuse across *unrelated* subjects.
 
 ---
 

@@ -92,16 +92,16 @@ export default async function MaterialPage({ params }: Params) {
       >
         <dl className="flex flex-wrap gap-x-10 gap-y-4">
           <div>
-            <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-400">{p("Grades")}</dt>
-            <dd className="mt-1 font-display text-2xl font-bold text-white tabular-nums">
+            <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500 [.on-dark_&]:text-steel-400">{p("Grades")}</dt>
+            <dd className="mt-1 font-display text-2xl font-bold text-navy-900 tabular-nums [.on-dark_&]:text-white">
               {category.grades.length}
             </dd>
           </div>
           <div>
-            <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-400">
+            <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500 [.on-dark_&]:text-steel-400">
               {p("Elements tabulated")}
             </dt>
-            <dd className="mt-1 font-display text-2xl font-bold text-white tabular-nums">
+            <dd className="mt-1 font-display text-2xl font-bold text-navy-900 tabular-nums [.on-dark_&]:text-white">
               {category.elements.length}
             </dd>
           </div>
