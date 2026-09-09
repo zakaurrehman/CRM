@@ -78,7 +78,7 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
     return (
       <div role="status" className="border-t-2 border-success-500 bg-success-50 p-8">
         <h2 className="font-display text-2xl font-semibold text-navy-900">Inquiry received</h2>
-        <p className="mt-3 text-[1.0625rem] leading-relaxed text-steel-700">
+        <p className="mt-3 content-en text-[1.0625rem] leading-relaxed text-steel-700">
           Thank you &mdash; your inquiry is with our team. We will come back to you with a route for your
           material.
         </p>
@@ -96,7 +96,11 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
   return (
     <form ref={formRef} onSubmit={onSubmit} noValidate className="space-y-6">
       {/* Honeypot: visually and programmatically hidden from real users. */}
-      <div aria-hidden className="absolute h-px w-px overflow-hidden opacity-0" style={{ left: "-9999px" }}>
+      {/* Honeypot. Hidden by clipping rather than by parking it at left:-9999px:
+          a physical offset extends the scrollable area on whichever side is
+          "behind" the reading direction, which gave every RTL page a 9999px
+          horizontal scroll. */}
+      <div aria-hidden className="sr-only">
         <label htmlFor={field("website")}>Website</label>
         <input id={field("website")} name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
@@ -106,7 +110,7 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
       </div>
 
       {formError ? (
-        <div className="border-l-2 border-danger-500 bg-danger-50 p-5">
+        <div className="border-s-2 border-danger-500 bg-danger-50 p-5">
           <p className="text-[0.9375rem] text-navy-900">{formError}</p>
           <a
             href={fallbackHref ?? "mailto:" + contact.email}

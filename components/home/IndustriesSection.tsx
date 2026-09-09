@@ -51,7 +51,7 @@ export function IndustriesSection() {
                 <span className="mt-6 inline-flex items-center gap-1.5 text-[0.875rem] font-medium text-white">
                   Sector capabilities
                   <span aria-hidden className="transition-transform duration-200 ease-swift group-hover:translate-x-1">
-                    &rarr;
+                    <span className="dir-arrow">&rarr;</span>
                   </span>
                 </span>
               </div>

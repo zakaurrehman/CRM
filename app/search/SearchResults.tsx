@@ -42,7 +42,7 @@ export function SearchResults() {
           <svg
             viewBox="0 0 18 18"
             aria-hidden
-            className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-steel-400"
+            className="pointer-events-none absolute start-4 top-1/2 h-5 w-5 -translate-y-1/2 text-steel-400"
           >
             <circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.6" />
             <path d="M12.5 12.5L16 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -54,7 +54,7 @@ export function SearchResults() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search alloys, grades, streams and pages"
-            className="h-14 w-full rounded border border-steel-300 bg-white pl-12 pr-4 text-[1.0625rem] text-navy-900 transition-colors placeholder:text-steel-400 hover:border-steel-400 focus:border-brand-700"
+            className="h-14 w-full rounded border border-steel-300 bg-white ps-12 pe-4 text-[1.0625rem] text-navy-900 transition-colors placeholder:text-steel-400 hover:border-steel-400 focus:border-brand-700"
           />
         </div>
       </form>
@@ -100,7 +100,7 @@ export function SearchResults() {
                           aria-hidden
                           className="shrink-0 text-steel-300 transition-all duration-200 group-hover:translate-x-1 group-hover:text-brand-700"
                         >
-                          &rarr;
+                          <span className="dir-arrow">&rarr;</span>
                         </span>
                       </Link>
                     </li>

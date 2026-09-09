@@ -88,9 +88,9 @@ export function MaterialsIndex({
               </div>
               <span
                 aria-hidden
-                className="absolute right-4 top-4 text-white/0 transition-all duration-300 ease-swift group-hover:translate-x-0.5 group-hover:text-white/80"
+                className="absolute end-4 top-4 text-white/0 transition-all duration-300 ease-swift group-hover:translate-x-0.5 group-hover:text-white/80"
               >
-                &rarr;
+                <span className="dir-arrow">&rarr;</span>
               </span>
             </Link>
           </Reveal>

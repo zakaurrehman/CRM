@@ -59,7 +59,7 @@ export default function IndustriesPage() {
                   <h2 className="mt-3 font-display text-display-sm text-navy-900 transition-colors group-hover:text-brand-700">
                     {industry.name}
                   </h2>
-                  <p className="mt-4 text-[1.0625rem] leading-relaxed text-steel-600">{industry.intro}</p>
+                  <p className="mt-4 content-en text-[1.0625rem] leading-relaxed text-steel-600">{industry.intro}</p>
                   <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
                     {industry.capabilities.map((capability) => (
                       <li key={capability.title} className="text-[0.875rem] text-steel-500">
@@ -73,7 +73,7 @@ export default function IndustriesPage() {
                       aria-hidden
                       className="transition-transform duration-200 ease-swift group-hover:translate-x-1"
                     >
-                      &rarr;
+                      <span className="dir-arrow">&rarr;</span>
                     </span>
                   </span>
                 </div>
@@ -87,7 +87,7 @@ export default function IndustriesPage() {
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <h2 className="text-display-sm">Wider sectors supplied</h2>
-            <p className="mt-5 text-[1.0625rem] leading-relaxed text-steel-600">
+            <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-600">
               Beyond the four sectors above, our material and recovery services reach a broader set of
               industries that depend on the same alloy families.
             </p>

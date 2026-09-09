@@ -78,7 +78,7 @@ export function RecyclingStory() {
               { src: "/images/company/port-terminal.jpg", alt: "Recovered metal at a port terminal", caption: "Supplied to customers worldwide" },
             ]}
           />
-          <blockquote className="mt-6 border-l-2 border-brand-700 pl-5">
+          <blockquote className="mt-6 border-s-2 border-brand-700 ps-5">
             <p className="text-[0.9375rem] leading-relaxed text-steel-700">
               Our recycling process enables us to revalorise thousands of tons of material destined for
               landfill every year. This not only reduces environmental impact and valuable landfill space,

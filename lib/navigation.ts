@@ -15,6 +15,14 @@ export interface NavColumn {
 
 export interface NavItem {
   label: string;
+  /**
+   * Dictionary key for the label, when there is one.
+   *
+   * Only the top-level items carry this. The menu contents are material
+   * category names — Inconel, Stellite, Densalloy — which are designations
+   * rather than words, and stay as published in every language.
+   */
+  i18nKey?: "about" | "materials" | "recycling" | "industries" | "insights";
   href: string;
   /** Present when the item opens a mega menu. */
   columns?: NavColumn[];
@@ -55,6 +63,7 @@ const toolsColumn: NavColumn = {
 export const navigation: NavItem[] = [
   {
     label: "About",
+    i18nKey: "about",
     href: "/about",
     columns: [
       {
@@ -82,6 +91,7 @@ export const navigation: NavItem[] = [
   },
   {
     label: "Materials",
+    i18nKey: "materials",
     href: "/materials",
     columns: [...materialColumns(), toolsColumn],
     feature: {
@@ -94,6 +104,7 @@ export const navigation: NavItem[] = [
   },
   {
     label: "Recycling",
+    i18nKey: "recycling",
     href: "/recycling",
     columns: [
       {
@@ -122,6 +133,7 @@ export const navigation: NavItem[] = [
   },
   {
     label: "Industries",
+    i18nKey: "industries",
     href: "/industries",
     columns: [
       {
@@ -137,7 +149,7 @@ export const navigation: NavItem[] = [
       image: "/images/aerospace/aero-engines.jpg",
     },
   },
-  { label: "Insights", href: "/insights" },
+  { label: "Insights", i18nKey: "insights", href: "/insights" },
 ];
 
 export const footerNavigation: NavColumn[] = [

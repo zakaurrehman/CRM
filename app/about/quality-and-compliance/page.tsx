@@ -81,25 +81,25 @@ export default function QualityPage() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
             <h2 className="text-display-sm">Traceability</h2>
-            <p className="mt-5 text-[1.0625rem] leading-relaxed text-steel-600">
+            <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-600">
               Sorting and segregation are quality controls as much as commercial ones. Keeping alloy
               families separated through processing means a grade's identity survives the journey, and the
               certification issued at the end describes material that genuinely matches it.
             </p>
 
             <h2 className="mt-12 text-display-sm">Quality policy</h2>
-            <p className="mt-5 text-[1.0625rem] leading-relaxed text-steel-600">
+            <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-600">
               IMS is committed to a policy of continuously improving quality performance throughout the
               business, to ensure that the highest standards of product and service are achieved.
             </p>
 
             {/* Deliberately not listing scheme accreditations: none were substantiated
                 during the content audit. See /docs/content-verification.md. */}
-            <div className="mt-10 border-l-2 border-steel-300 bg-white p-6">
+            <div className="mt-10 border-s-2 border-steel-300 bg-white p-6">
               <h3 className="font-display text-base font-semibold text-navy-900">
                 Certification for your requirement
               </h3>
-              <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-steel-600">
+              <p className="mt-2.5 content-en text-[0.9375rem] leading-relaxed text-steel-600">
                 Certification accompanies material supplied by IMS. The specific standards and documentation
                 that apply depend on the material and the contract &mdash; ask us for the paperwork relevant
                 to your specification and we will confirm what we can issue.

@@ -6,6 +6,7 @@ import { useAlloyIndex, useSaved, useCompare, formatAmount } from "@/lib/alloy-c
 import { downloadCsv, gradesToCsv } from "@/lib/export";
 import { Button, ButtonEl } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n/provider";
 
 /**
  * Saved materials.
@@ -15,6 +16,7 @@ import { cn } from "@/lib/utils";
  * than left for someone to discover when they open the site on another machine.
  */
 export function SavedMaterials() {
+  const { t } = useI18n();
   const { index, error } = useAlloyIndex();
   const saved = useSaved();
   const compare = useCompare();
@@ -31,14 +33,14 @@ export function SavedMaterials() {
   if (saved.ids.length === 0) {
     return (
       <div className="rounded-lg border border-steel-200 bg-white px-6 py-16 text-center">
-        <h2 className="font-display text-xl font-semibold text-navy-900">No saved materials yet</h2>
-        <p className="mx-auto mt-3 max-w-md text-[0.9375rem] leading-relaxed text-steel-600">
+        <h2 className="font-display text-xl font-semibold text-navy-900">{t("savedList", "emptyTitle")}</h2>
+        <p className="mx-auto mt-3 max-w-md content-en text-[0.9375rem] leading-relaxed text-steel-600">
           Save a grade from any composition table or from the alloy finder and it will be kept here, ready to compare
           or send through as a quotation request.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
-          <Button href="/materials/finder">Open the alloy finder</Button>
-          <Button href="/materials" variant="secondary">Browse categories</Button>
+          <Button href="/materials/finder">{t("common", "openFinder")}</Button>
+          <Button href="/materials" variant="secondary">{t("common", "browseCategories")}</Button>
         </div>
       </div>
     );
@@ -55,7 +57,7 @@ export function SavedMaterials() {
         </p>
         <div className="flex flex-wrap items-center gap-2">
           <ButtonEl type="button" variant="ghost" size="sm" onClick={saved.clear}>
-            Clear all
+            {t("common", "clearAll")}
           </ButtonEl>
           <ButtonEl
             type="button"
@@ -63,10 +65,10 @@ export function SavedMaterials() {
             size="sm"
             onClick={() => downloadCsv("ims-saved-materials.csv", gradesToCsv(grades, index.elements.map((e) => e.symbol)))}
           >
-            Export CSV
+            {t("common", "exportCsv")}
           </ButtonEl>
           <Button href={`/rfq?grades=${encodeURIComponent(saved.ids.join(","))}`} size="sm">
-            Request a quotation
+            {t("common", "requestQuotation")}
           </Button>
         </div>
       </div>
@@ -91,7 +93,7 @@ export function SavedMaterials() {
                   onClick={() => saved.remove(grade.id)}
                   className="shrink-0 rounded px-2 py-1 text-[0.8125rem] font-medium text-steel-600 transition-colors hover:bg-steel-100 hover:text-danger-600"
                 >
-                  Remove
+                  {t("common", "remove")}
                 </button>
               </div>
 
@@ -117,10 +119,10 @@ export function SavedMaterials() {
                   )}
                   title={blocked ? `Comparison holds ${compare.max} grades.` : undefined}
                 >
-                  {inCompare ? "In comparison" : "Add to comparison"}
+                  {inCompare ? t("compare", "inComparison") : t("compare", "addToComparisonShort")}
                 </button>
                 <Link href={grade.href} className="text-[0.8125rem] font-medium text-brand-700 hover:text-brand-900">
-                  Full composition &rarr;
+                  Full composition <span className="dir-arrow">&rarr;</span>
                 </Link>
               </div>
             </li>

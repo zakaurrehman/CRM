@@ -71,7 +71,7 @@ export default function SustainabilityPage() {
               <h3 className="mt-4 font-display text-xl font-semibold tracking-tight text-navy-900">
                 {effect.title}
               </h3>
-              <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-600">{effect.body}</p>
+              <p className="mt-3 content-en text-[0.9375rem] leading-relaxed text-steel-600">{effect.body}</p>
             </Reveal>
           ))}
         </ul>
@@ -81,12 +81,12 @@ export default function SustainabilityPage() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
             <h2 className="text-display-sm">What this looks like in practice</h2>
-            <p className="mt-5 text-[1.0625rem] leading-relaxed text-steel-600">
+            <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-600">
               We treat {recoveryStreams.length} distinct metal-bearing streams. Each one represents material
               that a producer would otherwise pay to dispose of, carrying metal that a melt shop would
               otherwise buy new.
             </p>
-            <p className="mt-4 text-[1.0625rem] leading-relaxed text-steel-600">
+            <p className="mt-4 content-en text-[1.0625rem] leading-relaxed text-steel-600">
               We serve industries by providing environmental compliance alongside innovative, cost-effective
               recycling solutions for stainless steel, soft metallic waste streams, superalloy reverts, high
               temperature alloys and pure metals.
@@ -96,7 +96,7 @@ export default function SustainabilityPage() {
               <ArrowLink href="/recycling/aerospace-reverts">Aerospace reverts</ArrowLink>
             </div>
 
-            <div className="mt-10 border-l-2 border-steel-300 bg-white p-6">
+            <div className="mt-10 border-s-2 border-steel-300 bg-white p-6">
               <p className="text-[0.875rem] leading-relaxed text-steel-600">
                 We describe the environmental effect of this business in terms of what it physically does:
                 material recovered, landfill avoided, and primary metal displaced. Quantified emissions or

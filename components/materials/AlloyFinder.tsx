@@ -10,6 +10,7 @@ import type { AlloyGroup } from "@/types/content";
 import { GradeActions } from "./GradeActions";
 import { ButtonEl } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n/provider";
 
 const OPERATORS: { op: Comparator; label: string }[] = [
   { op: "gte", label: "≥" },
@@ -33,6 +34,7 @@ const PAGE = 40;
  * per query, so the whole thing works at the speed of typing.
  */
 export function AlloyFinder() {
+  const { t } = useI18n();
   const { index, error } = useAlloyIndex();
   const [text, setText] = useState("");
   const [rows, setRows] = useState<ElementConstraint[]>([]);
@@ -84,7 +86,7 @@ export function AlloyFinder() {
       {/* ---------- query ---------- */}
       <div className="rounded-lg border border-steel-200 bg-white p-5 shadow-subtle sm:p-6">
         <label htmlFor="finder-q" className="block font-display text-[0.9375rem] font-semibold text-navy-900">
-          Describe what you need
+          {t("finder", "describe")}
         </label>
         <p className="mt-1 text-[0.875rem] text-steel-600">
           Plain English or symbols — &ldquo;cobalt free, chromium above 20&rdquo; and &ldquo;Cr &gt;= 20 no Co&rdquo;
@@ -95,7 +97,7 @@ export function AlloyFinder() {
           <svg
             viewBox="0 0 18 18"
             aria-hidden
-            className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-steel-500"
+            className="pointer-events-none absolute start-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-steel-500"
           >
             <circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.6" />
             <path d="M12.5 12.5L16 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -105,9 +107,9 @@ export function AlloyFinder() {
             type="search"
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="e.g. high nickel corrosion resistant, cobalt free"
+            placeholder={t("finder", "placeholder")}
             autoComplete="off"
-            className="h-12 w-full rounded border border-steel-300 bg-white pl-10 pr-4 text-[0.9375rem] text-navy-900 transition-colors placeholder:text-steel-500 hover:border-steel-400 focus:border-brand-700"
+            className="h-12 w-full rounded border border-steel-300 bg-white ps-10 pe-4 text-[0.9375rem] text-navy-900 transition-colors placeholder:text-steel-500 hover:border-steel-400 focus:border-brand-700"
           />
         </div>
 
@@ -131,7 +133,7 @@ export function AlloyFinder() {
         {parsed.explain.length > 0 ? (
           <div className="mt-4 rounded border border-brand-200 bg-brand-50 px-4 py-3">
             <p className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-brand-800">
-              Reading your query as
+              {t("finder", "readingAs")}
             </p>
             <ul className="mt-2 flex flex-wrap gap-1.5">
               {parsed.explain.map((e) => (
@@ -154,9 +156,9 @@ export function AlloyFinder() {
         {/* ---------- element rows ---------- */}
         <div className="mt-5 border-t border-steel-200 pt-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="font-display text-[0.9375rem] font-semibold text-navy-900">Composition filters</p>
+            <p className="font-display text-[0.9375rem] font-semibold text-navy-900">{t("finder", "compositionFilters")}</p>
             <ButtonEl type="button" variant="secondary" size="sm" onClick={addRow} disabled={!index}>
-              Add element
+              {t("finder", "addElement")}
             </ButtonEl>
           </div>
 
@@ -168,7 +170,7 @@ export function AlloyFinder() {
             <ul className="mt-3 space-y-2">
               {rows.map((row, i) => (
                 <li key={i} className="flex flex-wrap items-center gap-2">
-                  <label className="sr-only" htmlFor={`el-${i}`}>Element</label>
+                  <label className="sr-only" htmlFor={`el-${i}`}>{t("finder", "element")}</label>
                   <select
                     id={`el-${i}`}
                     value={row.element}
@@ -184,7 +186,7 @@ export function AlloyFinder() {
                     ))}
                   </select>
 
-                  <label className="sr-only" htmlFor={`op-${i}`}>Comparison</label>
+                  <label className="sr-only" htmlFor={`op-${i}`}>{t("finder", "comparison")}</label>
                   <select
                     id={`op-${i}`}
                     value={row.op}
@@ -198,7 +200,7 @@ export function AlloyFinder() {
                     ))}
                   </select>
 
-                  <label className="sr-only" htmlFor={`v-${i}`}>Percentage</label>
+                  <label className="sr-only" htmlFor={`v-${i}`}>{t("finder", "percentage")}</label>
                   <input
                     id={`v-${i}`}
                     type="number"
@@ -216,7 +218,7 @@ export function AlloyFinder() {
                   <button
                     type="button"
                     onClick={() => setRows((r) => r.filter((_, j) => j !== i))}
-                    className="ml-auto inline-flex h-10 items-center rounded px-3 text-[0.875rem] text-steel-600 transition-colors hover:bg-steel-100 hover:text-danger-600 sm:ml-0"
+                    className="ms-auto inline-flex h-10 items-center rounded px-3 text-[0.875rem] text-steel-600 transition-colors hover:bg-steel-100 hover:text-danger-600 sm:ms-0"
                   >
                     Remove
                   </button>
@@ -228,9 +230,9 @@ export function AlloyFinder() {
 
         {/* ---------- groups ---------- */}
         <div className="mt-5 border-t border-steel-200 pt-5">
-          <p className="font-display text-[0.9375rem] font-semibold text-navy-900">Material group</p>
+          <p className="font-display text-[0.9375rem] font-semibold text-navy-900">{t("finder", "materialGroup")}</p>
           <div className="scroll-x -mx-1 mt-3 px-1">
-            <div role="group" aria-label="Filter by material group" className="flex w-max gap-2 pb-1 sm:w-auto sm:flex-wrap">
+            <div role="group" aria-label={t("finder", "filterByGroup")} className="flex w-max gap-2 pb-1 sm:w-auto sm:flex-wrap">
               {alloyGroupOrder.map((g) => {
                 const on = groups.includes(g);
                 return (
@@ -281,7 +283,7 @@ export function AlloyFinder() {
                 setGroups([]);
               }}
             >
-              Reset
+              {t("common", "reset")}
             </ButtonEl>
           ) : null}
           <ButtonEl
@@ -296,7 +298,7 @@ export function AlloyFinder() {
               )
             }
           >
-            Export CSV
+            {t("common", "exportCsv")}
           </ButtonEl>
         </div>
       </div>
@@ -366,7 +368,7 @@ function GradeResult({ grade, reasons }: { grade: ClientGrade; reasons: string[]
         href={grade.href}
         className="mt-auto pt-4 text-[0.8125rem] font-medium text-brand-700 transition-colors hover:text-brand-900"
       >
-        Full composition &rarr;
+        Full composition <span className="dir-arrow">&rarr;</span>
       </Link>
     </div>
   );

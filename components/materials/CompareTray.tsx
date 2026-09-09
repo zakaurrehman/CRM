@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAlloyIndex, useCompare } from "@/lib/alloy-client";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n/provider";
 
 /**
  * Persistent comparison tray.
@@ -16,6 +17,7 @@ import { cn } from "@/lib/utils";
  * Sits above the WhatsApp button's corner and leaves room for it.
  */
 export function CompareTray() {
+  const { t } = useI18n();
   const { ids, remove, clear } = useCompare();
   const { index } = useAlloyIndex();
   const pathname = usePathname();
@@ -31,7 +33,7 @@ export function CompareTray() {
         "motion-safe:animate-slide-up",
       )}
       role="region"
-      aria-label="Material comparison"
+      aria-label={t("compare", "region")}
     >
       <div className="mx-auto flex max-w-container flex-col gap-3 px-5 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 lg:px-8">
         <div className="flex min-w-0 flex-1 items-center gap-3">
@@ -41,7 +43,7 @@ export function CompareTray() {
           <ul className="scroll-x flex min-w-0 flex-1 items-center gap-2 pb-1 sm:pb-0">
             {names.map((g) => (
               <li key={g.id} className="shrink-0">
-                <span className="inline-flex items-center gap-1.5 rounded border border-white/20 bg-white/5 py-1 pl-2.5 pr-1 text-[0.8125rem] text-white">
+                <span className="inline-flex items-center gap-1.5 rounded border border-white/20 bg-white/5 py-1 ps-2.5 pe-1 text-[0.8125rem] text-white">
                   {g.name}
                   <button
                     type="button"
@@ -59,13 +61,13 @@ export function CompareTray() {
           </ul>
         </div>
 
-        <div className="flex shrink-0 items-center gap-2 pr-0 sm:pr-16">
+        <div className="flex shrink-0 items-center gap-2 pe-0 sm:pe-16">
           <button
             type="button"
             onClick={clear}
             className="h-9 rounded px-3 text-[0.875rem] font-medium text-steel-300 transition-colors hover:bg-white/10 hover:text-white"
           >
-            Clear
+            {t("common", "clear")}
           </button>
           <Link
             href="/materials/compare"

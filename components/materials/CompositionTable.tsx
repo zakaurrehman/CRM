@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { compositionFootnote } from "@/data/alloy-index";
 import type { AlloyCategory } from "@/types/content";
 import { cn, normalise } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n/provider";
 import { gradeId as makeGradeId } from "@/lib/alloy-ids";
 import { GradeActions } from "./GradeActions";
 import { ButtonEl } from "@/components/ui/Button";
@@ -26,6 +27,7 @@ type View = "table" | "cards";
  * reader picks. The table stays the default because it is the reference view.
  */
 export function CompositionTable({ category }: { category: AlloyCategory }) {
+  const { t } = useI18n();
   const [query, setQuery] = useState("");
   const [view, setView] = useState<View>("table");
 
@@ -42,7 +44,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="text-display-sm" id="composition">
-            Chemical composition
+            {t("table", "heading")}
           </h2>
           <p className="mt-2 text-[0.9375rem] text-steel-600">
             {category.grades.length} grades &middot; percentage by weight
@@ -59,7 +61,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
                 <svg
                   viewBox="0 0 18 18"
                   aria-hidden
-                  className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-steel-500"
+                  className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-steel-500"
                 >
                   <circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.6" />
                   <path d="M12.5 12.5L16 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -69,15 +71,15 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
                   type="search"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Filter grades"
-                  className="h-11 w-full rounded border border-steel-300 bg-white pl-9 pr-3 text-[0.9375rem] text-navy-900 transition-colors placeholder:text-steel-500 hover:border-steel-400 focus:border-brand-700"
+                  placeholder={t("table", "filterGrades")}
+                  className="h-11 w-full rounded border border-steel-300 bg-white ps-9 pe-3 text-[0.9375rem] text-navy-900 transition-colors placeholder:text-steel-500 hover:border-steel-400 focus:border-brand-700"
                 />
               </div>
             </div>
           ) : null}
 
           {/* Only worth offering where the table is actually cramped. */}
-          <div role="group" aria-label="Composition view" className="flex gap-1 sm:hidden">
+          <div role="group" aria-label={t("table", "view")} className="flex gap-1 sm:hidden">
             {(["table", "cards"] as View[]).map((v) => (
               <button
                 key={v}
@@ -160,7 +162,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
         )}
       >
         <div className="scroll-x max-h-[min(70vh,44rem)] overflow-y-auto xl:max-h-none xl:overflow-visible">
-          <table className="w-full min-w-[46rem] border-collapse text-left">
+          <table className="w-full min-w-[46rem] border-collapse text-start">
             <caption className="sr-only">
               Nominal chemical composition of {category.name} grades handled by IMS, in percentage by weight.
               {" "}
@@ -170,7 +172,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
               <tr>
                 <th
                   scope="col"
-                  className="sticky left-0 top-0 z-30 min-w-[15rem] border-b border-r border-steel-200 bg-steel-100 px-4 py-3 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-steel-600 xl:top-[var(--header-h)]"
+                  className="sticky start-0 top-0 z-30 min-w-[15rem] border-b border-e border-steel-200 bg-steel-100 px-4 py-3 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-steel-600 xl:top-[var(--header-h)]"
                 >
                   Grade
                 </th>
@@ -181,7 +183,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
                     className={cn(
                       /* No `uppercase` here: element symbols are case-significant — Co is cobalt, CO is carbon monoxide. */
                       "sticky top-0 z-20 border-b border-steel-200 bg-steel-100 px-3 py-3 font-mono text-[0.6875rem] font-medium tracking-[0.1em] text-steel-600 xl:top-[var(--header-h)]",
-                      el === "Others" ? "min-w-[10rem] text-left" : "min-w-[4.25rem] text-right",
+                      el === "Others" ? "min-w-[10rem] text-start" : "min-w-[4.25rem] text-end",
                     )}
                   >
                     {el}
@@ -194,7 +196,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
                 <tr key={grade.name} id={"grade-" + normalise(grade.name).replace(/ /g, "-")} className="group">
                   <th
                     scope="row"
-                    className="sticky left-0 z-10 border-b border-r border-steel-200 bg-white px-4 py-2 text-[0.875rem] font-medium text-navy-900 transition-colors group-hover:bg-brand-50"
+                    className="sticky start-0 z-10 border-b border-e border-steel-200 bg-white px-4 py-2 text-[0.875rem] font-medium text-navy-900 transition-colors group-hover:bg-brand-50"
                   >
                     {/* In the sticky column rather than a trailing one, so the
                         controls stay on screen while the table is scrolled
@@ -214,11 +216,11 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
                       key={category.elements[i]}
                       className={cn(
                         "border-b border-steel-100 px-3 py-2.5 font-mono text-[0.8125rem] tabular-nums transition-colors group-hover:bg-brand-50/50",
-                        category.elements[i] === "Others" ? "text-left text-steel-600" : "text-right",
+                        category.elements[i] === "Others" ? "text-start text-steel-600" : "text-end",
                         value ? "text-steel-800" : "text-steel-500",
                       )}
                     >
-                      {value || <span aria-label="not specified">&ndash;</span>}
+                      {value || <span aria-label={t("table", "notSpecified")}>&ndash;</span>}
                     </td>
                   ))}
                 </tr>
@@ -231,7 +233,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
           <p className="border-t border-steel-200 bg-steel-50 px-4 py-8 text-center text-sm text-steel-600">
             No grade matches &ldquo;{query}&rdquo;.{" "}
             <button type="button" onClick={() => setQuery("")} className="font-medium text-brand-700 hover:underline">
-              Clear filter
+              {t("table", "clearFilter")}
             </button>
           </p>
         ) : null}
@@ -239,7 +241,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
 
       <div className="mt-4 flex flex-wrap items-center gap-3 print:hidden">
         <ButtonEl type="button" variant="secondary" size="sm" onClick={() => window.print()}>
-          Print / PDF
+          {t("common", "printPdf")}
         </ButtonEl>
         <p className="text-[0.8125rem] text-steel-500">
           Select grades to compare them side by side, or save them to a shortlist.

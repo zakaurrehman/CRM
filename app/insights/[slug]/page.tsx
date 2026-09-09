@@ -84,7 +84,7 @@ export default async function ArticlePage({ params }: Params) {
         <Container>
           <div className="grid gap-12 py-14 sm:py-18 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-7 lg:col-start-2">
-              <div className="prose-ims max-w-prose">
+              <div className="prose-ims content-en max-w-prose">
                 {article.body.map((block, i) => {
                   if (block.type === "h2") {
                     return <h2 key={i}>{block.text}</h2>;
@@ -108,7 +108,7 @@ export default async function ArticlePage({ params }: Params) {
                 <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
                   Talk to IMS
                 </p>
-                <p className="mt-4 text-[0.9375rem] leading-relaxed text-steel-600">
+                <p className="mt-4 content-en text-[0.9375rem] leading-relaxed text-steel-600">
                   If this touches on a material requirement of your own, our team can tell you what we can
                   supply or recover.
                 </p>

@@ -75,7 +75,7 @@ export function ProcessExplorer({
                   setActive(i);
                 }}
                 className={cn(
-                  "group relative flex items-center gap-4 border-l-2 py-4 pl-5 pr-4 text-left transition-colors duration-200",
+                  "group relative flex items-center gap-4 border-s-2 py-4 ps-5 pe-4 text-start transition-colors duration-200",
                   selected
                     ? "border-brand-700 bg-white"
                     : "border-steel-200 hover:border-steel-400 hover:bg-white/60",
@@ -133,7 +133,7 @@ export function ProcessExplorer({
               <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight text-navy-900">
                 {step.title}
               </h3>
-              <p className="mt-4 text-[1.0625rem] leading-relaxed text-steel-700">{step.body}</p>
+              <p className="mt-4 content-en text-[1.0625rem] leading-relaxed text-steel-700">{step.body}</p>
 
               <div className="mt-8 flex items-center justify-between border-t border-steel-200 pt-5">
                 <button
@@ -145,7 +145,7 @@ export function ProcessExplorer({
                   disabled={active === 0}
                   className="text-[0.9375rem] font-medium text-brand-700 transition-colors hover:text-brand-900 disabled:pointer-events-none disabled:text-steel-500"
                 >
-                  &larr; Previous
+                  <span className="dir-arrow">&larr;</span> Previous
                 </button>
                 <button
                   type="button"
@@ -156,7 +156,7 @@ export function ProcessExplorer({
                   disabled={active === steps.length - 1}
                   className="text-[0.9375rem] font-medium text-brand-700 transition-colors hover:text-brand-900 disabled:pointer-events-none disabled:text-steel-500"
                 >
-                  Next &rarr;
+                  Next <span className="dir-arrow">&rarr;</span>
                 </button>
               </div>
             </div>

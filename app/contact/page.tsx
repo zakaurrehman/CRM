@@ -49,7 +49,7 @@ export default function ContactPage() {
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <h2 className="text-display-sm">Request an inquiry</h2>
-            <p className="mt-4 max-w-xl text-[1.0625rem] leading-relaxed text-steel-600">
+            <p className="mt-4 max-w-xl content-en text-[1.0625rem] leading-relaxed text-steel-600">
               The more you can tell us about the material, the faster we can come back with something
               useful.
             </p>
@@ -66,7 +66,7 @@ export default function ContactPage() {
                 </h2>
                 <address className="mt-4 not-italic">
                   <p className="text-[1.0625rem] font-medium text-navy-900">IMS Metals &amp; Alloys OÜ</p>
-                  <p className="mt-2 text-[0.9375rem] leading-relaxed text-steel-600">
+                  <p className="mt-2 content-en text-[0.9375rem] leading-relaxed text-steel-600">
                     {contact.address.street}
                     <br />
                     {contact.address.city} {contact.address.postalCode}

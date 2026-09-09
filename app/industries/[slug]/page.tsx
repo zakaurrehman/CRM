@@ -81,7 +81,7 @@ export default async function IndustryPage({ params }: Params) {
               <h3 className="mt-4 font-display text-xl font-semibold tracking-tight text-navy-900">
                 {capability.title}
               </h3>
-              <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-600">{capability.body}</p>
+              <p className="mt-3 content-en text-[0.9375rem] leading-relaxed text-steel-600">{capability.body}</p>
             </Reveal>
           ))}
         </ul>
@@ -109,7 +109,7 @@ export default async function IndustryPage({ params }: Params) {
                 <h3 className="font-display text-xl font-semibold tracking-tight text-navy-900">
                   {sectorGradeCount} grades documented for {industry.name.toLowerCase()}
                 </h3>
-                <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-600">
+                <p className="mt-3 content-en text-[0.9375rem] leading-relaxed text-steel-600">
                   Across {materials.length}{" "}
                   {materials.length === 1 ? "category" : "categories"}, covering{" "}
                   {sectorElements.slice(0, 8).join(", ")}

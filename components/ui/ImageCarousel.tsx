@@ -111,9 +111,9 @@ export function ImageCarousel({
             type="button"
             onClick={() => go(index - 1)}
             aria-label="Previous image"
-            className="absolute left-3 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-navy-950/50 text-white opacity-0 backdrop-blur-sm transition-opacity duration-200 hover:bg-navy-950/75 focus-visible:opacity-100 group-hover:opacity-100"
+            className="absolute start-3 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-navy-950/50 text-white opacity-0 backdrop-blur-sm transition-opacity duration-200 hover:bg-navy-950/75 focus-visible:opacity-100 group-hover:opacity-100"
           >
-            <svg viewBox="0 0 12 20" aria-hidden className="h-4 w-4">
+            <svg viewBox="0 0 12 20" aria-hidden className="h-4 w-4 rtl:-scale-x-100">
               <path d="M10 1L2 10l8 9" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
           </button>
@@ -121,9 +121,9 @@ export function ImageCarousel({
             type="button"
             onClick={() => go(index + 1)}
             aria-label="Next image"
-            className="absolute right-3 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-navy-950/50 text-white opacity-0 backdrop-blur-sm transition-opacity duration-200 hover:bg-navy-950/75 focus-visible:opacity-100 group-hover:opacity-100"
+            className="absolute end-3 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-navy-950/50 text-white opacity-0 backdrop-blur-sm transition-opacity duration-200 hover:bg-navy-950/75 focus-visible:opacity-100 group-hover:opacity-100"
           >
-            <svg viewBox="0 0 12 20" aria-hidden className="h-4 w-4">
+            <svg viewBox="0 0 12 20" aria-hidden className="h-4 w-4 rtl:-scale-x-100">
               <path d="M2 1l8 9-8 9" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
           </button>

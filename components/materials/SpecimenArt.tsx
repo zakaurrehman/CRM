@@ -49,7 +49,7 @@ export function SpecimenArt({
 
       {/* A soft brand glow behind the symbol, so the tile has depth rather than
           reading as a flat colour swatch. */}
-      <div className="absolute -right-8 -top-10 h-40 w-40 rounded-full bg-brand-700/25 blur-3xl" />
+      <div className="absolute -end-8 -top-10 h-40 w-40 rounded-full bg-brand-700/25 blur-3xl" />
 
       {/* Extra room at the foot: the card that hosts this paints its own
           "N grades" label over the bottom-left corner. */}

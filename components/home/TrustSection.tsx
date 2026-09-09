@@ -123,7 +123,7 @@ export function TrustSection() {
                   aria-hidden
                   className="mt-4 block text-[0.8125rem] font-medium text-brand-300 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
                 >
-                  See for yourself &rarr;
+                  See for yourself <span className="dir-arrow">&rarr;</span>
                 </span>
               </dd>
             </Link>

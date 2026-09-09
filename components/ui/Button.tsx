@@ -85,7 +85,7 @@ export function ArrowLink({
     >
       {children}
       <span aria-hidden className="transition-transform duration-200 ease-swift group-hover/al:translate-x-1">
-        &rarr;
+        <span className="dir-arrow">&rarr;</span>
       </span>
     </Link>
   );

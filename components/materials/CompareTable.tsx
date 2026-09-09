@@ -6,6 +6,7 @@ import { useAlloyIndex, useCompare, useSaved, formatAmount } from "@/lib/alloy-c
 import { downloadCsv, gradesToCsv } from "@/lib/export";
 import { ButtonEl, Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n/provider";
 
 /**
  * Side-by-side composition comparison.
@@ -21,6 +22,7 @@ import { cn } from "@/lib/utils";
  * is itself information.
  */
 export function CompareTable() {
+  const { t } = useI18n();
   const { index, error } = useAlloyIndex();
   const { ids, remove, clear } = useCompare();
   const saved = useSaved();
@@ -54,15 +56,15 @@ export function CompareTable() {
   if (ids.length === 0) {
     return (
       <div className="rounded-lg border border-steel-200 bg-white px-6 py-16 text-center">
-        <h2 className="font-display text-xl font-semibold text-navy-900">Nothing selected yet</h2>
-        <p className="mx-auto mt-3 max-w-md text-[0.9375rem] leading-relaxed text-steel-600">
+        <h2 className="font-display text-xl font-semibold text-navy-900">{t("compare", "emptyTitle")}</h2>
+        <p className="mx-auto mt-3 max-w-md content-en text-[0.9375rem] leading-relaxed text-steel-600">
           Add up to four grades from any category or from the alloy finder, and their compositions will line up here
           for comparison.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
-          <Button href="/materials/finder">Open the alloy finder</Button>
+          <Button href="/materials/finder">{t("common", "openFinder")}</Button>
           <Button href="/materials" variant="secondary">
-            Browse categories
+            {t("common", "browseCategories")}
           </Button>
         </div>
       </div>
@@ -86,7 +88,7 @@ export function CompareTable() {
         </p>
         <div className="flex items-center gap-2">
           <ButtonEl type="button" variant="ghost" size="sm" onClick={clear}>
-            Clear all
+            {t("common", "clearAll")}
           </ButtonEl>
           <ButtonEl
             type="button"
@@ -94,17 +96,17 @@ export function CompareTable() {
             size="sm"
             onClick={() => downloadCsv("ims-comparison.csv", gradesToCsv(grades, index.elements.map((e) => e.symbol)))}
           >
-            Export CSV
+            {t("common", "exportCsv")}
           </ButtonEl>
           <ButtonEl type="button" variant="secondary" size="sm" onClick={() => window.print()}>
-            Print / PDF
+            {t("common", "printPdf")}
           </ButtonEl>
         </div>
       </div>
 
       <div className="mt-6 overflow-hidden rounded-md border border-steel-200 bg-white">
         <div className="scroll-x">
-          <table className="w-full border-collapse text-left">
+          <table className="w-full border-collapse text-start">
             <caption className="sr-only">
               Nominal composition of the selected grades, percentage by weight. Rows where the grades differ are
               marked.
@@ -113,7 +115,7 @@ export function CompareTable() {
               <tr>
                 <th
                   scope="col"
-                  className="sticky left-0 z-20 min-w-[7rem] border-b border-r border-steel-200 bg-steel-100 px-4 py-3 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-steel-600"
+                  className="sticky start-0 z-20 min-w-[7rem] border-b border-e border-steel-200 bg-steel-100 px-4 py-3 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-steel-600"
                 >
                   Element
                 </th>
@@ -163,12 +165,12 @@ export function CompareTable() {
                     /* The sticky column paints over the row, so it has to carry
                        the shading itself rather than inherit it. */
                     className={cn(
-                      "sticky left-0 z-10 border-b border-r border-steel-200 px-4 py-2.5",
+                      "sticky start-0 z-10 border-b border-e border-steel-200 px-4 py-2.5",
                       row.differs ? "bg-white" : "bg-steel-50",
                     )}
                   >
                     <span className="font-mono text-[0.8125rem] font-medium text-navy-900">{row.element}</span>
-                    <span className="ml-2 text-[0.75rem] text-steel-500">
+                    <span className="ms-2 text-[0.75rem] text-steel-500">
                       {index.elementNames[row.element] ?? ""}
                     </span>
                   </th>
@@ -193,9 +195,9 @@ export function CompareTable() {
                 <tr>
                   <th
                     scope="row"
-                    className="sticky left-0 z-10 border-t border-r border-steel-200 bg-white px-4 py-2.5 font-mono text-[0.8125rem] font-medium text-navy-900"
+                    className="sticky start-0 z-10 border-t border-e border-steel-200 bg-white px-4 py-2.5 font-mono text-[0.8125rem] font-medium text-navy-900"
                   >
-                    Compounds
+                    {t("compare", "compounds")}
                   </th>
                   {grades.map((g) => (
                     <td key={g.id} className="border-t border-steel-100 px-4 py-2.5 text-[0.8125rem] text-steel-700">
@@ -216,13 +218,13 @@ export function CompareTable() {
       </p>
 
       <div className="mt-8 rounded-lg border border-brand-200 bg-brand-50 p-6 print:hidden">
-        <h2 className="font-display text-lg font-semibold text-navy-900">Ready to price these?</h2>
+        <h2 className="font-display text-lg font-semibold text-navy-900">{t("compare", "readyTitle")}</h2>
         <p className="mt-2 max-w-2xl text-[0.9375rem] leading-relaxed text-steel-700">
           Send the selection straight through as a quotation request — the grades below travel with it, so nobody has
           to retype a composition.
         </p>
         <div className="mt-5">
-          <Button href={`/rfq?grades=${encodeURIComponent(ids.join(","))}`}>Request a quotation</Button>
+          <Button href={`/rfq?grades=${encodeURIComponent(ids.join(","))}`}>{t("common", "requestQuotation")}</Button>
         </div>
       </div>
     </div>

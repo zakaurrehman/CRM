@@ -95,7 +95,7 @@ export function Footer() {
         {/* The floating WhatsApp button sits over the bottom-right corner and
             covered the last link in this row at 1024px. The reserve is on the
             row rather than the button so the button stays where it is. */}
-        <div className="flex flex-col gap-4 border-t border-white/10 py-7 sm:flex-row sm:items-center sm:justify-between sm:pr-16">
+        <div className="flex flex-col gap-4 border-t border-white/10 py-7 sm:flex-row sm:items-center sm:justify-between sm:pe-16">
           <p className="text-[0.8125rem] text-steel-400">
             &copy; {year} {site.legalName}. All rights reserved.
           </p>

@@ -4,6 +4,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { CompareTray } from "@/components/materials/CompareTray";
+import { I18nProvider } from "@/lib/i18n/provider";
+import { LOCALE_STORAGE_KEY, localeMeta } from "@/lib/i18n/config";
 import { JsonLd, organizationSchema, websiteSchema } from "@/lib/schema";
 import { navigation } from "@/lib/navigation";
 import { site } from "@/lib/site";
@@ -69,19 +71,31 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
         />
+        {/* Applies the stored language's direction before the first paint, so a
+            Hebrew reader never sees the layout render left-to-right and then
+            flip. The words settle on hydration; the layout never moves. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var l=localStorage.getItem(${JSON.stringify(LOCALE_STORAGE_KEY)});if(!l)return;var m=${JSON.stringify(
+              Object.fromEntries(Object.entries(localeMeta).map(([code, meta]) => [code, [meta.tag, meta.dir]])),
+            )};var e=m[l];if(!e)return;var r=document.documentElement;r.lang=e[0];r.dir=e[1];}catch(_){}})()`,
+          }}
+        />
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:rounded focus:bg-brand-700 focus:px-4 focus:py-2.5 focus:text-sm focus:font-medium focus:text-white"
+          className="sr-only focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-[70] focus:rounded focus:bg-brand-700 focus:px-4 focus:py-2.5 focus:text-sm focus:font-medium focus:text-white"
         >
           Skip to content
         </a>
-        <Header items={navigation} />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <WhatsAppButton />
-        <CompareTray />
+        <I18nProvider>
+          <Header items={navigation} />
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+          <WhatsAppButton />
+          <CompareTray />
+        </I18nProvider>
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
       </body>
     </html>

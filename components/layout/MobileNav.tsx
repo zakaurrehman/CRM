@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { NavItem } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n/provider";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 /**
  * Full-height mobile drawer.
@@ -16,6 +18,7 @@ import { cn } from "@/lib/utils";
  */
 export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: boolean; onClose: () => void }) {
   const [expanded, setExpanded] = useState<string | null>(null);
+  const { t } = useI18n();
   const panelRef = useRef<HTMLDivElement>(null);
   const restoreTo = useRef<HTMLElement | null>(null);
 
@@ -82,10 +85,10 @@ export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: bo
         ref={panelRef}
         role="dialog"
         aria-modal="true"
-        aria-label="Site menu"
+        aria-label={t("nav", "siteMenu")}
         className={cn(
-          "absolute inset-y-0 right-0 flex w-full max-w-sm flex-col bg-white shadow-lift transition-transform duration-300 ease-swift",
-          open ? "translate-x-0" : "translate-x-full",
+          "absolute inset-y-0 end-0 flex w-full max-w-sm flex-col bg-white shadow-lift transition-transform duration-300 ease-swift",
+          open ? "translate-x-0" : "translate-x-full rtl:-translate-x-full",
         )}
       >
         <div className="flex h-[var(--header-h)] shrink-0 items-center justify-between border-b border-steel-200 px-5">
@@ -99,16 +102,19 @@ export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: bo
               className="h-8 w-auto"
             />
           </Link>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close menu"
-            className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded text-navy-900 hover:bg-steel-100"
-          >
-            <svg viewBox="0 0 20 20" aria-hidden className="h-5 w-5">
-              <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-            </svg>
-          </button>
+          <div className="flex items-center gap-1">
+            <LanguageSwitcher tone="light" />
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label={t("nav", "closeMenu")}
+              className="-me-2 inline-flex h-11 w-11 items-center justify-center rounded text-navy-900 hover:bg-steel-100"
+            >
+              <svg viewBox="0 0 20 20" aria-hidden className="h-5 w-5">
+                <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+              </svg>
+            </button>
+          </div>
         </div>
 
         <nav aria-label="Mobile" className="flex-1 overflow-y-auto overscroll-contain px-5 py-2">
@@ -117,26 +123,26 @@ export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: bo
               const isOpen = expanded === item.label;
               if (!item.columns) {
                 return (
-                  <li key={item.label}>
+                  <li key={item.i18nKey ? t("nav", item.i18nKey) : item.label}>
                     <Link
                       href={item.href}
                       onClick={onClose}
                       className="flex min-h-[3.25rem] items-center text-[1.0625rem] font-medium text-navy-900"
                     >
-                      {item.label}
+                      {item.i18nKey ? t("nav", item.i18nKey) : item.label}
                     </Link>
                   </li>
                 );
               }
               return (
-                <li key={item.label}>
+                <li key={item.i18nKey ? t("nav", item.i18nKey) : item.label}>
                   <button
                     type="button"
                     onClick={() => setExpanded(isOpen ? null : item.label)}
                     aria-expanded={isOpen}
-                    className="flex min-h-[3.25rem] w-full items-center justify-between gap-3 text-left text-[1.0625rem] font-medium text-navy-900"
+                    className="flex min-h-[3.25rem] w-full items-center justify-between gap-3 text-start text-[1.0625rem] font-medium text-navy-900"
                   >
-                    {item.label}
+                    {item.i18nKey ? t("nav", item.i18nKey) : item.label}
                     <svg
                       aria-hidden
                       viewBox="0 0 12 12"
@@ -154,7 +160,7 @@ export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: bo
                       onClick={onClose}
                       className="mb-2 flex min-h-[2.5rem] items-center text-[0.9375rem] font-medium text-brand-700"
                     >
-                      All {item.label.toLowerCase()}
+                      All {(item.i18nKey ? t("nav", item.i18nKey) : item.label).toLowerCase()}
                     </Link>
                     {item.columns.map((col) => (
                       <div key={col.heading} className="mb-3 last:mb-0">

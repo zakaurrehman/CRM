@@ -68,13 +68,13 @@ export function Pillars() {
                 <h3 className="font-display text-xl font-semibold tracking-tight text-navy-900 transition-colors group-hover:text-white">
                   {pillar.title}
                 </h3>
-                <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-steel-600 transition-colors group-hover:text-steel-300">
+                <p className="mt-3 flex-1 content-en text-[0.9375rem] leading-relaxed text-steel-600 transition-colors group-hover:text-steel-300">
                   {pillar.body}
                 </p>
                 <span className="mt-6 inline-flex items-center gap-1.5 text-[0.875rem] font-medium text-brand-700 transition-colors group-hover:text-brand-300">
                   {pillar.cta}
                   <span aria-hidden className="transition-transform duration-200 ease-swift group-hover:translate-x-1">
-                    &rarr;
+                    <span className="dir-arrow">&rarr;</span>
                   </span>
                 </span>
               </div>

@@ -64,7 +64,7 @@ export function SectionHeader({
         </Reveal>
         {(description || action) && (
           <Reveal delay={120} className="lg:col-span-5 lg:col-start-8 lg:pt-2">
-            {description ? <div className="text-lg leading-relaxed opacity-80">{description}</div> : null}
+            {description ? <div className="content-en text-lg leading-relaxed opacity-80">{description}</div> : null}
             {action ? <div className="mt-7">{action}</div> : null}
           </Reveal>
         )}
@@ -77,7 +77,7 @@ export function SectionHeader({
       {eyebrow ? <p className="eyebrow mb-4">{eyebrow}</p> : null}
       <h2 className="text-display-md">{title}</h2>
       {description ? (
-        <div className={cn("mt-5 text-lg leading-relaxed opacity-80", align === "left" && "max-w-2xl")}>
+        <div className={cn("content-en mt-5 text-lg leading-relaxed opacity-80", align === "left" && "max-w-2xl")}>
           {description}
         </div>
       ) : null}

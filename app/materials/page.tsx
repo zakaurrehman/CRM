@@ -53,7 +53,7 @@ export default function MaterialsPage() {
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <h2 className="text-display-sm">Beyond the directory</h2>
-            <p className="mt-5 text-[1.0625rem] leading-relaxed text-steel-600">
+            <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-600">
               The categories above cover the alloy families we document publicly. We also handle pure
               metals and a full range of ferro-alloys in all sizes, packings and specifications.
             </p>

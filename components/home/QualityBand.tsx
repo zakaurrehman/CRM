@@ -65,11 +65,11 @@ export function QualityBand() {
             />
           </figure>
           <div className="lg:col-span-5">
-            <p className="text-[0.9375rem] leading-relaxed text-steel-600">
+            <p className="content-en text-[0.9375rem] leading-relaxed text-steel-600">
               IMS is committed to a policy of continuously improving quality performance throughout the
               business, to ensure the highest standards of product and service are achieved.
             </p>
-            <p className="mt-5 border-l-2 border-steel-300 pl-5 text-[0.875rem] leading-relaxed text-steel-600">
+            <p className="mt-5 border-s-2 border-steel-300 ps-5 text-[0.875rem] leading-relaxed text-steel-600">
               Certification accompanies material supplied by IMS. Specific standards and scheme
               accreditations are confirmed per contract &mdash; ask us for the documentation that applies
               to your requirement.

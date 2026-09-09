@@ -61,7 +61,7 @@ export default function AboutPage() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <h2 className="text-display-sm">Who we are</h2>
-            <div className="mt-6 space-y-5 text-[1.0625rem] leading-relaxed text-steel-700">
+            <div className="mt-6 space-y-5 content-en text-[1.0625rem] leading-relaxed text-steel-700">
               <p>
                 We handle a wide variety of stainless steel, low alloy steels, die steel, nickel, cobalt,
                 complex nickel superalloys, pure metals and ferro-alloys, which arise from the
@@ -79,7 +79,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="mt-10 border-l-2 border-brand-700 pl-6">
+            <div className="mt-10 border-s-2 border-brand-700 ps-6">
               <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
                 Registered office
               </p>
@@ -134,7 +134,7 @@ export default function AboutPage() {
             <h3 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
               Ferro-alloys
             </h3>
-            <p className="mt-5 text-[0.9375rem] leading-relaxed text-steel-600">
+            <p className="mt-5 content-en text-[0.9375rem] leading-relaxed text-steel-600">
               A full range of ferro-alloys, available in all sizes, packings and specifications.
             </p>
             <ul className="mt-5 grid grid-cols-2 grid-rule">
@@ -150,7 +150,7 @@ export default function AboutPage() {
             <h3 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
               Documented alloys
             </h3>
-            <p className="mt-5 text-[0.9375rem] leading-relaxed text-steel-600">
+            <p className="mt-5 content-en text-[0.9375rem] leading-relaxed text-steel-600">
               We publish nominal composition data for {totalGradeCount} grades across{" "}
               {alloyCategoryCount} categories, so a specification can be checked before an enquiry is
               even sent.
@@ -183,7 +183,7 @@ export default function AboutPage() {
               <h3 className="mt-4 font-display text-xl font-semibold tracking-tight text-navy-900">
                 {item.title}
               </h3>
-              <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-600">{item.body}</p>
+              <p className="mt-3 content-en text-[0.9375rem] leading-relaxed text-steel-600">{item.body}</p>
             </Reveal>
           ))}
         </ul>
@@ -233,7 +233,7 @@ export default function AboutPage() {
                 <h3 className="font-display text-xl font-semibold text-navy-900 transition-colors group-hover:text-brand-700">
                   {card.title}
                 </h3>
-                <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-steel-600">{card.body}</p>
+                <p className="mt-2.5 content-en text-[0.9375rem] leading-relaxed text-steel-600">{card.body}</p>
               </div>
             </Link>
           ))}

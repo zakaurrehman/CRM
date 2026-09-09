@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 import { Container } from "@/components/ui/Container";
 import { MobileNav } from "./MobileNav";
 import { SearchTrigger } from "./SearchTrigger";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useI18n } from "@/lib/i18n/provider";
 
 export function Header({ items }: { items: NavItem[] }) {
   const pathname = usePathname();
@@ -60,6 +62,8 @@ export function Header({ items }: { items: NavItem[] }) {
     cancelClose();
     closeTimer.current = setTimeout(() => setOpenIndex(null), 120);
   };
+
+  const { t } = useI18n();
 
   const isActive = (item: NavItem) =>
     item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
@@ -118,7 +122,7 @@ export function Header({ items }: { items: NavItem[] }) {
                   const open = openIndex === i;
                   return (
                     <li
-                      key={item.label}
+                      key={item.i18nKey ? t("nav", item.i18nKey) : item.label}
                       onMouseEnter={() => {
                         if (!hasMenu) return;
                         cancelClose();
@@ -140,7 +144,7 @@ export function Header({ items }: { items: NavItem[] }) {
                             open || isActive(item) ? "text-brand-700" : "text-navy-900 hover:text-brand-700",
                           )}
                         >
-                          {item.label}
+                          {item.i18nKey ? t("nav", item.i18nKey) : item.label}
                           <svg
                             aria-hidden
                             viewBox="0 0 10 6"
@@ -163,13 +167,13 @@ export function Header({ items }: { items: NavItem[] }) {
                             isActive(item) ? "text-brand-700" : "text-navy-900 hover:text-brand-700",
                           )}
                         >
-                          {item.label}
+                          {item.i18nKey ? t("nav", item.i18nKey) : item.label}
                         </Link>
                       )}
                       <span
                         aria-hidden
                         className={cn(
-                          "pointer-events-none absolute inset-x-3 bottom-0 h-0.5 origin-left bg-brand-700 transition-transform duration-300 ease-swift",
+                          "pointer-events-none absolute inset-x-3 bottom-0 h-0.5 origin-left bg-brand-700 transition-transform duration-300 ease-swift rtl:origin-right",
                           open || isActive(item) ? "scale-x-100" : "scale-x-0",
                         )}
                       />
@@ -180,19 +184,24 @@ export function Header({ items }: { items: NavItem[] }) {
             </nav>
 
             <div className="flex items-center gap-2 sm:gap-3">
+              {/* Desktop only here; the drawer carries its own copy so the
+                  control is never more than one tap away on a phone. */}
+              <div className="hidden lg:block">
+                <LanguageSwitcher tone="light" />
+              </div>
               <SearchTrigger />
               <Link
                 href="/contact"
                 className="hidden h-10 items-center rounded bg-brand-700 px-4 text-[0.9375rem] font-medium text-white shadow-subtle transition-colors hover:bg-brand-800 sm:inline-flex"
               >
-                Talk to IMS
+                {t("nav", "talkToIms")}
               </Link>
               <button
                 type="button"
                 onClick={() => setMobileOpen(true)}
-                aria-label="Open menu"
+                aria-label={t("nav", "openMenu")}
                 aria-expanded={mobileOpen}
-                className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded text-navy-900 transition-colors hover:bg-steel-100 lg:hidden"
+                className="-me-2 inline-flex h-11 w-11 items-center justify-center rounded text-navy-900 transition-colors hover:bg-steel-100 lg:hidden"
               >
                 <svg viewBox="0 0 20 20" aria-hidden className="h-5 w-5">
                   <path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -204,7 +213,7 @@ export function Header({ items }: { items: NavItem[] }) {
           {items.map((item, i) =>
             item.columns ? (
               <MegaMenu
-                key={item.label}
+                key={item.i18nKey ? t("nav", item.i18nKey) : item.label}
                 id={menuId + "-" + i}
                 item={item}
                 open={openIndex === i}
@@ -320,7 +329,7 @@ function MegaMenu({
                 <p className="mt-4 inline-flex items-center gap-1.5 text-[0.8125rem] font-medium text-brand-300">
                   {item.feature.cta}
                   <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-1">
-                    &rarr;
+                    <span className="dir-arrow">&rarr;</span>
                   </span>
                 </p>
               </div>

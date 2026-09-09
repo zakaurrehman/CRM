@@ -47,7 +47,7 @@ export function MaterialCard({
             />
           </>
         )}
-        <span className="absolute bottom-3 left-4 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-white tabular-nums">
+        <span className="absolute bottom-3 start-4 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-white tabular-nums">
           {category.grades.length} grades
         </span>
       </div>
@@ -56,7 +56,7 @@ export function MaterialCard({
         <h3 className="font-display text-lg font-semibold tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
           {category.name}
         </h3>
-        <p className="mt-2.5 flex-1 text-[0.875rem] leading-relaxed text-steel-600">{category.summary}</p>
+        <p className="content-en mt-2.5 flex-1 text-[0.875rem] leading-relaxed text-steel-600">{category.summary}</p>
 
         <ul className="mt-4 flex flex-wrap gap-1.5">
           {category.properties.slice(0, 3).map((p) => (
@@ -72,7 +72,7 @@ export function MaterialCard({
         <span className="mt-5 inline-flex items-center gap-1.5 text-[0.875rem] font-medium text-brand-700">
           View composition
           <span aria-hidden className="transition-transform duration-200 ease-swift group-hover:translate-x-1">
-            &rarr;
+            <span className="dir-arrow">&rarr;</span>
           </span>
         </span>
       </div>

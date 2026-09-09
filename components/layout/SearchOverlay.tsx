@@ -126,7 +126,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
                 onClick={onClose}
                 className="mt-3 inline-block text-sm font-medium text-brand-700 hover:text-brand-900"
               >
-                Ask our team about this material &rarr;
+                Ask our team about this material <span className="dir-arrow">&rarr;</span>
               </Link>
             </div>
           ) : (
@@ -138,7 +138,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
                     onMouseEnter={() => setActive(i)}
                     onClick={() => go(doc)}
                     className={cn(
-                      "flex w-full items-center gap-3 px-5 py-2.5 text-left transition-colors",
+                      "flex w-full items-center gap-3 px-5 py-2.5 text-start transition-colors",
                       i === active ? "bg-brand-50" : "hover:bg-steel-50",
                     )}
                   >

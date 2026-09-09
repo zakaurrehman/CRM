@@ -55,7 +55,7 @@ export default function AerospaceRevertsPage() {
               <h3 className="mt-4 font-display text-xl font-semibold tracking-tight text-navy-900">
                 {capability.title}
               </h3>
-              <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-600">{capability.body}</p>
+              <p className="mt-3 content-en text-[0.9375rem] leading-relaxed text-steel-600">{capability.body}</p>
             </Reveal>
           ))}
         </ul>
@@ -65,7 +65,7 @@ export default function AerospaceRevertsPage() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
             <h2 className="text-display-sm">Precious metal recovery</h2>
-            <p className="mt-5 text-[1.0625rem] leading-relaxed text-steel-600">
+            <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-600">
               Aerospace components carry more than their base alloy. Coatings and specialist assemblies
               contain metals worth recovering in their own right, and they are routinely lost when parts are
               treated as bulk scrap.
@@ -77,7 +77,7 @@ export default function AerospaceRevertsPage() {
                 </li>
               ))}
             </ul>
-            <p className="mt-8 text-[0.9375rem] leading-relaxed text-steel-600">
+            <p className="mt-8 content-en text-[0.9375rem] leading-relaxed text-steel-600">
               Recovered superalloy returns to the melt as either air-melt or vacuum grade product, sorted
               and graded so it re-enters production as a known specification.{" "}
               <ArrowLink href="/materials/complex-nickel-alloys">Complex nickel alloys</ArrowLink>

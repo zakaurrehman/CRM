@@ -79,7 +79,7 @@ export function MaterialsBrowser({
             <svg
               viewBox="0 0 18 18"
               aria-hidden
-              className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-steel-500"
+              className="pointer-events-none absolute start-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-steel-500"
             >
               <circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.6" />
               <path d="M12.5 12.5L16 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -90,7 +90,7 @@ export function MaterialsBrowser({
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search grades, e.g. Inconel 718, Stellite, Nimonic"
-              className="h-12 w-full rounded border border-steel-300 bg-white pl-10 pr-4 text-[0.9375rem] text-navy-900 transition-colors placeholder:text-steel-500 hover:border-steel-400 focus:border-brand-700"
+              className="h-12 w-full rounded border border-steel-300 bg-white ps-10 pe-4 text-[0.9375rem] text-navy-900 transition-colors placeholder:text-steel-500 hover:border-steel-400 focus:border-brand-700"
             />
           </div>
         </div>
@@ -192,7 +192,7 @@ export function MaterialsBrowser({
                       />
                     </>
                   )}
-                  <span className="absolute bottom-3 left-4 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-white tabular-nums">
+                  <span className="absolute bottom-3 start-4 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-white tabular-nums">
                     {category.gradeCount} grades
                   </span>
                 </div>
@@ -200,7 +200,7 @@ export function MaterialsBrowser({
                   <h3 className="font-display text-lg font-semibold tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
                     {category.name}
                   </h3>
-                  <p className="mt-2.5 flex-1 text-[0.875rem] leading-relaxed text-steel-600">
+                  <p className="content-en mt-2.5 flex-1 text-[0.875rem] leading-relaxed text-steel-600">
                     {category.summary}
                   </p>
                   <ul className="mt-4 flex flex-wrap gap-1.5">
@@ -219,7 +219,7 @@ export function MaterialsBrowser({
                       aria-hidden
                       className="transition-transform duration-200 ease-swift group-hover:translate-x-1"
                     >
-                      &rarr;
+                      <span className="dir-arrow">&rarr;</span>
                     </span>
                   </span>
                 </div>

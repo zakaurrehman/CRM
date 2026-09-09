@@ -66,7 +66,7 @@ export function PageHero({
             {intro ? (
               <div
                 className={cn(
-                  "mt-6 animate-fade-up text-lg leading-relaxed [animation-delay:140ms] sm:text-xl",
+                  "content-en mt-6 animate-fade-up text-lg leading-relaxed [animation-delay:140ms] sm:text-xl",
                   dark ? "text-steel-300" : "text-steel-600",
                 )}
               >
