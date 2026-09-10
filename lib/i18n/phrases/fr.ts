@@ -623,4 +623,8 @@ export const frPhrases: PhraseTable = {
   "Refresh prices": "Actualiser les cours",
   "Welcome to IMS": "Bienvenue chez IMS",
   "per tonne": "la tonne",
+  "All prices per tonne": "Tous les prix à la tonne",
+  "Copper": "Cuivre",
+  "Lead": "Plomb",
+  "Steel scrap": "Ferraille d'acier",
 };

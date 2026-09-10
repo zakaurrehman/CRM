@@ -623,4 +623,8 @@ export const nlPhrases: PhraseTable = {
   "Refresh prices": "Prijzen vernieuwen",
   "Welcome to IMS": "Welkom bij IMS",
   "per tonne": "per ton",
+  "All prices per tonne": "Alle prijzen per ton",
+  "Copper": "Koper",
+  "Lead": "Lood",
+  "Steel scrap": "Staalschroot",
 };
