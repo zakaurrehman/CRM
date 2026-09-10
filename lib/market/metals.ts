@@ -101,12 +101,17 @@ async function supportedSymbols(provider: string, key: string): Promise<Set<stri
     if (!response.ok) { symbolsNote = `symbols endpoint HTTP ${response.status}`; return null; }
     const body = (await response.json()) as { data?: unknown; symbols?: unknown; success?: boolean };
     // Same envelope as the rates endpoint.
-    const inner = (body.data && typeof body.data === "object" ? body.data : body) as {
-      symbols?: Record<string, string> | string[];
-    };
-    const raw = inner.symbols;
-    if (!raw) { symbolsNote = `symbols endpoint gave no list: ${Object.keys(inner).join(", ") || "empty"}`; return null; }
-    const symbols = new Set(Array.isArray(raw) ? raw : Object.keys(raw));
+    const inner = (body.data && typeof body.data === "object" ? body.data : body) as Record<string, unknown>;
+
+    /* The codes arrive as the payload's own keys — AAAU, ADA, AED, ALU … — not
+       under a "symbols" property. Both shapes are handled because the other
+       provider does nest them. */
+    const nested = inner.symbols as Record<string, string> | string[] | undefined;
+    const raw = nested ?? inner;
+    const codes = Array.isArray(raw) ? raw : Object.keys(raw);
+    // Drop the envelope's own bookkeeping fields.
+    const symbols = new Set(codes.filter((c) => !["success", "timestamp", "base", "date", "unit"].includes(c)));
+    if (symbols.size === 0) { symbolsNote = "symbols endpoint gave no codes"; return null; }
     if (symbols.size === 0) return null;
     symbolsNote = `${symbols.size} symbols known`;
     symbolCache = { at: Date.now(), symbols };
@@ -138,19 +143,26 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
      before asking for prices. When the list cannot be fetched, fall back to
      requesting everything — which is what happened before, and no worse. */
   const available = await supportedSymbols(provider, key);
-  const wanted = available
-    ? trackedMetals.filter((m) => available.has(m.symbol))
-    : trackedMetals;
+
+  /* Take the first candidate the provider confirms. Without a list there is
+     nothing to check against, so only the first candidate is tried — better a
+     short request that succeeds than a long one rejected outright. */
+  const wanted = trackedMetals
+    .map((m) => ({
+      spec: m,
+      symbol: available ? m.symbols.find((s) => available.has(s)) : m.symbols[0],
+    }))
+    .filter((x): x is { spec: (typeof trackedMetals)[number]; symbol: string } => Boolean(x.symbol));
 
   if (wanted.length === 0) {
     lastError = redact(
-      `${provider} supports none of the tracked metals. Wanted: ${trackedMetals.map((m) => m.symbol).join(", ")}. ` +
+      `${provider} supports none of the tracked metals. Tried: ${trackedMetals.flatMap((m) => m.symbols).join(", ")}. ` +
         `Provider offers ${available ? available.size : 0} symbols.`,
     );
     return null;
   }
 
-  const symbols = wanted.map((m) => m.symbol).join(",");
+  const symbols = wanted.map((w) => w.symbol).join(",");
 
   const response = await fetch(endpointFor(provider, key, symbols), { cache: "no-store" });
   if (!response.ok) {
@@ -192,19 +204,19 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
   }
 
   const quotes: MetalQuote[] = [];
-  for (const metal of wanted) {
-    const rate = data.rates[metal.symbol];
+  for (const { spec, symbol } of wanted) {
+    const rate = data.rates[symbol];
     /* A provider that does not cover a metal omits it, or returns zero. Either
        way there is no price, so the row is dropped rather than shown empty. */
     if (typeof rate !== "number" || !Number.isFinite(rate) || rate <= 0) continue;
 
     quotes.push({
-      symbol: metal.symbol,
-      name: metal.name,
-      category: metal.category,
+      symbol,
+      name: spec.name,
+      category: spec.category,
       // The feed is inverted: rate is metal per unit of base currency.
       price: 1 / rate,
-      change: typeof data.change?.[metal.symbol] === "number" ? data.change[metal.symbol] : undefined,
+      change: typeof data.change?.[symbol] === "number" ? data.change[symbol] : undefined,
     });
   }
 

@@ -20,8 +20,15 @@
  * widget shows fewer rows rather than invented numbers.
  */
 export interface MetalSpec {
-  /** Provider symbol, e.g. XNI for nickel. */
-  symbol: string;
+  /**
+   * Codes to try, most likely first.
+   *
+   * These services do not agree on naming — one publishes ALU where another
+   * has XAL — and asking for a code a provider does not know rejects the whole
+   * request, not just that line. Listing candidates and taking whichever is
+   * confirmed avoids having to know which convention is in play.
+   */
+  symbols: string[];
   /** English name, translated at render through the phrase table. */
   name: string;
   /** Slug of the alloy category this metal leads, for linking through. */
@@ -29,14 +36,16 @@ export interface MetalSpec {
 }
 
 export const trackedMetals: MetalSpec[] = [
-  { symbol: "XNI", name: "Nickel", category: "nickel-alloys" },
-  { symbol: "XCO", name: "Cobalt", category: "cobalt-alloys" },
-  { symbol: "XCU", name: "Copper", category: "copper-nickel-alloys" },
-  { symbol: "XAL", name: "Aluminium" },
-  { symbol: "XZN", name: "Zinc" },
-  { symbol: "XSN", name: "Tin" },
-  { symbol: "TITANIUM", name: "Titanium", category: "titanium-alloys" },
-  { symbol: "MOLYBDENUM", name: "Molybdenum" },
+  { symbols: ["NICKEL", "XNI", "NI", "LME-NI"], name: "Nickel", category: "nickel-alloys" },
+  { symbols: ["COBALT", "XCO", "CO", "LME-CO"], name: "Cobalt", category: "cobalt-alloys" },
+  { symbols: ["COPPER", "XCU", "LME-CU"], name: "Copper", category: "copper-nickel-alloys" },
+  { symbols: ["ALU", "ALUMINUM", "ALUMINIUM", "XAL", "LME-ALU"], name: "Aluminium" },
+  { symbols: ["ZINC", "XZN", "LME-ZNC"], name: "Zinc" },
+  { symbols: ["TIN", "XSN", "LME-TIN"], name: "Tin" },
+  { symbols: ["TITANIUM", "XTI"], name: "Titanium", category: "titanium-alloys" },
+  { symbols: ["MOLYBDENUM", "MO"], name: "Molybdenum" },
+  { symbols: ["LEAD", "XPB", "LME-LEAD"], name: "Lead" },
+  { symbols: ["TUNGSTEN", "XW"], name: "Tungsten", category: "tungsten-alloys" },
 ];
 
 /**
