@@ -89,6 +89,11 @@
   .grid-rule > * {
     outline: 1px solid theme(colors.steel.200);
   }
+  /* On a dark ground the steel hairline disappears; a low-alpha white reads as
+     the same weight of rule against navy. */
+  .on-dark .grid-rule > * {
+    outline-color: theme(colors.white / 12%);
+  }
 
   .eyebrow {
     @apply font-mono text-eyebrow uppercase text-brand-700;

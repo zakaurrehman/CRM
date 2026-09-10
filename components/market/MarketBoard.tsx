@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 interface Quote {
   symbol: string;
   name: string;
+  element: string;
   category?: string;
   price: number;
   change?: number;
@@ -125,10 +126,10 @@ export function MarketBoard({ className }: { className?: string }) {
   if (status === "loading") {
     return (
       <div className={cn("animate-pulse", className)} aria-hidden>
-        <div className="h-3 w-32 rounded bg-steel-200" />
-        <div className="mt-5 grid grid-cols-2 gap-px bg-steel-200 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="h-3 w-32 rounded bg-white/10" />
+        <div className="grid-rule mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
           {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
-            <div key={i} className="h-[4.5rem] bg-steel-50" />
+            <div key={i} className="h-[5.5rem] bg-navy-950" />
           ))}
         </div>
       </div>
@@ -155,8 +156,14 @@ export function MarketBoard({ className }: { className?: string }) {
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
         <h2
           id="market-board"
-          className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500"
+          className="flex items-center gap-2.5 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-brand-300"
         >
+          {/* A quiet pulse says "live" in a way a timestamp alone does not.
+              Held still under reduced motion, where it is simply a dot. */}
+          <span aria-hidden className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full rounded-full bg-success-500 opacity-70 motion-safe:animate-ping" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success-500" />
+          </span>
           {hasMetals ? p("Live metals prices") : p("Live exchange rates")}
         </h2>
 
@@ -164,7 +171,7 @@ export function MarketBoard({ className }: { className?: string }) {
           {updated ? (
             <time
               dateTime={new Date(stamp!).toISOString()}
-              className="font-mono text-[0.6875rem] tabular-nums text-steel-500"
+              className="font-mono text-[0.6875rem] tabular-nums text-steel-400"
             >
               {updated}
             </time>
@@ -175,7 +182,7 @@ export function MarketBoard({ className }: { className?: string }) {
             onClick={refresh}
             disabled={refreshing}
             aria-label={p("Refresh prices")}
-            className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-steel-300 text-steel-500 transition-colors hover:border-brand-700 hover:text-brand-700 disabled:opacity-40"
+            className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/25 text-steel-300 transition-colors hover:border-white/60 hover:text-white disabled:opacity-40"
           >
             <svg
               viewBox="0 0 14 14"
@@ -197,7 +204,7 @@ export function MarketBoard({ className }: { className?: string }) {
               <select
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value as Currency)}
-                className="h-8 rounded border border-steel-300 bg-white px-2 text-[0.8125rem] font-medium text-navy-900 transition-colors hover:border-brand-700 focus:border-brand-700"
+                className="h-8 rounded border border-white/25 bg-navy-900 px-2 text-[0.8125rem] font-medium text-white transition-colors hover:border-white/60 focus:border-white/60"
               >
                 {data.currencies.map((code) => (
                   <option key={code} value={code}>
@@ -212,54 +219,80 @@ export function MarketBoard({ className }: { className?: string }) {
 
       {hasMetals ? (
         /* Hairline grid: a 1px gap over a coloured parent would paint the empty
-           cells of an incomplete last row, so each cell draws its own outline. */
-        <ul className="grid-rule mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+           cells of an incomplete last row, so each cell draws its own outline
+           and the parent stays unpainted. */
+        <ul className="grid-rule mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
           {metals.map((q) => {
             const cell = (
               <>
-                <span className="block font-mono text-[0.625rem] uppercase tracking-[0.12em] text-steel-500">
+                {/* The element as a watermark. It is the site's own language —
+                    the specimen cards do the same — and it gives a grid of
+                    numbers something to look at besides numbers. */}
+                <span
+                  aria-hidden
+                  data-decorative
+                  className="pointer-events-none absolute end-3 top-2 select-none font-display text-[2.5rem] font-bold leading-none text-white/[0.07]"
+                >
+                  {q.element}
+                </span>
+
+                <span className="relative block font-mono text-[0.625rem] uppercase tracking-[0.12em] text-brand-300">
                   {p(q.name)}
                 </span>
-                <span className="mt-1.5 block tabular-nums text-[1.0625rem] font-semibold text-navy-900">
+                <span className="relative mt-2 block tabular-nums text-[1.125rem] font-semibold text-white">
                   {q.display ?? "—"}
                 </span>
-                <span className="mt-0.5 block text-[0.6875rem] text-steel-500">{p("per tonne")}</span>
               </>
             );
             return (
-              <li key={q.symbol} className="bg-white">
+              <li key={q.symbol} className="relative isolate overflow-hidden bg-navy-950">
                 {q.category ? (
                   <Link
                     href={"/materials/" + q.category}
-                    className="block px-4 py-4 transition-colors hover:bg-steel-50"
+                    className="block px-4 py-5 transition-colors hover:bg-navy-900"
                   >
                     {cell}
                   </Link>
                 ) : (
-                  <div className="px-4 py-4">{cell}</div>
+                  <div className="px-4 py-5">{cell}</div>
                 )}
               </li>
             );
           })}
+
+          {/* Says the unit once instead of nine times, and fills the cell that
+              nine metals leave over in a five-column grid. Shown at every width:
+              on a phone this is the only place the unit appears. */}
+          <li className="bg-navy-950 px-4 py-5">
+            <span className="block font-mono text-[0.625rem] uppercase tracking-[0.12em] text-steel-400">
+              {p("Unit")}
+            </span>
+            <span className="mt-2 block text-[0.8125rem] leading-snug text-steel-400">
+              {p("All prices per tonne")}
+            </span>
+          </li>
         </ul>
       ) : null}
 
       {hasRates ? (
-        <div className={cn("flex flex-wrap items-baseline gap-x-7 gap-y-2", hasMetals ? "mt-5" : "mt-5")}>
-          {hasMetals ? (
-            <span className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-steel-500">
-              {p("Exchange rates")}
-            </span>
-          ) : null}
+        <div className="mt-6 flex flex-wrap items-center gap-x-2.5 gap-y-2">
+          {/* "USD" once, as the base, rather than repeated in front of every
+              pair. Each rate is then just a currency and a number. */}
+          <span className="me-1 font-mono text-[0.625rem] uppercase tracking-[0.12em] text-steel-400">
+            {hasMetals ? p("Exchange rates") : null} {"1 USD ="}
+          </span>
           {rateRows.map((r) => (
-            <span key={r.code} className="text-[0.8125rem] text-steel-600">
-              <span className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-steel-500">
-                {"USD / " + r.code}
-              </span>{" "}
-              <span className="tabular-nums font-medium text-navy-900">
+            <span
+              key={r.code}
+              className="inline-flex items-baseline gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1"
+            >
+              <span className="tabular-nums text-[0.8125rem] font-semibold text-white">
                 {new Intl.NumberFormat(tag, { minimumFractionDigits: 2, maximumFractionDigits: 4 }).format(
                   r.value,
                 )}
+              </span>
+              <span className="font-mono text-[0.625rem] uppercase tracking-[0.08em] text-steel-400">
+                {r.code}
               </span>
             </span>
           ))}

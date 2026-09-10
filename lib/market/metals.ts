@@ -26,6 +26,8 @@ export function isMetalsConfigured(): boolean {
 export interface MetalQuote {
   symbol: string;
   name: string;
+  /** Element symbol, for the board watermark. */
+  element: string;
   category?: string;
   /** Price per troy ounce or per tonne, in the base currency, as the provider reports it. */
   price: number;
@@ -229,6 +231,7 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
     quotes.push({
       symbol,
       name: spec.name,
+      element: spec.element,
       category: spec.category,
       // Quoted per troy ounce; the site trades and displays per tonne.
       price: perOunce * TROY_OUNCES_PER_TONNE,

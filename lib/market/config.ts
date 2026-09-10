@@ -33,18 +33,20 @@ export interface MetalSpec {
   name: string;
   /** Slug of the alloy category this metal leads, for linking through. */
   category?: string;
+  /** Element symbol, shown as a watermark on the board. Steel scrap takes Fe. */
+  element: string;
 }
 
 export const trackedMetals: MetalSpec[] = [
-  { symbols: ["LME-NI", "NICKEL", "XNI"], name: "Nickel", category: "nickel-alloys" },
-  { symbols: ["LCO", "COBALT", "XCO"], name: "Cobalt", category: "cobalt-alloys" },
-  { symbols: ["LME-XCU", "COPPER", "XCU"], name: "Copper", category: "copper-nickel-alloys" },
-  { symbols: ["LME-ALU", "ALU", "ALUMINIUM"], name: "Aluminium" },
-  { symbols: ["LME-ZNC", "ZINC", "XZN"], name: "Zinc" },
-  { symbols: ["LME-TIN", "TIN", "XSN"], name: "Tin" },
-  { symbols: ["LME-LEAD", "LEAD", "XPB"], name: "Lead" },
-  { symbols: ["MO", "MOLYBDENUM"], name: "Molybdenum" },
-  { symbols: ["STEEL-SC"], name: "Steel scrap" },
+  { symbols: ["LME-NI", "NICKEL", "XNI"], element: "Ni", name: "Nickel", category: "nickel-alloys" },
+  { symbols: ["LCO", "COBALT", "XCO"], element: "Co", name: "Cobalt", category: "cobalt-alloys" },
+  { symbols: ["LME-XCU", "COPPER", "XCU"], element: "Cu", name: "Copper", category: "copper-nickel-alloys" },
+  { symbols: ["LME-ALU", "ALU", "ALUMINIUM"], element: "Al", name: "Aluminium" },
+  { symbols: ["LME-ZNC", "ZINC", "XZN"], element: "Zn", name: "Zinc" },
+  { symbols: ["LME-TIN", "TIN", "XSN"], element: "Sn", name: "Tin" },
+  { symbols: ["LME-LEAD", "LEAD", "XPB"], element: "Pb", name: "Lead" },
+  { symbols: ["MO", "MOLYBDENUM"], element: "Mo", name: "Molybdenum" },
+  { symbols: ["STEEL-SC"], element: "Fe", name: "Steel scrap" },
 
   /*
    * Not listed:

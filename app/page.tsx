@@ -38,7 +38,7 @@ export default async function HomePage() {
 
       {/* Between the welcome band and the hero: prominent without pushing the
           headline below the fold. Renders nothing when neither feed has data. */}
-      <div className="border-b border-steel-200 bg-white">
+      <div className="on-dark border-b border-white/10 bg-navy-950">
         <Container>
           <MarketBoard className="py-10 lg:py-12" />
         </Container>
