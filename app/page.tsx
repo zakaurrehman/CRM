@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { MarketTicker } from "@/components/market/MarketTicker";
 import { WelcomeBanner } from "@/components/home/WelcomeBanner";
 import { Hero } from "@/components/home/Hero";
 import { CredibilityStrip } from "@/components/home/CredibilityStrip";
@@ -32,7 +33,12 @@ export default async function HomePage() {
 
   return (
     <>
+      {/* Metals above the welcome band, currency rates below it. Each renders
+          nothing when its feed is empty, so the metals bar simply is not there
+          until a key exists rather than scrolling a blank strip. */}
+      <MarketTicker feed="metals" />
       <WelcomeBanner />
+      <MarketTicker feed="rates" />
       <Hero />
       <CredibilityStrip />
       <Pillars />

@@ -623,4 +623,8 @@ export const hePhrases: PhraseTable = {
   "Tin": "בדיל",
   "Live exchange rates": "שערי חליפין בזמן אמת",
   "Metals prices are temporarily unavailable.": "מחירי המתכות אינם זמינים כרגע.",
+  "Metals": "מתכות",
+  "Exchange rates": "שערי חליפין",
+  "Pause the ticker": "השהיית סרט הנתונים",
+  "Resume the ticker": "המשך סרט הנתונים",
 };

@@ -616,4 +616,8 @@ export const nlPhrases: PhraseTable = {
   "Tin": "Tin",
   "Live exchange rates": "Actuele wisselkoersen",
   "Metals prices are temporarily unavailable.": "Metaalprijzen zijn tijdelijk niet beschikbaar.",
+  "Metals": "Metalen",
+  "Exchange rates": "Wisselkoersen",
+  "Pause the ticker": "Pauzeer de koersbalk",
+  "Resume the ticker": "Hervat de koersbalk",
 };

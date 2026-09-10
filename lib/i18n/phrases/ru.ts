@@ -622,4 +622,8 @@ export const ruPhrases: PhraseTable = {
   "Tin": "Олово",
   "Live exchange rates": "Актуальные курсы валют",
   "Metals prices are temporarily unavailable.": "Цены на металлы временно недоступны.",
+  "Metals": "Металлы",
+  "Exchange rates": "Курсы валют",
+  "Pause the ticker": "Остановить бегущую строку",
+  "Resume the ticker": "Возобновить бегущую строку",
 };

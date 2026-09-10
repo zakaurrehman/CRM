@@ -616,4 +616,8 @@ export const frPhrases: PhraseTable = {
   "Tin": "Étain",
   "Live exchange rates": "Taux de change en direct",
   "Metals prices are temporarily unavailable.": "Les cours des métaux sont momentanément indisponibles.",
+  "Metals": "Métaux",
+  "Exchange rates": "Taux de change",
+  "Pause the ticker": "Mettre le bandeau en pause",
+  "Resume the ticker": "Reprendre le bandeau",
 };
