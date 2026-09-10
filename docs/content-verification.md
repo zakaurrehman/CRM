@@ -552,6 +552,51 @@ overflow at 1440, 1024, 768 and 390px across seven pages.
 
 ---
 
+### 22. Live metals prices and exchange rates — LIVE, WITH TWO FEED PROBLEMS
+
+The homepage carries a price board above the hero: nine metals and five currency
+rates, refreshed automatically every 15 minutes with a manual refresh control and
+a visible timestamp, so a reader can always see how old a figure is.
+
+**Where the numbers come from.** Metals from metals-api, currencies from Open
+Exchange Rates. Both are read server-side only. `METALS_API_KEY` and the exchange
+app ID are read inside modules marked `server-only`, which makes importing them
+into a client component a build error rather than a leak; the browser only ever
+talks to `/api/market` on this domain. Neither credential is in the repository —
+`.env*` is gitignored and only `.env.example`, with empty placeholders, is tracked.
+
+**Prices are never invented.** If a feed is unavailable, that half of the board is
+omitted; if neither responds, the whole band renders nothing and the page closes up
+around it. There is no placeholder, no last-known figure presented as current, and
+no fallback table. Prices are converted from the provider's troy-ounce quoting to
+tonnes (×32,150.7466) and rejected if the result is implausible, because a wrong
+unit is worse than no price.
+
+**Rouble pairs are not offered.** USD/RUB and EUR/RUB were removed on IMS's
+instruction: quoting in roubles carries sanctions exposure and invites a KYC
+question. RUB is dropped from the supported currency list rather than hidden in the
+interface, so it is not reachable through the API either.
+
+**Two problems with the feed, for IMS to raise with the provider:**
+
+| Problem | Detail |
+| --- | --- |
+| **Titanium is missing** | The plan publishes no titanium symbol, so a metal central to IMS's business is absent from the board. Every candidate code was tried against the provider's own symbol list. |
+| **Tungsten reads ~$357,000/tonne** | Roughly ten times the market. The figure is not shown for that reason. Either the symbol is quoted in a unit the provider does not document, or the series is wrong. |
+
+**Small trend charts are not built.** They need a daily series, and the timeseries
+endpoint returns HTTP 400 on the current plan — it is a tier feature. If IMS wants
+sparklines, this is a plan upgrade, not development work; the code already probes
+the endpoint and reports what it gets back.
+
+**Design.** The board is a static grid, not a scrolling ticker. A ticker makes a
+reader wait for the number they came for, does not scan on a phone, and needs a
+pause control to satisfy WCAG 2.2.2 because it never stops. A board is read at a
+glance and has no motion to manage. Metal names translate in all five languages;
+element symbols, currency codes and figures do not.
+
+---
+
 ## Claims deliberately NOT made on the new site
 
 Recorded so it is clear these were choices, not oversights. Each was either
