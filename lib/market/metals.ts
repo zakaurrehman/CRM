@@ -1,5 +1,5 @@
 import "server-only";
-import { BASE_CURRENCY, METALS_TTL_MS, trackedMetals } from "./config";
+import { BASE_CURRENCY, METALS_TTL_MS, TROY_OUNCES_PER_TONNE, trackedMetals } from "./config";
 
 /** Whether a metals feed is configured at all. Server-side only. */
 export function isMetalsConfigured(): boolean {
@@ -209,17 +209,29 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
 
   const quotes: MetalQuote[] = [];
   for (const { spec, symbol } of wanted) {
-    const rate = data.rates[symbol];
-    /* A provider that does not cover a metal omits it, or returns zero. Either
-       way there is no price, so the row is dropped rather than shown empty. */
-    if (typeof rate !== "number" || !Number.isFinite(rate) || rate <= 0) continue;
+    /*
+     * Every symbol is published twice: LME-NI as units per dollar, and
+     * USDLME-NI as dollars per unit. Prefer the second — it is the price
+     * already, so nothing is inherited from inverting a rounded figure.
+     */
+    const direct = data.rates[BASE_CURRENCY + symbol];
+    const inverse = data.rates[symbol];
+
+    const perOunce =
+      typeof direct === "number" && Number.isFinite(direct) && direct > 0
+        ? direct
+        : typeof inverse === "number" && Number.isFinite(inverse) && inverse > 0
+          ? 1 / inverse
+          : null;
+
+    if (perOunce === null) continue;
 
     quotes.push({
       symbol,
       name: spec.name,
       category: spec.category,
-      // The feed is inverted: rate is metal per unit of base currency.
-      price: 1 / rate,
+      // Quoted per troy ounce; the site trades and displays per tonne.
+      price: perOunce * TROY_OUNCES_PER_TONNE,
       change: typeof data.change?.[symbol] === "number" ? data.change[symbol] : undefined,
     });
   }
@@ -237,12 +249,12 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
    * are rejected outright. A wrong price on a metals trading site is worse
    * than no price, and this is the one thing the brief was explicit about.
    */
-  const implausible = quotes.filter((q) => q.price < 200);
+  const implausible = quotes.filter((q) => q.price < 100);
   if (implausible.length > 0) {
     lastError = redact(
-      `${provider} returned values that are not prices per tonne — ` +
+      `${provider} returned values too low to be prices per tonne — ` +
         implausible.slice(0, 4).map((q) => `${q.name} ${q.price.toFixed(2)}`).join(", ") +
-        `. The unit=mt parameter is rejected on this plan, so the quote unit needs confirming with the provider.`,
+        `. The feed quotes per troy ounce and is converted here; a figure this small means the unit changed.`,
     );
     return null;
   }

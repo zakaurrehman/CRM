@@ -36,16 +36,27 @@ export interface MetalSpec {
 }
 
 export const trackedMetals: MetalSpec[] = [
-  { symbols: ["NICKEL", "XNI", "NI", "LME-NI"], name: "Nickel", category: "nickel-alloys" },
-  { symbols: ["COBALT", "XCO", "CO", "LME-CO"], name: "Cobalt", category: "cobalt-alloys" },
-  { symbols: ["COPPER", "XCU", "LME-CU"], name: "Copper", category: "copper-nickel-alloys" },
-  { symbols: ["ALU", "ALUMINUM", "ALUMINIUM", "XAL", "LME-ALU"], name: "Aluminium" },
-  { symbols: ["ZINC", "XZN", "LME-ZNC"], name: "Zinc" },
-  { symbols: ["TIN", "XSN", "LME-TIN"], name: "Tin" },
-  { symbols: ["TITANIUM", "XTI"], name: "Titanium", category: "titanium-alloys" },
-  { symbols: ["MOLYBDENUM", "MO"], name: "Molybdenum" },
-  { symbols: ["LEAD", "XPB", "LME-LEAD"], name: "Lead" },
-  { symbols: ["TUNGSTEN", "XW"], name: "Tungsten", category: "tungsten-alloys" },
+  { symbols: ["LME-NI", "NICKEL", "XNI"], name: "Nickel", category: "nickel-alloys" },
+  { symbols: ["LCO", "COBALT", "XCO"], name: "Cobalt", category: "cobalt-alloys" },
+  { symbols: ["LME-XCU", "COPPER", "XCU"], name: "Copper", category: "copper-nickel-alloys" },
+  { symbols: ["LME-ALU", "ALU", "ALUMINIUM"], name: "Aluminium" },
+  { symbols: ["LME-ZNC", "ZINC", "XZN"], name: "Zinc" },
+  { symbols: ["LME-TIN", "TIN", "XSN"], name: "Tin" },
+  { symbols: ["LME-LEAD", "LEAD", "XPB"], name: "Lead" },
+  { symbols: ["MO", "MOLYBDENUM"], name: "Molybdenum" },
+  { symbols: ["STEEL-SC"], name: "Steel scrap" },
+
+  /*
+   * Not listed:
+   *
+   * Titanium — the feed does not carry it, and IMS trades it. Worth raising
+   * with the provider rather than quietly leaving a gap.
+   *
+   * Tungsten — carried, but at $11.12 a troy ounce it works out at $357,000 a
+   * tonne, against a market of roughly $30,000-45,000 for tungsten metal. Every
+   * other symbol reconciles on the same factor, so this one is either a
+   * different product or bad data, and it is left out until that is known.
+   */
 ];
 
 /**
@@ -80,6 +91,14 @@ export const currencySymbols: Record<Currency, string> = {
  * refresh the existing webapp hook uses without hammering a free endpoint.
  */
 export const METALS_TTL_MS = 15 * 60 * 1000;
+
+/**
+ * Troy ounces in a tonne.
+ *
+ * The feed quotes per troy ounce even for base metals. Steel scrap pins it:
+ * 0.010871 a troy ounce is $350 a tonne, which is what HMS scrap costs.
+ */
+export const TROY_OUNCES_PER_TONNE = 32150.7466;
 export const RATES_TTL_MS = 60 * 60 * 1000;
 
 /* isMetalsConfigured lives in metals.ts, not here. This module is imported by
