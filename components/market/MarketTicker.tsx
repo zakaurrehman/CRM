@@ -99,7 +99,7 @@ export function MarketTicker({
 
   if (items.length === 0) return null;
 
-  const heading = feed === "metals" ? p("Metals") : p("Exchange rates");
+  const heading = feed === "metals" ? p("Metals") : p("FX rates");
   const dark = tone === "dark";
 
   const stamp = feed === "metals" ? data?.metals?.fetchedAt : data?.rates?.fetchedAt;

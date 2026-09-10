@@ -126,7 +126,7 @@ export function MarketBoard({ className }: { className?: string }) {
             <span className="absolute inline-flex h-full w-full rounded-full bg-success-500 opacity-70 motion-safe:animate-ping" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success-500" />
           </span>
-          {hasMetals ? p("Live metals prices") : p("Live exchange rates")}
+          {hasMetals ? p("Live metals prices") : p("Live FX rates")}
         </h2>
 
         <div className="flex items-center gap-3">
@@ -241,7 +241,7 @@ export function MarketBoard({ className }: { className?: string }) {
           {/* "USD" once, as the base, rather than repeated in front of every
               pair. Each rate is then just a currency and a number. */}
           <span className="me-1 font-mono text-[0.625rem] uppercase tracking-[0.12em] text-steel-400">
-            {hasMetals ? p("Exchange rates") : null} {"1 USD ="}
+            {hasMetals ? p("FX rates") : null} {"1 USD ="}
           </span>
           {rateRows.map((r) => (
             <span
