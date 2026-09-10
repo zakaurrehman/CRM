@@ -89,9 +89,9 @@ export function MarketBoard({ className }: { className?: string }) {
     return (
       <div className={cn("animate-pulse", className)} aria-hidden>
         <div className="h-3 w-32 rounded bg-white/10" />
-        <div className="grid-rule mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="grid-rule mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
           {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
-            <div key={i} className="h-[5.5rem] bg-navy-950" />
+            <div key={i} className="h-[4.25rem] bg-navy-950" />
           ))}
         </div>
       </div>
@@ -183,7 +183,7 @@ export function MarketBoard({ className }: { className?: string }) {
         /* Hairline grid: a 1px gap over a coloured parent would paint the empty
            cells of an incomplete last row, so each cell draws its own outline
            and the parent stays unpainted. */
-        <ul className="grid-rule mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+        <ul className="grid-rule mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
           {metals.map((q) => {
             const cell = (
               <>
@@ -193,7 +193,7 @@ export function MarketBoard({ className }: { className?: string }) {
                 <span
                   aria-hidden
                   data-decorative
-                  className="pointer-events-none absolute end-3 top-2 select-none font-display text-[2.5rem] font-bold leading-none text-white/[0.07]"
+                  className="pointer-events-none absolute end-3 top-1.5 select-none font-display text-[2rem] font-bold leading-none text-white/[0.07]"
                 >
                   {q.element}
                 </span>
@@ -201,7 +201,7 @@ export function MarketBoard({ className }: { className?: string }) {
                 <span className="relative block font-mono text-[0.625rem] uppercase tracking-[0.12em] text-brand-300">
                   {p(q.name)}
                 </span>
-                <span className="relative mt-2 block tabular-nums text-[1.125rem] font-semibold text-white">
+                <span className="relative mt-1 block tabular-nums text-[1rem] font-semibold text-white">
                   {q.display ?? "—"}
                 </span>
               </>
@@ -211,12 +211,12 @@ export function MarketBoard({ className }: { className?: string }) {
                 {q.category ? (
                   <Link
                     href={"/materials/" + q.category}
-                    className="block px-4 py-5 transition-colors hover:bg-navy-900"
+                    className="block px-4 py-3.5 transition-colors hover:bg-navy-900"
                   >
                     {cell}
                   </Link>
                 ) : (
-                  <div className="px-4 py-5">{cell}</div>
+                  <div className="px-4 py-3.5">{cell}</div>
                 )}
               </li>
             );
@@ -225,11 +225,11 @@ export function MarketBoard({ className }: { className?: string }) {
           {/* Says the unit once instead of nine times, and fills the cell that
               nine metals leave over in a five-column grid. Shown at every width:
               on a phone this is the only place the unit appears. */}
-          <li className="bg-navy-950 px-4 py-5">
+          <li className="bg-navy-950 px-4 py-3.5">
             <span className="block font-mono text-[0.625rem] uppercase tracking-[0.12em] text-steel-400">
               {p("Unit")}
             </span>
-            <span className="mt-2 block text-[0.8125rem] leading-snug text-steel-400">
+            <span className="mt-1 block text-[0.8125rem] leading-snug text-steel-400">
               {p("All prices per tonne")}
             </span>
           </li>
@@ -237,7 +237,7 @@ export function MarketBoard({ className }: { className?: string }) {
       ) : null}
 
       {hasRates ? (
-        <div className="mt-6 flex flex-wrap items-center gap-x-2.5 gap-y-2">
+        <div className="mt-5 flex flex-wrap items-center gap-x-2.5 gap-y-2">
           {/* "USD" once, as the base, rather than repeated in front of every
               pair. Each rate is then just a currency and a number. */}
           <span className="me-1 font-mono text-[0.625rem] uppercase tracking-[0.12em] text-steel-400">

@@ -48,7 +48,7 @@ export default async function HomePage() {
           headline below the fold. Renders nothing when neither feed has data. */}
       <div className="on-dark border-b border-white/10 bg-navy-950">
         <Container>
-          <MarketBoard className="py-10 lg:py-12" />
+          <MarketBoard className="py-7 lg:py-8" />
         </Container>
       </div>
       <Hero />
