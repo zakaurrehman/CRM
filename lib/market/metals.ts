@@ -72,6 +72,47 @@ interface ProviderResponse {
   change?: Record<string, number>;
 }
 
+function symbolsEndpointFor(provider: string, key: string): string {
+  switch (provider) {
+    case "metalpriceapi":
+      return `https://api.metalpriceapi.com/v1/symbols?api_key=${encodeURIComponent(key)}`;
+    case "metals-api":
+    default:
+      return `https://metals-api.com/api/symbols?access_key=${encodeURIComponent(key)}`;
+  }
+}
+
+/**
+ * Symbols this key can actually see, cached for a day.
+ *
+ * Coverage changes when a plan changes, not minute to minute, so this is worth
+ * asking once. Null means the question could not be answered, and the caller
+ * then requests its full wanted list — no worse than before this existed.
+ */
+let symbolCache: { at: number; symbols: Set<string> } | null = null;
+const SYMBOLS_TTL_MS = 24 * 60 * 60 * 1000;
+
+async function supportedSymbols(provider: string, key: string): Promise<Set<string> | null> {
+  if (symbolCache && Date.now() - symbolCache.at < SYMBOLS_TTL_MS) return symbolCache.symbols;
+  try {
+    const response = await fetch(symbolsEndpointFor(provider, key), { cache: "no-store" });
+    if (!response.ok) return null;
+    const body = (await response.json()) as { data?: unknown; symbols?: unknown; success?: boolean };
+    // Same envelope as the rates endpoint.
+    const inner = (body.data && typeof body.data === "object" ? body.data : body) as {
+      symbols?: Record<string, string> | string[];
+    };
+    const raw = inner.symbols;
+    if (!raw) return null;
+    const symbols = new Set(Array.isArray(raw) ? raw : Object.keys(raw));
+    if (symbols.size === 0) return null;
+    symbolCache = { at: Date.now(), symbols };
+    return symbols;
+  } catch {
+    return null;
+  }
+}
+
 function endpointFor(provider: string, key: string, symbols: string): string {
   const list = encodeURIComponent(symbols);
   switch (provider) {
@@ -88,7 +129,24 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
   if (!key) return null;
 
   const provider = process.env.METALS_API_PROVIDER || "metals-api";
-  const symbols = trackedMetals.map((m) => m.symbol).join(",");
+
+  /* One unrecognised symbol rejects the entire request, so ask what exists
+     before asking for prices. When the list cannot be fetched, fall back to
+     requesting everything — which is what happened before, and no worse. */
+  const available = await supportedSymbols(provider, key);
+  const wanted = available
+    ? trackedMetals.filter((m) => available.has(m.symbol))
+    : trackedMetals;
+
+  if (wanted.length === 0) {
+    lastError = redact(
+      `${provider} supports none of the tracked metals. Wanted: ${trackedMetals.map((m) => m.symbol).join(", ")}. ` +
+        `Provider offers ${available ? available.size : 0} symbols.`,
+    );
+    return null;
+  }
+
+  const symbols = wanted.map((m) => m.symbol).join(",");
 
   const response = await fetch(endpointFor(provider, key, symbols), { cache: "no-store" });
   if (!response.ok) {
@@ -129,7 +187,7 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
   }
 
   const quotes: MetalQuote[] = [];
-  for (const metal of trackedMetals) {
+  for (const metal of wanted) {
     const rate = data.rates[metal.symbol];
     /* A provider that does not cover a metal omits it, or returns zero. Either
        way there is no price, so the row is dropped rather than shown empty. */
