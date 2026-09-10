@@ -34,7 +34,7 @@ export async function Hero() {
       <HeroSlideshow slides={heroSlides} />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-tr from-navy-950 via-navy-950/88 to-navy-900/55"
+        className="absolute inset-0 -z-10 bg-gradient-to-tr from-navy-950 via-navy-950/90 to-navy-900/55"
       />
       <div
         aria-hidden

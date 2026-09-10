@@ -18,6 +18,18 @@ const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
 
+/**
+ * Tailwind's default opacity steps, used by the /NN colour modifier.
+ *
+ * Same trap as the spacing scale and it has now caught two bugs: bg-white/88
+ * looked entirely reasonable, emitted nothing, and left a panel with a blur and
+ * no background at all.
+ */
+const OPACITY = new Set([
+  "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50",
+  "55", "60", "65", "70", "75", "80", "85", "90", "95", "100",
+]);
+
 /** Tailwind's default spacing keys. */
 const DEFAULT_SPACING = new Set([
   "0", "px", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "5", "6", "7", "8",
@@ -62,8 +74,26 @@ for (const rel of files) {
   }
 }
 
+// ---- opacity modifiers on colour utilities
+const COLOUR_UTILITIES =
+  "bg|text|border|ring|from|via|to|divide|placeholder|shadow|outline|decoration|accent|caret|fill|stroke";
+const OPACITY_PATTERN = new RegExp(
+  `(?:^|[\\s"'\`])(?:[a-z-]+:)*(?:${COLOUR_UTILITIES})-[a-z0-9-]+\\/(\\d+)(?=[\\s"'\`])`,
+  "g",
+);
+for (const rel of files) {
+  const src = fs.readFileSync(path.join(ROOT, rel), "utf8");
+  for (const m of src.matchAll(OPACITY_PATTERN)) {
+    const [full, value] = m;
+    if (OPACITY.has(value)) continue;
+    const cls = full.trim();
+    if (!bad.has(cls)) bad.set(cls, new Set());
+    bad.get(cls).add(rel);
+  }
+}
+
 if (bad.size === 0) {
-  console.log("PASS — every spacing value used is in the scale");
+  console.log("PASS — every spacing and opacity value used is in the scale");
   process.exit(0);
 }
 

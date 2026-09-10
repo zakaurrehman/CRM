@@ -90,9 +90,14 @@ export function WelcomeBackdrop({ slides }: { slides: WelcomeSlide[] }) {
         text, samples the real pixels behind it across every frame of the
         rotation, and takes the worst.
       */}
-      <div className="absolute inset-0 bg-navy-950/38" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_52%_58%_at_center,rgba(8,26,52,0.86)_0%,rgba(8,26,52,0.66)_45%,rgba(8,26,52,0.28)_75%,rgba(8,26,52,0)_100%)]" />
-      <div className="absolute inset-0 bg-gradient-to-b from-navy-950/35 via-transparent to-navy-950/40" />
+      {/*
+        Only enough to settle the frame — the type no longer sits directly on
+        it, so nothing here has to protect anything. A light navy wash keeps the
+        band in the same palette as the header and the hero and stops a bright
+        frame competing with the panel; the photograph is otherwise untouched.
+      */}
+      <div className="absolute inset-0 bg-navy-950/30" />
+      <div className="absolute inset-0 bg-gradient-to-b from-navy-950/25 via-transparent to-navy-950/30" />
     </div>
   );
 }
