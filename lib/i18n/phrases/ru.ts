@@ -626,4 +626,5 @@ export const ruPhrases: PhraseTable = {
   "Exchange rates": "Курсы валют",
   "Pause the ticker": "Остановить бегущую строку",
   "Resume the ticker": "Возобновить бегущую строку",
+  "Refresh prices": "Обновить цены",
 };

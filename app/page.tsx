@@ -33,12 +33,12 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Metals above the welcome band, currency rates below it. Each renders
-          nothing when its feed is empty, so the metals bar simply is not there
-          until a key exists rather than scrolling a blank strip. */}
-      <MarketTicker feed="metals" />
+      {/* Both bars together above the welcome band, the second a shade darker
+          so they read as two feeds rather than one long run of numbers. Each
+          renders nothing when its feed is empty. */}
+      <MarketTicker feed="metals" tone="light" />
+      <MarketTicker feed="rates" tone="dark" />
       <WelcomeBanner />
-      <MarketTicker feed="rates" />
       <Hero />
       <CredibilityStrip />
       <Pillars />

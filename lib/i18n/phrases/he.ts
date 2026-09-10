@@ -627,4 +627,5 @@ export const hePhrases: PhraseTable = {
   "Exchange rates": "שערי חליפין",
   "Pause the ticker": "השהיית סרט הנתונים",
   "Resume the ticker": "המשך סרט הנתונים",
+  "Refresh prices": "רענון מחירים",
 };

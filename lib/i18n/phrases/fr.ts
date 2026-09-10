@@ -620,4 +620,5 @@ export const frPhrases: PhraseTable = {
   "Exchange rates": "Taux de change",
   "Pause the ticker": "Mettre le bandeau en pause",
   "Resume the ticker": "Reprendre le bandeau",
+  "Refresh prices": "Actualiser les cours",
 };

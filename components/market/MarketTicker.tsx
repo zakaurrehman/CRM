@@ -65,9 +65,13 @@ const REFRESH_MS = 15 * 60 * 1000;
  */
 export function MarketTicker({
   feed,
+  tone = "light",
   className,
 }: {
   feed: "metals" | "rates";
+  /* The two bars sit together, so one is a shade darker than the other. Without
+     that they read as a single block of scrolling numbers. */
+  tone?: "light" | "dark";
   className?: string;
 }) {
   const p = useP();
@@ -75,6 +79,7 @@ export function MarketTicker({
   const [data, setData] = useState<MarketPayload | null>(cached);
   const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -97,6 +102,18 @@ export function MarketTicker({
       clearInterval(timer);
     };
   }, []);
+
+  /* Manual refresh. Clears the shared result so both bars refetch together —
+     they come from one call, and refreshing one while the other stayed stale
+     would be worse than not offering it. */
+  const refresh = async () => {
+    if (refreshing) return;
+    setRefreshing(true);
+    cached = null;
+    const fresh = await loadMarket();
+    setData(fresh);
+    setRefreshing(false);
+  };
 
   const tag = localeMeta[locale].tag;
 
@@ -137,6 +154,13 @@ export function MarketTicker({
 
   const heading = feed === "metals" ? p("Metals") : p("Exchange rates");
 
+  const stamp = feed === "metals" ? data?.metals?.fetchedAt : data?.rates?.fetchedAt;
+  const updated = stamp
+    ? new Intl.DateTimeFormat(tag, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }).format(
+        new Date(stamp),
+      )
+    : null;
+
   /* The list is rendered twice. The animation travels exactly half the track,
      so the second copy is in the first one's place when it restarts and the
      loop has no seam. */
@@ -145,7 +169,8 @@ export function MarketTicker({
   return (
     <div
       className={cn(
-        "relative isolate overflow-hidden border-y border-steel-200 bg-steel-50",
+        "relative isolate overflow-hidden border-b border-steel-200",
+        tone === "dark" ? "bg-steel-100" : "bg-steel-50",
         className,
       )}
       onMouseEnter={() => setPaused(true)}
@@ -156,10 +181,43 @@ export function MarketTicker({
       <div className="flex items-stretch">
         {/* Fixed label. Sits outside the moving track so the bar always says
             what it is, whatever has scrolled past. */}
-        <div className="z-10 flex shrink-0 items-center gap-2 border-e border-steel-200 bg-white px-4">
+        <div className="z-10 flex shrink-0 items-center gap-2.5 border-e border-steel-200 bg-white px-4">
           <span className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-steel-500">
             {heading}
           </span>
+
+          {/* When the figures are from. Hidden on the narrowest screens, where
+              the bar has no room for it and the numbers matter more. */}
+          {updated ? (
+            <time
+              dateTime={new Date(stamp!).toISOString()}
+              className="hidden whitespace-nowrap font-mono text-[0.625rem] tabular-nums text-steel-500 sm:inline"
+            >
+              {updated}
+            </time>
+          ) : null}
+
+          <button
+            type="button"
+            onClick={refresh}
+            disabled={refreshing}
+            aria-label={p("Refresh prices")}
+            className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-steel-300 text-steel-500 transition-colors hover:border-brand-700 hover:text-brand-700 disabled:opacity-40"
+          >
+            <svg
+              viewBox="0 0 14 14"
+              aria-hidden
+              className={cn("h-3 w-3", refreshing && "motion-safe:animate-spin")}
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+            >
+              <path d="M12.5 7a5.5 5.5 0 1 1-1.6-3.9" />
+              <path d="M12.6 1.4v3.2H9.4" />
+            </svg>
+          </button>
+
           <button
             type="button"
             onClick={() => setPaused((v) => !v)}

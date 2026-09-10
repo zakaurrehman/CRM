@@ -620,4 +620,5 @@ export const nlPhrases: PhraseTable = {
   "Exchange rates": "Wisselkoersen",
   "Pause the ticker": "Pauzeer de koersbalk",
   "Resume the ticker": "Hervat de koersbalk",
+  "Refresh prices": "Prijzen vernieuwen",
 };

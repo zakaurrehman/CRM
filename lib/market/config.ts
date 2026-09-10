@@ -65,7 +65,13 @@ export const trackedMetals: MetalSpec[] = [
  * Matches the set already used in the IMS webapp's exchange-rate hook, so the
  * two surfaces offer the same choices rather than diverging.
  */
-export const supportedCurrencies = ["USD", "EUR", "ILS", "GBP", "RUB", "AED", "CNY"] as const;
+/*
+ * No RUB. Removed on IMS's instruction (10 Sep 2026): quoting in roubles
+ * carries sanctions exposure they do not want, and it is a KYC question they
+ * would rather not invite. It is dropped from the supported list rather than
+ * hidden in the interface, so it is not reachable through the API either.
+ */
+export const supportedCurrencies = ["USD", "EUR", "ILS", "GBP", "AED", "CNY"] as const;
 export type Currency = (typeof supportedCurrencies)[number];
 
 export const BASE_CURRENCY: Currency = "USD";
@@ -76,7 +82,6 @@ export const currencySymbols: Record<Currency, string> = {
   EUR: "€",
   ILS: "₪",
   GBP: "£",
-  RUB: "₽",
   AED: "AED",
   CNY: "¥",
 };

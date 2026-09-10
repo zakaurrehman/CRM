@@ -85,8 +85,8 @@ export function WelcomeBackdrop({ slides }: { slides: WelcomeSlide[] }) {
         Tuned against the contrast checker rather than by eye — the navy on this
         is measured, not assumed.
       */}
-      <div className="absolute inset-0 bg-white/40" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_70%_at_center,rgba(255,255,255,0.93)_0%,rgba(255,255,255,0.82)_55%,rgba(255,255,255,0.5)_100%)]" />
+      <div className="absolute inset-0 bg-white/28" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_72%_62%_at_center,rgba(255,255,255,0.9)_0%,rgba(255,255,255,0.85)_62%,rgba(255,255,255,0.35)_100%)]" />
     </div>
   );
 }
