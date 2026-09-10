@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { getP } from "@/lib/i18n/server";
+import { WelcomeBackdrop } from "./WelcomeBackdrop";
 
 /**
  * The welcome block from the original IMS Metals homepage.
@@ -21,7 +22,15 @@ export async function WelcomeBanner() {
   const p = await getP();
 
   return (
-    <section className="border-b border-steel-200 bg-white">
+    /* isolate so the backdrop's negative z-index stays inside this section
+       rather than sliding behind the page background. */
+    <section className="relative isolate overflow-hidden border-b border-steel-200 bg-white">
+      <WelcomeBackdrop
+        slides={[
+          { src: "/images/hero/hot-metal-plate.jpg", subject: "Hot metal slab in the cast house" },
+          { src: "/images/turbine/turbine-manufacturing.jpg", subject: "Turbine rotor on the shop floor" },
+        ]}
+      />
       <Container>
         <div className="mx-auto flex max-w-3xl flex-col items-center py-14 text-center sm:py-16 lg:py-20">
           {/*
