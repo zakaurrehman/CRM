@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
-import { getMetals, getMetalsError, isMetalsConfigured } from "@/lib/market/metals";
+import {
+  getMetals,
+  getMetalsError,
+  getMetalsHistory,
+  getHistoryNote,
+  isMetalsConfigured,
+} from "@/lib/market/metals";
 import { getRates } from "@/lib/market/rates";
 import { supportedCurrencies } from "@/lib/market/config";
 
@@ -18,7 +24,7 @@ import { supportedCurrencies } from "@/lib/market/config";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const [metals, rates] = await Promise.all([getMetals(), getRates()]);
+  const [metals, rates, history] = await Promise.all([getMetals(), getRates(), getMetalsHistory()]);
 
   return NextResponse.json(
     {
@@ -34,6 +40,11 @@ export async function GET() {
          back. Carries no credential — the key is redacted from any provider
          message and the request URL is never recorded. */
       metalsError: !metals && isMetalsConfigured() ? getMetalsError() : undefined,
+      /* Whether the plan serves a series, which is what small charts would
+         need. Reported either way so the choice between a ticker and charts
+         rests on what the data supports. */
+      history: history ?? undefined,
+      historyNote: isMetalsConfigured() ? getHistoryNote() : undefined,
       rates: rates ? { base: rates.base, rates: rates.rates, fetchedAt: rates.fetchedAt } : null,
       currencies: supportedCurrencies,
     },

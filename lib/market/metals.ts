@@ -273,6 +273,109 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
   return { base: BASE_CURRENCY, quotes, fetchedAt: Date.now(), unit: data.unit };
 }
 
+/* ---------------------------------------------------------------- history */
+
+export interface MetalSeries {
+  /** Provider symbol the series belongs to. */
+  symbol: string;
+  /** Oldest first, one point per day the provider returned. */
+  points: { date: string; price: number }[];
+}
+
+let historyCache: { at: number; series: MetalSeries[] } | null = null;
+let historyNote: string | null = null;
+const HISTORY_TTL_MS = 24 * 60 * 60 * 1000;
+
+export function getHistoryNote(): string | null {
+  return historyNote;
+}
+
+function isoDaysAgo(days: number): string {
+  return new Date(Date.now() - days * 86400000).toISOString().slice(0, 10);
+}
+
+/**
+ * Daily closes for the tracked metals, or null when the plan will not serve
+ * them. Shape matches the latest endpoint: a "data" envelope, prices under
+ * "rates" keyed by date, and a USD-prefixed key carrying the direct price.
+ */
+export async function getMetalsHistory(): Promise<MetalSeries[] | null> {
+  const key = process.env.METALS_API_KEY;
+  if (!key) return null;
+  if (historyCache && Date.now() - historyCache.at < HISTORY_TTL_MS) return historyCache.series;
+
+  const provider = process.env.METALS_API_PROVIDER || "metals-api";
+  const available = await supportedSymbols(provider, key);
+  const wanted = trackedMetals
+    .map((m) => ({ spec: m, symbol: available ? m.symbols.find((s) => available.has(s)) : m.symbols[0] }))
+    .filter((x): x is { spec: (typeof trackedMetals)[number]; symbol: string } => Boolean(x.symbol));
+  if (wanted.length === 0) {
+    historyNote = "no supported symbols to request history for";
+    return null;
+  }
+
+  const url =
+    `https://metals-api.com/api/timeseries?access_key=${encodeURIComponent(key)}` +
+    `&start_date=${isoDaysAgo(30)}&end_date=${isoDaysAgo(0)}&base=${BASE_CURRENCY}` +
+    `&symbols=${encodeURIComponent(wanted.map((w) => w.symbol).join(","))}`;
+
+  try {
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) {
+      historyNote = redact(`timeseries HTTP ${response.status} ${response.statusText}`);
+      return null;
+    }
+    const body = (await response.json()) as { data?: unknown } & Record<string, unknown>;
+    const inner = (body.data && typeof body.data === "object" ? body.data : body) as {
+      success?: boolean;
+      error?: { type?: string; info?: string; code?: number };
+      rates?: Record<string, Record<string, number>>;
+    };
+
+    if (inner.success === false || inner.error) {
+      const e = inner.error;
+      historyNote = redact(
+        `timeseries rejected${e?.type ? ": " + e.type : ""}${e?.info ? " — " + e.info : ""}${e?.code ? " (code " + e.code + ")" : ""}`,
+      );
+      return null;
+    }
+    if (!inner.rates) {
+      historyNote = redact(`timeseries returned no rates. Keys: ${Object.keys(inner).join(", ") || "none"}`);
+      return null;
+    }
+
+    const byDate = Object.entries(inner.rates).sort(([a], [b]) => a.localeCompare(b));
+    const series: MetalSeries[] = wanted.map(({ symbol }) => ({
+      symbol,
+      points: byDate
+        .map(([date, row]) => {
+          const direct = row[BASE_CURRENCY + symbol];
+          const inverse = row[symbol];
+          const perOunce =
+            typeof direct === "number" && direct > 0
+              ? direct
+              : typeof inverse === "number" && inverse > 0
+                ? 1 / inverse
+                : null;
+          return perOunce === null ? null : { date, price: perOunce * TROY_OUNCES_PER_TONNE };
+        })
+        .filter((p): p is { date: string; price: number } => p !== null),
+    })).filter((s) => s.points.length > 1);
+
+    if (series.length === 0) {
+      historyNote = redact(`timeseries gave ${byDate.length} dates but no usable series`);
+      return null;
+    }
+
+    historyNote = `${series.length} series, ${series[0].points.length} points each`;
+    historyCache = { at: Date.now(), series };
+    return series;
+  } catch (e) {
+    historyNote = redact(e instanceof Error ? e.message : String(e));
+    return null;
+  }
+}
+
 /**
  * Current metals prices.
  *
