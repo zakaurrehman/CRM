@@ -96,7 +96,12 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
     return null;
   }
 
-  const data = (await response.json()) as ProviderResponse;
+  const body = (await response.json()) as ProviderResponse & { data?: ProviderResponse };
+
+  /* Some deployments wrap the whole payload in a "data" envelope, so both the
+     rates and the error object sit a level down. Unwrap before anything else,
+     or a rejection reads as "no rates" and the reason never surfaces. */
+  const data: ProviderResponse = body.data && typeof body.data === "object" ? body.data : body;
 
   if (data.success === false || data.error) {
     const e = data.error;
