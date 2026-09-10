@@ -73,20 +73,26 @@ export function WelcomeBackdrop({ slides }: { slides: WelcomeSlide[] }) {
       ))}
 
       {/*
-        The wash.
+        The scrim.
 
-        A flat scrim heavy enough to protect the type erases the photograph, and
-        one light enough to show it leaves the type sitting on whatever happens
-        to be underneath. So it is graded instead: strongest at the centre where
-        the lockup sits, easing off towards the edges where the picture can be
-        seen. The type keeps its contrast and the photograph still reads, which
-        is what the original does.
+        Deepening a photograph and lightening it are not equally costly. Bleached
+        to carry dark type, an image goes flat and grey and the subject
+        disappears — which is what kept happening here. Darkened, it keeps its
+        contrast and its shape; a hot slab still glows, a turbine hall still has
+        depth. So the picture runs at full strength and the type goes white.
 
-        Tuned against the contrast checker rather than by eye — the navy on this
-        is measured, not assumed.
+        Two layers: an even navy wash for the floor, and a gradient weighted to
+        the centre where the lockup sits. Both are navy rather than black, so
+        the band belongs to the same palette as the header and the hero instead
+        of reading as a grey hole between them.
+
+        Measured, not judged by eye: see backdrop-contrast.mjs, which hides the
+        text, samples the real pixels behind it across every frame of the
+        rotation, and takes the worst.
       */}
-      <div className="absolute inset-0 bg-white/28" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_72%_62%_at_center,rgba(255,255,255,0.9)_0%,rgba(255,255,255,0.85)_62%,rgba(255,255,255,0.35)_100%)]" />
+      <div className="absolute inset-0 bg-navy-950/38" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_52%_58%_at_center,rgba(8,26,52,0.86)_0%,rgba(8,26,52,0.66)_45%,rgba(8,26,52,0.28)_75%,rgba(8,26,52,0)_100%)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-navy-950/35 via-transparent to-navy-950/40" />
     </div>
   );
 }

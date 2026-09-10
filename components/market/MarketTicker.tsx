@@ -153,6 +153,7 @@ export function MarketTicker({
   if (items.length === 0) return null;
 
   const heading = feed === "metals" ? p("Metals") : p("Exchange rates");
+  const dark = tone === "dark";
 
   const stamp = feed === "metals" ? data?.metals?.fetchedAt : data?.rates?.fetchedAt;
   const updated = stamp
@@ -169,8 +170,8 @@ export function MarketTicker({
   return (
     <div
       className={cn(
-        "relative isolate overflow-hidden border-b border-steel-200",
-        tone === "dark" ? "bg-steel-100" : "bg-steel-50",
+        "relative isolate overflow-hidden",
+        dark ? "on-dark border-b border-white/10 bg-navy-950" : "border-b border-steel-200 bg-white",
         className,
       )}
       onMouseEnter={() => setPaused(true)}
@@ -181,8 +182,18 @@ export function MarketTicker({
       <div className="flex items-stretch">
         {/* Fixed label. Sits outside the moving track so the bar always says
             what it is, whatever has scrolled past. */}
-        <div className="z-10 flex shrink-0 items-center gap-2.5 border-e border-steel-200 bg-white px-4">
-          <span className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-steel-500">
+        <div
+          className={cn(
+            "z-10 flex shrink-0 items-center gap-2.5 px-4 sm:px-5",
+            dark ? "border-e border-white/10 bg-navy-900" : "border-e border-steel-200 bg-steel-50",
+          )}
+        >
+          <span
+            className={cn(
+              "font-mono text-[0.625rem] uppercase tracking-[0.14em]",
+              dark ? "text-brand-300" : "text-steel-500",
+            )}
+          >
             {heading}
           </span>
 
@@ -191,7 +202,10 @@ export function MarketTicker({
           {updated ? (
             <time
               dateTime={new Date(stamp!).toISOString()}
-              className="hidden whitespace-nowrap font-mono text-[0.625rem] tabular-nums text-steel-500 sm:inline"
+              className={cn(
+                "hidden whitespace-nowrap font-mono text-[0.625rem] tabular-nums lg:inline",
+                dark ? "text-steel-400" : "text-steel-500",
+              )}
             >
               {updated}
             </time>
@@ -202,7 +216,12 @@ export function MarketTicker({
             onClick={refresh}
             disabled={refreshing}
             aria-label={p("Refresh prices")}
-            className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-steel-300 text-steel-500 transition-colors hover:border-brand-700 hover:text-brand-700 disabled:opacity-40"
+            className={cn(
+              "inline-flex h-6 w-6 items-center justify-center rounded-full border transition-colors disabled:opacity-40",
+              dark
+                ? "border-white/25 text-steel-300 hover:border-white/60 hover:text-white"
+                : "border-steel-300 text-steel-500 hover:border-brand-700 hover:text-brand-700",
+            )}
           >
             <svg
               viewBox="0 0 14 14"
@@ -222,7 +241,12 @@ export function MarketTicker({
             type="button"
             onClick={() => setPaused((v) => !v)}
             aria-label={paused ? p("Resume the ticker") : p("Pause the ticker")}
-            className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-steel-300 text-steel-500 transition-colors hover:border-brand-700 hover:text-brand-700"
+            className={cn(
+              "inline-flex h-6 w-6 items-center justify-center rounded-full border transition-colors",
+              dark
+                ? "border-white/25 text-steel-300 hover:border-white/60 hover:text-white"
+                : "border-steel-300 text-steel-500 hover:border-brand-700 hover:text-brand-700",
+            )}
           >
             <svg viewBox="0 0 12 12" aria-hidden className="h-2.5 w-2.5" fill="currentColor">
               {paused ? <path d="M3 1.5v9l7-4.5z" /> : <path d="M3 1.5h2.2v9H3zM6.8 1.5H9v9H6.8z" />}
@@ -230,7 +254,7 @@ export function MarketTicker({
           </button>
         </div>
 
-        <div className="relative flex-1 overflow-hidden py-2.5">
+        <div className="relative flex-1 overflow-hidden py-3">
           <ul
             className={cn("ticker-track flex w-max items-center", (paused || reduced) && "is-paused")}
             /* Longer lists take proportionally longer, so the words move at one
@@ -243,18 +267,41 @@ export function MarketTicker({
                 /* The duplicate half is decorative: a screen reader should hear
                    the list once, not twice. */
                 aria-hidden={i >= items.length}
-                className="flex items-center gap-2 whitespace-nowrap px-5"
+                className="flex items-baseline gap-2 whitespace-nowrap px-6"
               >
-                <span className="text-[0.8125rem] font-medium text-navy-900">{item.label}</span>
-                <span className="tabular-nums text-[0.8125rem] text-steel-700">
+                <span
+                  className={cn(
+                    "text-[0.75rem] font-medium uppercase tracking-[0.06em]",
+                    dark ? "text-steel-400" : "text-steel-500",
+                  )}
+                >
+                  {item.label}
+                </span>
+                <span
+                  className={cn(
+                    "tabular-nums text-[0.875rem] font-semibold",
+                    dark ? "text-white" : "text-navy-900",
+                  )}
+                >
                   {item.value}
-                  {item.unit ? <span className="ms-1 text-[0.6875rem] text-steel-500">{item.unit}</span> : null}
+                  {item.unit ? (
+                    <span
+                      className={cn(
+                        "ms-1 text-[0.6875rem] font-normal",
+                        dark ? "text-steel-400" : "text-steel-500",
+                      )}
+                    >
+                      {item.unit}
+                    </span>
+                  ) : null}
                 </span>
                 {typeof item.change === "number" ? (
                   <span
                     className={cn(
                       "tabular-nums text-[0.75rem] font-medium",
-                      item.change >= 0 ? "text-success-600" : "text-danger-600",
+                      item.change >= 0
+                        ? dark ? "text-success-500" : "text-success-600"
+                        : dark ? "text-danger-500" : "text-danger-600",
                     )}
                   >
                     {item.change >= 0 ? "▲" : "▼"}{" "}
@@ -269,7 +316,10 @@ export function MarketTicker({
                 {/* Drawn, not typed. A "·" is text, so a contrast checker
                     holds it to 4.5:1 and a separator that subtle can never
                     meet it. A shape carries the same meaning and is exempt. */}
-                <span aria-hidden className="ms-5 h-1 w-1 shrink-0 rounded-full bg-steel-300" />
+                <span
+                  aria-hidden
+                  className={cn("ms-6 h-1 w-1 shrink-0 self-center rounded-full", dark ? "bg-white/25" : "bg-steel-300")}
+                />
               </li>
             ))}
           </ul>

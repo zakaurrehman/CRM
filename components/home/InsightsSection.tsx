@@ -1,6 +1,5 @@
 import { getLocale, getP } from "@/lib/i18n/server";
 import { localiseArticle } from "@/lib/i18n/content";
-import Image from "next/image";
 import Link from "next/link";
 import { articlesByDate } from "@/data/insights";
 import { Section, SectionHeader } from "@/components/ui/Section";
@@ -31,63 +30,45 @@ export async function InsightsSection() {
         }
       />
 
-      <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-16">
-        <article className="lg:col-span-7">
-          <Link href={"/insights/" + lead.slug} className="group block">
-            <div className="relative aspect-[16/9] overflow-hidden bg-steel-100">
-              <Image
-                src={lead.image}
-                alt=""
-                fill
-                sizes="(min-width: 1024px) 58vw, 100vw"
-                className="object-cover transition-transform duration-700 ease-swift group-hover:scale-[1.03]"
-              />
-            </div>
-            <div className="mt-6">
-              <p className="flex items-center gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500">
-                <time dateTime={lead.published}>{formatDate(lead.published, localeMeta[locale].tag)}</time>
-                <span aria-hidden className="h-px w-6 bg-steel-300" />
-                <span>{p("{n} min read", { n: lead.readingMinutes })}</span>
+      {/*
+        No photography. The articles are about certification, standards and
+        supply chains, and the library holds scrap yards and excavators — there
+        is no image here that illustrates a compliance piece, and a generic one
+        would decorate rather than inform. On a technical site that reads as
+        filler, which is the same fault the alloy cards had.
+      */}
+      <ul className="mt-10 border-t border-steel-200">
+        {[lead, ...rest].map((article) => (
+          <li key={article.slug}>
+            <Link
+              href={"/insights/" + article.slug}
+              className="group flex flex-col gap-2 border-b border-steel-200 py-6 sm:flex-row sm:items-baseline sm:gap-8"
+            >
+              <p className="flex shrink-0 items-center gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500 sm:w-44">
+                <time dateTime={article.published}>
+                  {formatDate(article.published, localeMeta[locale].tag)}
+                </time>
+                <span aria-hidden className="h-px w-4 bg-steel-300" />
+                <span className="whitespace-nowrap">{p("{n} min read", { n: article.readingMinutes })}</span>
               </p>
-              <h3 className="mt-4 font-display text-2xl font-bold leading-tight tracking-tight text-navy-900 transition-colors group-hover:text-brand-700 lg:text-[2rem]">
-                {lead.title}
-              </h3>
-              <p className="mt-4 max-w-xl text-[1rem] leading-relaxed text-steel-600">{lead.standfirst}</p>
-            </div>
-          </Link>
-        </article>
 
-        <div className="lg:col-span-4 lg:col-start-9">
-          <ul className="border-t border-steel-200">
-            {rest.map((article) => (
-              <li key={article.slug}>
-                <Link href={"/insights/" + article.slug} className="group flex gap-5 border-b border-steel-200 py-6">
-                  <div className="min-w-0 flex-1">
-                    <p className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500">
-                      <time dateTime={article.published}>{formatDate(article.published, localeMeta[locale].tag)}</time>
-                    </p>
-                    <h3 className="mt-2.5 font-display text-lg font-semibold leading-snug tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
-                      {article.title}
-                    </h3>
-                    <p className="mt-2 line-clamp-2 text-[0.875rem] leading-relaxed text-steel-600">
-                      {article.standfirst}
-                    </p>
-                  </div>
-                  <div className="relative hidden h-20 w-24 shrink-0 overflow-hidden bg-steel-100 sm:block">
-                    <Image
-                      src={article.image}
-                      alt=""
-                      fill
-                      sizes="96px"
-                      className="object-cover transition-transform duration-500 ease-swift group-hover:scale-105"
-                    />
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-display text-[1.0625rem] font-semibold leading-snug tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
+                  {article.title}
+                </h3>
+                <p className="mt-1.5 text-[0.875rem] leading-relaxed text-steel-600">{article.standfirst}</p>
+              </div>
+
+              <span
+                aria-hidden
+                className="hidden shrink-0 self-center text-steel-500 transition-all duration-300 ease-swift group-hover:translate-x-0.5 group-hover:text-brand-700 sm:block"
+              >
+                <span className="dir-arrow">&rarr;</span>
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </Section>
   );
 }

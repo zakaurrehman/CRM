@@ -36,8 +36,8 @@ export default async function HomePage() {
       {/* Both bars together above the welcome band, the second a shade darker
           so they read as two feeds rather than one long run of numbers. Each
           renders nothing when its feed is empty. */}
-      <MarketTicker feed="metals" tone="light" />
-      <MarketTicker feed="rates" tone="dark" />
+      <MarketTicker feed="metals" tone="dark" />
+      <MarketTicker feed="rates" tone="light" />
       <WelcomeBanner />
       <Hero />
       <CredibilityStrip />

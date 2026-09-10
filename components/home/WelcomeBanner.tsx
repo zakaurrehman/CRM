@@ -24,7 +24,7 @@ export async function WelcomeBanner() {
   return (
     /* isolate so the backdrop's negative z-index stays inside this section
        rather than sliding behind the page background. */
-    <section className="relative isolate overflow-hidden border-b border-steel-200 bg-white">
+    <section className="on-dark relative isolate overflow-hidden bg-navy-950 text-white">
       <WelcomeBackdrop
         slides={[
           { src: "/images/hero/hot-metal-plate.jpg", subject: "Hot metal slab in the cast house" },
@@ -46,7 +46,7 @@ export async function WelcomeBanner() {
             height={1455}
             priority
             sizes="(min-width: 640px) 280px, 220px"
-            className="h-auto w-[11.5rem] sm:w-[14.5rem]"
+            className="h-auto w-[11.5rem] brightness-0 invert sm:w-[14.5rem]"
           />
 
           {/*
@@ -60,17 +60,17 @@ export async function WelcomeBanner() {
             to the display face there, which is why the size is set in a way
             that suits both.
           */}
-          <h1 className="mt-7 font-lockup text-[clamp(1.375rem,2.9vw,2.125rem)] font-black uppercase leading-[1.22] tracking-[-0.005em] text-navy-900">
+          <h1 className="mt-7 font-lockup text-[clamp(1.375rem,2.9vw,2.125rem)] font-black uppercase leading-[1.22] tracking-[-0.005em] text-white">
             <span className="block">{p("Welcome to IMS")}</span>
             <span className="block">{p("Metals & Alloys")}</span>
           </h1>
 
-          <p className="mt-4 max-w-xl text-base leading-relaxed text-steel-700">
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-steel-200">
             {p("Our objective is to responsibly source the commodities which supplement our everyday life.")}
           </p>
 
           <div className="mt-7">
-            <Button href="/contact" size="lg">
+            <Button href="/contact" variant="onDark" size="lg">
               {p("Contact us")}
             </Button>
           </div>
