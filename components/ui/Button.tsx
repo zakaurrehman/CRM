@@ -22,7 +22,9 @@ const variants: Record<Variant, string> = {
 
 const sizes: Record<Size, string> = {
   sm: "h-8 px-3 text-[0.8125rem]",
-  md: "h-10 px-4.5 text-[0.875rem]",
+  /* px-5, not px-4.5. There is no 4.5 in the spacing scale, so that class
+     emitted nothing and every medium button lost its horizontal padding. */
+  md: "h-10 px-5 text-[0.875rem]",
   lg: "h-12 px-6 text-[0.9375rem]",
 };
 
