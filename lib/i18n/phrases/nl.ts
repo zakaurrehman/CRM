@@ -621,4 +621,5 @@ export const nlPhrases: PhraseTable = {
   "Pause the ticker": "Pauzeer de koersbalk",
   "Resume the ticker": "Hervat de koersbalk",
   "Refresh prices": "Prijzen vernieuwen",
+  "Welcome to IMS": "Welkom bij IMS",
 };

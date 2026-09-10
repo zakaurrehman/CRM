@@ -39,6 +39,9 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
         display: ["var(--font-archivo)", "var(--font-inter)", "system-ui", "sans-serif"],
+        /* The welcome lockup only. Falls through to the display stack for
+           scripts Orbitron does not cover, Hebrew among them. */
+        lockup: ["var(--font-lockup)", "var(--font-archivo)", "var(--font-inter)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       fontSize: {

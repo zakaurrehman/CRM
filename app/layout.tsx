@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Mono, Inter } from "next/font/google";
+import { Archivo, IBM_Plex_Mono, Inter, Orbitron } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
@@ -24,6 +24,23 @@ const inter = Inter({
 const archivo = Archivo({
   subsets: ["latin"],
   variable: "--font-archivo",
+  display: "swap",
+  weight: ["600", "700"],
+});
+
+/*
+ * Stand-in for Ethnocentric, the face the original site sets its headings in.
+ * Ethnocentric is a paid commercial typeface and IMS has not confirmed a web
+ * licence, so it cannot be self-hosted here; Orbitron is the nearest free
+ * equivalent in the same wide, squared, technical vein. Used for the welcome
+ * lockup only, which is what was asked for.
+ *
+ * Latin only. It has no Hebrew glyphs, so the Hebrew page falls through to the
+ * display stack, which is correct rather than a gap.
+ */
+const orbitron = Orbitron({
+  subsets: ["latin"],
+  variable: "--font-lockup",
   display: "swap",
   weight: ["600", "700"],
 });
@@ -80,7 +97,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html
       lang={localeMeta[locale].tag}
       dir={dirOf(locale)}
-      className={`${inter.variable} ${archivo.variable} ${mono.variable}`}
+      className={`${inter.variable} ${archivo.variable} ${orbitron.variable} ${mono.variable}`}
     >
       <body className="flex min-h-screen flex-col">
         {/* Marks the document as script-enabled before first paint, so the

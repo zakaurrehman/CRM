@@ -49,8 +49,20 @@ export async function WelcomeBanner() {
             className="h-auto w-[11.5rem] sm:w-[14.5rem]"
           />
 
-          <h1 className="mt-7 font-display text-[clamp(1.5rem,3.2vw,2.375rem)] font-semibold uppercase leading-[1.15] tracking-[0.005em] text-navy-900">
-            {p("Welcome to IMS Metals & Alloys")}
+          {/*
+            Two lines, breaking after "IMS", as the original sets it. Each half
+            is its own element rather than a <br>: a hard break inside a
+            translated string puts the break wherever English happens to want
+            it, which is rarely where another language would.
+
+            font-lockup is Orbitron standing in for Ethnocentric — see the note
+            in app/layout.tsx. It carries no Hebrew, and the stack falls through
+            to the display face there, which is why the size is set in a way
+            that suits both.
+          */}
+          <h1 className="mt-7 font-lockup text-[clamp(1.375rem,2.9vw,2.125rem)] font-semibold uppercase leading-[1.25] tracking-[0.01em] text-navy-900">
+            <span className="block">{p("Welcome to IMS")}</span>
+            <span className="block">{p("Metals & Alloys")}</span>
           </h1>
 
           <p className="mt-4 max-w-xl text-base leading-relaxed text-steel-700">
