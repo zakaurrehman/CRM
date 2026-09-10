@@ -70,7 +70,7 @@ export default async function AerospaceRevertsPage() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
             <h2 className="text-display-sm">{p("Precious metal recovery")}</h2>
-            <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-600">
+            <p className="mt-5 content-en text-base leading-relaxed text-steel-600">
               {p("Aerospace components carry more than their base alloy. Coatings and specialist assemblies contain metals worth recovering in their own right, and they are routinely lost when parts are treated as bulk scrap.")}
             </p>
             <ul className="mt-8 grid grid-cols-3 grid-rule">

@@ -86,12 +86,12 @@ export default async function SustainabilityPage() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
             <h2 className="text-display-sm">{p("What this looks like in practice")}</h2>
-            <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-600">
+            <p className="mt-5 content-en text-base leading-relaxed text-steel-600">
               We treat {recoveryStreams.length} distinct metal-bearing streams. Each one represents material
               that a producer would otherwise pay to dispose of, carrying metal that a melt shop would
               otherwise buy new.
             </p>
-            <p className="mt-4 content-en text-[1.0625rem] leading-relaxed text-steel-600">
+            <p className="mt-4 content-en text-base leading-relaxed text-steel-600">
               {p("We serve industries by providing environmental compliance alongside innovative, cost-effective recycling solutions for stainless steel, soft metallic waste streams, superalloy reverts, high temperature alloys and pure metals.")}
             </p>
             <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">

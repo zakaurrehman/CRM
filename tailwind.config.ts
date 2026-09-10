@@ -42,11 +42,11 @@ const config: Config = {
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       fontSize: {
-        "display-xl": ["clamp(2.125rem, 4vw, 3.25rem)", { lineHeight: "1.08", letterSpacing: "-0.026em", fontWeight: "600" }],
-        "display-lg": ["clamp(1.875rem, 3.1vw, 2.5rem)", { lineHeight: "1.12", letterSpacing: "-0.022em", fontWeight: "600" }],
-        "display-md": ["clamp(1.5rem, 2.3vw, 1.9375rem)", { lineHeight: "1.18", letterSpacing: "-0.018em", fontWeight: "700" }],
-        "display-sm": ["clamp(1.375rem, 1.9vw, 1.75rem)", { lineHeight: "1.25", letterSpacing: "-0.013em", fontWeight: "700" }],
-        eyebrow: ["0.75rem", { lineHeight: "1", letterSpacing: "0.16em", fontWeight: "600" }],
+        "display-xl": ["clamp(1.875rem, 3.3vw, 2.75rem)", { lineHeight: "1.1", letterSpacing: "-0.024em", fontWeight: "600" }],
+        "display-lg": ["clamp(1.625rem, 2.6vw, 2.125rem)", { lineHeight: "1.16", letterSpacing: "-0.02em", fontWeight: "600" }],
+        "display-md": ["clamp(1.375rem, 2vw, 1.6875rem)", { lineHeight: "1.22", letterSpacing: "-0.016em", fontWeight: "700" }],
+        "display-sm": ["clamp(1.1875rem, 1.6vw, 1.4375rem)", { lineHeight: "1.3", letterSpacing: "-0.011em", fontWeight: "700" }],
+        eyebrow: ["0.6875rem", { lineHeight: "1", letterSpacing: "0.13em", fontWeight: "600" }],
       },
       /* 13 backs the `lg` button height; 18/22/30 the section rhythm. */
       spacing: { 13: "3.25rem", 18: "4.5rem", 22: "5.5rem", 30: "7.5rem" },

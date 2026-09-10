@@ -130,7 +130,7 @@ export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: bo
                     <Link
                       href={item.href}
                       onClick={onClose}
-                      className="flex min-h-[3.25rem] items-center text-[1.0625rem] font-medium text-navy-900"
+                      className="flex min-h-[3.25rem] items-center text-base font-medium text-navy-900"
                     >
                       {item.i18nKey ? t("nav", item.i18nKey) : item.label}
                     </Link>
@@ -143,7 +143,7 @@ export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: bo
                     type="button"
                     onClick={() => setExpanded(isOpen ? null : item.label)}
                     aria-expanded={isOpen}
-                    className="flex min-h-[3.25rem] w-full items-center justify-between gap-3 text-start text-[1.0625rem] font-medium text-navy-900"
+                    className="flex min-h-[3.25rem] w-full items-center justify-between gap-3 text-start text-base font-medium text-navy-900"
                   >
                     {item.i18nKey ? t("nav", item.i18nKey) : item.label}
                     <svg

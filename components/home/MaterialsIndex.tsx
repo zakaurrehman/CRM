@@ -1,3 +1,4 @@
+import { LiveMetalPrices } from "@/components/market/LiveMetalPrices";
 import { getP } from "@/lib/i18n/server";
 import Image from "next/image";
 import Link from "next/link";
@@ -96,6 +97,11 @@ export async function MaterialsIndex({
           </Reveal>
         ))}
       </ul>
+
+      {/* Market prices sit with the materials they price rather than in a band
+          of their own. The widget renders nothing at all when there is no feed,
+          so an unconfigured site shows no empty space here. */}
+      <LiveMetalPrices className="mt-12 max-w-2xl" />
     </Section>
   );
 }

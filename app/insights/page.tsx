@@ -66,7 +66,7 @@ export default async function InsightsPage() {
                 <h2 className="mt-5 font-display text-display-sm text-navy-900 transition-colors group-hover:text-brand-700">
                   {lead.title}
                 </h2>
-                <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-600">{lead.standfirst}</p>
+                <p className="mt-5 content-en text-base leading-relaxed text-steel-600">{lead.standfirst}</p>
                 <span className="mt-7 inline-flex items-center gap-1.5 text-[0.9375rem] font-medium text-brand-700">
                   {p("Read article")}
                   <span aria-hidden className="transition-transform duration-200 ease-swift group-hover:translate-x-1">

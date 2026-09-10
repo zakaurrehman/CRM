@@ -86,12 +86,12 @@ export default async function QualityPage() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
             <h2 className="text-display-sm">{p("Traceability")}</h2>
-            <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-600">
+            <p className="mt-5 content-en text-base leading-relaxed text-steel-600">
               {p("Sorting and segregation are quality controls as much as commercial ones. Keeping alloy families separated through processing means a grade's identity survives the journey, and the certification issued at the end describes material that genuinely matches it.")}
             </p>
 
             <h2 className="mt-12 text-display-sm">{p("Quality policy")}</h2>
-            <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-600">
+            <p className="mt-5 content-en text-base leading-relaxed text-steel-600">
               {p("IMS is committed to a policy of continuously improving quality performance throughout the business, to ensure that the highest standards of product and service are achieved.")}
             </p>
 

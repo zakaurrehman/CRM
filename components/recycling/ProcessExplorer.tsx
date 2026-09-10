@@ -93,7 +93,7 @@ export function ProcessExplorer({
                 </span>
                 <span
                   className={cn(
-                    "font-display text-[1.0625rem] font-semibold tracking-tight transition-colors",
+                    "font-display text-base font-semibold tracking-tight transition-colors",
                     selected ? "text-navy-900" : "text-steel-700 group-hover:text-navy-900",
                   )}
                 >
@@ -135,7 +135,7 @@ export function ProcessExplorer({
               <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight text-navy-900">
                 {step.title}
               </h3>
-              <p className="mt-4 content-en text-[1.0625rem] leading-relaxed text-steel-700">{step.body}</p>
+              <p className="mt-4 content-en text-base leading-relaxed text-steel-700">{step.body}</p>
 
               <div className="mt-8 flex items-center justify-between border-t border-steel-200 pt-5">
                 <button

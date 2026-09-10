@@ -605,4 +605,13 @@ export const nlPhrases: PhraseTable = {
   "Welcome to IMS Metals & Alloys": "Welkom bij IMS Metals & Alloys",
   "Our objective is to responsibly source the commodities which supplement our everyday life.": "Ons doel is om op verantwoorde wijze de grondstoffen te betrekken die ons dagelijks leven ondersteunen.",
   "Contact us": "Neem contact op",
+  "Live metals prices": "Actuele metaalprijzen",
+  "Display currency": "Weergavevaluta",
+  "Market data, last updated {when}": "Marktgegevens, laatst bijgewerkt {when}",
+  "Live prices are temporarily unavailable.": "Actuele prijzen zijn tijdelijk niet beschikbaar.",
+  "Shown in USD — conversion unavailable": "Weergegeven in USD — omrekening niet beschikbaar",
+  "/ MT": "/ ton",
+  "Aluminium": "Aluminium",
+  "Zinc": "Zink",
+  "Tin": "Tin",
 };

@@ -83,7 +83,7 @@ export function SavedMaterials() {
             <li key={grade.id} className="flex flex-col bg-white p-5">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <h2 className="font-display text-[1.0625rem] font-semibold leading-tight text-navy-900">
+                  <h2 className="font-display text-base font-semibold leading-tight text-navy-900">
                     <Link href={grade.href} className="transition-colors hover:text-brand-700">
                       {grade.name}
                     </Link>

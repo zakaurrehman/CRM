@@ -113,8 +113,8 @@ export default async function MaterialPage({ params }: Params) {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <h2 className="text-display-sm">{p("Overview")}</h2>
-            <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-700">{category.summary}</p>
-            <p className="mt-4 content-en text-[1.0625rem] leading-relaxed text-steel-700">
+            <p className="mt-5 content-en text-base leading-relaxed text-steel-700">{category.summary}</p>
+            <p className="mt-4 content-en text-base leading-relaxed text-steel-700">
               {p("IMS handles {name} as both prime material and as arisings recovered from industrial processing. Material is sorted and segregated by grade, so it returns to the melt as a known specification rather than a mixed stream.", { name: category.name.toLowerCase() })}
             </p>
 

@@ -88,7 +88,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={p("Search alloys, grades, streams and pages")}
-            className="h-14 w-full border-0 bg-transparent text-[1.0625rem] text-navy-900 outline-none placeholder:text-steel-500 focus-visible:border-0 focus-visible:ring-0"
+            className="h-14 w-full border-0 bg-transparent text-base text-navy-900 outline-none placeholder:text-steel-500 focus-visible:border-0 focus-visible:ring-0"
           />
           <button
             type="button"

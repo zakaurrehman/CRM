@@ -56,7 +56,7 @@ export function SearchResults() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={p("Search alloys, grades, streams and pages")}
-            className="h-14 w-full rounded border border-steel-300 bg-white ps-12 pe-4 text-[1.0625rem] text-navy-900 transition-colors placeholder:text-steel-400 hover:border-steel-400 focus:border-brand-700"
+            className="h-14 w-full rounded border border-steel-300 bg-white ps-12 pe-4 text-base text-navy-900 transition-colors placeholder:text-steel-400 hover:border-steel-400 focus:border-brand-700"
           />
         </div>
       </form>
@@ -93,7 +93,7 @@ export function SearchResults() {
                         className="group flex items-center justify-between gap-4 border-b border-steel-200 py-4"
                       >
                         <span>
-                          <span className="block text-[1.0625rem] font-medium text-navy-900 transition-colors group-hover:text-brand-700">
+                          <span className="block text-base font-medium text-navy-900 transition-colors group-hover:text-brand-700">
                             {doc.title}
                           </span>
                           <span className="mt-0.5 block text-[0.875rem] text-steel-500">{doc.context}</span>

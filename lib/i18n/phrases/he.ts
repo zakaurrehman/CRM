@@ -612,4 +612,13 @@ export const hePhrases: PhraseTable = {
   "Welcome to IMS Metals & Alloys": "ברוכים הבאים ל-IMS Metals & Alloys",
   "Our objective is to responsibly source the commodities which supplement our everyday life.": "מטרתנו היא לספק באחריות את חומרי הגלם המלווים את חיי היום-יום שלנו.",
   "Contact us": "צרו קשר",
+  "Live metals prices": "מחירי מתכות בזמן אמת",
+  "Display currency": "מטבע תצוגה",
+  "Market data, last updated {when}": "נתוני שוק, עודכנו לאחרונה {when}",
+  "Live prices are temporarily unavailable.": "מחירים בזמן אמת אינם זמינים כרגע.",
+  "Shown in USD — conversion unavailable": "מוצג בדולר — המרה אינה זמינה",
+  "/ MT": "/ טון",
+  "Aluminium": "אלומיניום",
+  "Zinc": "אבץ",
+  "Tin": "בדיל",
 };

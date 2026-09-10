@@ -66,7 +66,7 @@ export default async function AboutPage() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <h2 className="text-display-sm">{p("Who we are")}</h2>
-            <div className="mt-6 space-y-5 content-en text-[1.0625rem] leading-relaxed text-steel-700">
+            <div className="mt-6 space-y-5 content-en text-base leading-relaxed text-steel-700">
               <p>
                 {p("We handle a wide variety of stainless steel, low alloy steels, die steel, nickel, cobalt, complex nickel superalloys, pure metals and ferro-alloys, which arise from the petrochemical, oil and gas, industrial gas turbine and aerospace sectors.")}
               </p>

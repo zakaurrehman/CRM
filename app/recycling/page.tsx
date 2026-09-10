@@ -83,7 +83,7 @@ export default async function RecyclingPage() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <h2 className="text-display-sm">{p("Processing capability")}</h2>
-            <p className="mt-5 content-en text-[1.0625rem] leading-relaxed text-steel-600">
+            <p className="mt-5 content-en text-base leading-relaxed text-steel-600">
               {p("Recovery is a metallurgical problem before it is a logistics one. The value in a filtercake or a plasma dust is only realised if the metal content is identified accurately and separated cleanly.")}
             </p>
             <figure className="relative mt-10 aspect-[4/3] overflow-hidden">
