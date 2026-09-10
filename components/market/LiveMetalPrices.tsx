@@ -106,29 +106,37 @@ export function LiveMetalPrices({ className }: { className?: string }) {
   }
 
   if (status === "error" || !data) return null;
-  if (!data.metalsConfigured) return null;
-  if (!data.metals) {
-    return (
-      <div className={cn("rounded-md border border-steel-200 bg-steel-50 p-5", className)}>
-        <p className="text-[0.875rem] text-steel-600">
-          {p("Live prices are temporarily unavailable.")}
-        </p>
-      </div>
-    );
-  }
 
+  /* Nothing to show only when both feeds are empty. Metals need a key and may
+     not be configured; rates need none and almost always are — so hiding the
+     rates because the metals key is absent hid a working feature behind a
+     missing one. */
+  const hasMetals = Boolean(data.metals);
+  const hasRates = Boolean(data.rates);
+  if (!hasMetals && !hasRates) return null;
+
+  const stamp = data.metals?.fetchedAt ?? data.rates?.fetchedAt ?? Date.now();
   const updated = new Intl.DateTimeFormat(tag, {
     dateStyle: "medium",
     timeStyle: "short",
-  }).format(new Date(data.metals.fetchedAt));
+  }).format(new Date(stamp));
+
+  /* One unit of USD in each currency. Shown when there are no metals rows, so
+     the panel still carries live market data rather than an apology. */
+  const rateRows = hasRates
+    ? data.currencies
+        .filter((code) => code !== "USD" && typeof data.rates?.rates[code] === "number")
+        .map((code) => ({ code, value: data.rates!.rates[code] }))
+    : [];
 
   return (
     <section className={cn("rounded-md border border-steel-200 bg-white", className)}>
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-steel-200 px-5 py-4">
         <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.13em] text-steel-500">
-          {p("Live metals prices")}
+          {hasMetals ? p("Live metals prices") : p("Live exchange rates")}
         </h2>
 
+        {hasMetals ? (
         <label className="inline-flex items-center gap-2">
           <span className="sr-only">{p("Display currency")}</span>
           <select
@@ -146,7 +154,23 @@ export function LiveMetalPrices({ className }: { className?: string }) {
             ))}
           </select>
         </label>
+        ) : null}
       </header>
+
+      {!hasMetals ? (
+        <ul className="divide-y divide-steel-100">
+          {rateRows.map((row) => (
+            <li key={row.code} className="flex items-center justify-between gap-4 px-5 py-3">
+              <span className="text-[0.9375rem] font-medium text-navy-900">
+                {"USD / " + row.code}
+              </span>
+              <span className="tabular-nums text-[0.9375rem] text-navy-900">
+                {new Intl.NumberFormat(tag, { minimumFractionDigits: 2, maximumFractionDigits: 4 }).format(row.value)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
 
       <ul className="divide-y divide-steel-100">
         {formatted.map((quote) => (
@@ -198,7 +222,12 @@ export function LiveMetalPrices({ className }: { className?: string }) {
       <footer className="border-t border-steel-200 px-5 py-3">
         <p className="text-[0.75rem] text-steel-500">
           {p("Market data, last updated {when}", { when: updated })}
-          {currency !== "USD" && !data.rates ? ` · ${p("Shown in USD — conversion unavailable")}` : ""}
+          {hasMetals && currency !== "USD" && !hasRates
+            ? ` · ${p("Shown in USD — conversion unavailable")}`
+            : ""}
+          {!hasMetals && data.metalsConfigured
+            ? ` · ${p("Metals prices are temporarily unavailable.")}`
+            : ""}
         </p>
       </footer>
     </section>

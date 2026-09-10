@@ -614,4 +614,6 @@ export const frPhrases: PhraseTable = {
   "Aluminium": "Aluminium",
   "Zinc": "Zinc",
   "Tin": "Étain",
+  "Live exchange rates": "Taux de change en direct",
+  "Metals prices are temporarily unavailable.": "Les cours des métaux sont momentanément indisponibles.",
 };

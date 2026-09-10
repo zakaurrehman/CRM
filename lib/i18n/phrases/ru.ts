@@ -620,4 +620,6 @@ export const ruPhrases: PhraseTable = {
   "Aluminium": "Алюминий",
   "Zinc": "Цинк",
   "Tin": "Олово",
+  "Live exchange rates": "Актуальные курсы валют",
+  "Metals prices are temporarily unavailable.": "Цены на металлы временно недоступны.",
 };

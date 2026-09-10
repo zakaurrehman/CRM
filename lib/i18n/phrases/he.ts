@@ -621,4 +621,6 @@ export const hePhrases: PhraseTable = {
   "Aluminium": "אלומיניום",
   "Zinc": "אבץ",
   "Tin": "בדיל",
+  "Live exchange rates": "שערי חליפין בזמן אמת",
+  "Metals prices are temporarily unavailable.": "מחירי המתכות אינם זמינים כרגע.",
 };

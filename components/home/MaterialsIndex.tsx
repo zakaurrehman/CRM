@@ -1,5 +1,4 @@
 import { LiveMetalPrices } from "@/components/market/LiveMetalPrices";
-import { isMetalsConfigured } from "@/lib/market/metals";
 import { getP } from "@/lib/i18n/server";
 import Image from "next/image";
 import Link from "next/link";
@@ -102,12 +101,10 @@ export async function MaterialsIndex({
       {/* Market prices sit with the materials they price rather than in a band
           of their own.
 
-          Whether a feed exists is known here, on the server, so an unconfigured
-          site renders no widget at all. Leaving that to the client meant a
-          loading skeleton appeared and then vanished once the fetch came back
-          empty — a flash and a layout shift for something that was never going
-          to show. */}
-      {isMetalsConfigured() ? <LiveMetalPrices className="mt-12 max-w-2xl" /> : null}
+          Rendered unconditionally: currency rates need no key and are almost
+          always available, so there is virtually always something to show. The
+          component returns null only if both feeds come back empty. */}
+      <LiveMetalPrices className="mt-12 max-w-2xl" />
     </Section>
   );
 }
