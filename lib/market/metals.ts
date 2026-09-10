@@ -110,7 +110,16 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
   }
 
   if (!data.rates) {
-    lastError = redact(`${provider} returned no rates. Keys present: ${Object.keys(data).join(", ") || "none"}`);
+    /* Report the shape, not just the top-level keys. "Keys present: data" says
+       the adapter is wrong without saying what to change it to; two levels and a
+       short sample is enough to write the right one. */
+    const shape = (obj: unknown, depth = 0): string => {
+      if (obj === null || typeof obj !== "object") return JSON.stringify(obj);
+      if (Array.isArray(obj)) return `[${obj.length} items] ${depth < 2 ? shape(obj[0], depth + 1) : ""}`;
+      const entries = Object.entries(obj as Record<string, unknown>).slice(0, 8);
+      return "{" + entries.map(([k, v]) => k + ": " + (depth < 2 ? shape(v, depth + 1) : typeof v)).join(", ") + "}";
+    };
+    lastError = redact(`${provider} returned no "rates" key. Response shape: ${shape(data)}`);
     return null;
   }
 
