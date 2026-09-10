@@ -622,4 +622,5 @@ export const frPhrases: PhraseTable = {
   "Resume the ticker": "Reprendre le bandeau",
   "Refresh prices": "Actualiser les cours",
   "Welcome to IMS": "Bienvenue chez IMS",
+  "per tonne": "la tonne",
 };

@@ -629,4 +629,5 @@ export const hePhrases: PhraseTable = {
   "Resume the ticker": "המשך סרט הנתונים",
   "Refresh prices": "רענון מחירים",
   "Welcome to IMS": "ברוכים הבאים ל-IMS",
+  "per tonne": "לטונה",
 };

@@ -628,4 +628,5 @@ export const ruPhrases: PhraseTable = {
   "Resume the ticker": "Возобновить бегущую строку",
   "Refresh prices": "Обновить цены",
   "Welcome to IMS": "Добро пожаловать в IMS",
+  "per tonne": "за тонну",
 };

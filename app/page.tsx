@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { MarketTicker } from "@/components/market/MarketTicker";
+import { MarketBoard } from "@/components/market/MarketBoard";
+import { Container } from "@/components/ui/Container";
 import { WelcomeBanner } from "@/components/home/WelcomeBanner";
 import { Hero } from "@/components/home/Hero";
 import { CredibilityStrip } from "@/components/home/CredibilityStrip";
@@ -33,12 +34,15 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Both bars together above the welcome band, the second a shade darker
-          so they read as two feeds rather than one long run of numbers. Each
-          renders nothing when its feed is empty. */}
-      <MarketTicker feed="metals" tone="dark" />
-      <MarketTicker feed="rates" tone="light" />
       <WelcomeBanner />
+
+      {/* Between the welcome band and the hero: prominent without pushing the
+          headline below the fold. Renders nothing when neither feed has data. */}
+      <div className="border-b border-steel-200 bg-white">
+        <Container>
+          <MarketBoard className="py-10 lg:py-12" />
+        </Container>
+      </div>
       <Hero />
       <CredibilityStrip />
       <Pillars />
