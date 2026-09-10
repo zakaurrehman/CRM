@@ -42,9 +42,31 @@ export interface MetalsPayload {
 let cache: MetalsPayload | null = null;
 let inFlight: Promise<MetalsPayload | null> | null = null;
 
+/**
+ * Why the last fetch produced nothing, for diagnosis.
+ *
+ * Never contains the key. The request URL is never recorded, and any substring
+ * matching the key is redacted from provider messages before it is stored.
+ */
+let lastError: string | null = null;
+
+export function getMetalsError(): string | null {
+  return lastError;
+}
+
+/** Removes the key from any text before it can leave the server. */
+function redact(text: string): string {
+  const key = process.env.METALS_API_KEY;
+  const safe = text.slice(0, 300);
+  return key ? safe.split(key).join("[key]") : safe;
+}
+
 interface ProviderResponse {
   success?: boolean;
   rates?: Record<string, number>;
+  /* Both providers report failures in an `error` object rather than an HTTP
+     status, so a 200 can still be a rejection. */
+  error?: { code?: number; type?: string; info?: string; message?: string };
   /* Some plans return a parallel map of 24h changes. Absent on most, which is
      why `change` is optional all the way through to the UI. */
   change?: Record<string, number>;
@@ -69,10 +91,28 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
   const symbols = trackedMetals.map((m) => m.symbol).join(",");
 
   const response = await fetch(endpointFor(provider, key, symbols), { cache: "no-store" });
-  if (!response.ok) return null;
+  if (!response.ok) {
+    lastError = redact(`${provider} returned HTTP ${response.status} ${response.statusText}`);
+    return null;
+  }
 
   const data = (await response.json()) as ProviderResponse;
-  if (data.success === false || !data.rates) return null;
+
+  if (data.success === false || data.error) {
+    const e = data.error;
+    lastError = redact(
+      `${provider} rejected the request` +
+        (e?.type ? `: ${e.type}` : "") +
+        (e?.info || e?.message ? ` — ${e.info || e.message}` : "") +
+        (e?.code ? ` (code ${e.code})` : ""),
+    );
+    return null;
+  }
+
+  if (!data.rates) {
+    lastError = redact(`${provider} returned no rates. Keys present: ${Object.keys(data).join(", ") || "none"}`);
+    return null;
+  }
 
   const quotes: MetalQuote[] = [];
   for (const metal of trackedMetals) {
@@ -91,7 +131,17 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
     });
   }
 
-  if (quotes.length === 0) return null;
+  if (quotes.length === 0) {
+    /* The commonest real cause: the plan covers precious metals but not the
+       industrial ones IMS actually trades. Naming what did come back makes that
+       obvious at a glance. */
+    lastError = redact(
+      `${provider} covered none of the requested symbols. Asked for: ${symbols}. Returned: ${Object.keys(data.rates).join(", ") || "nothing"}`,
+    );
+    return null;
+  }
+
+  lastError = null;
   return { base: BASE_CURRENCY, quotes, fetchedAt: Date.now() };
 }
 
@@ -119,7 +169,8 @@ export async function getMetals(): Promise<MetalsPayload | null> {
          not: it was real, and the response carries the timestamp so the UI can
          say how old it is. */
       return cache;
-    } catch {
+    } catch (e) {
+      lastError = redact(e instanceof Error ? e.message : String(e));
       return cache;
     } finally {
       inFlight = null;

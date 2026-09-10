@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getMetals, isMetalsConfigured } from "@/lib/market/metals";
+import { getMetals, getMetalsError, isMetalsConfigured } from "@/lib/market/metals";
 import { getRates } from "@/lib/market/rates";
 import { supportedCurrencies } from "@/lib/market/config";
 
@@ -30,6 +30,10 @@ export async function GET() {
          problem in the second, which are different situations for whoever is
          looking after the site. */
       metalsConfigured: isMetalsConfigured(),
+      /* Why there are no metals, when a key is configured but nothing came
+         back. Carries no credential — the key is redacted from any provider
+         message and the request URL is never recorded. */
+      metalsError: !metals && isMetalsConfigured() ? getMetalsError() : undefined,
       rates: rates ? { base: rates.base, rates: rates.rates, fetchedAt: rates.fetchedAt } : null,
       currencies: supportedCurrencies,
     },
