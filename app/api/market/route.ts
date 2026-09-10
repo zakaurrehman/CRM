@@ -23,7 +23,7 @@ export async function GET() {
   return NextResponse.json(
     {
       metals: metals
-        ? { base: metals.base, quotes: metals.quotes, fetchedAt: metals.fetchedAt }
+        ? { base: metals.base, unit: metals.unit, quotes: metals.quotes, fetchedAt: metals.fetchedAt }
         : null,
       /* Distinguishes "no key configured" from "configured but the provider is
          down". The UI says nothing at all in the first case and reports a

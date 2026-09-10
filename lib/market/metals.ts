@@ -35,6 +35,8 @@ export interface MetalQuote {
 
 export interface MetalsPayload {
   base: string;
+  /** What the prices are per, as the provider reports it. */
+  unit?: string;
   quotes: MetalQuote[];
   fetchedAt: number;
 }
@@ -63,6 +65,8 @@ function redact(text: string): string {
 
 interface ProviderResponse {
   success?: boolean;
+  /** The quote unit the provider applied, when it reports one. */
+  unit?: string;
   rates?: Record<string, number>;
   /* Both providers report failures in an `error` object rather than an HTTP
      status, so a 200 can still be a rejection. */
@@ -129,7 +133,7 @@ function endpointFor(provider: string, key: string, symbols: string): string {
       return `https://api.metalpriceapi.com/v1/latest?api_key=${encodeURIComponent(key)}&base=${BASE_CURRENCY}&currencies=${list}`;
     case "metals-api":
     default:
-      return `https://metals-api.com/api/latest?access_key=${encodeURIComponent(key)}&base=${BASE_CURRENCY}&symbols=${list}`;
+      return `https://metals-api.com/api/latest?access_key=${encodeURIComponent(key)}&base=${BASE_CURRENCY}&symbols=${list}&unit=mt`;
   }
 }
 
@@ -231,7 +235,7 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
   }
 
   lastError = null;
-  return { base: BASE_CURRENCY, quotes, fetchedAt: Date.now() };
+  return { base: BASE_CURRENCY, quotes, fetchedAt: Date.now(), unit: data.unit };
 }
 
 /**
