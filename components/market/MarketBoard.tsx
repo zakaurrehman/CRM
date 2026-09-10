@@ -7,47 +7,7 @@ import { useI18n } from "@/lib/i18n/provider";
 import { localeMeta } from "@/lib/i18n/config";
 import type { Currency } from "@/lib/market/config";
 import { cn } from "@/lib/utils";
-
-interface Quote {
-  symbol: string;
-  name: string;
-  element: string;
-  category?: string;
-  price: number;
-  change?: number;
-}
-
-interface MarketPayload {
-  metals: { base: string; quotes: Quote[]; fetchedAt: number } | null;
-  metalsConfigured: boolean;
-  rates: { base: string; rates: Record<string, number>; fetchedAt: number } | null;
-  currencies: readonly Currency[];
-}
-
-/**
- * One fetch however many boards are on the page, and a way to force a fresh one.
- */
-let shared: Promise<MarketPayload | null> | null = null;
-let cached: MarketPayload | null = null;
-
-function loadMarket(force = false): Promise<MarketPayload | null> {
-  if (force) cached = null;
-  if (cached) return Promise.resolve(cached);
-  if (shared) return shared;
-  shared = fetch("/api/market")
-    .then((r) => (r.ok ? (r.json() as Promise<MarketPayload>) : null))
-    .then((d) => {
-      cached = d;
-      return d;
-    })
-    .catch(() => null)
-    .finally(() => {
-      shared = null;
-    });
-  return shared;
-}
-
-const REFRESH_MS = 15 * 60 * 1000;
+import { getCachedMarket, loadMarket, subscribeMarket } from "@/lib/market/feed-client";
 
 /**
  * Live metals prices and currency rates, as a board rather than a ticker.
@@ -64,25 +24,27 @@ const REFRESH_MS = 15 * 60 * 1000;
 export function MarketBoard({ className }: { className?: string }) {
   const p = useP();
   const { locale } = useI18n();
-  const [data, setData] = useState<MarketPayload | null>(cached);
-  const [status, setStatus] = useState<"loading" | "ready" | "error">(cached ? "ready" : "loading");
+  const [data, setData] = useState(getCachedMarket);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">(
+    getCachedMarket() ? "ready" : "loading",
+  );
   const [currency, setCurrency] = useState<Currency>("USD");
   const [refreshing, setRefreshing] = useState(false);
 
   const load = useCallback(async (force = false) => {
     const d = await loadMarket(force);
-    if (d) {
-      setData(d);
-      setStatus("ready");
-    } else {
-      setStatus("error");
-    }
+    setStatus(d ? "ready" : "error");
   }, []);
 
   useEffect(() => {
-    load();
-    const timer = setInterval(() => load(true), REFRESH_MS);
-    return () => clearInterval(timer);
+    /* The store pushes each new payload; this only has to ask for the first
+       one and follow the status. A refresh pressed on a ticker lands here too. */
+    const unsubscribe = subscribeMarket((payload) => {
+      setData(payload);
+      setStatus(payload ? "ready" : "error");
+    });
+    void load();
+    return unsubscribe;
   }, [load]);
 
   const refresh = async () => {
