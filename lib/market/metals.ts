@@ -92,23 +92,27 @@ function symbolsEndpointFor(provider: string, key: string): string {
 let symbolCache: { at: number; symbols: Set<string> } | null = null;
 const SYMBOLS_TTL_MS = 24 * 60 * 60 * 1000;
 
+let symbolsNote = "not attempted";
+
 async function supportedSymbols(provider: string, key: string): Promise<Set<string> | null> {
   if (symbolCache && Date.now() - symbolCache.at < SYMBOLS_TTL_MS) return symbolCache.symbols;
   try {
     const response = await fetch(symbolsEndpointFor(provider, key), { cache: "no-store" });
-    if (!response.ok) return null;
+    if (!response.ok) { symbolsNote = `symbols endpoint HTTP ${response.status}`; return null; }
     const body = (await response.json()) as { data?: unknown; symbols?: unknown; success?: boolean };
     // Same envelope as the rates endpoint.
     const inner = (body.data && typeof body.data === "object" ? body.data : body) as {
       symbols?: Record<string, string> | string[];
     };
     const raw = inner.symbols;
-    if (!raw) return null;
+    if (!raw) { symbolsNote = `symbols endpoint gave no list: ${Object.keys(inner).join(", ") || "empty"}`; return null; }
     const symbols = new Set(Array.isArray(raw) ? raw : Object.keys(raw));
     if (symbols.size === 0) return null;
+    symbolsNote = `${symbols.size} symbols known`;
     symbolCache = { at: Date.now(), symbols };
     return symbols;
-  } catch {
+  } catch (e) {
+    symbolsNote = `symbols endpoint threw: ${e instanceof Error ? e.message : String(e)}`;
     return null;
   }
 }
@@ -167,7 +171,8 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
       `${provider} rejected the request` +
         (e?.type ? `: ${e.type}` : "") +
         (e?.info || e?.message ? ` — ${e.info || e.message}` : "") +
-        (e?.code ? ` (code ${e.code})` : ""),
+        (e?.code ? ` (code ${e.code})` : "") +
+        ` [discovery: ${symbolsNote}; asked for: ${symbols}]`,
     );
     return null;
   }
