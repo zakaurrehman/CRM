@@ -1,4 +1,5 @@
 import { LiveMetalPrices } from "@/components/market/LiveMetalPrices";
+import { isMetalsConfigured } from "@/lib/market/metals";
 import { getP } from "@/lib/i18n/server";
 import Image from "next/image";
 import Link from "next/link";
@@ -99,9 +100,14 @@ export async function MaterialsIndex({
       </ul>
 
       {/* Market prices sit with the materials they price rather than in a band
-          of their own. The widget renders nothing at all when there is no feed,
-          so an unconfigured site shows no empty space here. */}
-      <LiveMetalPrices className="mt-12 max-w-2xl" />
+          of their own.
+
+          Whether a feed exists is known here, on the server, so an unconfigured
+          site renders no widget at all. Leaving that to the client meant a
+          loading skeleton appeared and then vanished once the fetch came back
+          empty — a flash and a layout shift for something that was never going
+          to show. */}
+      {isMetalsConfigured() ? <LiveMetalPrices className="mt-12 max-w-2xl" /> : null}
     </Section>
   );
 }
