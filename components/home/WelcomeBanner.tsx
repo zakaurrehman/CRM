@@ -60,7 +60,7 @@ export async function WelcomeBanner() {
             to the display face there, which is why the size is set in a way
             that suits both.
           */}
-          <h1 className="mt-7 font-lockup text-[clamp(1.375rem,2.9vw,2.125rem)] font-semibold uppercase leading-[1.25] tracking-[0.01em] text-navy-900">
+          <h1 className="mt-7 font-lockup text-[clamp(1.375rem,2.9vw,2.125rem)] font-black uppercase leading-[1.22] tracking-[-0.005em] text-navy-900">
             <span className="block">{p("Welcome to IMS")}</span>
             <span className="block">{p("Metals & Alloys")}</span>
           </h1>

@@ -42,7 +42,10 @@ const orbitron = Orbitron({
   subsets: ["latin"],
   variable: "--font-lockup",
   display: "swap",
-  weight: ["600", "700"],
+  /* 900 only. Ethnocentric is a heavy face and 600 read as thin beside it;
+     nothing else on the page uses this family, so there is no reason to ship
+     weights that will not be drawn. */
+  weight: ["900"],
 });
 
 const mono = IBM_Plex_Mono({
