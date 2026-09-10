@@ -133,7 +133,7 @@ function endpointFor(provider: string, key: string, symbols: string): string {
       return `https://api.metalpriceapi.com/v1/latest?api_key=${encodeURIComponent(key)}&base=${BASE_CURRENCY}&currencies=${list}`;
     case "metals-api":
     default:
-      return `https://metals-api.com/api/latest?access_key=${encodeURIComponent(key)}&base=${BASE_CURRENCY}&symbols=${list}&unit=mt`;
+      return `https://metals-api.com/api/latest?access_key=${encodeURIComponent(key)}&base=${BASE_CURRENCY}&symbols=${list}`;
   }
 }
 
@@ -222,6 +222,29 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
       price: 1 / rate,
       change: typeof data.change?.[symbol] === "number" ? data.change[symbol] : undefined,
     });
+  }
+
+  /*
+   * Plausibility guard.
+   *
+   * The feed returns numbers but not, reliably, the unit they are in: asking
+   * for metric tonnes is rejected on this plan, and the values that come back
+   * put nickel at 0.52 when LME nickel trades around $15,000 a tonne. Some
+   * reconcile as troy ounces and others are half again too high, so the unit
+   * cannot be inferred from the data either.
+   *
+   * Rather than publish figures labelled "/ MT" that are not per tonne, they
+   * are rejected outright. A wrong price on a metals trading site is worse
+   * than no price, and this is the one thing the brief was explicit about.
+   */
+  const implausible = quotes.filter((q) => q.price < 200);
+  if (implausible.length > 0) {
+    lastError = redact(
+      `${provider} returned values that are not prices per tonne — ` +
+        implausible.slice(0, 4).map((q) => `${q.name} ${q.price.toFixed(2)}`).join(", ") +
+        `. The unit=mt parameter is rejected on this plan, so the quote unit needs confirming with the provider.`,
+    );
+    return null;
   }
 
   if (quotes.length === 0) {
