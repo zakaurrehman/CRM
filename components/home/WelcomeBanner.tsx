@@ -5,29 +5,22 @@ import { getP } from "@/lib/i18n/server";
 import { WelcomeBackdrop } from "./WelcomeBackdrop";
 
 /**
- * The welcome block from the original IMS Metals homepage, built the way the
- * original builds it.
+ * The welcome block from the original IMS Metals homepage.
  *
- * The original's markup was recovered and read rather than remembered. It is a
- * section with a Ken Burns slideshow for a background, and four widgets sitting
- * directly on it — logo, "WELCOME TO IMS / Metals & Alloys", the objective, a
- * Contact Us button — every one of them entering with Elementor's fadeInLeft,
- * the heading, text and button at the slow setting. There is no card. That is
- * the "effect" IMS kept asking for, and this is the first version to have it.
+ * The original opens on a centred lockup — logo, "WELCOME TO IMS METALS &
+ * ALLOYS", the company objective, and a Contact Us button — before the hero
+ * imagery begins. It is the most recognisable thing about the page and the part
+ * the client identifies as "the centred logo", so it is reproduced here in the
+ * same position and proportions.
  *
- * There is no card here either, which is the other thing IMS kept asking for.
- * Every earlier version put a light panel behind the type so that it could be
- * navy; IMS rejected a light panel four times, and never asked for navy — they
- * asked for the logo's typeface, which this uses. So the type is white and the
- * photograph is deepened rather than bleached, which keeps its contrast and its
- * subject: a hot slab still glows, a turbine hall still has depth. The wash is
- * measured, not judged by eye — backdrop-contrast.mjs hides the text, samples
- * the real pixels behind it across every frame, and takes the worst.
+ * The type is navy, on a light tinted-glass panel, because IMS's developer wants
+ * the logo and the heading in one colour family and the mark is navy and blue.
+ * A dark-ground version with white type was built and reverted for that reason;
+ * it is in the history if the question comes up again.
  *
- * The logo is the one compromise. IMS's mark has a navy wordmark that would
- * vanish on a dark ground, and the brand pack's reversed version has not been
- * supplied, so the same file is rendered as a white silhouette. Geometry is
- * untouched; only the fill. Swap in the official reversed logo when it arrives.
+ * The original brings the logo, heading, text and button in with fadeInLeft, one
+ * after another. That is reproduced here — see .welcome-in in globals.css, which
+ * also handles right-to-left and reduced motion.
  *
  * The original's second sentence ("Our long standing and established
  * relationships with suppliers.") is an incomplete fragment on the live site, so
@@ -48,23 +41,40 @@ export async function WelcomeBanner() {
         ]}
       />
       <Container>
-        <div className="flex flex-col items-center py-16 text-center sm:py-20 lg:py-24">
+        <div className="flex justify-center py-14 sm:py-16 lg:py-20">
           {/*
-            Each element enters from the reading-side edge, one after another —
-            the original's fadeInLeft, staggered so they arrive as a sequence
-            rather than a block. The delays are inline because they differ per
-            element and nothing else needs them. welcome-in is defined in
-            globals.css, where it also handles right-to-left and reduced motion.
+            The panel. Translucent, blurred and tinted rather than solid white:
+            solid white reads as a sheet of paper dropped onto a photograph,
+            where this reads as glass belonging to the same frame. The blur is
+            what keeps the type crisp over whatever detail passes behind it;
+            the tint and the lit edge are what stop it looking like a box.
+
+            It stays opaque enough that the navy type cannot fail against it —
+            the readability here was hard won and is not being traded for
+            atmosphere.
+          */}
+          <div className="relative flex max-w-2xl flex-col items-center overflow-hidden rounded-xl border border-white/70 bg-gradient-to-br from-white/95 via-white/90 to-brand-100/90 px-8 py-12 text-center shadow-lift backdrop-blur-xl sm:px-14 sm:py-14">
+          {/* The accent. Brightest in the middle and falling to the brand blue
+              at both ends, so it reads as a lit edge rather than a ruled line.
+              overflow-hidden on the panel is what bends it round the corners. */}
+          <span
+            aria-hidden
+            className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-700 via-brand-400 to-brand-700"
+          />
+          {/*
+            Deliberately larger than the header lockup and not a link: this is
+            the brand statement, not a navigation control. The subtle lift on
+            hover matches the header's treatment so the two read as the same
+            mark rather than two different assets.
           */}
           <Image
             src="/images/branding/ims-logo.png"
             alt="IMS Metals &amp; Alloys"
-            width={1000}
-            height={485}
+            width={3000}
+            height={1455}
             priority
             sizes="(min-width: 640px) 280px, 220px"
-            /* White silhouette of the mark — see the note above. */
-            className="welcome-in h-auto w-[11.5rem] brightness-0 invert sm:w-[14.5rem]"
+            className="welcome-in h-auto w-[11.5rem] sm:w-[14.5rem]"
           />
 
           {/*
@@ -79,7 +89,7 @@ export async function WelcomeBanner() {
             that suits both.
           */}
           <h1
-            className="welcome-in mt-8 font-lockup text-[clamp(1.5rem,3.2vw,2.375rem)] font-black uppercase leading-[1.22] tracking-[-0.005em] text-white"
+            className="welcome-in mt-7 font-lockup text-[clamp(1.375rem,2.9vw,2.125rem)] font-black uppercase leading-[1.22] tracking-[-0.005em] text-navy-900"
             style={{ animationDelay: "140ms" }}
           >
             <span className="block">{p("Welcome to IMS")}</span>
@@ -87,16 +97,17 @@ export async function WelcomeBanner() {
           </h1>
 
           <p
-            className="welcome-in mt-5 max-w-xl text-base leading-relaxed text-white/85 sm:text-[1.0625rem]"
+            className="welcome-in mt-4 max-w-xl text-base leading-relaxed text-steel-700"
             style={{ animationDelay: "280ms" }}
           >
             {p("Our objective is to responsibly source the commodities which supplement our everyday life.")}
           </p>
 
-          <div className="welcome-in mt-8" style={{ animationDelay: "420ms" }}>
+          <div className="welcome-in mt-7" style={{ animationDelay: "420ms" }}>
             <Button href="/contact" size="lg">
               {p("Contact us")}
             </Button>
+          </div>
           </div>
         </div>
       </Container>
