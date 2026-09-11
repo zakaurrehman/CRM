@@ -347,48 +347,6 @@
      slideshow frame — see HeroSlideshow. Nothing to add here. */
 }
 
-@layer components {
-  /**
-   * Market ticker. See components/market/MarketTicker.tsx.
-   *
-   * The list is rendered twice and the track travels exactly half its width, so
-   * the second copy lands where the first began and the loop has no seam.
-   *
-   * Right-to-left reverses the travel: a ticker reads in the direction of the
-   * script, so in Hebrew it must come from the other side. `translateX` is
-   * physical, not logical, which is why this needs its own rule rather than
-   * mirroring on its own.
-   */
-  .ticker-track {
-    animation-name: ticker-ltr;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    will-change: transform;
-  }
-
-  [dir="rtl"] .ticker-track { animation-name: ticker-rtl; }
-
-  /* Hover, focus, and the pause control all land here. */
-  .ticker-track.is-paused { animation-play-state: paused; }
-
-  @keyframes ticker-ltr {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  @keyframes ticker-rtl {
-    from { transform: translateX(0); }
-    to { transform: translateX(50%); }
-  }
-
-  /* Reduced motion is handled in the component too, which sets is-paused; this
-     is the belt to that braces, for anyone whose preference changes mid-visit
-     before React has re-rendered. */
-  @media (prefers-reduced-motion: reduce) {
-    .ticker-track { animation: none; }
-  }
-}
-
 @layer utilities {
   .text-balance { text-wrap: balance; }
   /* Masks the trailing edge of a scrollable region to hint at more content. */

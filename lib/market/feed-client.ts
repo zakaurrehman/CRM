@@ -1,14 +1,16 @@
 /**
  * One market feed, shared by every component that shows it.
  *
- * Three things now render these numbers — the metals ticker, the rates ticker
- * and the price board — and each used to keep its own copy of the fetch. That
- * meant three calls to a rate-limited endpoint, three timers, and three
- * timestamps that could disagree: refreshing the board left the bars above it
- * quoting older prices, which is worse than offering no refresh at all.
+ * There were three at one point — a metals ticker, a rates ticker and the price
+ * board — each keeping its own copy of the fetch. That meant three calls to a
+ * rate-limited endpoint, three timers, and three timestamps that could
+ * disagree: refreshing the board left the bars above it quoting older prices,
+ * which is worse than offering no refresh at all.
  *
  * So the payload lives here instead. Subscribers share one request, one timer
- * and one result, and a refresh anywhere updates everything at once.
+ * and one result, and a refresh anywhere updates everything at once. Only the
+ * board remains today, but the sharing costs nothing and the next thing to
+ * show a price gets it for free.
  */
 import type { Currency } from "@/lib/market/config";
 

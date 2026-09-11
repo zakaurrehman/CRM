@@ -32,9 +32,12 @@ const config: Config = {
           400: "#9AA8B8", 500: "#5F6C79", 600: "#566270", 700: "#414B57",
           800: "#2B333C", 900: "#1A2028", 950: "#0E1319",
         },
-        success: { 50: "#ECFDF3", 500: "#12A150", 600: "#0A7539", 700: "#0A6F36" },
+        /* The 300s exist for dark grounds and are measured, not picked by eye:
+           against navy-950 the 500s give 4.46:1 (success) and 3.11:1 (danger),
+           both under the 4.5 that small text needs. These give 6.59 and 6.58. */
+        success: { 50: "#ECFDF3", 300: "#22C55E", 500: "#12A150", 600: "#0A7539", 700: "#0A6F36" },
         warning: { 50: "#FFF8EB", 500: "#C77A0A", 600: "#A96208", 700: "#874E06" },
-        danger: { 50: "#FEF2F2", 500: "#D92D20", 600: "#B42318", 700: "#912018" },
+        danger: { 50: "#FEF2F2", 300: "#FF8A80", 500: "#D92D20", 600: "#B42318", 700: "#912018" },
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],

@@ -624,8 +624,6 @@ export const ruPhrases: PhraseTable = {
   "Metals prices are temporarily unavailable.": "Цены на металлы временно недоступны.",
   "Metals": "Металлы",
   "FX rates": "Курсы валют",
-  "Pause the ticker": "Остановить бегущую строку",
-  "Resume the ticker": "Возобновить бегущую строку",
   "Refresh prices": "Обновить цены",
   "Welcome to IMS": "Добро пожаловать в IMS",
   "per tonne": "за тонну",

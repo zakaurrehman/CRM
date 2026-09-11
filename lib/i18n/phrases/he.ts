@@ -625,8 +625,6 @@ export const hePhrases: PhraseTable = {
   "Metals prices are temporarily unavailable.": "מחירי המתכות אינם זמינים כרגע.",
   "Metals": "מתכות",
   "FX rates": "שערי חליפין",
-  "Pause the ticker": "השהיית סרט הנתונים",
-  "Resume the ticker": "המשך סרט הנתונים",
   "Refresh prices": "רענון מחירים",
   "Welcome to IMS": "ברוכים הבאים ל-IMS",
   "per tonne": "לטונה",

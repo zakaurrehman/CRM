@@ -618,8 +618,6 @@ export const nlPhrases: PhraseTable = {
   "Metals prices are temporarily unavailable.": "Metaalprijzen zijn tijdelijk niet beschikbaar.",
   "Metals": "Metalen",
   "FX rates": "Wisselkoersen",
-  "Pause the ticker": "Pauzeer de koersbalk",
-  "Resume the ticker": "Hervat de koersbalk",
   "Refresh prices": "Prijzen vernieuwen",
   "Welcome to IMS": "Welkom bij IMS",
   "per tonne": "per ton",

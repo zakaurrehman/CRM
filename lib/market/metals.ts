@@ -454,6 +454,15 @@ function perOunceFrom(rates: Record<string, number> | undefined, symbol: string)
   return null;
 }
 
+/**
+ * True when a change set is all zeroes, which no real trading day produces
+ * across nine metals at full precision. See the note on getMetalsChange.
+ */
+function isStatic(change: Record<string, number>): boolean {
+  const values = Object.values(change);
+  return values.length > 0 && values.every((v) => v === 0);
+}
+
 /** Unwraps the provider's "data" envelope, which not every endpoint uses. */
 function envelope<T>(body: unknown): T {
   const b = body as { data?: unknown };
@@ -508,12 +517,15 @@ export async function getMetalsChange(): Promise<Record<string, number> | null> 
             change[symbol] = row.end_rate / row.start_rate - 1;
           }
         }
-        if (Object.keys(change).length > 0) {
+        if (isStatic(change)) {
+          notes.push(`fluctuation reported 0.0000% for all ${Object.keys(change).length} symbols — static feed`);
+        } else if (Object.keys(change).length > 0) {
           changeNote = `fluctuation: ${Object.keys(change).length} of ${wanted.length} symbols`;
           changeCache = { at: Date.now(), change };
           return change;
+        } else {
+          notes.push("fluctuation returned no usable rows");
         }
-        notes.push("fluctuation returned no usable rows");
       } else {
         notes.push("fluctuation returned no rates");
       }
@@ -553,12 +565,18 @@ export async function getMetalsChange(): Promise<Record<string, number> | null> 
             const now = quote.price / TROY_OUNCES_PER_TONNE;
             if (then !== null && then > 0 && now > 0) change[quote.symbol] = now / then - 1;
           }
-          if (Object.keys(change).length > 0) {
+          if (isStatic(change)) {
+            notes.push(
+              `yesterday's close is identical to today for all ${Object.keys(change).length} symbols — ` +
+                "the plan is serving a static snapshot, not live prices",
+            );
+          } else if (Object.keys(change).length > 0) {
             changeNote = `historical: ${Object.keys(change).length} of ${wanted.length} symbols`;
             changeCache = { at: Date.now(), change };
             return change;
+          } else {
+            notes.push("historical returned no usable rows");
           }
-          notes.push("historical returned no usable rows");
         }
       }
     }

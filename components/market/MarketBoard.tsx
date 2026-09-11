@@ -37,7 +37,7 @@ export function MarketBoard({ className }: { className?: string }) {
 
   useEffect(() => {
     /* The store pushes each new payload; this only has to ask for the first
-       one and follow the status. A refresh pressed on a ticker lands here too. */
+       one and follow the status. */
     const unsubscribe = subscribeMarket((payload) => {
       setData(payload);
       setStatus(payload ? "ready" : "error");
@@ -188,7 +188,7 @@ export function MarketBoard({ className }: { className?: string }) {
                     <span
                       className={cn(
                         "inline-flex items-center gap-0.5 tabular-nums text-[0.6875rem] font-semibold",
-                        q.change >= 0 ? "text-success-500" : "text-danger-500",
+                        q.change >= 0 ? "text-success-300" : "text-danger-300",
                       )}
                     >
                       <svg viewBox="0 0 8 6" aria-hidden className="h-1.5 w-2" fill="currentColor">

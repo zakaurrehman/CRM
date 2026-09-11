@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { MarketBoard } from "@/components/market/MarketBoard";
-import { MarketTicker } from "@/components/market/MarketTicker";
 import { Container } from "@/components/ui/Container";
 import { WelcomeBanner } from "@/components/home/WelcomeBanner";
 import { Hero } from "@/components/home/Hero";
@@ -35,13 +34,6 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* The two scrolling bars sit directly under the header, where IMS asked
-          for them: metals above, currency rates below in a lighter tone so they
-          read as two feeds rather than one long run of numbers. Each renders
-          nothing when its feed is empty. The board further down carries the
-          same numbers at rest, for a reader who would rather not chase them. */}
-      <MarketTicker feed="metals" tone="dark" />
-      <MarketTicker feed="rates" tone="light" />
       <WelcomeBanner />
 
       {/* Between the welcome band and the hero: prominent without pushing the
