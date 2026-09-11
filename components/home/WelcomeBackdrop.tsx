@@ -5,12 +5,12 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * Photographic backdrop for the welcome band.
+ * Photographic backdrop for the welcome band, matching the original site.
  *
  * The original runs industrial photography behind the welcome lockup, washed
- * out far enough that dark type reads over it. This does not: the band is split
- * and the type has its own ground beside the picture rather than on top of it,
- * so the photography needs no wash and runs at full strength.
+ * out far enough that the dark type still reads cleanly over it. That wash is
+ * the whole trick: at full strength either the picture wins and the words
+ * become unreadable, or the words win and the picture looks like a mistake.
  *
  * Purely decorative — aria-hidden, no controls, nothing focusable. The section
  * content sits above it and never moves, so this is ambience rather than
@@ -73,18 +73,31 @@ export function WelcomeBackdrop({ slides }: { slides: WelcomeSlide[] }) {
       ))}
 
       {/*
-        No scrim.
+        The scrim.
 
-        There was one, in two layers, and it was doing real work: the type used
-        to sit on this photograph and needed a floor under it. In the split band
-        the type has its own ground and nothing is printed over the picture, so
-        a wash would only dull an image for no one's benefit. The photograph
-        runs at full strength.
+        Deepening a photograph and lightening it are not equally costly. Bleached
+        to carry dark type, an image goes flat and grey and the subject
+        disappears — which is what kept happening here. Darkened, it keeps its
+        contrast and its shape; a hot slab still glows, a turbine hall still has
+        depth. So the picture runs at full strength and the type goes white.
 
-        The hairline is all that is left — it keeps the photo from butting into
-        the light half with a raw seam.
+        Two layers: an even navy wash for the floor, and a gradient weighted to
+        the centre where the lockup sits. Both are navy rather than black, so
+        the band belongs to the same palette as the header and the hero instead
+        of reading as a grey hole between them.
+
+        Measured, not judged by eye: see backdrop-contrast.mjs, which hides the
+        text, samples the real pixels behind it across every frame of the
+        rotation, and takes the worst.
       */}
-      <div className="absolute inset-y-0 start-0 hidden w-px bg-navy-950/10 lg:block" />
+      {/*
+        Only enough to settle the frame — the type no longer sits directly on
+        it, so nothing here has to protect anything. A light navy wash keeps the
+        band in the same palette as the header and the hero and stops a bright
+        frame competing with the panel; the photograph is otherwise untouched.
+      */}
+      <div className="absolute inset-0 bg-navy-950/30" />
+      <div className="absolute inset-0 bg-gradient-to-b from-navy-950/25 via-transparent to-navy-950/30" />
     </div>
   );
 }
