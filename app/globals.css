@@ -347,6 +347,42 @@
      slideshow frame — see HeroSlideshow. Nothing to add here. */
 }
 
+@layer components {
+  /**
+   * Live price strip.
+   *
+   * Two honest signals of liveness. market-arrive is a wash across every cell
+   * when a refresh lands — the visible form of "we just checked", which is true
+   * every fifteen minutes whether or not a price moved. market-up and
+   * market-down colour a figure that did move, in its direction, and let it
+   * settle back to white. Neither runs under reduced motion, and neither claims
+   * anything: a cell that did not move gets the wash and nothing else.
+   *
+   * Durations match ARRIVE_MS and MOVE_MS in MarketBoard.tsx, which remove the
+   * classes on the same clock so the animation never restarts on a re-render.
+   */
+  .market-arrive { animation: market-arrive 900ms ease-out; }
+  .market-up { animation: market-up 1400ms ease-out; }
+  .market-down { animation: market-down 1400ms ease-out; }
+
+  @keyframes market-arrive {
+    from { background-color: theme(colors.brand.700 / 35%); }
+    to { background-color: theme(colors.navy.950); }
+  }
+  @keyframes market-up {
+    from { color: theme(colors.success.300); }
+    to { color: theme(colors.white); }
+  }
+  @keyframes market-down {
+    from { color: theme(colors.danger.300); }
+    to { color: theme(colors.white); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .market-arrive, .market-up, .market-down { animation: none; }
+  }
+}
+
 @layer utilities {
   .text-balance { text-wrap: balance; }
   /* Masks the trailing edge of a scrollable region to hint at more content. */

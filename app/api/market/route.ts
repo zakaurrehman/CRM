@@ -8,7 +8,7 @@ import {
   getHistoryNote,
   isMetalsConfigured,
 } from "@/lib/market/metals";
-import { getRates } from "@/lib/market/rates";
+import { getRates, getRatesChange, getRatesChangeNote } from "@/lib/market/rates";
 import { supportedCurrencies } from "@/lib/market/config";
 
 /**
@@ -26,11 +26,12 @@ import { supportedCurrencies } from "@/lib/market/config";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const [metals, rates, history, change] = await Promise.all([
+  const [metals, rates, history, change, ratesChange] = await Promise.all([
     getMetals(),
     getRates(),
     getMetalsHistory(),
     getMetalsChange(),
+    getRatesChange(),
   ]);
 
   return NextResponse.json(
@@ -65,7 +66,18 @@ export async function GET() {
       historyNote: isMetalsConfigured() ? getHistoryNote() : undefined,
       /* Why there are no arrows, when there are none. */
       changeNote: isMetalsConfigured() ? getChangeNote() : undefined,
-      rates: rates ? { base: rates.base, rates: rates.rates, fetchedAt: rates.fetchedAt } : null,
+      rates: rates
+        ? {
+            base: rates.base,
+            rates: rates.rates,
+            fetchedAt: rates.fetchedAt,
+            /* Day-over-day movement from the ECB series, in the feed's own
+               direction; the client turns it round for pairs that invert. */
+            change: ratesChange?.change,
+            changeAsOf: ratesChange?.asOf,
+          }
+        : null,
+      ratesChangeNote: getRatesChangeNote() ?? undefined,
       currencies: supportedCurrencies,
     },
     {

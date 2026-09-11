@@ -26,7 +26,15 @@ export interface Quote {
 export interface MarketPayload {
   metals: { base: string; quotes: Quote[]; fetchedAt: number } | null;
   metalsConfigured: boolean;
-  rates: { base: string; rates: Record<string, number>; fetchedAt: number } | null;
+  rates: {
+    base: string;
+    rates: Record<string, number>;
+    fetchedAt: number;
+    /** Fractional day change per currency, feed direction. Absent when unknown. */
+    change?: Record<string, number>;
+    /** The ECB date the change is measured to. */
+    changeAsOf?: string;
+  } | null;
   currencies: readonly Currency[];
 }
 

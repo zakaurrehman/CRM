@@ -611,7 +611,6 @@ export const ruPhrases: PhraseTable = {
   "Welcome to IMS Metals & Alloys": "Добро пожаловать в IMS Metals & Alloys",
   "Our objective is to responsibly source the commodities which supplement our everyday life.": "Наша цель — ответственно добывать сырьё, которое дополняет нашу повседневную жизнь.",
   "Contact us": "Связаться с нами",
-  "Live metals prices": "Текущие цены на металлы",
   "Display currency": "Валюта отображения",
   "Market data, last updated {when}": "Рыночные данные, обновлено {when}",
   "Live prices are temporarily unavailable.": "Текущие цены временно недоступны.",
@@ -620,7 +619,6 @@ export const ruPhrases: PhraseTable = {
   "Aluminium": "Алюминий",
   "Zinc": "Цинк",
   "Tin": "Олово",
-  "Live FX rates": "Актуальные курсы валют",
   "Metals prices are temporarily unavailable.": "Цены на металлы временно недоступны.",
   "Metals": "Металлы",
   "FX rates": "Курсы валют",
@@ -631,4 +629,7 @@ export const ruPhrases: PhraseTable = {
   "Lead": "Свинец",
   "Steel scrap": "Стальной лом",
   "USD / tonne": "USD за тонну",
+  "Live": "ОНЛАЙН",
+  "Metals prices": "Цены на металлы",
+  "pegged": "привязка",
 };

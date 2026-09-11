@@ -605,7 +605,6 @@ export const frPhrases: PhraseTable = {
   "Welcome to IMS Metals & Alloys": "Bienvenue chez IMS Metals & Alloys",
   "Our objective is to responsibly source the commodities which supplement our everyday life.": "Notre objectif est de nous approvisionner de manière responsable en matières premières qui accompagnent notre vie quotidienne.",
   "Contact us": "Contactez-nous",
-  "Live metals prices": "Cours des métaux en direct",
   "Display currency": "Devise d’affichage",
   "Market data, last updated {when}": "Données de marché, mises à jour le {when}",
   "Live prices are temporarily unavailable.": "Les cours en direct sont momentanément indisponibles.",
@@ -614,7 +613,6 @@ export const frPhrases: PhraseTable = {
   "Aluminium": "Aluminium",
   "Zinc": "Zinc",
   "Tin": "Étain",
-  "Live FX rates": "Taux de change en direct",
   "Metals prices are temporarily unavailable.": "Les cours des métaux sont momentanément indisponibles.",
   "Metals": "Métaux",
   "FX rates": "Taux de change",
@@ -625,4 +623,7 @@ export const frPhrases: PhraseTable = {
   "Lead": "Plomb",
   "Steel scrap": "Ferraille d'acier",
   "USD / tonne": "USD la tonne",
+  "Live": "EN DIRECT",
+  "Metals prices": "Prix des métaux",
+  "pegged": "parité fixe",
 };

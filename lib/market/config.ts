@@ -153,3 +153,25 @@ export const FX_FRACTION_DIGITS = 4;
    should not read process.env at all — even for a value Next would replace
    with undefined. Keeping the boundary obvious is worth more than the one
    shared line. */
+
+/**
+ * Carry a feed-direction change across to the quoted pair.
+ *
+ * The feed reports units per one USD. For a pair that keeps that direction
+ * (USD/ILS) the change is the change. For one that inverts it (EUR/USD) the
+ * pair moves the opposite way, and not by a simple sign flip: if the feed rose
+ * by c, the inverse fell to 1/(1+c). That is what is returned, exactly.
+ */
+export function pairChange(code: Currency, feedChange: number): number {
+  const pair = toFxPair(code, 1);
+  if (!pair) return feedChange;
+  return pair.label.startsWith(BASE_CURRENCY + "/") ? feedChange : 1 / (1 + feedChange) - 1;
+}
+
+/**
+ * Currencies pegged to the dollar. Their day change is genuinely nil, and the
+ * board says so rather than leaving a gap where the other pairs have an arrow.
+ * AED has been fixed at 3.6725 since 1997. A fact about the currency, not a
+ * claim about IMS.
+ */
+export const PEGGED_TO_BASE: ReadonlySet<string> = new Set(["AED"]);
