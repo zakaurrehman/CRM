@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useP } from "@/lib/i18n/phrases/client";
 import { useI18n } from "@/lib/i18n/provider";
 import { localeMeta } from "@/lib/i18n/config";
-import type { Currency } from "@/lib/market/config";
+import { toFxPair, FX_FRACTION_DIGITS } from "@/lib/market/config";
 import { cn } from "@/lib/utils";
 import { getCachedMarket, loadMarket, subscribeMarket } from "@/lib/market/feed-client";
 
@@ -28,7 +28,6 @@ export function MarketBoard({ className }: { className?: string }) {
   const [status, setStatus] = useState<"loading" | "ready" | "error">(
     getCachedMarket() ? "ready" : "loading",
   );
-  const [currency, setCurrency] = useState<Currency>("USD");
   const [refreshing, setRefreshing] = useState(false);
 
   const load = useCallback(async (force = false) => {
@@ -55,34 +54,27 @@ export function MarketBoard({ className }: { className?: string }) {
   };
 
   const tag = localeMeta[locale].tag;
-  const rate = data?.rates?.rates?.[currency];
 
+  /* Dollars only, on IMS's instruction. The trade happens in dollars and a
+     converted figure invites someone to quote off it. */
   const metals = useMemo(() => {
     if (!data?.metals) return [];
-    return data.metals.quotes.map((q) => {
-      /* Convert only when a rate exists. Showing a dollar figure under a
-         non-dollar label would be worse than leaving the selector alone. */
-      const value =
-        currency === "USD" ? q.price : typeof rate === "number" && rate > 0 ? q.price * rate : null;
-      return {
-        ...q,
-        display:
-          value === null
-            ? null
-            : new Intl.NumberFormat(tag, {
-                style: "currency",
-                currency,
-                maximumFractionDigits: 0,
-              }).format(value),
-      };
-    });
-  }, [data, currency, rate, tag]);
+    return data.metals.quotes.map((q) => ({
+      ...q,
+      display: new Intl.NumberFormat(tag, {
+        style: "currency",
+        currency: data.metals!.base,
+        maximumFractionDigits: 0,
+      }).format(q.price),
+    }));
+  }, [data, tag]);
 
   const rateRows = useMemo(() => {
     if (!data?.rates) return [];
     return data.currencies
       .filter((c) => c !== "USD" && typeof data.rates?.rates[c] === "number")
-      .map((c) => ({ code: c, value: data.rates!.rates[c] }));
+      .map((c) => toFxPair(c, data.rates!.rates[c]))
+      .filter((pair): pair is NonNullable<typeof pair> => pair !== null);
   }, [data]);
 
   if (status === "loading") {
@@ -160,22 +152,6 @@ export function MarketBoard({ className }: { className?: string }) {
             </svg>
           </button>
 
-          {hasMetals && hasRates ? (
-            <label className="inline-flex items-center gap-2">
-              <span className="sr-only">{p("Display currency")}</span>
-              <select
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value as Currency)}
-                className="h-8 rounded border border-white/25 bg-navy-900 px-2 text-[0.8125rem] font-medium text-white transition-colors hover:border-white/60 focus:border-white/60"
-              >
-                {data.currencies.map((code) => (
-                  <option key={code} value={code}>
-                    {code}
-                  </option>
-                ))}
-              </select>
-            </label>
-          ) : null}
         </div>
       </div>
 
@@ -201,8 +177,31 @@ export function MarketBoard({ className }: { className?: string }) {
                 <span className="relative block font-mono text-[0.625rem] uppercase tracking-[0.12em] text-brand-300">
                   {p(q.name)}
                 </span>
-                <span className="relative mt-1 block tabular-nums text-[1rem] font-semibold text-white">
-                  {q.display ?? "—"}
+                <span className="relative mt-1 flex items-baseline gap-2">
+                  <span className="tabular-nums text-[1rem] font-semibold text-white">
+                    {q.display ?? "—"}
+                  </span>
+
+                  {/* Only when the provider gave real movement. No data, no
+                      arrow — a decorative one would be inventing a market. */}
+                  {typeof q.change === "number" ? (
+                    <span
+                      className={cn(
+                        "inline-flex items-center gap-0.5 tabular-nums text-[0.6875rem] font-semibold",
+                        q.change >= 0 ? "text-success-500" : "text-danger-500",
+                      )}
+                    >
+                      <svg viewBox="0 0 8 6" aria-hidden className="h-1.5 w-2" fill="currentColor">
+                        {q.change >= 0 ? <path d="M4 0l4 6H0z" /> : <path d="M4 6L0 0h8z" />}
+                      </svg>
+                      {new Intl.NumberFormat(tag, {
+                        style: "percent",
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                        signDisplay: "never",
+                      }).format(Math.abs(q.change))}
+                    </span>
+                  ) : null}
                 </span>
               </>
             );
@@ -238,23 +237,27 @@ export function MarketBoard({ className }: { className?: string }) {
 
       {hasRates ? (
         <div className="mt-5 flex flex-wrap items-center gap-x-2.5 gap-y-2">
-          {/* "USD" once, as the base, rather than repeated in front of every
-              pair. Each rate is then just a currency and a number. */}
-          <span className="me-1 font-mono text-[0.625rem] uppercase tracking-[0.12em] text-steel-400">
-            {hasMetals ? p("FX rates") : null} {"1 USD ="}
-          </span>
+          {/* No "1 USD =" lead-in: a pair written EUR/USD already says which
+              way round it is, and saying it twice would contradict the pairs
+              that lead with the dollar. */}
+          {hasMetals ? (
+            <span className="me-1 font-mono text-[0.625rem] uppercase tracking-[0.12em] text-steel-400">
+              {p("FX rates")}
+            </span>
+          ) : null}
           {rateRows.map((r) => (
             <span
               key={r.code}
               className="inline-flex items-baseline gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1"
             >
-              <span className="tabular-nums text-[0.8125rem] font-semibold text-white">
-                {new Intl.NumberFormat(tag, { minimumFractionDigits: 2, maximumFractionDigits: 4 }).format(
-                  r.value,
-                )}
-              </span>
               <span className="font-mono text-[0.625rem] uppercase tracking-[0.08em] text-steel-400">
-                {r.code}
+                {r.label}
+              </span>
+              <span className="tabular-nums text-[0.8125rem] font-semibold text-white">
+                {new Intl.NumberFormat(tag, {
+                  minimumFractionDigits: FX_FRACTION_DIGITS,
+                  maximumFractionDigits: FX_FRACTION_DIGITS,
+                }).format(r.value)}
               </span>
             </span>
           ))}

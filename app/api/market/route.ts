@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import {
   getMetals,
+  getMetalsChange,
   getMetalsError,
   getMetalsHistory,
+  getChangeNote,
   getHistoryNote,
   isMetalsConfigured,
 } from "@/lib/market/metals";
@@ -24,12 +26,28 @@ import { supportedCurrencies } from "@/lib/market/config";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const [metals, rates, history] = await Promise.all([getMetals(), getRates(), getMetalsHistory()]);
+  const [metals, rates, history, change] = await Promise.all([
+    getMetals(),
+    getRates(),
+    getMetalsHistory(),
+    getMetalsChange(),
+  ]);
 
   return NextResponse.json(
     {
       metals: metals
-        ? { base: metals.base, unit: metals.unit, quotes: metals.quotes, fetchedAt: metals.fetchedAt }
+        ? {
+            base: metals.base,
+            unit: metals.unit,
+            /* Day change merged in where the provider supplies it. A quote with
+               no movement data simply has no change field, and the UI shows a
+               price with no arrow rather than an arrow that means nothing. */
+            quotes: metals.quotes.map((q) => ({
+              ...q,
+              change: change?.[q.symbol] ?? q.change,
+            })),
+            fetchedAt: metals.fetchedAt,
+          }
         : null,
       /* Distinguishes "no key configured" from "configured but the provider is
          down". The UI says nothing at all in the first case and reports a
@@ -45,6 +63,8 @@ export async function GET() {
          rests on what the data supports. */
       history: history ?? undefined,
       historyNote: isMetalsConfigured() ? getHistoryNote() : undefined,
+      /* Why there are no arrows, when there are none. */
+      changeNote: isMetalsConfigured() ? getChangeNote() : undefined,
       rates: rates ? { base: rates.base, rates: rates.rates, fetchedAt: rates.fetchedAt } : null,
       currencies: supportedCurrencies,
     },

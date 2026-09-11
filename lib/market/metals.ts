@@ -413,3 +413,159 @@ export async function getMetals(): Promise<MetalsPayload | null> {
 
   return inFlight;
 }
+
+/* ----------------------------------------------------------------- movement */
+
+/**
+ * Day change per symbol, as a fraction: 0.0123 is +1.23%.
+ *
+ * IMS asked for up and down indicators so the board reads as live. A live
+ * indicator has to come from real movement — an arrow that is decoration would
+ * be inventing market data, which on a metals trading site is worse than having
+ * no arrow at all. So this asks the provider for it, two ways, and returns null
+ * if neither is available. The board then shows a price with no arrow, which is
+ * honest, rather than a green tick that means nothing.
+ *
+ * Two routes, cheapest first:
+ *
+ *   1. /fluctuation, which returns change and change_pct per symbol directly.
+ *   2. failing that, yesterday's close from the dated endpoint, compared with
+ *      the price already in hand.
+ *
+ * Percentages are unit-independent, so nothing here needs the troy-ounce
+ * conversion: as long as both sides of the comparison are extracted the same
+ * way, the ratio is the same whether the figures are ounces or tonnes.
+ */
+let changeCache: { at: number; change: Record<string, number> } | null = null;
+let changeNote: string | null = null;
+const CHANGE_TTL_MS = 60 * 60 * 1000;
+
+export function getChangeNote(): string | null {
+  return changeNote;
+}
+
+/** Pulls a per-ounce figure out of a rates block, the same way prices are read. */
+function perOunceFrom(rates: Record<string, number> | undefined, symbol: string): number | null {
+  if (!rates) return null;
+  const direct = rates[BASE_CURRENCY + symbol];
+  const inverse = rates[symbol];
+  if (typeof direct === "number" && Number.isFinite(direct) && direct > 0) return direct;
+  if (typeof inverse === "number" && Number.isFinite(inverse) && inverse > 0) return 1 / inverse;
+  return null;
+}
+
+/** Unwraps the provider's "data" envelope, which not every endpoint uses. */
+function envelope<T>(body: unknown): T {
+  const b = body as { data?: unknown };
+  return (b && typeof b === "object" && b.data && typeof b.data === "object" ? b.data : body) as T;
+}
+
+export async function getMetalsChange(): Promise<Record<string, number> | null> {
+  const key = process.env.METALS_API_KEY;
+  if (!key) return null;
+  if (changeCache && Date.now() - changeCache.at < CHANGE_TTL_MS) return changeCache.change;
+
+  const provider = process.env.METALS_API_PROVIDER || "metals-api";
+  const available = await supportedSymbols(provider, key);
+  const wanted = trackedMetals
+    .map((m) => (available ? m.symbols.find((s) => available.has(s)) : m.symbols[0]))
+    .filter((s): s is string => Boolean(s));
+  if (wanted.length === 0) {
+    changeNote = "no supported symbols to ask about";
+    return null;
+  }
+  const symbols = encodeURIComponent(wanted.join(","));
+  const notes: string[] = [];
+
+  // ---- 1. the fluctuation endpoint, which answers the question directly
+  try {
+    const url =
+      `https://metals-api.com/api/fluctuation?access_key=${encodeURIComponent(key)}` +
+      `&start_date=${isoDaysAgo(1)}&end_date=${isoDaysAgo(0)}&base=${BASE_CURRENCY}&symbols=${symbols}`;
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) {
+      notes.push(`fluctuation HTTP ${response.status}`);
+    } else {
+      const inner = envelope<{
+        success?: boolean;
+        error?: { type?: string; info?: string };
+        rates?: Record<string, { start_rate?: number; end_rate?: number; change_pct?: number }>;
+      }>(await response.json());
+
+      if (inner.success === false || inner.error) {
+        notes.push(`fluctuation rejected${inner.error?.type ? ": " + inner.error.type : ""}`);
+      } else if (inner.rates) {
+        const change: Record<string, number> = {};
+        for (const symbol of wanted) {
+          const row = inner.rates[symbol] ?? inner.rates[BASE_CURRENCY + symbol];
+          if (!row) continue;
+          if (typeof row.change_pct === "number" && Number.isFinite(row.change_pct)) {
+            change[symbol] = row.change_pct / 100;
+          } else if (
+            typeof row.start_rate === "number" && row.start_rate > 0 &&
+            typeof row.end_rate === "number" && row.end_rate > 0
+          ) {
+            change[symbol] = row.end_rate / row.start_rate - 1;
+          }
+        }
+        if (Object.keys(change).length > 0) {
+          changeNote = `fluctuation: ${Object.keys(change).length} of ${wanted.length} symbols`;
+          changeCache = { at: Date.now(), change };
+          return change;
+        }
+        notes.push("fluctuation returned no usable rows");
+      } else {
+        notes.push("fluctuation returned no rates");
+      }
+    }
+  } catch (e) {
+    notes.push(`fluctuation threw: ${e instanceof Error ? e.message : String(e)}`);
+  }
+
+  // ---- 2. yesterday's close against the price already in hand
+  try {
+    const current = await getMetals();
+    if (!current) {
+      notes.push("no current prices to compare against");
+    } else {
+      const url =
+        `https://metals-api.com/api/${isoDaysAgo(1)}?access_key=${encodeURIComponent(key)}` +
+        `&base=${BASE_CURRENCY}&symbols=${symbols}`;
+      const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) {
+        notes.push(`historical HTTP ${response.status}`);
+      } else {
+        const inner = envelope<{
+          success?: boolean;
+          error?: { type?: string };
+          rates?: Record<string, number>;
+        }>(await response.json());
+
+        if (inner.success === false || inner.error) {
+          notes.push(`historical rejected${inner.error?.type ? ": " + inner.error.type : ""}`);
+        } else {
+          const change: Record<string, number> = {};
+          for (const quote of current.quotes) {
+            const then = perOunceFrom(inner.rates, quote.symbol);
+            /* current.quotes carry tonnes; the historical block is ounces.
+               Undo the conversion rather than scaling the old figure up, so
+               both sides are the provider's own numbers. */
+            const now = quote.price / TROY_OUNCES_PER_TONNE;
+            if (then !== null && then > 0 && now > 0) change[quote.symbol] = now / then - 1;
+          }
+          if (Object.keys(change).length > 0) {
+            changeNote = `historical: ${Object.keys(change).length} of ${wanted.length} symbols`;
+            changeCache = { at: Date.now(), change };
+            return change;
+          }
+          notes.push("historical returned no usable rows");
+        }
+      }
+    }
+  } catch (e) {
+    notes.push(`historical threw: ${e instanceof Error ? e.message : String(e)}`);
+  }
+
+  changeNote = redact(notes.join("; ") || "no change data available");
+  return null;
+}

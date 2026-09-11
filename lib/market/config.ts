@@ -108,6 +108,46 @@ export const METALS_TTL_MS = 15 * 60 * 1000;
 export const TROY_OUNCES_PER_TONNE = 32150.7466;
 export const RATES_TTL_MS = 60 * 60 * 1000;
 
+/* ------------------------------------------------------------ currency pairs */
+
+/**
+ * Market precedence for deciding which side of a pair is the base.
+ *
+ * This ordering is a market convention, not a preference: the currency higher
+ * in the list is always quoted as the base. Anything absent ranks below USD.
+ */
+const PAIR_PRECEDENCE = ["EUR", "GBP", "AUD", "NZD", "USD"];
+
+export interface FxPair {
+  /** The currency in the pair that is not the base of the feed. */
+  code: Currency;
+  /** How the pair is written, e.g. "EUR/USD" or "USD/ILS". */
+  label: string;
+  /** Units of the second currency per one unit of the first. */
+  value: number;
+}
+
+/**
+ * Turn a feed rate — always "units per one USD" — into a quoted pair.
+ *
+ * EUR and GBP outrank the dollar, so their rate is inverted and the pair is
+ * written the other way round: a feed value of 0.861 becomes EUR/USD 1.1614.
+ * Everything else keeps the feed's direction, so 3.04 becomes USD/ILS 3.0400.
+ */
+export function toFxPair(code: Currency, perBase: number): FxPair | null {
+  if (!Number.isFinite(perBase) || perBase <= 0) return null;
+  const rank = (c: string) => {
+    const i = PAIR_PRECEDENCE.indexOf(c);
+    return i === -1 ? PAIR_PRECEDENCE.length : i;
+  };
+  return rank(code) < rank(BASE_CURRENCY)
+    ? { code, label: `${code}/${BASE_CURRENCY}`, value: 1 / perBase }
+    : { code, label: `${BASE_CURRENCY}/${code}`, value: perBase };
+}
+
+/** Four decimals is how majors are quoted, and it is what makes a rate look live. */
+export const FX_FRACTION_DIGITS = 4;
+
 /* isMetalsConfigured lives in metals.ts, not here. This module is imported by
    the client widget for its currency list, and a module the browser can import
    should not read process.env at all — even for a value Next would replace

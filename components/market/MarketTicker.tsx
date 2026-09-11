@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useP } from "@/lib/i18n/phrases/client";
 import { useI18n } from "@/lib/i18n/provider";
 import { localeMeta } from "@/lib/i18n/config";
+import { toFxPair, FX_FRACTION_DIGITS } from "@/lib/market/config";
 import { cn } from "@/lib/utils";
 import { getCachedMarket, loadMarket, subscribeMarket } from "@/lib/market/feed-client";
 
@@ -83,15 +84,19 @@ export function MarketTicker({
     }
 
     if (!data.rates) return [];
+    /* Quoted the way the market quotes them: EUR and GBP lead against the
+       dollar, everything else follows it. See toFxPair. */
     return data.currencies
       .filter((c) => c !== "USD" && typeof data.rates?.rates[c] === "number")
-      .map((c) => ({
-        key: c,
-        label: `USD / ${c}`,
+      .map((c) => toFxPair(c, data.rates!.rates[c]))
+      .filter((pair): pair is NonNullable<typeof pair> => pair !== null)
+      .map((pair) => ({
+        key: pair.code,
+        label: pair.label,
         value: new Intl.NumberFormat(tag, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 4,
-        }).format(data.rates!.rates[c]),
+          minimumFractionDigits: FX_FRACTION_DIGITS,
+          maximumFractionDigits: FX_FRACTION_DIGITS,
+        }).format(pair.value),
         unit: "",
         change: undefined as number | undefined,
       }));
