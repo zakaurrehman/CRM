@@ -628,8 +628,8 @@ export const hePhrases: PhraseTable = {
   "Refresh prices": "רענון מחירים",
   "Welcome to IMS": "ברוכים הבאים ל-IMS",
   "per tonne": "לטונה",
-  "All prices per tonne": "כל המחירים לטונה",
   "Copper": "נחושת",
   "Lead": "עופרת",
   "Steel scrap": "גרוטאות פלדה",
+  "USD / tonne": "USD לטונה",
 };

@@ -627,8 +627,8 @@ export const ruPhrases: PhraseTable = {
   "Refresh prices": "Обновить цены",
   "Welcome to IMS": "Добро пожаловать в IMS",
   "per tonne": "за тонну",
-  "All prices per tonne": "Все цены за тонну",
   "Copper": "Медь",
   "Lead": "Свинец",
   "Steel scrap": "Стальной лом",
+  "USD / tonne": "USD за тонну",
 };

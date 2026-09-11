@@ -34,15 +34,15 @@ export default async function HomePage() {
 
   return (
     <>
-      <WelcomeBanner />
-
-      {/* Between the welcome band and the hero: prominent without pushing the
-          headline below the fold. Renders nothing when neither feed has data. */}
+      {/* Directly under the header, where IMS wants the numbers: a thin strip
+          a reader passes over on the way in rather than a band between the
+          welcome and the hero. Renders nothing when neither feed has data. */}
       <div className="on-dark border-b border-white/10 bg-navy-950">
         <Container>
-          <MarketBoard className="py-7 lg:py-8" />
+          <MarketBoard className="py-4 lg:py-5" />
         </Container>
       </div>
+      <WelcomeBanner />
       <Hero />
       <CredibilityStrip />
       <Pillars />

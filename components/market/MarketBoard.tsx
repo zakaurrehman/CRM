@@ -61,11 +61,9 @@ export function MarketBoard({ className }: { className?: string }) {
     if (!data?.metals) return [];
     return data.metals.quotes.map((q) => ({
       ...q,
-      display: new Intl.NumberFormat(tag, {
-        style: "currency",
-        currency: data.metals!.base,
-        maximumFractionDigits: 0,
-      }).format(q.price),
+      /* A plain number. The currency is stated once in the heading, which is
+         what lets nine of these sit on one line. */
+      display: new Intl.NumberFormat(tag, { maximumFractionDigits: 0 }).format(q.price),
     }));
   }, [data, tag]);
 
@@ -81,9 +79,9 @@ export function MarketBoard({ className }: { className?: string }) {
     return (
       <div className={cn("animate-pulse", className)} aria-hidden>
         <div className="h-3 w-32 rounded bg-white/10" />
-        <div className="grid-rule mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
-            <div key={i} className="h-[4.25rem] bg-navy-950" />
+        <div className="grid-rule mt-3 grid grid-cols-3 lg:grid-cols-5 xl:grid-cols-9">
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+            <div key={i} className="h-[3.25rem] bg-navy-950" />
           ))}
         </div>
       </div>
@@ -119,6 +117,15 @@ export function MarketBoard({ className }: { className?: string }) {
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success-500" />
           </span>
           {hasMetals ? p("Live metals prices") : p("Live FX rates")}
+          {/* Said once, in the heading, rather than nine times in the grid:
+              "US$" in front of every price and a whole cell spent on the unit
+              are what made the strip two rows deep. */}
+          {hasMetals ? (
+            <span className="text-steel-400">
+              <span aria-hidden>{" · "}</span>
+              {p("USD / tonne")}
+            </span>
+          ) : null}
         </h2>
 
         <div className="flex items-center gap-3">
@@ -159,26 +166,15 @@ export function MarketBoard({ className }: { className?: string }) {
         /* Hairline grid: a 1px gap over a coloured parent would paint the empty
            cells of an incomplete last row, so each cell draws its own outline
            and the parent stays unpainted. */
-        <ul className="grid-rule mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+        <ul className="grid-rule mt-3 grid grid-cols-3 lg:grid-cols-5 xl:grid-cols-9">
           {metals.map((q) => {
             const cell = (
               <>
-                {/* The element as a watermark. It is the site's own language —
-                    the specimen cards do the same — and it gives a grid of
-                    numbers something to look at besides numbers. */}
-                <span
-                  aria-hidden
-                  data-decorative
-                  className="pointer-events-none absolute end-3 top-1.5 select-none font-display text-[2rem] font-bold leading-none text-white/[0.07]"
-                >
-                  {q.element}
-                </span>
-
-                <span className="relative block font-mono text-[0.625rem] uppercase tracking-[0.12em] text-brand-300">
+                <span className="relative block truncate font-mono text-[0.5625rem] uppercase tracking-[0.1em] text-brand-300">
                   {p(q.name)}
                 </span>
                 <span className="relative mt-1 flex items-baseline gap-2">
-                  <span className="tabular-nums text-[1rem] font-semibold text-white">
+                  <span className="tabular-nums text-[0.9375rem] font-semibold text-white">
                     {q.display ?? "—"}
                   </span>
 
@@ -210,33 +206,22 @@ export function MarketBoard({ className }: { className?: string }) {
                 {q.category ? (
                   <Link
                     href={"/materials/" + q.category}
-                    className="block px-4 py-3.5 transition-colors hover:bg-navy-900"
+                    className="block px-3 py-2.5 transition-colors hover:bg-navy-900"
                   >
                     {cell}
                   </Link>
                 ) : (
-                  <div className="px-4 py-3.5">{cell}</div>
+                  <div className="px-3 py-2.5">{cell}</div>
                 )}
               </li>
             );
           })}
 
-          {/* Says the unit once instead of nine times, and fills the cell that
-              nine metals leave over in a five-column grid. Shown at every width:
-              on a phone this is the only place the unit appears. */}
-          <li className="bg-navy-950 px-4 py-3.5">
-            <span className="block font-mono text-[0.625rem] uppercase tracking-[0.12em] text-steel-400">
-              {p("Unit")}
-            </span>
-            <span className="mt-1 block text-[0.8125rem] leading-snug text-steel-400">
-              {p("All prices per tonne")}
-            </span>
-          </li>
         </ul>
       ) : null}
 
       {hasRates ? (
-        <div className="mt-5 flex flex-wrap items-center gap-x-2.5 gap-y-2">
+        <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1.5">
           {/* No "1 USD =" lead-in: a pair written EUR/USD already says which
               way round it is, and saying it twice would contradict the pairs
               that lead with the dollar. */}
