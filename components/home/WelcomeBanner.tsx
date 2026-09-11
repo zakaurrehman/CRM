@@ -34,12 +34,24 @@ export async function WelcomeBanner() {
       <Container>
         <div className="flex justify-center py-14 sm:py-16 lg:py-20">
           {/*
-            The panel. Translucent and blurred rather than solid: solid white
-            reads as a box dropped onto a photograph, where this reads as part
-            of the same frame. The blur is what keeps the type crisp over
-            whatever detail happens to pass behind it.
+            The panel. Translucent, blurred and tinted rather than solid white:
+            solid white reads as a sheet of paper dropped onto a photograph,
+            where this reads as glass belonging to the same frame. The blur is
+            what keeps the type crisp over whatever detail passes behind it;
+            the tint and the lit edge are what stop it looking like a box.
+
+            It stays opaque enough that the navy type cannot fail against it —
+            the readability here was hard won and is not being traded for
+            atmosphere.
           */}
-          <div className="flex max-w-2xl flex-col items-center rounded-lg bg-white/90 px-8 py-12 text-center shadow-lift backdrop-blur-md sm:px-14 sm:py-14">
+          <div className="relative flex max-w-2xl flex-col items-center overflow-hidden rounded-xl border border-white/70 bg-gradient-to-br from-white/95 via-white/90 to-brand-100/90 px-8 py-12 text-center shadow-lift backdrop-blur-xl sm:px-14 sm:py-14">
+          {/* The accent. Brightest in the middle and falling to the brand blue
+              at both ends, so it reads as a lit edge rather than a ruled line.
+              overflow-hidden on the panel is what bends it round the corners. */}
+          <span
+            aria-hidden
+            className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-700 via-brand-400 to-brand-700"
+          />
           {/*
             Deliberately larger than the header lockup and not a link: this is
             the brand statement, not a navigation control. The subtle lift on
