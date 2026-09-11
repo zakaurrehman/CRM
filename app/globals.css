@@ -385,34 +385,192 @@
 
 @layer components {
   /**
-   * Welcome entrance.
+   * Welcome sequence.
    *
-   * The original site brings the welcome lockup in with fadeInLeft, one widget
-   * after another. This is that: each element slides a short way in from the
-   * reading-side edge while fading up, with a per-element delay set inline.
-   * The fill mode is "both", and it matters — it holds the from-state through
-   * the delay, so a later element is not visible before its turn.
+   * Four motions, used once each on arrival, in this order: the veil lifts
+   * off the photograph; the logo and then the heading are revealed by a
+   * soft-edged sweep with a light passing along the heading's metal; a rule
+   * draws itself; the objective and the button rise into focus. Delays are set
+   * inline on the elements because they differ per element and nothing else
+   * needs them.
    *
-   * "Left" is the reading side, so right-to-left comes in from the right.
-   * translateX is physical, which is why this needs its own rule rather than
-   * mirroring on its own. Reduced motion shows everything in place at once.
+   * Every resting state is fully visible with no animation, and every
+   * keyframe starts from hidden with fill-mode both. So reduced motion is one
+   * override at the bottom, and if an animation ever fails to run the content
+   * is simply there.
+   *
+   * "Reading side" is where the sweep begins: the left in Latin script, the
+   * right in Hebrew. Masks and gradients are physical, not logical, so the
+   * right-to-left variants are spelled out.
    */
-  .welcome-in {
-    animation: welcome-in-ltr 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-  [dir="rtl"] .welcome-in { animation-name: welcome-in-rtl; }
 
-  @keyframes welcome-in-ltr {
-    from { opacity: 0; transform: translateX(-28px); }
+  /* 0. The vignette. Deepens the column the lockup sits in and leaves the
+     frame's edges near the photograph's own values. Black, so the photograph's
+     hues are kept — see the note on the shade in WelcomeBackdrop. */
+  .welcome-vignette {
+    background: radial-gradient(
+      ellipse 55% 65% at 50% 62%,
+      rgb(0 0 0 / 0.62) 0%,
+      rgb(0 0 0 / 0.5) 45%,
+      rgb(0 0 0 / 0) 100%
+    );
+  }
+
+  /* 1. The veil. */
+  .veil-lift {
+    opacity: 0;
+    animation: veil-lift 1.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+  @keyframes veil-lift {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+
+  /* 2. The sweep. A soft edge — the mask is a gradient two and a half times
+     the element's width, and its position travels — so nothing wipes on hard.
+     At rest the element sees the opaque end of the mask and is fully shown. */
+  .reveal-sweep {
+    -webkit-mask-image: linear-gradient(100deg, #000 42%, transparent 58%);
+    mask-image: linear-gradient(100deg, #000 42%, transparent 58%);
+    -webkit-mask-size: 260% 100%;
+    mask-size: 260% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+    animation: reveal-sweep 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes reveal-sweep {
+    from { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
+    to { -webkit-mask-position: 0 0; mask-position: 0 0; }
+  }
+  [dir="rtl"] .reveal-sweep {
+    -webkit-mask-image: linear-gradient(-100deg, #000 42%, transparent 58%);
+    mask-image: linear-gradient(-100deg, #000 42%, transparent 58%);
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+    animation-name: reveal-sweep-rtl;
+  }
+  @keyframes reveal-sweep-rtl {
+    from { -webkit-mask-position: 0 0; mask-position: 0 0; }
+    to { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
+  }
+
+  /* 3. The metal — currently unused. The heading reverted to plain white on
+     IMS's instruction, so nothing in the markup applies this class. Left here
+     rather than deleted: it is a working blue brushed-metal treatment for the
+     heading, clipped to the letters with a highlight band that travels once
+     as the heading is revealed, in case IMS wants it back. `color` is set to
+     the darkest stop so a contrast check that reads the colour property
+     measures the worst case the gradient can produce. */
+  .metal-text {
+    color: theme(colors.brand.500);
+  }
+  @supports (-webkit-background-clip: text) or (background-clip: text) {
+    .metal-text {
+      background-image: linear-gradient(
+        105deg,
+        theme(colors.brand.500) 0%,
+        theme(colors.brand.400) 22%,
+        theme(colors.brand.300) 38%,
+        theme(colors.brand.500) 56%,
+        theme(colors.brand.400) 78%,
+        theme(colors.brand.500) 100%
+      );
+      background-size: 220% 100%;
+      background-position: 0 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+  .reveal-sweep.metal-text {
+    animation-name: reveal-sweep, metal-sheen;
+    animation-duration: 1.3s, 2.4s;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-fill-mode: both;
+  }
+  [dir="rtl"] .reveal-sweep.metal-text {
+    animation-name: reveal-sweep-rtl, metal-sheen-rtl;
+  }
+  @keyframes metal-sheen {
+    from { background-position: 100% 0; }
+    to { background-position: 0 0; }
+  }
+  @keyframes metal-sheen-rtl {
+    from { background-position: 0 0; }
+    to { background-position: 100% 0; }
+  }
+
+  /* 2b. The light behind the mark. A flattened radial pool, sized as a
+     multiple of the logo so it scales with it, holding just enough light
+     across the whole mark for its navy wordmark to read and falling off
+     quickly beyond it. It is set to the softest level that keeps the
+     wordmark at 4.5:1 — measured by logo-contrast.mjs — because IMS asked for
+     a lighter touch, and the spill beyond the mark is what read as heavy.
+     It slides in from the
+     reading side as the logo is revealed — a light source settling on the
+     brand — and then does nothing. `translate` centres it and `transform`
+     animates it, so the two never fight. z-index -1 places it above the
+     backdrop (-10) and below the mark. */
+  .logo-light {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 320%;
+    height: 175%;
+    translate: -50% -50%;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+      closest-side,
+      rgb(255 255 255 / 0.72) 0%,
+      rgb(255 255 255 / 0.7) 58%,
+      rgb(255 255 255 / 0.3) 80%,
+      transparent 100%
+    );
+    animation: logo-light 1.5s cubic-bezier(0.22, 1, 0.36, 1) 450ms both;
+  }
+  @keyframes logo-light {
+    from { opacity: 0; transform: translateX(-14%); }
     to { opacity: 1; transform: none; }
   }
-  @keyframes welcome-in-rtl {
-    from { opacity: 0; transform: translateX(28px); }
+  [dir="rtl"] .logo-light { animation-name: logo-light-rtl; }
+  @keyframes logo-light-rtl {
+    from { opacity: 0; transform: translateX(14%); }
     to { opacity: 1; transform: none; }
+  }
+
+  /* 4. The rise, for prose and the control — a sweep across running text
+     looks typed, and a button should arrive, not be unveiled. Focus is pulled
+     as it rises: a small blur clearing reads as depth of field, not a fade. */
+  .rise-in {
+    animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes rise-in {
+    from { opacity: 0; transform: translateY(10px); filter: blur(6px); }
+    to { opacity: 1; transform: none; filter: blur(0); }
+  }
+
+  /* 5. The rule draws from its centre. */
+  .rule-draw {
+    transform-origin: center;
+    animation: rule-draw 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes rule-draw {
+    from { transform: scaleX(0); opacity: 0; }
+    to { transform: scaleX(1); opacity: 1; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .welcome-in { animation: none; }
+    .veil-lift,
+    .logo-light,
+    .reveal-sweep,
+    .reveal-sweep.metal-text,
+    .rise-in,
+    .rule-draw {
+      animation: none;
+    }
   }
 }
 

@@ -5,27 +5,46 @@ import { getP } from "@/lib/i18n/server";
 import { WelcomeBackdrop } from "./WelcomeBackdrop";
 
 /**
- * The welcome block from the original IMS Metals homepage.
+ * The welcome, as a cinematic industrial opening rather than a card.
  *
- * The original opens on a centred lockup — logo, "WELCOME TO IMS METALS &
- * ALLOYS", the company objective, and a Contact Us button — before the hero
- * imagery begins. It is the most recognisable thing about the page and the part
- * the client identifies as "the centred logo", so it is reproduced here in the
- * same position and proportions.
+ * Content is the original's, unchanged: logo, "WELCOME TO IMS / Metals &
+ * Alloys", the company objective, Contact Us. What changed is the ground and
+ * the arrival. There is no panel — the type sits on the photograph, which keeps
+ * its own colours under a neutral shade rather than being bleached or tinted,
+ * so a hot slab still glows orange and a turbine hall still has depth.
  *
- * The type is navy, on a light tinted-glass panel, because IMS's developer wants
- * the logo and the heading in one colour family and the mark is navy and blue.
- * A dark-ground version with white type was built and reverted for that reason;
- * it is in the history if the question comes up again.
+ * The logo keeps its own colours; the heading is white. The logo's navy
+ * wordmark would vanish on a dark photograph on its own, so it stands in a
+ * soft pool of light instead — see the note at the logo — which is a fix for
+ * the mark specifically. The heading has no such problem: white reads cleanly
+ * against the photograph at every frame, so it is left alone rather than
+ * recoloured to match.
  *
- * The original brings the logo, heading, text and button in with fadeInLeft, one
- * after another. That is reproduced here — see .welcome-in in globals.css, which
- * also handles right-to-left and reduced motion.
+ * The arrival is a sequence, timed so each thing follows the last:
+ *
+ *   0.0s  the veil lifts off the photograph
+ *   0.45s a light slides in from the reading side and settles behind the mark
+ *   0.6s  the logo is revealed by a soft-edged sweep, reading-side first
+ *   1.1s  the heading, the same sweep
+ *   1.75s a rule draws itself under the heading
+ *   1.9s  the objective rises into focus
+ *   2.15s the button follows
+ *
+ * and then the picture drifts — a slow zoom that was already there, and a
+ * parallax against the scroll that was not. Nothing loops, nothing sparkles,
+ * and there are no particles. Under reduced motion everything is simply there.
+ * All of it is CSS; see the welcome block in globals.css, which also handles
+ * right-to-left, where every sweep runs the other way.
+ *
+ * font-lockup is Orbitron standing in for Ethnocentric, the original's face —
+ * see app/layout.tsx. Ethnocentric is commercial and IMS has not confirmed a
+ * licence; Orbitron is the nearest free face and this is the closest match
+ * available without one.
  *
  * The original's second sentence ("Our long standing and established
- * relationships with suppliers.") is an incomplete fragment on the live site, so
- * only the first, complete sentence is carried over. Nothing is invented: this
- * is the objective statement IMS publishes about itself.
+ * relationships with suppliers.") is an incomplete fragment on the live site,
+ * so only the first, complete sentence is carried over. Nothing is invented:
+ * this is the objective statement IMS publishes about itself.
  */
 export async function WelcomeBanner() {
   const p = await getP();
@@ -33,49 +52,50 @@ export async function WelcomeBanner() {
   return (
     /* isolate so the backdrop's negative z-index stays inside this section
        rather than sliding behind the page background. */
-    <section className="relative isolate overflow-hidden bg-navy-950">
+    /* steel-950, not navy: this is only seen before the photograph loads,
+       and a navy flash would be the one blue thing in a section that has
+       none. */
+    <section className="relative isolate overflow-hidden bg-steel-950">
       <WelcomeBackdrop
         slides={[
           { src: "/images/hero/hot-metal-plate.jpg", subject: "Hot metal slab in the cast house" },
           { src: "/images/turbine/turbine-manufacturing.jpg", subject: "Turbine rotor on the shop floor" },
         ]}
       />
-      <Container>
-        <div className="flex justify-center py-14 sm:py-16 lg:py-20">
-          {/*
-            The panel. Translucent, blurred and tinted rather than solid white:
-            solid white reads as a sheet of paper dropped onto a photograph,
-            where this reads as glass belonging to the same frame. The blur is
-            what keeps the type crisp over whatever detail passes behind it;
-            the tint and the lit edge are what stop it looking like a box.
 
-            It stays opaque enough that the navy type cannot fail against it —
-            the readability here was hard won and is not being traded for
-            atmosphere.
-          */}
-          <div className="relative flex max-w-2xl flex-col items-center overflow-hidden rounded-xl border border-white/70 bg-gradient-to-br from-white/95 via-white/90 to-brand-100/90 px-8 py-12 text-center shadow-lift backdrop-blur-xl sm:px-14 sm:py-14">
-          {/* The accent. Brightest in the middle and falling to the brand blue
-              at both ends, so it reads as a lit edge rather than a ruled line.
-              overflow-hidden on the panel is what bends it round the corners. */}
-          <span
-            aria-hidden
-            className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-700 via-brand-400 to-brand-700"
-          />
+      <Container>
+        <div className="flex min-h-[34rem] flex-col items-center justify-center py-20 text-center sm:min-h-[38rem] lg:min-h-[42rem] lg:py-24">
           {/*
-            Deliberately larger than the header lockup and not a link: this is
-            the brand statement, not a navigation control. The subtle lift on
-            hover matches the header's treatment so the two read as the same
-            mark rather than two different assets.
+            The mark, in its own colours, standing in light.
+
+            The logo is navy and blue, and its wordmark measures a luminance of
+            0.024 — on the dark photograph it would simply vanish, at about
+            1.4:1. So a light is placed behind it: a soft, flattened pool that
+            slides in from the reading side as the mark is revealed and settles
+            there. It is the one bright thing in the frame, which is the point;
+            the eye reaches the brand first. Its size is a multiple of the
+            logo's, so it scales with it, and its strength is measured rather
+            than judged by eye — logo-contrast.mjs hides the mark and samples
+            the ground under the wordmark across every frame of the slideshow.
+
+            The light sits outside the masked wrapper. A mask clips everything
+            inside it to the element's box, and the light has to spill past the
+            edges of the mark to read as light rather than as a panel.
           */}
-          <Image
-            src="/images/branding/ims-logo.png"
-            alt="IMS Metals &amp; Alloys"
-            width={3000}
-            height={1455}
-            priority
-            sizes="(min-width: 640px) 280px, 220px"
-            className="welcome-in h-auto w-[11.5rem] sm:w-[14.5rem]"
-          />
+          <div className="relative">
+            <span aria-hidden className="logo-light" />
+            <div className="reveal-sweep" style={{ animationDelay: "600ms" }}>
+              <Image
+                src="/images/branding/ims-logo.png"
+                alt="IMS Metals &amp; Alloys"
+                width={1000}
+                height={485}
+                priority
+                sizes="(min-width: 640px) 300px, 224px"
+                className="h-auto w-[14rem] sm:w-[18.75rem]"
+              />
+            </div>
+          </div>
 
           {/*
             Two lines, breaking after "IMS", as the original sets it. Each half
@@ -83,31 +103,37 @@ export async function WelcomeBanner() {
             translated string puts the break wherever English happens to want
             it, which is rarely where another language would.
 
-            font-lockup is Orbitron standing in for Ethnocentric — see the note
-            in app/layout.tsx. It carries no Hebrew, and the stack falls through
-            to the display face there, which is why the size is set in a way
-            that suits both.
+            font-lockup carries no Hebrew, and the stack falls through to the
+            display face there, which is why the size is set in a way that suits
+            both.
           */}
           <h1
-            className="welcome-in mt-7 font-lockup text-[clamp(1.375rem,2.9vw,2.125rem)] font-black uppercase leading-[1.22] tracking-[-0.005em] text-navy-900"
-            style={{ animationDelay: "140ms" }}
+            className="reveal-sweep mt-16 font-lockup text-[clamp(1.625rem,3.4vw,2.625rem)] font-black uppercase leading-[1.2] tracking-[0.01em] text-white"
+            style={{ animationDelay: "1100ms" }}
           >
             <span className="block">{p("Welcome to IMS")}</span>
             <span className="block">{p("Metals & Alloys")}</span>
           </h1>
 
+          {/* A rule that draws itself: the one piece of ornament, and it is a
+              line. Silver like the type. */}
+          <span
+            aria-hidden
+            className="rule-draw mt-8 h-px w-20 bg-white/40"
+            style={{ animationDelay: "1750ms" }}
+          />
+
           <p
-            className="welcome-in mt-4 max-w-xl text-base leading-relaxed text-steel-700"
-            style={{ animationDelay: "280ms" }}
+            className="rise-in mt-8 max-w-xl text-base leading-relaxed text-white/85 sm:text-[1.0625rem]"
+            style={{ animationDelay: "1900ms" }}
           >
             {p("Our objective is to responsibly source the commodities which supplement our everyday life.")}
           </p>
 
-          <div className="welcome-in mt-7" style={{ animationDelay: "420ms" }}>
+          <div className="rise-in mt-9" style={{ animationDelay: "2150ms" }}>
             <Button href="/contact" size="lg">
               {p("Contact us")}
             </Button>
-          </div>
           </div>
         </div>
       </Container>
