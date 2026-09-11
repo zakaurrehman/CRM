@@ -101,6 +101,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       lang={localeMeta[locale].tag}
       dir={dirOf(locale)}
       className={`${inter.variable} ${archivo.variable} ${orbitron.variable} ${mono.variable}`}
+      /* The inline script below adds "js" to this element before React
+         hydrates, so the class list React expects and the one it finds differ
+         by design. React does not patch attributes on mismatch, so nothing is
+         lost; this only stops it reporting the difference as an error. */
+      suppressHydrationWarning
     >
       <body className="flex min-h-screen flex-col">
         {/* Marks the document as script-enabled before first paint, so the

@@ -383,6 +383,39 @@
   }
 }
 
+@layer components {
+  /**
+   * Welcome entrance.
+   *
+   * The original site brings the welcome lockup in with fadeInLeft, one widget
+   * after another. This is that: each element slides a short way in from the
+   * reading-side edge while fading up, with a per-element delay set inline.
+   * The fill mode is "both", and it matters — it holds the from-state through
+   * the delay, so a later element is not visible before its turn.
+   *
+   * "Left" is the reading side, so right-to-left comes in from the right.
+   * translateX is physical, which is why this needs its own rule rather than
+   * mirroring on its own. Reduced motion shows everything in place at once.
+   */
+  .welcome-in {
+    animation: welcome-in-ltr 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  [dir="rtl"] .welcome-in { animation-name: welcome-in-rtl; }
+
+  @keyframes welcome-in-ltr {
+    from { opacity: 0; transform: translateX(-28px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes welcome-in-rtl {
+    from { opacity: 0; transform: translateX(28px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .welcome-in { animation: none; }
+  }
+}
+
 @layer utilities {
   .text-balance { text-wrap: balance; }
   /* Masks the trailing edge of a scrollable region to hint at more content. */

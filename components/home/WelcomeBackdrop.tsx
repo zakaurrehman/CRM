@@ -91,13 +91,25 @@ export function WelcomeBackdrop({ slides }: { slides: WelcomeSlide[] }) {
         rotation, and takes the worst.
       */}
       {/*
-        Only enough to settle the frame — the type no longer sits directly on
-        it, so nothing here has to protect anything. A light navy wash keeps the
-        band in the same palette as the header and the hero and stops a bright
-        frame competing with the panel; the photograph is otherwise untouched.
+        The scrim, doing real work again: the type sits directly on the
+        photograph, as it does on the original, and needs a floor under it.
+
+        Deepening a photograph and lightening it are not equally costly.
+        Bleached to carry dark type, an image goes flat and grey and the
+        subject disappears — which is what IMS kept calling "too light".
+        Darkened, it keeps its contrast and its shape; a hot slab still glows,
+        a turbine hall still has depth. So the picture runs at full strength
+        under a navy wash, and the type is white.
+
+        Two layers: an even wash for the floor, and a gradient weighted to the
+        middle where the lockup sits. Navy rather than black, so the band
+        belongs to the same palette as the header and the hero instead of
+        reading as a grey hole between them. Strengths are set by measurement —
+        backdrop-contrast.mjs hides the text and samples the real pixels behind
+        it across every frame — not by eye.
       */}
-      <div className="absolute inset-0 bg-navy-950/30" />
-      <div className="absolute inset-0 bg-gradient-to-b from-navy-950/25 via-transparent to-navy-950/30" />
+      <div className="absolute inset-0 bg-navy-950/60" />
+      <div className="absolute inset-0 bg-gradient-to-b from-navy-950/30 via-navy-950/45 to-navy-950/70" />
     </div>
   );
 }

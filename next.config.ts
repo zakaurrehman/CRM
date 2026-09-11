@@ -70,6 +70,10 @@ const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
   images: {
     formats: ["image/avif", "image/webp"],
+    /* The two qualities the site uses: 72 for full-bleed backdrops, where the
+       wash hides compression, and 78 for everything else. Next 16 refuses a
+       quality that is not declared here; today it only warns. */
+    qualities: [72, 78],
     deviceSizes: [400, 640, 828, 1200, 1600, 2048],
     imageSizes: [64, 96, 128, 256, 384],
   },
