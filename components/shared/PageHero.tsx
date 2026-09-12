@@ -17,10 +17,13 @@ export function PageHero({
   image,
   imageAlt = "",
   align = "left",
+  mark,
   children,
 }: {
   eyebrow?: string;
   title: string;
+  /** Rendered beside the title — the material symbol on a portfolio page. */
+  mark?: React.ReactNode;
   intro?: React.ReactNode;
   trail: Crumb[];
   image?: string;
@@ -62,7 +65,14 @@ export function PageHero({
             {eyebrow ? (
               <p className={cn("eyebrow mb-4 animate-fade-up", dark && "text-brand-300")}>{eyebrow}</p>
             ) : null}
-            <h1 className={cn("animate-fade-up text-display-lg [animation-delay:70ms]", dark && "text-white")}>{title}</h1>
+            {mark ? (
+              <div className="flex animate-fade-up items-center gap-5 [animation-delay:70ms]">
+                {mark}
+                <h1 className={cn("text-display-lg", dark && "text-white")}>{title}</h1>
+              </div>
+            ) : (
+              <h1 className={cn("animate-fade-up text-display-lg [animation-delay:70ms]", dark && "text-white")}>{title}</h1>
+            )}
             {intro ? (
               <div
                 className={cn(

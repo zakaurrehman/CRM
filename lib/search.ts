@@ -1,5 +1,5 @@
 import { alloyCategorySummaries } from "@/data/alloy-index";
-import { portfolioFamilies } from "@/data/portfolio";
+import { portfolioFamilies, ferroAlloys, intermediates } from "@/data/portfolio";
 import { tungstenForms } from "@/data/recovery";
 import { articles } from "@/data/insights";
 import { claimedCategorySlugs, groupOf, materialHref } from "./portfolio";
@@ -35,7 +35,7 @@ const staticPages: { title: string; context: string; href: string; terms: string
     terms: "blending program ni-based blends complex scrap off-spec off-grade downgrading refiners alloy producers stainless",
   },
   { title: "About IMS", context: "Company", href: "/about", terms: "company tallinn estonia registration eori advantage" },
-  { title: "Portfolio", context: "Portfolio", href: "/materials", terms: "families materials what we buy blend supply" },
+  { title: "Portfolio", context: "Portfolio", href: "/materials", terms: "materials what we buy blend supply" },
   {
     title: "Accepted forms",
     context: "Portfolio",
@@ -64,8 +64,34 @@ export const searchIndex: SearchDoc[] = [
     context: groupOf(f).name,
     href: "/materials/" + f.slug,
     kind: "family" as const,
-    haystack: normalise([f.name, f.accepts, f.detail ?? "", (f.also ?? []).join(" "), groupOf(f).name].join(" ")),
+    haystack: normalise([f.symbol, f.name, f.accepts, f.detail ?? "", groupOf(f).name].join(" ")),
   })),
+  {
+    id: "family:ferro-alloys",
+    title: "Ferro Alloys",
+    context: "Portfolio",
+    href: "/materials/ferro-alloys",
+    kind: "family" as const,
+    haystack: normalise("ferro alloys ferroalloys " + ferroAlloys.map((a) => a.mark + " " + a.name).join(" ")),
+  },
+  ...ferroAlloys.map((a) => ({
+    id: "ferro:" + a.mark,
+    title: a.mark,
+    context: a.name,
+    href: "/materials/ferro-alloys#" + a.mark.toLowerCase(),
+    kind: "family" as const,
+    haystack: normalise(a.mark + " " + a.name + " ferro alloy"),
+  })),
+  ...intermediates.flatMap((g) =>
+    g.items.map((item) => ({
+      id: "intermediate:" + g.metal + ":" + item.name,
+      title: item.formula ? item.formula + " · " + item.name : item.name,
+      context: g.metal + " · " + "Powders, oxides & intermediaries",
+      href: g.family ? "/materials/" + g.family : "/materials#intermediates",
+      kind: "family" as const,
+      haystack: normalise([item.formula ?? "", item.name, g.metal, g.symbol ?? "", "powder oxide intermediate"].join(" ")),
+    })),
+  ),
   ...alloyCategorySummaries
     .filter((c) => !claimedCategorySlugs.has(c.slug))
     .map((c) => ({
@@ -89,8 +115,8 @@ export const searchIndex: SearchDoc[] = [
   ...tungstenForms.map((t) => ({
     id: "tungsten:" + t.slug,
     title: t.name,
-    context: "Tungsten & Moly",
-    href: "/materials/tungsten-moly#form-" + t.slug,
+    context: "Tungsten",
+    href: "/materials/tungsten#form-" + t.slug,
     kind: "tungsten" as const,
     haystack: normalise(t.name + " " + t.note + " tungsten"),
   })),

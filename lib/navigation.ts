@@ -45,21 +45,30 @@ export const alloyGroupLabels: Record<AlloyGroup, string> = {
 export const alloyGroupOrder: AlloyGroup[] = ["nickel", "cobalt", "ferrous", "refractory", "non-ferrous"];
 
 /**
- * Four plain links and one menu.
+ * Three plain links and one menu.
  *
- * The menu is the portfolio: the four groups as columns, the families under
- * them, and nothing promoted beside it. Everything that used to open a panel
- * — Recycling, Industries, About with its sub-pages — is either a single page
- * now or is gone. Insights lives in the footer.
+ * The menu is the portfolio: the twelve materials in two columns, then the
+ * ferro-alloys, the intermediaries and the grade reference. Nothing promoted
+ * beside it. Insights lives in the footer.
  */
-const portfolioColumns: NavColumn[] = portfolioGroups.map((group) => ({
-  heading: group.name,
-  links: familiesInGroup(group.id).map((f) => ({
-    label: f.name,
-    href: `/materials/${f.slug}`,
-    description: f.threshold ? `${f.threshold} content` : undefined,
+const portfolioColumns: NavColumn[] = [
+  ...portfolioGroups.map((group) => ({
+    heading: group.name,
+    links: familiesInGroup(group.id).map((f) => ({
+      label: `${f.symbol} · ${f.name}`,
+      href: `/materials/${f.slug}`,
+      description: f.threshold ? `${f.threshold} content` : undefined,
+    })),
   })),
-}));
+  {
+    heading: "Also",
+    links: [
+      { label: "Ferro Alloys", href: "/materials/ferro-alloys", description: "FeNiCr, FeW, FeMo, FeNb, FeTi" },
+      { label: "Powders, Oxides & Intermediaries", href: "/materials#intermediates", description: "APT, oxides, hydroxides, filtercake" },
+      { label: "Grade reference", href: "/materials#reference", description: "295 published compositions" },
+    ],
+  },
+];
 
 export const navigation: NavItem[] = [
   {
@@ -82,22 +91,15 @@ export const footerNavigation: NavColumn[] = [
       { label: "Contact", href: "/contact" },
     ],
   },
+  ...portfolioGroups.map((group) => ({
+    heading: group.name,
+    links: familiesInGroup(group.id).map((f) => ({ label: f.name, href: `/materials/${f.slug}` })),
+  })),
   {
-    heading: "Portfolio",
+    heading: "Also",
     links: [
-      ...portfolioGroups.map((group) => ({ label: group.name, href: `/materials#group-${group.id}` })),
-      { label: "All families", href: "/materials" },
-    ],
-  },
-  {
-    /* Listed by family, not just by group: these are the ones IMS asked
-       where they were. */
-    heading: "Refractory & Rare Metals",
-    links: familiesInGroup("refractory").map((f) => ({ label: f.name, href: `/materials/${f.slug}` })),
-  },
-  {
-    heading: "Grade reference",
-    links: [
+      { label: "Ferro Alloys", href: "/materials/ferro-alloys" },
+      { label: "Powders, Oxides & Intermediaries", href: "/materials#intermediates" },
       { label: "Alloy finder", href: "/materials/finder" },
       { label: "Compare grades", href: "/materials/compare" },
       { label: "Request a quotation", href: "/rfq" },

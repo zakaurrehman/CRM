@@ -84,9 +84,9 @@ export default async function WhatWeDoPage() {
           <div className="lg:col-span-6 lg:col-start-7">
             <h2 className="text-display-sm">{p("What we handle")}</h2>
             <p className="mt-5 content-en text-base leading-relaxed text-steel-600">
-              {p("Every family in the portfolio, including off-spec grades, mixed lots and off-grade refractory units. We make sure to be able to manage each complex material.")}
+              {p("Every material in the portfolio, including off-spec grades, mixed lots and off-grade refractory units. We make sure to be able to manage each complex material.")}
             </p>
-            <ul className="mt-8 grid gap-x-8 gap-y-6 sm:grid-cols-2">
+            <ul className="mt-8 grid gap-x-8 gap-y-6 sm:grid-cols-3">
               {portfolioGroups.map((group) => (
                 <li key={group.id}>
                   <h3 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">{p(group.name)}</h3>
@@ -107,6 +107,21 @@ export default async function WhatWeDoPage() {
                   </ul>
                 </li>
               ))}
+              <li>
+                <h3 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">{p("Also")}</h3>
+                <ul className="mt-3 space-y-1.5">
+                  <li>
+                    <Link href="/materials/ferro-alloys" className="text-[0.9375rem] text-navy-900 underline decoration-steel-300 underline-offset-4 transition-colors hover:text-brand-700 hover:decoration-brand-700">
+                      {p("Ferro Alloys")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/materials#intermediates" className="text-[0.9375rem] text-navy-900 underline decoration-steel-300 underline-offset-4 transition-colors hover:text-brand-700 hover:decoration-brand-700">
+                      {p("Powders, Oxides & Intermediaries")}
+                    </Link>
+                  </li>
+                </ul>
+              </li>
             </ul>
             <div className="mt-8">
               <ArrowLink href="/materials">{p("Open the portfolio")}</ArrowLink>

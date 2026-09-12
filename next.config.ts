@@ -37,7 +37,7 @@ const CATEGORY_TO_FAMILY: Record<string, string> = {
   "high-speed-steels": "hss-tool-steel",
   "tool-steels": "hss-tool-steel",
   "titanium-alloys": "titanium",
-  "tungsten-alloys": "tungsten-moly",
+  "tungsten-alloys": "tungsten",
 };
 
 const REFERENCE_SLUGS = [
@@ -90,8 +90,12 @@ const LEGACY_MAP: [string, string][] = [
    */
   ["/metals-and-waste-recovery", "/what-we-do"],
   ["/recycling", "/what-we-do"],
-  ["/tungsten-carbide-recycling", "/materials/tungsten-moly"],
-  ["/recycling/tungsten", "/materials/tungsten-moly"],
+  ["/tungsten-carbide-recycling", "/materials/tungsten"],
+  ["/recycling/tungsten", "/materials/tungsten"],
+  // Slugs that existed for a day on the refocus branch before IMS asked for
+  // tungsten and moly separately and for ferro-alloys as a section.
+  ["/materials/tungsten-moly", "/materials/tungsten"],
+  ["/materials/fenicr", "/materials/ferro-alloys"],
   ["/recycling/aerospace-reverts", "/materials/superalloys"],
   ["/industries-served", "/what-we-do"],
   ["/industries", "/what-we-do"],

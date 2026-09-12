@@ -2,10 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import type { AlloyCategory } from "@/types/content";
 import type { PortfolioFamily } from "@/data/portfolio";
-import { acceptedForms } from "@/data/portfolio";
+import { acceptedForms, intermediates } from "@/data/portfolio";
 import { compositionFootnote } from "@/data/alloy-index";
 import { alloyCategoryBySlug } from "@/data/alloys";
-import { familiesInGroup, groupOf } from "@/lib/portfolio";
+import { familiesInGroup } from "@/lib/portfolio";
+import { SymbolBox } from "./FamilyCard";
+import { Intermediates } from "./Intermediates";
 import { getLocale, getP } from "@/lib/i18n/server";
 import { localiseCategory, localiseTungstenForm } from "@/lib/i18n/content";
 import { PageHero } from "@/components/shared/PageHero";
@@ -40,11 +42,11 @@ export function tablesFor(family: PortfolioFamily, locale: Parameters<typeof loc
 export async function FamilyPage({ family }: { family: PortfolioFamily }) {
   const p = await getP();
   const locale = await getLocale();
-  const group = groupOf(family);
   const tables = tablesFor(family, locale);
   const gradeCount = tables.reduce((n, t) => n + t.grades.length, 0);
-  const siblings = familiesInGroup(family.group).filter((f) => f.slug !== family.slug);
+  const siblings = familiesInGroup(family.group).filter((f) => f.slug !== family.slug).slice(0, 4);
   const forms = family.forms?.map((f) => localiseTungstenForm(f, locale));
+  const ownIntermediates = intermediates.filter((g) => g.family === family.slug);
 
   const trail = [
     { name: "Home", href: "/" },
@@ -55,8 +57,15 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
   return (
     <>
       <PageHero
-        eyebrow={p(group.name)}
+        eyebrow={p("Portfolio")}
         title={family.name}
+        mark={
+          <SymbolBox
+            symbol={family.symbol}
+            size="lg"
+            className={family.images[0] ? "border-white/40 bg-white/10 text-white" : undefined}
+          />
+        }
         intro={
           <>
             {p(family.accepts)}
@@ -88,23 +97,26 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
               {p(family.accepts)}
               {family.detail ? <> {p(family.detail)}</> : null}
             </p>
-            {family.also ? (
-              <p className="mt-4 text-[0.9375rem] text-steel-600">
-                {p("Also handled:")}{" "}
-                <span className="font-mono text-navy-900">{family.also.join(" · ")}</span>
-              </p>
-            ) : null}
 
             <h3 className="mt-10 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
               {p("Forms")}
             </h3>
             <ul className="mt-4 flex flex-wrap gap-2">
               {acceptedForms.map((form) => (
-                <li key={form} className="rounded-sm border border-steel-300 px-3 py-1.5 text-[0.875rem] text-navy-900">
-                  {p(form)}
+                <li key={form.name} className="rounded-sm border border-steel-300 px-3 py-1.5 text-[0.875rem] text-navy-900">
+                  {p(form.name)}
                 </li>
               ))}
             </ul>
+
+            {ownIntermediates.length > 0 ? (
+              <div className="mt-10">
+                <h3 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
+                  {p("Powders, oxides & intermediaries")}
+                </h3>
+                <Intermediates groups={ownIntermediates} heading={false} className="mt-4" />
+              </div>
+            ) : null}
 
             {family.images.length > 1 ? (
               <div className="relative mt-10 aspect-[16/9] overflow-hidden bg-navy-950">
@@ -189,15 +201,18 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
 
       {siblings.length > 0 ? (
         <Section tone="white">
-          <h2 className="text-display-sm">{p("Also in {group}", { group: p(group.name) })}</h2>
-          <ul className="mt-8 grid grid-rule sm:grid-cols-2 lg:grid-cols-3">
+          <h2 className="text-display-sm">{p("Also in the portfolio")}</h2>
+          <ul className="mt-8 grid grid-rule sm:grid-cols-2 lg:grid-cols-4">
             {siblings.map((item) => (
               <li key={item.slug} className="bg-white">
                 <Link href={"/materials/" + item.slug} className="group flex h-full flex-col p-6 transition-colors hover:bg-steel-50">
-                  <h3 className="font-display text-lg font-semibold text-navy-900 transition-colors group-hover:text-brand-700">
-                    {item.name}
-                  </h3>
-                  <p className="mt-2 flex-1 text-[0.875rem] leading-relaxed text-steel-600">{p(item.accepts)}</p>
+                  <div className="flex items-center gap-3">
+                    <SymbolBox symbol={item.symbol} />
+                    <h3 className="font-display text-[1.0625rem] font-semibold leading-snug text-navy-900 transition-colors group-hover:text-brand-700">
+                      {item.name}
+                    </h3>
+                  </div>
+                  <p className="mt-4 flex-1 text-[0.875rem] leading-relaxed text-steel-600">{p(item.accepts)}</p>
                   {item.threshold ? (
                     <span className="mt-4 font-mono text-[0.6875rem] text-brand-700">{item.threshold}</span>
                   ) : null}

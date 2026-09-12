@@ -3,6 +3,8 @@ import Link from "next/link";
 import { PageHero } from "@/components/shared/PageHero";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { PortfolioGrid } from "@/components/portfolio/PortfolioGrid";
+import { FerroAlloys } from "@/components/portfolio/FerroAlloys";
+import { Intermediates } from "@/components/portfolio/Intermediates";
 import { AcceptedForms } from "@/components/shared/AcceptedForms";
 import { CtaSection } from "@/components/shared/CtaSection";
 import { ArrowLink } from "@/components/ui/Button";
@@ -24,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata({
     title: p("Portfolio"),
     description: p(
-      "High nickel alloys, superalloys, cobalt, FeNiCr, stainless, HSS and tool steel, maraging, titanium, tungsten and moly, niobium, tantalum and hafnium — in solids, turnings, runnings, grindings, 3D powders and dusts.",
+      "High nickel alloys, superalloys, cobalt, stainless, HSS and tool steel, maraging, titanium, hafnium, tungsten, molybdenum, niobium and tantalum; ferro-alloys; and the powders, oxides and intermediaries around them.",
     ),
     path: "/materials",
     image: "/images/hero/turnings.jpg",
@@ -50,7 +52,7 @@ export default async function PortfolioPage() {
       <PageHero
         eyebrow={p("Portfolio")}
         title={p("What we buy, blend and supply")}
-        intro={p("{n} material families, from high nickel alloys to tantalum. Open a family for what we accept, the thresholds that apply, and the published compositions behind it.", { n: portfolioFamilies.length })}
+        intro={p("{n} materials, from high nickel alloys to tantalum, plus ferro-alloys and the powders, oxides and intermediaries around them. Open any one for what we accept, the thresholds that apply, and the published compositions behind it.", { n: portfolioFamilies.length })}
         trail={trail}
         image="/images/hero/turnings.jpg"
         imageAlt=""
@@ -60,13 +62,21 @@ export default async function PortfolioPage() {
         <PortfolioGrid priority />
       </Section>
 
+      <Section tone="light" id="ferro-alloys">
+        <FerroAlloys />
+      </Section>
+
+      <Section tone="white" id="intermediates">
+        <Intermediates />
+      </Section>
+
       <AcceptedForms />
 
       <Section tone="light" id="reference">
         <SectionHeader
           eyebrow={p("Grade reference")}
           title={p("Nominal compositions for {n} grades, as published.", { n: totalGradeCount })}
-          description={p("The full composition tables are kept for reference: search every grade by element content, or compare up to four side by side. Families in the portfolio carry their tables on their own pages.")}
+          description={p("The full composition tables are kept for reference: search every grade by element content, or compare up to four side by side. Materials in the portfolio carry their tables on their own pages.")}
           align="split"
           action={
             <div className="flex flex-wrap gap-x-8 gap-y-3">

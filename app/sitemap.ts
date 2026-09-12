@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: url("/what-we-do"), lastModified: now, changeFrequency: "yearly", priority: 0.9 },
     { url: url("/about"), lastModified: now, changeFrequency: "yearly", priority: 0.8 },
     { url: url("/materials"), lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: url("/materials/ferro-alloys"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: url("/materials/finder"), lastModified: now, changeFrequency: "yearly", priority: 0.5 },
     { url: url("/materials/compare"), lastModified: now, changeFrequency: "yearly", priority: 0.4 },
     { url: url("/rfq"), lastModified: now, changeFrequency: "yearly", priority: 0.7 },
