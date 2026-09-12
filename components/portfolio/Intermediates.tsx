@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { intermediates, type IntermediateGroup } from "@/data/portfolio";
+import { intermediates, type Intermediate, type IntermediateGroup } from "@/data/portfolio";
 import { getP } from "@/lib/i18n/server";
 import { Reveal } from "@/components/ui/Reveal";
 import { SymbolBox } from "./FamilyCard";
@@ -79,5 +79,29 @@ export async function Intermediates({
         ))}
       </ul>
     </div>
+  );
+}
+
+/**
+ * The same items as a plain list, for a material's own page.
+ *
+ * There the metal is already the page, so repeating its symbol and name in
+ * a grouped row said nothing — and one chip in a wide row read as empty.
+ * A ruled list reads as a list: formula, name, one per line, and it grows
+ * as IMS adds to it.
+ */
+export async function IntermediatesList({ items, className }: { items: Intermediate[]; className?: string }) {
+  const p = await getP();
+  return (
+    <ul className={cn("border-t border-steel-200", className)}>
+      {items.map((item, i) => (
+        <Reveal as="li" key={item.name} delay={i * 40} className="flex items-baseline gap-4 border-b border-steel-200 py-3">
+          {item.formula ? (
+            <span className="w-20 shrink-0 font-mono text-[0.9375rem] font-medium text-navy-900">{item.formula}</span>
+          ) : null}
+          <span className="text-[0.9375rem] text-steel-700">{p(item.name)}</span>
+        </Reveal>
+      ))}
+    </ul>
   );
 }

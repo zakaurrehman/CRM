@@ -7,7 +7,7 @@ import { compositionFootnote } from "@/data/alloy-index";
 import { alloyCategoryBySlug } from "@/data/alloys";
 import { familiesInGroup } from "@/lib/portfolio";
 import { SymbolBox } from "./FamilyCard";
-import { Intermediates } from "./Intermediates";
+import { IntermediatesList } from "./Intermediates";
 import { getLocale, getP } from "@/lib/i18n/server";
 import { localiseCategory, localiseTungstenForm } from "@/lib/i18n/content";
 import { PageHero } from "@/components/shared/PageHero";
@@ -46,7 +46,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
   const gradeCount = tables.reduce((n, t) => n + t.grades.length, 0);
   const siblings = familiesInGroup(family.group).filter((f) => f.slug !== family.slug).slice(0, 4);
   const forms = family.forms?.map((f) => localiseTungstenForm(f, locale));
-  const ownIntermediates = intermediates.filter((g) => g.family === family.slug);
+  const ownIntermediates = intermediates.filter((g) => g.family === family.slug).flatMap((g) => g.items);
 
   const trail = [
     { name: "Home", href: "/" },
@@ -114,7 +114,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
                 <h3 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
                   {p("Powders, oxides & intermediaries")}
                 </h3>
-                <Intermediates groups={ownIntermediates} heading={false} className="mt-4" />
+                <IntermediatesList items={ownIntermediates} className="mt-4" />
               </div>
             ) : null}
 
