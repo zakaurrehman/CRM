@@ -2,7 +2,6 @@ import { getP } from "@/lib/i18n/server";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { PortfolioGrid } from "@/components/portfolio/PortfolioGrid";
-import { FerroAlloys } from "@/components/portfolio/FerroAlloys";
 import { Intermediates } from "@/components/portfolio/Intermediates";
 
 /**
@@ -23,9 +22,6 @@ export async function PortfolioSection() {
       />
       <div className="mt-14">
         <PortfolioGrid />
-      </div>
-      <div className="mt-16">
-        <FerroAlloys />
       </div>
       <div className="mt-16">
         <Intermediates />

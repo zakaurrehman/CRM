@@ -53,7 +53,9 @@ check(bad === 0, `all ${gradeIndex.length} grade links resolve`, bad ? `(${bad} 
 check(familyForCategory("complex-nickel-alloys", "MARAGING 250")?.slug === "maraging-steel", "MARAGING 250 -> maraging-steel");
 check(familyForCategory("complex-nickel-alloys", "Waspaloy")?.slug === "superalloys", "Waspaloy -> superalloys");
 check(familyForCategory("complex-nickel-alloys")?.slug === "superalloys", "bare complex-nickel-alloys -> superalloys");
-check(familyForCategory("nickel-copper") === undefined, "nickel-copper is reference, not a family");
+check(familyForCategory("nickel-copper")?.slug === "cu-ni-alloys", "nickel-copper -> cu-ni-alloys");
+check(familyForCategory("copper-nickel-alloys")?.slug === "cu-ni-alloys", "copper-nickel-alloys -> cu-ni-alloys");
+check(familyForCategory("zirconium-alloys") === undefined, "zirconium-alloys is reference, not a family");
 
 /* Search carries every family. */
 for (const f of portfolioFamilies) {

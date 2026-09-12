@@ -146,6 +146,19 @@ export const portfolioFamilies: PortfolioFamily[] = [
     tables: [{ category: "complex-nickel-alloys", only: MARAGING }],
   },
   {
+    /* Both sides of the family: cupro-nickels (copper base — Kunifer, 70/30)
+       and the Monels (nickel base). The trade buys them together, and the
+       two legacy tables were sitting in the reference pile until IMS asked
+       for the field on 12 September. */
+    slug: "cu-ni-alloys",
+    name: "Cu-Ni Alloys",
+    symbol: "CuNi",
+    group: "alloys",
+    accepts: "Cupro-nickels and nickel silvers — 70/30, 90/10, Kunifer — and Monel nickel-copper types.",
+    images: [],
+    tables: [{ category: "copper-nickel-alloys" }, { category: "nickel-copper" }],
+  },
+  {
     slug: "titanium",
     name: "Titanium",
     symbol: "Ti",
@@ -188,10 +201,10 @@ export const portfolioFamilies: PortfolioFamily[] = [
       { term: "Off-spec W scrap with contamination" },
     ],
     images: [
+      "/images/portfolio/tungsten-vac.jpg",
       "/images/tungsten/densalloy.jpg",
+      "/images/portfolio/tungsten-sinter-boats.jpg",
       "/images/tungsten/cc-inserts.jpg",
-      "/images/tungsten/swarf.jpg",
-      "/images/tungsten/w-crucibles.jpg",
     ],
     tables: [{ category: "tungsten-alloys" }],
     forms: tungstenForms,
@@ -210,7 +223,14 @@ export const portfolioFamilies: PortfolioFamily[] = [
       { term: "TZM, Mo-Re, Mo-Cu and Mo-La alloys" },
       { term: "Off-spec Mo scrap with contamination" },
     ],
-    images: [],
+    /* IMS material, September 2026. The supplied files carried internal lot
+       numbers burned into a corner; those are cropped out here — the
+       originals are untouched in public/images/Mo/. */
+    images: [
+      "/images/portfolio/molybdenum-1.jpg",
+      "/images/portfolio/molybdenum-2.jpg",
+      "/images/portfolio/molybdenum-3.jpg",
+    ],
     tables: [],
   },
   {
@@ -227,7 +247,7 @@ export const portfolioFamilies: PortfolioFamily[] = [
       { term: "Nb-Zr, C-103 and other Nb alloys" },
       { term: "Off-spec Nb scrap with contamination" },
     ],
-    images: [],
+    images: ["/images/portfolio/niobium-1.jpg", "/images/portfolio/niobium-2.jpg"],
     tables: [],
   },
   {
@@ -248,6 +268,26 @@ export const portfolioFamilies: PortfolioFamily[] = [
     tables: [],
   },
 ];
+
+/**
+ * Ferro alloys as a card in the same grid as the metals.
+ *
+ * Kept out of `portfolioFamilies` because it is not one material with one
+ * table — it is five designations with their own page, written by hand at
+ * app/materials/ferro-alloys. It is shaped like a family so the grid can
+ * render it with the same card as everything else: IMS asked for each
+ * material separate, and a section of its own would have made it the
+ * exception.
+ */
+export const ferroAlloysCard: PortfolioFamily = {
+  slug: "ferro-alloys",
+  name: "Ferro Alloys",
+  symbol: "Fe",
+  group: "alloys",
+  accepts: "FeNiCr, FeW, FeMo, FeNb and FeTi — all sizes, packings and specifications.",
+  images: [],
+  tables: [],
+};
 
 /* ── Ferro alloys ─────────────────────────────────────────────────────── */
 

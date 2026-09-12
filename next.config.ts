@@ -38,11 +38,11 @@ const CATEGORY_TO_FAMILY: Record<string, string> = {
   "tool-steels": "hss-tool-steel",
   "titanium-alloys": "titanium",
   "tungsten-alloys": "tungsten",
+  "copper-nickel-alloys": "cu-ni-alloys",
+  "nickel-copper": "cu-ni-alloys",
 };
 
 const REFERENCE_SLUGS = [
-  "nickel-copper",
-  "copper-nickel-alloys",
   "cobalt-iron-alloys",
   "alloy-irons",
   "nickel-iron-alloys",

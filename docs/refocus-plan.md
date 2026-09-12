@@ -53,6 +53,23 @@ grade of WO₃, so they could be one item.
   a soft tint; the accepted-forms strip lost its cells. Mono stays for
   data: formulas, prices, tables.
 
+### Round 4 — 12 September, 16:08
+
+- **First photographs in.** IMS supplied seven, in `public/images/Mo/`
+  (despite the folder name, only one is Mo: two are W, two Nb, two MoNb).
+  Cropped, converted and placed as `public/images/portfolio/`:
+  molybdenum 1–3, niobium 1–2, and two tungsten (W vacuum sheet, sinter
+  boats) which lead that card now. **Four carried internal lot numbers
+  burned into a corner — 3310230, 3310289, 3310181, 3310182 — cropped out
+  here; the originals are untouched in `public/images/Mo/`.**
+- **Cu-Ni Alloys** added as a material, at IMS's request: the cupro-nickels
+  (15 grades) and the Monels (5) promoted out of the reference pile, with
+  both tables on one page. Their two legacy URLs 301 to it.
+- **Ferro Alloys is a card in the main grid** rather than a section of its
+  own — IMS asked for each material separate, and a band of its own made it
+  the exception. It sits second, where the intro puts FeNiCr, and keeps its
+  page. Fourteen cards now fill four rows of the grid evenly.
+
 One deviation from the original plan: Stainless Steel sits in a group named
 **"Ferro Alloys & Stainless"** beside FeNiCr, rather than under a bare "Ferro
 Alloys" heading — stainless is a steel, not a ferro-alloy, and the heading

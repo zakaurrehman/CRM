@@ -3,7 +3,6 @@ import Link from "next/link";
 import { PageHero } from "@/components/shared/PageHero";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { PortfolioGrid } from "@/components/portfolio/PortfolioGrid";
-import { FerroAlloys } from "@/components/portfolio/FerroAlloys";
 import { Intermediates } from "@/components/portfolio/Intermediates";
 import { AcceptedForms } from "@/components/shared/AcceptedForms";
 import { CtaSection } from "@/components/shared/CtaSection";
@@ -52,7 +51,7 @@ export default async function PortfolioPage() {
       <PageHero
         eyebrow={p("Portfolio")}
         title={p("What we buy, blend and supply")}
-        intro={p("{n} materials, from high nickel alloys to tantalum, plus ferro-alloys and the powders, oxides and intermediaries around them. Open any one for what we accept, the thresholds that apply, and the published compositions behind it.", { n: portfolioFamilies.length })}
+        intro={p("{n} materials, from high nickel alloys to tantalum, plus the powders, oxides and intermediaries around them. Open any one for what we accept, the thresholds that apply, and the published compositions behind it.", { n: portfolioFamilies.length + 1 })}
         trail={trail}
         image="/images/hero/turnings.jpg"
         imageAlt=""
@@ -62,11 +61,7 @@ export default async function PortfolioPage() {
         <PortfolioGrid priority />
       </Section>
 
-      <Section tone="light" id="ferro-alloys">
-        <FerroAlloys />
-      </Section>
-
-      <Section tone="white" id="intermediates">
+      <Section tone="light" id="intermediates">
         <Intermediates />
       </Section>
 
