@@ -1,10 +1,11 @@
 import { alloyCategorySummaries } from "@/data/alloy-index";
-import { recoveryStreams, tungstenForms } from "@/data/recovery";
-import { industries } from "@/data/industries";
+import { portfolioFamilies } from "@/data/portfolio";
+import { tungstenForms } from "@/data/recovery";
 import { articles } from "@/data/insights";
+import { claimedCategorySlugs, groupOf, materialHref } from "./portfolio";
 import { normalise } from "./utils";
 
-export type SearchKind = "grade" | "material" | "stream" | "tungsten" | "industry" | "article" | "page";
+export type SearchKind = "family" | "grade" | "material" | "tungsten" | "article" | "page";
 
 export interface SearchDoc {
   id: string;
@@ -18,103 +19,80 @@ export interface SearchDoc {
 }
 
 export const kindLabels: Record<SearchKind, string> = {
+  family: "Portfolio",
   grade: "Alloy grade",
-  material: "Material",
-  stream: "Recovery stream",
-  tungsten: "Tungsten",
-  industry: "Industry",
+  material: "Grade reference",
+  tungsten: "Tungsten form",
   article: "Insight",
   page: "Page",
 };
 
 const staticPages: { title: string; context: string; href: string; terms: string }[] = [
-  { title: "About IMS", context: "Company", href: "/about", terms: "company history trading network partnerships" },
   {
-    title: "Quality & Compliance",
+    title: "What we do",
     context: "Company",
-    href: "/about/quality-and-compliance",
-    terms: "metallurgical laboratory testing sampling traceability certification feed stock analysis",
+    href: "/what-we-do",
+    terms: "blending program ni-based blends complex scrap off-spec off-grade downgrading refiners alloy producers stainless",
   },
+  { title: "About IMS", context: "Company", href: "/about", terms: "company tallinn estonia registration eori advantage" },
+  { title: "Portfolio", context: "Portfolio", href: "/materials", terms: "families materials what we buy blend supply" },
   {
-    title: "Sustainability",
-    context: "Company",
-    href: "/about/sustainability",
-    terms: "environmental compliance landfill circular economy primary mining recovery",
+    title: "Accepted forms",
+    context: "Portfolio",
+    href: "/materials#forms",
+    terms: "solids turnings runnings grindings 3d powders dusts",
   },
-  { title: "Materials directory", context: "Materials", href: "/materials", terms: "alloys grades composition search" },
-  {
-    title: "Metals & Waste Recovery",
-    context: "Recycling",
-    href: "/recycling",
-    terms: "powders dusts sludges filtercake metallurgical metal powder processing",
-  },
-  {
-    title: "Tungsten Recycling",
-    context: "Recycling",
-    href: "/recycling/tungsten",
-    terms: "tungsten carbide densalloy cp-w heavy metals powder scrap production waste",
-  },
-  {
-    title: "Aerospace Reverts",
-    context: "Recycling",
-    href: "/recycling/aerospace-reverts",
-    terms: "engine teardown destruction llp rotating parts superalloy grading precious metal gold platinum rhenium",
-  },
-  { title: "Industries", context: "Industries", href: "/industries", terms: "sectors served aerospace oil gas turbine" },
+  { title: "Alloy finder", context: "Grade reference", href: "/materials/finder", terms: "search by element composition" },
+  { title: "Compare grades", context: "Grade reference", href: "/materials/compare", terms: "side by side" },
+  { title: "Request a quotation", context: "Contact", href: "/rfq", terms: "rfq quote price sell buy" },
   { title: "Insights", context: "Editorial", href: "/insights", terms: "news articles" },
-  { title: "Contact IMS", context: "Contact", href: "/contact", terms: "enquiry inquiry quote request tallinn estonia email" },
+  { title: "Contact IMS", context: "Contact", href: "/contact", terms: "enquiry inquiry tallinn estonia email whatsapp" },
 ];
 
 /**
  * Flat search index built once at module scope.
  *
- * Grades carry their category name and element symbols so that a search for
- * "inconel", "718", "nickel" or "rhenium" all land somewhere sensible.
+ * Families lead. Grades carry their category name so a search for "inconel",
+ * "718" or "stellite" lands on the family page that holds the table, at the
+ * grade's own anchor. The legacy categories the portfolio does not claim are
+ * indexed as reference, so nothing that used to be findable has vanished.
  */
 export const searchIndex: SearchDoc[] = [
-  ...alloyCategorySummaries.map((c) => ({
-    id: "material:" + c.slug,
-    title: c.name,
-    context: c.gradeCount + " grades",
-    href: "/materials/" + c.slug,
-    kind: "material" as const,
-    haystack: normalise(
-      [c.name, c.summary, c.properties.join(" "), c.applications.join(" ")].join(" "),
-    ),
+  ...portfolioFamilies.map((f) => ({
+    id: "family:" + f.slug,
+    title: f.name,
+    context: groupOf(f).name,
+    href: "/materials/" + f.slug,
+    kind: "family" as const,
+    haystack: normalise([f.name, f.accepts, f.detail ?? "", (f.also ?? []).join(" "), groupOf(f).name].join(" ")),
   })),
+  ...alloyCategorySummaries
+    .filter((c) => !claimedCategorySlugs.has(c.slug))
+    .map((c) => ({
+      id: "material:" + c.slug,
+      title: c.name,
+      context: c.gradeCount + " grades · reference",
+      href: "/materials/" + c.slug,
+      kind: "material" as const,
+      haystack: normalise([c.name, c.summary, c.properties.join(" "), c.applications.join(" ")].join(" ")),
+    })),
   ...alloyCategorySummaries.flatMap((c) =>
     c.gradeNames.map((g) => ({
       id: "grade:" + c.slug + ":" + g,
       title: g,
       context: c.name,
-      href: "/materials/" + c.slug + "#grade-" + normalise(g).replace(/ /g, "-"),
+      href: materialHref(c.slug, g) + "#grade-" + normalise(g).replace(/ /g, "-"),
       kind: "grade" as const,
       haystack: normalise(g + " " + c.name + " " + c.applications.join(" ")),
     })),
   ),
-  ...recoveryStreams.map((s) => ({
-    id: "stream:" + s.slug,
-    title: s.name,
-    context: "Metals & Waste Recovery",
-    href: "/recycling#stream-" + s.slug,
-    kind: "stream" as const,
-    haystack: normalise(s.name + " " + s.form + " recovery stream"),
-  })),
   ...tungstenForms.map((t) => ({
     id: "tungsten:" + t.slug,
     title: t.name,
-    context: "Tungsten Recycling",
-    href: "/recycling/tungsten#form-" + t.slug,
+    context: "Tungsten & Moly",
+    href: "/materials/tungsten-moly#form-" + t.slug,
     kind: "tungsten" as const,
     haystack: normalise(t.name + " " + t.note + " tungsten"),
-  })),
-  ...industries.map((i) => ({
-    id: "industry:" + i.slug,
-    title: i.name,
-    context: "Industries",
-    href: "/industries/" + i.slug,
-    kind: "industry" as const,
-    haystack: normalise(i.name + " " + i.strapline + " " + i.intro + " " + i.capabilities.map((c) => c.title).join(" ")),
   })),
   ...articles.map((a) => ({
     id: "article:" + a.slug,
@@ -147,10 +125,9 @@ function score(doc: SearchDoc, q: string): number {
 
 /** Ranks pages and materials slightly above the long tail of individual grades. */
 const kindWeight: Record<SearchKind, number> = {
+  family: 0,
   page: 0,
-  material: 0,
-  industry: 0,
-  stream: 0.2,
+  material: 0.2,
   tungsten: 0.2,
   article: 0.3,
   grade: 0.5,

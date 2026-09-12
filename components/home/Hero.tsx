@@ -1,26 +1,26 @@
-import Link from "next/link";
 import { getP } from "@/lib/i18n/server";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { HeroSlideshow, type HeroSlide } from "./HeroSlideshow";
-import { companyFacts } from "@/lib/site";
-import { alloyCategoryCount, totalGradeCount } from "@/data/alloy-index";
+import { customerSectors } from "@/data/portfolio";
 
 /**
- * The backdrop walks through the four sectors the headline names, in the order
- * it names them. Only the first frame is server-rendered — it is the LCP element,
- * so it stays `priority` at 100vw with no blur placeholder, and the rest are
- * mounted after it has loaded. See HeroSlideshow for the rotation itself.
+ * Three frames, in the order the business runs: the scrap as it arrives,
+ * the hard material in it, and the melt it goes back to. Only the first is
+ * server-rendered — it is the LCP element — and the rest mount after it.
  */
 const heroSlides: HeroSlide[] = [
   { src: "/images/hero/turnings.jpg", label: "Alloy turnings" },
-  { src: "/images/turbine/turbine-manufacturing.jpg", label: "Industrial gas turbine" },
-  { src: "/images/oil-gas/steel-pipes.jpg", label: "Oil and gas" },
-  { src: "/images/metals/steel-rods.jpg", label: "Stainless steel" },
+  { src: "/images/tungsten/swarf.jpg", label: "Tungsten swarf" },
+  { src: "/images/hero/hot-metal-plate.jpg", label: "Back into the melt" },
 ];
 
 /**
  * Homepage hero.
+ *
+ * The intro's tagline and its first sentence, then the two things a visitor
+ * came to do. The catalogue search that used to lead here is a reference
+ * tool now, reached from the portfolio rather than from the front door.
  *
  * Everything above the fold is server-rendered; no JavaScript gates the headline.
  */
@@ -28,9 +28,7 @@ export async function Hero() {
   const p = await getP();
 
   return (
-    /* `group` so the slideshow controls can stay hidden until the hero is
-       hovered — they are a necessary affordance, not part of the picture. */
-    <section className="group on-dark relative isolate flex min-h-[32rem] items-end overflow-hidden bg-navy-950 text-white lg:min-h-[38rem]">
+    <section className="group on-dark relative isolate flex min-h-[30rem] items-end overflow-hidden bg-navy-950 text-white lg:min-h-[36rem]">
       <HeroSlideshow slides={heroSlides} />
       <div
         aria-hidden
@@ -44,50 +42,39 @@ export async function Hero() {
       <Container className="relative">
         <div className="py-16 lg:py-20">
           <p className="eyebrow animate-fade-up text-brand-300">
-            {p("Metals · Alloys · Recovery")}
+            {p("Specialised recycler & supplier")}
           </p>
 
           {/* h2, not h1. The welcome block above opens the page and carries the
-              h1, as it does on the original site; two h1s would be one more than
-              the page should have, and putting this one first would mean the
-              document's headings run h2 before h1. */}
+              h1, as it does on the original site. */}
           <h2 className="mt-6 max-w-4xl animate-fade-up text-display-xl text-white [animation-delay:80ms]">
-            {p("Advanced metals, alloys and recycling solutions for global industry.")}
+            {p("Turning complex scrap into opportunity.")}
           </h2>
 
-          <p className="mt-6 max-w-xl animate-fade-up text-base leading-relaxed text-steel-300 [animation-delay:160ms]">
+          <p className="mt-6 max-w-2xl animate-fade-up text-base leading-relaxed text-steel-300 [animation-delay:160ms]">
             {p(
-              "IMS sources, sorts and certifies high-performance alloys and metal-bearing residues arising from the aerospace, oil & gas, industrial gas turbine and stainless steel sectors — returning them to the melt as air-melt or vacuum grade material.",
+              "IMS Metals & Alloys is a specialised recycler and supplier to the global nickel refinery, stainless steel, superalloy, titanium and refractory metals industries.",
             )}
           </p>
 
-          {/* The catalogue is the reason to be here, so it leads. "Talk to IMS"
-              stays reachable from the header on every page. */}
           <div className="mt-10 flex animate-fade-up flex-col gap-3 [animation-delay:240ms] sm:flex-row">
-            <Button href="/materials/finder" variant="onDark" size="lg">
-              {p("Search {count} alloy grades", { count: totalGradeCount })}
-            </Button>
-            <Button href="/rfq" variant="onDarkGhost" size="lg">
+            <Button href="/rfq" variant="onDark" size="lg">
               {p("Request a quotation")}
             </Button>
+            <Button href="/materials" variant="onDarkGhost" size="lg">
+              {p("See our portfolio")}
+            </Button>
           </div>
-
-          <p className="mt-6 animate-fade-up text-[0.875rem] text-steel-400 [animation-delay:280ms]">
-            {p("Search by composition — “cobalt free, chromium above 20” — or")}{" "}
-            <Link href="/materials" className="text-steel-300 underline decoration-white/25 underline-offset-4 transition-colors hover:text-white hover:decoration-white">
-              {p("browse all {count} categories", { count: alloyCategoryCount })}
-            </Link>
-            .
-          </p>
         </div>
 
-        {/* Specialist metals ticker: concrete and specific, straight from company content. */}
+        {/* Who we supply — the intro's five, and nothing else. */}
         <div className="animate-fade-up border-t border-white/10 py-5 [animation-delay:320ms]">
           <div className="scroll-x fade-r -mx-5 px-5 sm:mx-0 sm:px-0">
             <ul className="flex w-max items-center gap-6 font-mono text-[0.75rem] uppercase tracking-[0.14em] text-steel-400 sm:w-auto sm:flex-wrap">
-              {companyFacts.specialistMetals.map((metal) => (
-                <li key={p(metal)} className="whitespace-nowrap">
-                  {p(metal)}
+              <li className="whitespace-nowrap text-steel-500">{p("We supply")}</li>
+              {customerSectors.map((sector) => (
+                <li key={sector} className="whitespace-nowrap">
+                  {p(sector)}
                 </li>
               ))}
             </ul>

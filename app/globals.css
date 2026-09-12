@@ -229,6 +229,14 @@
     background-size: 64px 64px;
   }
 
+  /* The same grid for light grounds: the empty photo slot on a family card. */
+  .tech-grid-light {
+    background-image:
+      linear-gradient(to right, rgba(14,19,25,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(14,19,25,0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
   /* Horizontal scroll affordance for wide technical tables. */
   .scroll-x {
     @apply overflow-x-auto;

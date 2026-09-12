@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import type { AlloyGroup } from "@/types/content";
+import { materialHref } from "./portfolio";
 import type { ElementThresholds, QueryableGrade } from "./alloy-query";
 
 /**
@@ -79,7 +80,7 @@ export function loadAlloyIndex(): Promise<AlloyIndex> {
           name: g.name,
           category: g.category,
           anchor: g.anchor,
-          href: `/materials/${g.category}#${g.anchor}`,
+          href: `${materialHref(g.category, g.name)}#${g.anchor}`,
           categoryName: category?.name ?? g.category,
           categorySlug: g.category,
           group: category?.group ?? "nickel",

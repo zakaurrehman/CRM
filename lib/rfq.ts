@@ -10,6 +10,7 @@
  * and flattening that into a free-text message is what makes quoting slow and
  * error-prone at the other end.
  */
+import { materialHref } from "./portfolio";
 
 export const rfqDirections = [
   "I want to buy material from IMS",
@@ -140,7 +141,7 @@ export function formatRfqText(payload: RfqPayload): string {
     out.push(`${i + 1}. ${line.material}`);
     out.push(`   ${qty} · ${line.condition}`);
     if (line.note) out.push(`   Note: ${line.note}`);
-    if (line.gradeId) out.push(`   Catalogue: https://ims-metals.com/materials/${line.gradeId.split(":")[0]}`);
+    if (line.gradeId) out.push(`   Catalogue: https://ims-metals.com${materialHref(line.gradeId.split(":")[0])}`);
     out.push("");
   });
 

@@ -6,8 +6,7 @@ import { InquiryForm } from "@/components/forms/InquiryForm";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 import { contact } from "@/lib/site";
-import { recoveryStreams } from "@/data/recovery";
-import { alloyCategorySummaries, totalGradeCount } from "@/data/alloy-index";
+import { portfolioFamilies } from "@/data/portfolio";
 
 const trail = [
   { name: "Home", href: "/" },
@@ -19,26 +18,24 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata({
   title: p("Contact IMS"),
   description:
-    p("Talk to IMS Metals & Alloys OÜ about supplying, recovering or certifying specialist metals and alloys. Head office in Tallinn, Estonia."),
+    p("Talk to IMS Metals & Alloys OÜ about complex scrap, off-spec grades and Ni-based blends. Head office in Tallinn, Estonia."),
   path: "/contact",
 });
 }
 
+/* The intro's three audiences, in its words. */
 const routes = [
   {
-    title: "Buying material",
-    body: "Looking for a specific alloy or grade? We document {count} grades and handle a good deal more, including pure metals and ferro-alloys.",
-    count: totalGradeCount,
+    title: "Selling complex scrap",
+    body: "Off-spec grades, mixed lots and off-grade refractory units, in solids, turnings, runnings, grindings, 3D powders or dusts.",
   },
   {
-    title: "Selling or recycling",
-    body: "We treat {count} distinct metal-bearing streams, from fine dusts and filtercakes through to turnings and solids.",
-    count: recoveryStreams.length,
+    title: "Buying a blend",
+    body: "Tailored Ni-based blends for refiners, alloy producers and the stainless-steel sector, built to your melt.",
   },
   {
-    title: "Aerospace programmes",
-    body: "Engine teardown, onsite destruction of life-limited parts, superalloy grading and precious metal recovery.",
-    count: 0,
+    title: "Refractory and rare metals",
+    body: "Tungsten and moly from 8% content, niobium and tantalum from 10%, hafnium and Ni-Hf master alloys.",
   },
 ];
 
@@ -49,7 +46,7 @@ export default async function ContactPage() {
       <PageHero
         eyebrow={p("Contact")}
         title={p("Talk to IMS")}
-        intro={p("Tell us the alloy, the stream or the volume you are working with and we will come back with a route for it — whether that is supply, recovery or both.")}
+        intro={p("Tell us the material, the form and the quantity, and we will come back with a route for it.")}
         trail={trail}
       />
 
@@ -61,7 +58,7 @@ export default async function ContactPage() {
               {p("The more you can tell us about the material, the faster we can come back with something useful.")}
             </p>
             <div className="mt-10">
-              <InquiryForm materialNames={alloyCategorySummaries.map((c) => c.name)} />
+              <InquiryForm materialNames={portfolioFamilies.map((f) => f.name)} />
             </div>
           </div>
 
@@ -118,7 +115,7 @@ export default async function ContactPage() {
                   {routes.map((route) => (
                     <li key={p(route.title)}>
                       <h3 className="font-display text-base font-semibold text-navy-900">{p(route.title)}</h3>
-                      <p className="mt-1.5 text-[0.875rem] leading-relaxed text-steel-600">{p(route.body, { count: route.count })}</p>
+                      <p className="mt-1.5 text-[0.875rem] leading-relaxed text-steel-600">{p(route.body)}</p>
                     </li>
                   ))}
                 </ul>

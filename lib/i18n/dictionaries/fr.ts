@@ -16,9 +16,8 @@ export const fr: Dictionary = {
 
   nav: {
     about: "À propos",
-    materials: "Matériaux",
-    recycling: "Recyclage",
-    industries: "Secteurs",
+    portfolio: "Portefeuille",
+    whatWeDo: "Ce que nous faisons",
     insights: "Publications",
     contact: "Contact",
     search: "Rechercher",

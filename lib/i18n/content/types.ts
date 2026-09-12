@@ -23,13 +23,6 @@ export interface CategoryContent {
   applications: string[];
 }
 
-export interface IndustryContent {
-  name: string;
-  strapline: string;
-  intro: string;
-  capabilities: { title: string; body: string }[];
-}
-
 export interface ArticleContent {
   title: string;
   standfirst: string;
@@ -40,11 +33,6 @@ export interface ArticleContent {
 export interface ContentPack {
   /** Alloy category slug → descriptive fields. Grade names are not included. */
   categories: Record<string, Partial<CategoryContent>>;
-  industries: Record<string, Partial<IndustryContent>>;
-  /** Recovery stream slug → its display name and physical form. */
-  streams: Record<string, { name?: string; form?: string }>;
   tungstenForms: Record<string, { name?: string; note?: string }>;
-  /** Process step number ("01"…"06") → title and body. */
-  process: Record<string, { title?: string; body?: string }>;
   articles: Record<string, Partial<ArticleContent>>;
 }

@@ -22,9 +22,8 @@ export const he: Dictionary = {
 
   nav: {
     about: "אודות",
-    materials: "חומרים",
-    recycling: "מיחזור",
-    industries: "תעשיות",
+    portfolio: "תיק החומרים",
+    whatWeDo: "מה אנחנו עושים",
     insights: "מאמרים",
     contact: "צור קשר",
     search: "חיפוש",

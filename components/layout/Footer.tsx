@@ -23,7 +23,7 @@ export async function Footer() {
               className="h-12 w-auto opacity-90 brightness-0 invert"
             />
             <p className="mt-6 max-w-sm text-[0.9375rem] leading-relaxed text-steel-400">
-              {p("Sourcing, processing and certifying metals, alloys and metal-bearing residues for the aerospace, oil & gas, industrial gas turbine and stainless steel industries.")}
+              {p("A specialised recycler and supplier to the global nickel refinery, stainless steel, superalloy, titanium and refractory metals industries.")}
             </p>
 
             <address className="mt-8 not-italic">
@@ -101,7 +101,7 @@ export async function Footer() {
               {p("Contact")}
             </Link>
             <Link href="/materials" className="inline-flex min-h-[1.75rem] items-center rounded-sm text-steel-400 transition-colors hover:text-white">
-              {p("Materials")}
+              {p("Portfolio")}
             </Link>
           </div>
         </div>

@@ -17,9 +17,8 @@ export const nl: Dictionary = {
 
   nav: {
     about: "Over ons",
-    materials: "Materialen",
-    recycling: "Recycling",
-    industries: "Sectoren",
+    portfolio: "Portfolio",
+    whatWeDo: "Wat we doen",
     insights: "Publicaties",
     contact: "Contact",
     search: "Zoeken",

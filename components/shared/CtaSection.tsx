@@ -4,11 +4,16 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { contact } from "@/lib/site";
 
-/** Closing conversion band. Used at the foot of every content page. */
+/**
+ * Closing conversion band. Used at the foot of every content page.
+ *
+ * The default body names who IMS supplies — the intro's five — so the last
+ * thing on any page says, in one line, who this is for.
+ */
 export async function CtaSection({
-  title = "Talk to our team about your material requirements.",
-  body = "Tell us the alloy, the stream or the volume you are working with and we will come back with a route for it — whether that is supply, recovery or both.",
-  primary = { href: "/contact", label: "Request an inquiry" },
+  title = "Tell us what you have.",
+  body = "The material, the form and the quantity are enough to start. We supply nickel refineries, stainless steel mills, superalloy producers and the titanium and refractory metals industries.",
+  primary = { href: "/rfq", label: "Request a quotation" },
   secondary,
 }: {
   title?: string;

@@ -7,7 +7,7 @@ import { searchSite, kindLabels, type SearchKind } from "@/lib/search";
 import { cn } from "@/lib/utils";
 import { useP } from "@/lib/i18n/phrases/client";
 
-const groupOrder: SearchKind[] = ["page", "material", "industry", "grade", "stream", "tungsten", "article"];
+const groupOrder: SearchKind[] = ["family", "page", "grade", "tungsten", "material", "article"];
 
 export function SearchResults() {
   const p = useP();

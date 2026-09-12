@@ -38,7 +38,7 @@ export interface MetalSpec {
 }
 
 export const trackedMetals: MetalSpec[] = [
-  { symbols: ["LME-NI", "NICKEL", "XNI"], element: "Ni", name: "Nickel", category: "nickel-alloys" },
+  { symbols: ["LME-NI", "NICKEL", "XNI"], element: "Ni", name: "Nickel", category: "high-nickel-alloys" },
   { symbols: ["LCO", "COBALT", "XCO"], element: "Co", name: "Cobalt", category: "cobalt-alloys" },
   { symbols: ["LME-XCU", "COPPER", "XCU"], element: "Cu", name: "Copper", category: "copper-nickel-alloys" },
   { symbols: ["LME-ALU", "ALU", "ALUMINIUM"], element: "Al", name: "Aluminium" },

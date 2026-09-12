@@ -17,19 +17,34 @@ import type { NextConfig } from "next";
  * See /docs/migration-matrix.md.
  */
 
-const MATERIAL_SLUGS = [
-  "nickel-alloys",
-  "tungsten-alloys",
-  "stainless-steel",
-  "complex-nickel-alloys",
+/**
+ * Where each legacy material category lives now.
+ *
+ * The portfolio (data/portfolio.ts) claims eight of the fifteen source
+ * categories and puts their tables on a family page; those slugs redirect to
+ * the family in one hop, from both the WordPress URL and the interim
+ * /materials/<slug> one. The seven it does not claim stay at
+ * /materials/<slug> as reference and need only the WordPress redirect.
+ *
+ * Kept as a literal rather than derived from data/portfolio.ts: this file runs
+ * at config time, before the path alias is available.
+ */
+const CATEGORY_TO_FAMILY: Record<string, string> = {
+  "nickel-alloys": "high-nickel-alloys",
+  "complex-nickel-alloys": "superalloys",
+  "cobalt-alloys": "cobalt-alloys",
+  "stainless-steel": "stainless-steel",
+  "high-speed-steels": "hss-tool-steel",
+  "tool-steels": "hss-tool-steel",
+  "titanium-alloys": "titanium",
+  "tungsten-alloys": "tungsten-moly",
+};
+
+const REFERENCE_SLUGS = [
   "nickel-copper",
-  "high-speed-steels",
-  "cobalt-alloys",
   "copper-nickel-alloys",
-  "tool-steels",
   "cobalt-iron-alloys",
   "alloy-irons",
-  "titanium-alloys",
   "nickel-iron-alloys",
   "magnet-alloys",
   "zirconium-alloys",
@@ -37,11 +52,16 @@ const MATERIAL_SLUGS = [
 
 /** Legacy path -> new path. Registered with and without a trailing slash. */
 const LEGACY_MAP: [string, string][] = [
-  ...MATERIAL_SLUGS.map((slug): [string, string] => [`/${slug}`, `/materials/${slug}`]),
+  ...Object.entries(CATEGORY_TO_FAMILY).flatMap(([slug, family]): [string, string][] =>
+    slug === family
+      ? [[`/${slug}`, `/materials/${family}`]]
+      : [
+          [`/${slug}`, `/materials/${family}`],
+          [`/materials/${slug}`, `/materials/${family}`],
+        ],
+  ),
+  ...REFERENCE_SLUGS.map((slug): [string, string] => [`/${slug}`, `/materials/${slug}`]),
   ["/metals-alloys", "/materials"],
-  ["/metals-and-waste-recovery", "/recycling"],
-  ["/tungsten-carbide-recycling", "/recycling/tungsten"],
-  ["/industries-served", "/industries"],
   ["/about-us", "/about"],
   ["/contact-us", "/contact"],
   ["/blogs", "/insights"],
@@ -62,6 +82,25 @@ const LEGACY_MAP: [string, string][] = [
     "/2024/10/meeting-industry-standards-with-ims-metals-alloys-ou",
     "/insights/meeting-industry-standards-with-ims-metals-alloys-ou",
   ],
+
+  /*
+   * Pages retired in the 2026-09 refocus (docs/refocus-plan.md). The
+   * recycling, industries and quality pages described the previous business;
+   * each goes to the page that now answers the same question.
+   */
+  ["/metals-and-waste-recovery", "/what-we-do"],
+  ["/recycling", "/what-we-do"],
+  ["/tungsten-carbide-recycling", "/materials/tungsten-moly"],
+  ["/recycling/tungsten", "/materials/tungsten-moly"],
+  ["/recycling/aerospace-reverts", "/materials/superalloys"],
+  ["/industries-served", "/what-we-do"],
+  ["/industries", "/what-we-do"],
+  ["/industries/aerospace", "/materials/superalloys"],
+  ["/industries/oil-and-gas", "/what-we-do"],
+  ["/industries/industrial-gas-turbine", "/materials/superalloys"],
+  ["/industries/technology-and-mobility", "/what-we-do"],
+  ["/about/quality-and-compliance", "/about"],
+  ["/about/sustainability", "/about"],
 ];
 
 const nextConfig: NextConfig = {

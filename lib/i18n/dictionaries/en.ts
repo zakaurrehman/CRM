@@ -17,9 +17,8 @@ export const en = {
 
   nav: {
     about: "About",
-    materials: "Materials",
-    recycling: "Recycling",
-    industries: "Industries",
+    portfolio: "Portfolio",
+    whatWeDo: "What we do",
     insights: "Insights",
     contact: "Contact",
     search: "Search",

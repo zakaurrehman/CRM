@@ -42,20 +42,8 @@ export function localiseCategory<T extends { slug: string }>(category: T, locale
   return merge(category, contentFor(locale).categories[category.slug] as Partial<T>);
 }
 
-export function localiseIndustry<T extends { slug: string }>(industry: T, locale: Locale): T {
-  return merge(industry, contentFor(locale).industries[industry.slug] as Partial<T>);
-}
-
-export function localiseStream<T extends { slug: string }>(stream: T, locale: Locale): T {
-  return merge(stream, contentFor(locale).streams[stream.slug] as Partial<T>);
-}
-
 export function localiseTungstenForm<T extends { slug: string }>(form: T, locale: Locale): T {
   return merge(form, contentFor(locale).tungstenForms[form.slug] as Partial<T>);
-}
-
-export function localiseProcessStep<T extends { number: string }>(step: T, locale: Locale): T {
-  return merge(step, contentFor(locale).process[step.number] as Partial<T>);
 }
 
 export function localiseArticle<T extends { slug: string }>(article: T, locale: Locale): T {

@@ -2,6 +2,7 @@ import { alloyCategories } from "@/data/alloys";
 import type { AlloyCategory, AlloyGrade, AlloyGroup } from "@/types/content";
 import type { ElementThresholds } from "./alloy-query";
 import { gradeAnchor, gradeId } from "./alloy-ids";
+import { materialHref } from "./portfolio";
 
 /**
  * Turns the published composition tables into structured, queryable data.
@@ -169,7 +170,7 @@ export function indexGrade(category: AlloyCategory, grade: AlloyGrade): IndexedG
     applications: category.applications,
     composition: [...byElement.values()].sort((a, b) => b.pct - a.pct),
     compounds,
-    href: `/materials/${category.slug}#${gradeAnchor(grade.name)}`,
+    href: `${materialHref(category.slug, grade.name)}#${gradeAnchor(grade.name)}`,
   };
 }
 

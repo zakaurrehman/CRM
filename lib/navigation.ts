@@ -1,5 +1,5 @@
-import { alloyCategories } from "@/data/alloys";
-import { industries } from "@/data/industries";
+import { portfolioGroups } from "@/data/portfolio";
+import { familiesInGroup } from "@/lib/portfolio";
 import type { AlloyGroup } from "@/types/content";
 
 export interface NavLink {
@@ -18,11 +18,11 @@ export interface NavItem {
   /**
    * Dictionary key for the label, when there is one.
    *
-   * Only the top-level items carry this. The menu contents are material
-   * category names — Inconel, Stellite, Densalloy — which are designations
-   * rather than words, and stay as published in every language.
+   * Only the top-level items carry this. The menu contents are family names —
+   * FeNiCr, Superalloys, Tungsten & Moly — which are designations rather than
+   * words, and stay as published in every language.
    */
-  i18nKey?: "about" | "materials" | "recycling" | "industries" | "insights";
+  i18nKey?: "portfolio" | "whatWeDo" | "about" | "insights";
   href: string;
   /** Present when the item opens a mega menu. */
   columns?: NavColumn[];
@@ -30,6 +30,10 @@ export interface NavItem {
   feature?: { title: string; body: string; href: string; cta: string; image: string };
 }
 
+/**
+ * Labels for the five element groups the composition tables are filed under.
+ * Used by the alloy finder's group filter; the portfolio has its own groups.
+ */
 export const alloyGroupLabels: Record<AlloyGroup, string> = {
   nickel: "Nickel Alloys",
   cobalt: "Cobalt Alloys",
@@ -40,149 +44,63 @@ export const alloyGroupLabels: Record<AlloyGroup, string> = {
 
 export const alloyGroupOrder: AlloyGroup[] = ["nickel", "cobalt", "ferrous", "refractory", "non-ferrous"];
 
-function materialColumns(): NavColumn[] {
-  return alloyGroupOrder.map((group) => ({
-    heading: alloyGroupLabels[group],
-    links: alloyCategories
-      .filter((c) => c.group === group)
-      .map((c) => ({ label: c.name, href: `/materials/${c.slug}` })),
-  }));
-}
-
-/** The catalogue tools, promoted alongside the categories rather than buried in a page. */
-const toolsColumn: NavColumn = {
-  heading: "Tools",
-  links: [
-    { label: "Alloy Finder", href: "/materials/finder", description: "Search by element content" },
-    { label: "Compare Grades", href: "/materials/compare", description: "Up to four side by side" },
-    { label: "Saved Materials", href: "/materials/saved", description: "Your shortlist" },
-    { label: "Request a Quotation", href: "/rfq", description: "Line-by-line RFQ" },
-  ],
-};
+/**
+ * Four plain links and one menu.
+ *
+ * The menu is the portfolio: the four groups as columns, the families under
+ * them, and nothing promoted beside it. Everything that used to open a panel
+ * — Recycling, Industries, About with its sub-pages — is either a single page
+ * now or is gone. Insights lives in the footer.
+ */
+const portfolioColumns: NavColumn[] = portfolioGroups.map((group) => ({
+  heading: group.name,
+  links: familiesInGroup(group.id).map((f) => ({
+    label: f.name,
+    href: `/materials/${f.slug}`,
+    description: f.threshold ? `${f.threshold} content` : undefined,
+  })),
+}));
 
 export const navigation: NavItem[] = [
   {
-    label: "About",
-    i18nKey: "about",
-    href: "/about",
-    columns: [
-      {
-        heading: "The company",
-        links: [
-          { label: "Company", href: "/about", description: "Who we are and how we trade" },
-          { label: "Our Capabilities", href: "/about#capabilities", description: "Processing, sorting and supply" },
-        ],
-      },
-      {
-        heading: "How we operate",
-        links: [
-          { label: "Quality & Compliance", href: "/about/quality-and-compliance", description: "Laboratory, testing and traceability" },
-          { label: "Sustainability", href: "/about/sustainability", description: "Recovery in place of primary mining" },
-        ],
-      },
-    ],
-    feature: {
-      title: "How IMS works",
-      body: "Six steps from arising to certified material returning to the melt.",
-      href: "/about#process",
-      cta: "See the process",
-      image: "/images/company/claw-crane.jpg",
-    },
-  },
-  {
-    label: "Materials",
-    i18nKey: "materials",
+    label: "Portfolio",
+    i18nKey: "portfolio",
     href: "/materials",
-    columns: [...materialColumns(), toolsColumn],
-    feature: {
-      title: "Alloy finder",
-      body: "Search every grade by element content — \"cobalt free, chromium above 20\" — and compare the shortlist side by side.",
-      href: "/materials/finder",
-      cta: "Search by composition",
-      image: "/images/metals/steel-rods.jpg",
-    },
+    columns: portfolioColumns,
   },
-  {
-    label: "Recycling",
-    i18nKey: "recycling",
-    href: "/recycling",
-    columns: [
-      {
-        heading: "Recovery services",
-        links: [
-          { label: "Metals & Waste Recovery", href: "/recycling", description: "19 metal-bearing streams" },
-          { label: "Tungsten Recycling", href: "/recycling/tungsten", description: "Carbide, Densalloy, CP-W and heavy metals" },
-          { label: "Aerospace Reverts", href: "/recycling/aerospace-reverts", description: "Teardown, destruction and grading" },
-        ],
-      },
-      {
-        heading: "Process",
-        links: [
-          { label: "Recycling Process", href: "/recycling#process", description: "Source through to certified supply" },
-          { label: "Quality Control", href: "/about/quality-and-compliance", description: "Metallurgical laboratory" },
-        ],
-      },
-    ],
-    feature: {
-      title: "Tungsten recycling",
-      body: "Tungsten handled in almost all forms of scrap and production waste.",
-      href: "/recycling/tungsten",
-      cta: "Tungsten capabilities",
-      image: "/images/tungsten/densalloy.jpg",
-    },
-  },
-  {
-    label: "Industries",
-    i18nKey: "industries",
-    href: "/industries",
-    columns: [
-      {
-        heading: "Sectors served",
-        links: industries.map((i) => ({ label: i.name, href: `/industries/${i.slug}`, description: i.strapline })),
-      },
-    ],
-    feature: {
-      title: "Aerospace revert solutions",
-      body: "Engine teardown, onsite destruction and superalloy grading.",
-      href: "/industries/aerospace",
-      cta: "Aerospace capabilities",
-      image: "/images/aerospace/aero-engines.jpg",
-    },
-  },
-  { label: "Insights", i18nKey: "insights", href: "/insights" },
+  { label: "What we do", i18nKey: "whatWeDo", href: "/what-we-do" },
+  { label: "About", i18nKey: "about", href: "/about" },
 ];
 
 export const footerNavigation: NavColumn[] = [
   {
     heading: "Company",
     links: [
+      { label: "What we do", href: "/what-we-do" },
       { label: "About IMS", href: "/about" },
-      { label: "Quality & Compliance", href: "/about/quality-and-compliance" },
-      { label: "Sustainability", href: "/about/sustainability" },
       { label: "Insights", href: "/insights" },
+      { label: "Contact", href: "/contact" },
     ],
   },
   {
-    heading: "Materials",
+    heading: "Portfolio",
     links: [
-      { label: "All materials", href: "/materials" },
-      { label: "Nickel Alloys", href: "/materials/nickel-alloys" },
-      { label: "Complex Nickel Alloys", href: "/materials/complex-nickel-alloys" },
-      { label: "Cobalt Alloys", href: "/materials/cobalt-alloys" },
-      { label: "Stainless Steel", href: "/materials/stainless-steel" },
-      { label: "Titanium Alloys", href: "/materials/titanium-alloys" },
+      ...portfolioGroups.map((group) => ({ label: group.name, href: `/materials#group-${group.id}` })),
+      { label: "All families", href: "/materials" },
     ],
   },
   {
-    heading: "Recycling",
+    /* Listed by family, not just by group: these are the ones IMS asked
+       where they were. */
+    heading: "Refractory & Rare Metals",
+    links: familiesInGroup("refractory").map((f) => ({ label: f.name, href: `/materials/${f.slug}` })),
+  },
+  {
+    heading: "Grade reference",
     links: [
-      { label: "Metals & Waste Recovery", href: "/recycling" },
-      { label: "Tungsten Recycling", href: "/recycling/tungsten" },
-      { label: "Aerospace Reverts", href: "/recycling/aerospace-reverts" },
+      { label: "Alloy finder", href: "/materials/finder" },
+      { label: "Compare grades", href: "/materials/compare" },
+      { label: "Request a quotation", href: "/rfq" },
     ],
-  },
-  {
-    heading: "Industries",
-    links: industries.map((i) => ({ label: i.name, href: `/industries/${i.slug}` })),
   },
 ];

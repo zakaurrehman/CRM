@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { alloyCategories } from "@/data/alloys";
-import { industries } from "@/data/industries";
+import { portfolioFamilies } from "@/data/portfolio";
 import { articles } from "@/data/insights";
+import { claimedCategorySlugs } from "@/lib/portfolio";
 import { site } from "@/lib/site";
 
 /** Every indexable route. /search is excluded to match robots.ts. */
@@ -11,38 +12,39 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const core: MetadataRoute.Sitemap = [
     { url: url("/"), lastModified: now, changeFrequency: "monthly", priority: 1 },
+    { url: url("/what-we-do"), lastModified: now, changeFrequency: "yearly", priority: 0.9 },
     { url: url("/about"), lastModified: now, changeFrequency: "yearly", priority: 0.8 },
-    { url: url("/about/quality-and-compliance"), lastModified: now, changeFrequency: "yearly", priority: 0.7 },
-    { url: url("/about/sustainability"), lastModified: now, changeFrequency: "yearly", priority: 0.7 },
     { url: url("/materials"), lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: url("/recycling"), lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: url("/recycling/tungsten"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: url("/recycling/aerospace-reverts"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: url("/industries"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: url("/insights"), lastModified: now, changeFrequency: "weekly", priority: 0.6 },
+    { url: url("/materials/finder"), lastModified: now, changeFrequency: "yearly", priority: 0.5 },
+    { url: url("/materials/compare"), lastModified: now, changeFrequency: "yearly", priority: 0.4 },
+    { url: url("/rfq"), lastModified: now, changeFrequency: "yearly", priority: 0.7 },
+    { url: url("/insights"), lastModified: now, changeFrequency: "weekly", priority: 0.5 },
     { url: url("/contact"), lastModified: now, changeFrequency: "yearly", priority: 0.8 },
   ];
 
-  const materials: MetadataRoute.Sitemap = alloyCategories.map((category) => ({
-    url: url(`/materials/${category.slug}`),
+  const families: MetadataRoute.Sitemap = portfolioFamilies.map((family) => ({
+    url: url(`/materials/${family.slug}`),
     lastModified: now,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
 
-  const sectors: MetadataRoute.Sitemap = industries.map((industry) => ({
-    url: url(`/industries/${industry.slug}`),
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }));
+  /* Legacy tables the portfolio does not claim, kept as reference. */
+  const reference: MetadataRoute.Sitemap = alloyCategories
+    .filter((c) => !claimedCategorySlugs.has(c.slug))
+    .map((category) => ({
+      url: url(`/materials/${category.slug}`),
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.4,
+    }));
 
   const posts: MetadataRoute.Sitemap = articles.map((article) => ({
     url: url(`/insights/${article.slug}`),
     lastModified: new Date(article.updated ?? article.published),
     changeFrequency: "yearly",
-    priority: 0.6,
+    priority: 0.5,
   }));
 
-  return [...core, ...materials, ...sectors, ...posts];
+  return [...core, ...families, ...reference, ...posts];
 }

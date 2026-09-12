@@ -4,9 +4,15 @@ A complete rebuild of [ims-metals.com](https://ims-metals.com) in Next.js. Repla
 legacy WordPress/Elementor site, migrating all content and the full technical alloy
 dataset while rebuilding the information architecture, design system and front end.
 
+**September 2026:** the site was refocused on the company intro — a specialised
+recycler blending complex Ni-bearing scrap for refineries, superalloy producers and
+stainless mills. The homepage, navigation and materials section now follow the
+intro's five headings; the old recycling, industries and quality pages are retired.
+See [`docs/refocus-plan.md`](docs/refocus-plan.md) for what changed, why, the photo
+brief, and the seven questions IMS still needs to answer.
+
 **Read first:** [`docs/content-verification.md`](docs/content-verification.md) — a list of
-contradictory, placeholder and unsupported information found on the legacy site. Three
-items block launch.
+contradictory, placeholder and unsupported information found on the legacy site.
 
 ---
 
@@ -60,23 +66,25 @@ built-ins. The SMTP path is verified end to end against a live SMTP server.
 app/                  Routes (App Router). One folder per page, plus sitemap/robots/api.
 components/
   layout/             Header, mega menu, mobile drawer, search, footer
-  ui/                 Design-system primitives: Button, Badge, Section, Breadcrumbs, Reveal
-  home/               Homepage sections
-  materials/          Composition table, materials browser, stream grid
-  shared/             PageHero, CtaSection, ProcessSteps
-  forms/              InquiryForm
+  ui/                 Design-system primitives: Button, Section, Breadcrumbs, Reveal, RotatingImage
+  home/               Homepage sections: Hero, WhatWeDo, PortfolioSection
+  portfolio/          FamilyCard, PortfolioGrid, FamilyPage
+  materials/          Composition table, ReferencePage, finder/compare/saved
+  shared/             PageHero, CtaSection, BlendingProgram, AcceptedForms, Advantage
+  forms/              InquiryForm, RfqForm
 lib/
   site.ts             Single source of truth for company facts  <-- edit this, not pages
+  portfolio.ts        Family lookups; maps a legacy category/grade to its family page
   navigation.ts       Information architecture
   search.ts           Site-wide search index
   seo.ts / schema.tsx Metadata helpers and JSON-LD
   inquiry.ts          Inquiry validation + options (shared with the client)
   inquiry-delivery.ts Delivery transports (server-only)
 data/
+  portfolio.ts        The 12 families in 4 groups, image slots, table mapping  <-- the front of the site
   alloys.ts           295 alloy grades with full composition (generated — do not hand-edit)
   alloy-index.ts      Slim companion: names only, for client-side browse/search
-  recovery.ts         19 recovery streams, 9 tungsten forms, the 6-step process
-  industries.ts       4 industry sectors
+  recovery.ts         9 tungsten forms (shown on the Tungsten & Moly family page)
   insights.ts         3 migrated articles
 docs/                 Audit, content verification, migration matrix
 public/images/        46 assets recovered from the legacy site, organised by subject
@@ -84,22 +92,21 @@ public/images/        46 assets recovered from the legacy site, organised by sub
 
 ### Editing company information
 
-`lib/site.ts` is the single place that defines company facts. Two values are still
-deliberately withheld, because the legacy site's versions were contradictory or
-placeholder:
-
-```ts
-export const contact = { phone: null, /* email, address, whatsapp, social set */ };
-export const experience = { years: null, verified: false };
-```
-
-Setting `phone` publishes it across the header, footer, contact page and Organization
-schema. Setting `experience` to `{ years: 30, verified: true }` adds the years stat to the
-homepage. Nothing else needs changing — no page hard-codes either value. See
-`docs/content-verification.md` for why both are still empty.
+`lib/site.ts` is the single place that defines company facts — name, address,
+registration and EORI numbers, email, WhatsApp. `phone` is deliberately `null` by
+IMS's instruction; setting it would publish the number in the header, footer,
+contact page and Organization schema at once.
 
 Note that `phone` and `whatsapp` are separate on purpose: being reachable on WhatsApp is
 a narrower commitment than publishing a number as the company's general telephone.
+
+### Editing the portfolio
+
+`data/portfolio.ts` is what the homepage, the Portfolio page, the navigation and
+the family pages are built from. To add photographs to a family, list up to four
+paths in its `images` array — frame 1 is the card at rest, the rest cross-fade. To
+change what a family accepts, edit `accepts`. Family names are designations and are
+not translated; `accepts` lines are, via the phrase tables.
 
 ### The alloy dataset
 
@@ -108,6 +115,11 @@ against the crawled source: **295 grades, 3,245 composition cells, zero mismatch
 Composition values are reproduced exactly, including the `*` maximum notation, `BAL`, and
 multi-element "Others" entries. Do not hand-edit; corrections should come from IMS and be
 applied deliberately.
+
+The tables are no longer the front of the materials section. Eight of the fifteen
+categories are shown under the family that claims them (`tables` in
+`data/portfolio.ts`); the other seven stay at `/materials/<slug>` as reference.
+Category slugs and grade ids are unchanged, so nothing keyed on them moved.
 
 `data/alloy-index.ts` carries the same categories without the composition values, so
 client components can browse and search without downloading the tables.
@@ -216,8 +228,8 @@ refractory metals) and **German** (aerospace and IGT manufacturing).
 ## Before launch
 
 1. Configure an inquiry transport (see Configuration).
-2. Resolve the P1 items in [`docs/content-verification.md`](docs/content-verification.md):
-   the years-of-experience contradiction and the placeholder telephone number.
+2. Answer the seven questions in [`docs/refocus-plan.md`](docs/refocus-plan.md) §8 and
+   send the family photographs (brief in §6).
 3. Set `NEXT_PUBLIC_SITE_URL` if deploying anywhere other than the production domain.
 4. Submit the new sitemap in Search Console and keep the legacy URLs crawlable so the
    301s are picked up.

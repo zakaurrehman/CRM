@@ -7,8 +7,7 @@
  */
 import fs from "node:fs";
 import { alloyCategories } from "@/data/alloys";
-import { industries } from "@/data/industries";
-import { recoveryStreams, tungstenForms, processSteps } from "@/data/recovery";
+import { tungstenForms } from "@/data/recovery";
 import { articles } from "@/data/insights";
 
 const pack = {
@@ -20,17 +19,7 @@ const pack = {
       applications: c.applications,
     }]),
   ),
-  industries: Object.fromEntries(
-    industries.map((i) => [i.slug, {
-      name: i.name,
-      strapline: i.strapline,
-      intro: i.intro,
-      capabilities: i.capabilities.map((c) => ({ title: c.title, body: c.body })),
-    }]),
-  ),
-  streams: Object.fromEntries(recoveryStreams.map((s) => [s.slug, { name: s.name, form: s.form }])),
   tungstenForms: Object.fromEntries(tungstenForms.map((t) => [t.slug, { name: t.name, note: t.note }])),
-  process: Object.fromEntries(processSteps.map((s) => [s.number, { title: s.title, body: s.body }])),
   articles: Object.fromEntries(
     articles.map((a) => [a.slug, {
       title: a.title,
@@ -43,10 +32,7 @@ const pack = {
 
 const counts = {
   categories: Object.keys(pack.categories).length,
-  industries: Object.keys(pack.industries).length,
-  streams: Object.keys(pack.streams).length,
   tungstenForms: Object.keys(pack.tungstenForms).length,
-  process: Object.keys(pack.process).length,
   articles: Object.keys(pack.articles).length,
 };
 console.log("extracted:", JSON.stringify(counts));

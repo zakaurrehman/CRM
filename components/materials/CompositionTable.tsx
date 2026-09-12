@@ -27,7 +27,17 @@ type View = "table" | "cards";
  * reflowing it destroys the ability to compare grades — so both exist and the
  * reader picks. The table stays the default because it is the reference view.
  */
-export function CompositionTable({ category }: { category: AlloyCategory }) {
+export function CompositionTable({
+  category,
+  heading,
+  id = "composition",
+}: {
+  category: AlloyCategory;
+  /** Overrides the "Composition" heading — a family page with two tables names each by its source. */
+  heading?: string;
+  /** Anchor for the heading and a suffix for the filter control, so two tables on one page stay distinct. */
+  id?: string;
+}) {
   const p = useP();
   const { t } = useI18n();
   const [query, setQuery] = useState("");
@@ -45,8 +55,8 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="text-display-sm" id="composition">
-            {t("table", "heading")}
+          <h2 className="text-display-sm" id={id}>
+            {heading ?? t("table", "heading")}
           </h2>
           <p className="mt-2 text-[0.9375rem] text-steel-600">
             {p("{n} grades · percentage by weight", { n: category.grades.length })}
@@ -56,7 +66,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
         <div className="flex flex-col gap-3 sm:items-end">
           {category.grades.length > 8 ? (
             <div className="sm:w-72">
-              <label htmlFor="grade-filter" className="sr-only">
+              <label htmlFor={id + "-filter"} className="sr-only">
                 {t("table", "filterLabel", { category: category.name })}
               </label>
               <div className="relative">
@@ -69,7 +79,7 @@ export function CompositionTable({ category }: { category: AlloyCategory }) {
                   <path d="M12.5 12.5L16 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
                 </svg>
                 <input
-                  id="grade-filter"
+                  id={id + "-filter"}
                   type="search"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}

@@ -36,9 +36,16 @@ export const site = {
   legalName: "IMS Metals & Alloys OÜ",
   shortName: "IMS",
   url: resolveSiteUrl(),
+  tagline: "Turning complex scrap into opportunity",
   description:
-    "IMS Metals & Alloys OÜ sources, processes and certifies metals, alloys and metal-bearing residues for the aerospace, oil & gas, industrial gas turbine and stainless steel industries.",
+    "IMS Metals & Alloys OÜ is a specialised recycler and supplier to the global nickel refinery, stainless steel, superalloy, titanium and refractory metals industries, blending complex scrap streams into high-value Ni-based blends.",
   locale: "en",
+} as const;
+
+/** From the company letterhead. */
+export const registration = {
+  number: "17031890",
+  eori: "EE17031890",
 } as const;
 
 export const contact = {
@@ -95,63 +102,25 @@ export const contact = {
 } as const;
 
 /**
- * The legacy site made two incompatible claims — "over 15 years" (homepage,
- * About counter) and "over 30 years" (About body, About meta description, two
- * articles). IMS confirmed 15 on 2026-09-10, so the 30-year figure was wrong
- * wherever it appeared and is not carried over.
+ * The previous website's self-description — "15 years", the sectors list,
+ * "sorted, segregated, processed and certified", the metallurgical
+ * laboratory — is not carried on the site any more. The company intro of
+ * September 2026 is the source now (data/portfolio.ts); the open questions
+ * on what to keep from the old copy are in docs/refocus-plan.md §8.
  */
-export const experience: { years: number | null; verified: boolean } = {
-  years: 15,
-  verified: true,
-};
-
-/** Facts that appeared consistently across the audited legacy pages. */
-export const companyFacts = {
-  origin: "Eastern Europe",
-  reach: "International network with joint partnerships",
-  process: "Sorted, segregated, processed and certified before resale",
-  outputGrades: ["Air-melt", "Vacuum grade"],
-  sectors: [
-    "Stainless Steel",
-    "Oil & Gas",
-    "Aerospace",
-    "Automotive",
-    "Medical",
-    "Orthopedics",
-    "Electric (car battery)",
-    "Thermal Spray",
-    "Electroplating",
-    "Steel",
-    "3D Additive Manufacturing",
-  ],
-  specialistMetals: [
-    "Nickel",
-    "Cobalt",
-    "Titanium",
-    "Molybdenum",
-    "Niobium",
-    "Tantalum",
-    "Tungsten",
-    "Zirconium",
-    "Hafnium",
-    "Rhenium",
-  ],
-  ferroAlloys: ["FeNiCr", "FeW", "FeMo", "FeNb", "FeTi"],
-  preciousMetalsRecovered: ["Gold", "Platinum", "Rhenium"],
-} as const;
 
 export const routes = {
   home: "/",
   about: "/about",
-  quality: "/about/quality-and-compliance",
-  sustainability: "/about/sustainability",
+  whatWeDo: "/what-we-do",
+  /** Labelled "Portfolio" in the interface; the path is kept for its search rankings. */
   materials: "/materials",
-  material: (slug: string) => `/materials/${slug}`,
-  recycling: "/recycling",
-  tungsten: "/recycling/tungsten",
-  reverts: "/recycling/aerospace-reverts",
-  industries: "/industries",
-  industry: (slug: string) => `/industries/${slug}`,
+  family: (slug: string) => `/materials/${slug}`,
+  /** Legacy composition tables the portfolio does not claim. Same path shape as always. */
+  reference: (slug: string) => `/materials/${slug}`,
+  finder: "/materials/finder",
+  compare: "/materials/compare",
+  rfq: "/rfq",
   insights: "/insights",
   article: (slug: string) => `/insights/${slug}`,
   contact: "/contact",

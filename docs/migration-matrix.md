@@ -3,6 +3,27 @@
 Every public URL from the legacy sitemap, and every feature, accounted for.
 Redirects are implemented in `next.config.ts` and all return **HTTP 301**.
 
+> **September 2026 refocus.** Several destinations below moved again when the
+> site was realigned with the company intro (see `docs/refocus-plan.md`). The
+> legacy URL still lands in one hop; the current destination is:
+>
+> | Legacy | Now |
+> | --- | --- |
+> | `/metals-and-waste-recovery/` | `/what-we-do` |
+> | `/tungsten-carbide-recycling/` | `/materials/tungsten-moly` |
+> | `/industries-served/` | `/what-we-do` |
+> | `/nickel-alloys/` | `/materials/high-nickel-alloys` |
+> | `/complex-nickel-alloys/` | `/materials/superalloys` |
+> | `/high-speed-steels/`, `/tool-steels/` | `/materials/hss-tool-steel` |
+> | `/titanium-alloys/` | `/materials/titanium` |
+> | `/tungsten-alloys/` | `/materials/tungsten-moly` |
+> | `/cobalt-alloys/`, `/stainless-steel/` | same slug, now a family page |
+> | the other seven material URLs | unchanged, kept as grade reference |
+>
+> Interim URLs from the first rebuild (`/recycling`, `/recycling/tungsten`,
+> `/recycling/aerospace-reverts`, `/industries/*`, `/about/quality-and-compliance`,
+> `/about/sustainability`, and `/materials/<claimed category>`) also 301.
+
 ---
 
 ## 1. Pages

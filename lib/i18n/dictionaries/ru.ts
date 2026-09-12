@@ -18,9 +18,8 @@ export const ru: Dictionary = {
 
   nav: {
     about: "О компании",
-    materials: "Материалы",
-    recycling: "Переработка",
-    industries: "Отрасли",
+    portfolio: "Портфель",
+    whatWeDo: "Чем мы занимаемся",
     insights: "Публикации",
     contact: "Контакты",
     search: "Поиск",
