@@ -157,7 +157,7 @@ export const hePhrases: PhraseTable = {
   "Aerospace reverts": "חומרי השבה מתעופה",
   "Explore materials": "לצפייה בחומרים",
   "Browse by category": "עיון לפי קטגוריה",
-  "Request an inquiry": "שליחת פנייה",
+  "Send an inquiry": "שליחת פנייה",
   "Sector capabilities": "יכולות בענף",
   "Explore all materials": "כל החומרים",
   "Recovery capabilities": "יכולות השבה",

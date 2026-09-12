@@ -53,7 +53,7 @@ export default async function ContactPage() {
       <Section tone="white">
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
-            <h2 className="text-display-sm">{p("Request an inquiry")}</h2>
+            <h2 className="text-display-sm">{p("Send an inquiry")}</h2>
             <p className="mt-4 max-w-xl content-en text-base leading-relaxed text-steel-600">
               {p("The more you can tell us about the material, the faster we can come back with something useful.")}
             </p>

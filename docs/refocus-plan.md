@@ -70,6 +70,30 @@ grade of WO₃, so they could be one item.
   the exception. It sits second, where the intro puts FeNiCr, and keeps its
   page. Fourteen cards now fill four rows of the grid evenly.
 
+### Round 5 — the ChatGPT review IMS shared
+
+A review of the *previous* site (the "295 grades / laboratory" version).
+Of its ten points, seven were already done by the refocus — the opening
+line, the operational claims, the homepage cut, the portfolio emphasis,
+the "waste" language, the credibility band, real photography. Adopted from
+the remaining three:
+
+- **Two doors on the hero** — *Offer material* and *Request supply* — each
+  opening the quotation form with "which way round" already answered
+  (`/rfq?direction=sell|buy`). Replaces *Request a quotation · See our
+  portfolio*; the portfolio is the next section anyway.
+- **"Send an inquiry"** for "Request an inquiry".
+- **Typical lots** on the What-we-do page: what "complex" means in lots a
+  refiner recognises — mixed 718/625/Waspaloy, non-vacuum-grade turnings,
+  contaminated off-spec, fines and grindings. Trade categories; IMS strikes
+  what it does not take.
+
+Not adopted, for IMS to decide: the review calls the welcome line
+("responsibly source the commodities which supplement our everyday life")
+generic — IMS approved that band deliberately, so it stands until IMS says
+otherwise. And it suggests fresh Insights articles (the visible ones are
+from 2024); five titles are in the review, all writable from the intro.
+
 One deviation from the original plan: Stainless Steel sits in a group named
 **"Ferro Alloys & Stainless"** beside FeNiCr, rather than under a bare "Ferro
 Alloys" heading — stainless is a steel, not a ferro-alloy, and the heading

@@ -23,8 +23,14 @@ const trail = [
   { name: "Request a quotation", href: "/rfq" },
 ];
 
-export default async function RfqPage() {
+export default async function RfqPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ direction?: string }>;
+}) {
   const p = await getP();
+  const { direction } = await searchParams;
+  const preset = direction === "sell" || direction === "buy" ? direction : undefined;
   return (
     <>
       <JsonLd data={breadcrumbSchema(trail)} />
@@ -41,7 +47,7 @@ export default async function RfqPage() {
             <Suspense
               fallback={<p className="text-[0.9375rem] text-steel-600">{p("Loading the request form…")}</p>}
             >
-              <RfqForm />
+              <RfqForm preset={preset} />
             </Suspense>
           </div>
 

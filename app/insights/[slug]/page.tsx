@@ -119,7 +119,7 @@ export default async function ArticlePage({ params }: Params) {
                 <Link
                   href="/contact"
                   className="mt-5 inline-flex h-11 items-center rounded bg-brand-700 px-5 text-[0.9375rem] font-medium text-white transition-colors hover:bg-brand-800"
-                >{p("Request an inquiry")}</Link>
+                >{p("Send an inquiry")}</Link>
               </div>
             </aside>
           </div>

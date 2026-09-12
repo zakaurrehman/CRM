@@ -61,6 +61,33 @@ export default async function WhatWeDoPage() {
         <div className="mt-14">
           <BlendingProgram />
         </div>
+
+        {/* What "complex" means in practice — the lots conventional routes
+            downgrade or turn away. Standard categories in the trade, listed
+            at IMS's request for IMS to strike what it does not take. */}
+        <div className="mt-16 grid gap-8 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-4">
+            <h3 className="font-display text-xl font-semibold tracking-tight text-navy-900">{p("Typical lots")}</h3>
+            <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-600">
+              {p("The material conventional routes downgrade or turn away. If yours is on this list, it has a home.")}
+            </p>
+          </div>
+          <ul className="border-t border-steel-200 lg:col-span-7 lg:col-start-6">
+            {[
+              "Mixed 718 / 625 / Waspaloy lots",
+              "Non-vacuum-grade superalloy turnings",
+              "Contaminated or off-spec high-nickel alloys",
+              "Dusts, fines and grindings",
+              "Mixed titanium and superalloy turnings",
+              "Off-grade tungsten, molybdenum, niobium and tantalum units",
+              "Hafnium and Ni-Hf materials",
+            ].map((lot, i) => (
+              <Reveal as="li" key={lot} delay={i * 40} className="border-b border-steel-200 py-3 text-[0.9375rem] font-medium text-navy-900">
+                {p(lot)}
+              </Reveal>
+            ))}
+          </ul>
+        </div>
       </Section>
 
       <AcceptedForms />

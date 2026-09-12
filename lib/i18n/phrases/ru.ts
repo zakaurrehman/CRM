@@ -157,7 +157,7 @@ export const ruPhrases: PhraseTable = {
   "Aerospace reverts": "Отходы авиационной отрасли",
   "Explore materials": "Смотреть материалы",
   "Browse by category": "Смотреть по категориям",
-  "Request an inquiry": "Отправить запрос",
+  "Send an inquiry": "Отправить запрос",
   "Sector capabilities": "Возможности в отрасли",
   "Explore all materials": "Все материалы",
   "Recovery capabilities": "Возможности извлечения",

@@ -154,7 +154,7 @@ export const nlPhrases: PhraseTable = {
   "Aerospace reverts": "Revert uit de luchtvaart",
   "Explore materials": "Bekijk materialen",
   "Browse by category": "Bladeren per categorie",
-  "Request an inquiry": "Aanvraag versturen",
+  "Send an inquiry": "Aanvraag versturen",
   "Sector capabilities": "Mogelijkheden in de sector",
   "Explore all materials": "Alle materialen",
   "Recovery capabilities": "Terugwinningsmogelijkheden",

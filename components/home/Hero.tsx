@@ -57,12 +57,15 @@ export async function Hero() {
             )}
           </p>
 
+          {/* Two doors, for the two people who arrive here: one has material
+              and wants a route for it, the other needs supply. Each opens the
+              quotation form with that already answered. */}
           <div className="mt-10 flex animate-fade-up flex-col gap-3 [animation-delay:240ms] sm:flex-row">
-            <Button href="/rfq" variant="onDark" size="lg">
-              {p("Request a quotation")}
+            <Button href="/rfq?direction=sell" variant="onDark" size="lg">
+              {p("Offer material")}
             </Button>
-            <Button href="/materials" variant="onDarkGhost" size="lg">
-              {p("See our portfolio")}
+            <Button href="/rfq?direction=buy" variant="onDarkGhost" size="lg">
+              {p("Request supply")}
             </Button>
           </div>
         </div>

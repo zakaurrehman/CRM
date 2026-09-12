@@ -40,7 +40,15 @@ const inputBase =
  * path from "these four look right" to "quote me these four" is one click and
  * no retyping.
  */
-export function RfqForm() {
+/**
+ * `preset` answers "which way round is this?" before the visitor arrives —
+ * the homepage offers two doors, Offer material and Request supply, and a
+ * form that then asks the same question again would be one question too
+ * many. The select stays editable; it just starts on the right answer.
+ */
+export function RfqForm({ preset }: { preset?: "sell" | "buy" } = {}) {
+  const presetDirection =
+    preset === "sell" ? rfqDirections[1] : preset === "buy" ? rfqDirections[0] : "";
   const p = useP();
   const id = useId();
   const params = useSearchParams();
@@ -391,7 +399,7 @@ export function RfqForm() {
             id={field("direction")}
             name="direction"
             required
-            defaultValue=""
+            defaultValue={presetDirection}
             aria-invalid={Boolean(errors.direction)}
             aria-describedby={errors.direction ? field("direction") + "-error" : undefined}
             className={cn(inputBase, "mt-2", errors.direction ? "border-danger-500" : "border-steel-300")}

@@ -156,7 +156,7 @@ export const frPhrases: PhraseTable = {
   "Aerospace reverts": "Valorisation aéronautique",
   "Explore materials": "Voir les matériaux",
   "Browse by category": "Parcourir par catégorie",
-  "Request an inquiry": "Envoyer une demande",
+  "Send an inquiry": "Envoyer une demande",
   "Sector capabilities": "Capacités du secteur",
   "Explore all materials": "Tous les matériaux",
   "Recovery capabilities": "Capacités de valorisation",
