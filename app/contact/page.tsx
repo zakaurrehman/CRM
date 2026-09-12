@@ -65,7 +65,7 @@ export default async function ContactPage() {
           <aside className="lg:col-span-4 lg:col-start-9">
             <div className="lg:sticky lg:top-28">
               <div className="border-t-2 border-brand-700 bg-steel-50 p-7">
-                <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
+                <h2 className="label text-steel-500">
                   {p("Head office")}
                 </h2>
                 <address className="mt-4 not-italic">
@@ -108,7 +108,7 @@ export default async function ContactPage() {
               </div>
 
               <div className="mt-8">
-                <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
+                <h2 className="label text-steel-500">
                   {p("What people come to us for")}
                 </h2>
                 <ul className="mt-5 space-y-6">

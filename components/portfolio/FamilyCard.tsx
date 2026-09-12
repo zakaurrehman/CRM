@@ -38,7 +38,7 @@ export async function FamilyCard({
     <Link
       href={"/materials/" + family.slug}
       className={cn(
-        "group flex h-full flex-col bg-white transition-colors duration-300 hover:bg-steel-50",
+        "group relative flex h-full flex-col bg-white transition-[background-color,box-shadow] duration-300 hover:z-10 hover:bg-white hover:shadow-card",
         className,
       )}
     >
@@ -60,13 +60,13 @@ export async function FamilyCard({
           </div>
         )}
         {family.threshold ? (
-          <span className="absolute end-3 top-3 rounded-sm border border-navy-950/15 bg-white/85 px-2 py-0.5 font-mono text-[0.6875rem] font-medium tracking-[0.06em] text-navy-900 backdrop-blur-sm">
+          <span className="absolute end-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[0.75rem] font-medium text-navy-900 backdrop-blur-sm">
             {family.threshold}
           </span>
         ) : null}
       </div>
 
-      <div className="flex flex-1 flex-col p-5">
+      <div className="flex flex-1 flex-col p-6">
         <div className="flex items-center gap-3.5">
           <SymbolBox symbol={family.symbol} />
           <h3 className="font-display text-[1.0625rem] font-semibold leading-snug tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
@@ -95,7 +95,7 @@ export function SymbolBox({ symbol, size = "md", className }: { symbol: string; 
     <span
       aria-hidden
       className={cn(
-        "inline-flex shrink-0 items-center justify-center rounded-sm border border-navy-900/20 bg-white font-display font-bold tracking-tight text-navy-900 transition-colors group-hover:border-brand-700 group-hover:text-brand-700",
+        "inline-flex shrink-0 items-center justify-center rounded-md bg-steel-100 font-display font-semibold tracking-tight text-navy-900 transition-colors duration-300 group-hover:bg-brand-50 group-hover:text-brand-700",
         size === "md" ? "h-11 min-w-11 px-2 text-[1.125rem]" : "h-14 min-w-14 px-2.5 text-[1.5rem]",
         className,
       )}

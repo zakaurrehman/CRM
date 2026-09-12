@@ -241,7 +241,7 @@ export function MarketBoard({ className }: { className?: string }) {
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
         <h2
           id="market-board"
-          className="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-brand-300"
+          className="flex flex-wrap items-center gap-x-2.5 gap-y-1 label text-brand-300"
         >
           {/* The badge. A pulse says "live" in a way a timestamp alone does
               not; held still under reduced motion, where it is simply a dot. */}
@@ -360,7 +360,7 @@ export function MarketBoard({ className }: { className?: string }) {
               way round it is, and saying it twice would contradict the pairs
               that lead with the dollar. */}
           {hasMetals ? (
-            <span className="me-1 font-mono text-[0.625rem] uppercase tracking-[0.12em] text-steel-400">
+            <span className="me-1 label text-[0.625rem] text-steel-400">
               {p("FX rates")}
             </span>
           ) : null}

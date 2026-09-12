@@ -134,7 +134,7 @@ export function AlloyFinder() {
         {/* What the parser understood. Shown always, so nothing is applied invisibly. */}
         {parsed.explain.length > 0 ? (
           <div className="mt-4 rounded border border-brand-200 bg-brand-50 px-4 py-3">
-            <p className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-brand-800">
+            <p className="label text-brand-800">
               {t("finder", "readingAs")}
             </p>
             <ul className="mt-2 flex flex-wrap gap-1.5">

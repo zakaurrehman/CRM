@@ -94,25 +94,25 @@ export default async function AboutPage() {
           </div>
           <dl className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:col-span-6 lg:col-start-7">
             <div>
-              <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">{p("Registered entity")}</dt>
+              <dt className="label text-steel-500">{p("Registered entity")}</dt>
               <dd className="mt-1.5 text-[0.9375rem] text-navy-900">{site.legalName}</dd>
             </div>
             <div>
-              <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">{p("Registered office")}</dt>
+              <dt className="label text-steel-500">{p("Registered office")}</dt>
               <dd className="mt-1.5 text-[0.9375rem] text-navy-900">
                 {contact.address.street}, {contact.address.city} {contact.address.postalCode}, {contact.address.country}
               </dd>
             </div>
             <div>
-              <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">{p("Registration no.")}</dt>
+              <dt className="label text-steel-500">{p("Registration no.")}</dt>
               <dd className="mt-1.5 font-mono text-[0.9375rem] text-navy-900 tabular-nums">{registration.number}</dd>
             </div>
             <div>
-              <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">EORI</dt>
+              <dt className="label text-steel-500">EORI</dt>
               <dd className="mt-1.5 font-mono text-[0.9375rem] text-navy-900 tabular-nums">{registration.eori}</dd>
             </div>
             <div className="sm:col-span-2">
-              <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">{p("Direct contact")}</dt>
+              <dt className="label text-steel-500">{p("Direct contact")}</dt>
               <dd className="mt-1.5">
                 <a
                   href={"mailto:" + contact.email}

@@ -123,7 +123,7 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
       ) : null}
 
       <fieldset className="space-y-6">
-        <legend className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
+        <legend className="label text-steel-500">
           {p("Your details")}
         </legend>
 
@@ -169,7 +169,7 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
       </fieldset>
 
       <fieldset className="space-y-6 border-t border-steel-200 pt-6">
-        <legend className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
+        <legend className="label text-steel-500">
           {p("Your requirement")}
         </legend>
 

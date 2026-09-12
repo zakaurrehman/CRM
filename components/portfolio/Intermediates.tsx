@@ -49,7 +49,7 @@ export async function Intermediates({
               {group.symbol ? (
                 <SymbolBox symbol={group.symbol} />
               ) : (
-                <span aria-hidden className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-sm border border-dashed border-steel-300 text-steel-400">
+                <span aria-hidden className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-steel-100 text-steel-400">
                   ·
                 </span>
               )}
@@ -68,7 +68,7 @@ export async function Intermediates({
               {group.items.map((item) => (
                 <li
                   key={item.name}
-                  className="inline-flex items-baseline gap-2 rounded-sm border border-steel-200 bg-white px-2.5 py-1.5 text-[0.8125rem] text-steel-700"
+                  className="inline-flex items-baseline gap-2 rounded-full bg-steel-100 px-3 py-1.5 text-[0.8125rem] text-steel-700"
                 >
                   {item.formula ? <span className="font-mono font-medium text-navy-900">{item.formula}</span> : null}
                   <span>{p(item.name)}</span>

@@ -287,7 +287,7 @@ function MegaMenu({
           >
             {item.columns.map((col) => (
               <div key={col.heading}>
-                <p className="mb-4 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
+                <p className="mb-4 label text-steel-500">
                   {p(col.heading)}
                 </p>
                 <ul className="space-y-0.5">

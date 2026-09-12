@@ -37,7 +37,7 @@ export function CompareTray() {
     >
       <div className="mx-auto flex max-w-container flex-col gap-3 px-5 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 lg:px-8">
         <div className="flex min-w-0 flex-1 items-center gap-3">
-          <p className="hidden shrink-0 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-brand-300 sm:block">
+          <p className="hidden shrink-0 label text-brand-300 sm:block">
             Comparing {ids.length}
           </p>
           <ul className="scroll-x flex min-w-0 flex-1 items-center gap-2 pb-1 sm:pb-0">

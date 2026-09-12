@@ -65,10 +65,10 @@ export default async function FerroAlloysPage() {
               ))}
             </ul>
 
-            <h3 className="mt-10 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">{p("Forms")}</h3>
+            <h3 className="mt-10 label text-steel-500">{p("Forms")}</h3>
             <ul className="mt-4 flex flex-wrap gap-2">
               {acceptedForms.map((form) => (
-                <li key={form.name} className="rounded-sm border border-steel-300 px-3 py-1.5 text-[0.875rem] text-navy-900">
+                <li key={form.name} className="rounded-full bg-steel-100 px-3.5 py-1.5 text-[0.875rem] text-navy-900">
                   {p(form.name)}
                 </li>
               ))}

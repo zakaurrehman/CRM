@@ -63,7 +63,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
           <SymbolBox
             symbol={family.symbol}
             size="lg"
-            className={family.images[0] ? "border-white/40 bg-white/10 text-white" : undefined}
+            className={family.images[0] ? "bg-white/15 text-white" : undefined}
           />
         }
         intro={
@@ -80,8 +80,8 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
             {p("Request a quotation")}
           </Button>
           {family.threshold ? (
-            <span className="inline-flex items-center gap-2 font-mono text-[0.8125rem] text-steel-500 [.on-dark_&]:text-steel-300">
-              <span className="rounded-sm border border-current px-2 py-0.5 font-medium">{family.threshold}</span>
+            <span className="inline-flex items-center gap-2 text-[0.875rem] text-steel-500 [.on-dark_&]:text-steel-300">
+              <span className="rounded-full bg-steel-100 px-2.5 py-1 font-medium text-navy-900 [.on-dark_&]:bg-white/15 [.on-dark_&]:text-white">{family.threshold}</span>
               {p("minimum content")}
             </span>
           ) : null}
@@ -98,12 +98,25 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
               {family.detail ? <> {p(family.detail)}</> : null}
             </p>
 
-            <h3 className="mt-10 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
+            {family.accepted ? (
+              /* The trade's categories for this metal, one per line — the
+                 same quiet list the intermediaries use. */
+              <ul className="mt-8 border-t border-steel-200">
+                {family.accepted.map((entry, i) => (
+                  <Reveal as="li" key={entry.term} delay={i * 40} className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 border-b border-steel-200 py-3">
+                    <span className="text-[0.9375rem] font-medium text-navy-900">{p(entry.term)}</span>
+                    {entry.note ? <span className="text-[0.875rem] text-steel-500">{p(entry.note)}</span> : null}
+                  </Reveal>
+                ))}
+              </ul>
+            ) : null}
+
+            <h3 className="mt-10 label text-steel-500">
               {p("Forms")}
             </h3>
             <ul className="mt-4 flex flex-wrap gap-2">
               {acceptedForms.map((form) => (
-                <li key={form.name} className="rounded-sm border border-steel-300 px-3 py-1.5 text-[0.875rem] text-navy-900">
+                <li key={form.name} className="rounded-full bg-steel-100 px-3.5 py-1.5 text-[0.875rem] text-navy-900">
                   {p(form.name)}
                 </li>
               ))}
@@ -111,7 +124,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
 
             {ownIntermediates.length > 0 ? (
               <div className="mt-10">
-                <h3 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
+                <h3 className="label text-steel-500">
                   {p("Powders, oxides & intermediaries")}
                 </h3>
                 <IntermediatesList items={ownIntermediates} className="mt-4" />
@@ -214,7 +227,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
                   </div>
                   <p className="mt-4 flex-1 text-[0.875rem] leading-relaxed text-steel-600">{p(item.accepts)}</p>
                   {item.threshold ? (
-                    <span className="mt-4 font-mono text-[0.6875rem] text-brand-700">{item.threshold}</span>
+                    <span className="mt-4 self-start rounded-full bg-steel-100 px-2.5 py-0.5 text-[0.75rem] font-medium text-navy-900">{item.threshold}</span>
                   ) : null}
                 </Link>
               </li>

@@ -39,6 +39,20 @@ Two formulas were normalised from the list as sent and need a yes from IMS:
 not a commercial intermediate). YTO and WO₃ are listed as sent — YTO is a
 grade of WO₃, so they could be one item.
 
+### Round 3 — 12 September, 15:47
+
+- **Refractory scrap categories.** Each of W, Mo, Nb, Ta and Hf now lists
+  what it accepts, in the trade's terms — VQ (vacuum quality), air-melt,
+  master alloys (MoTi, NiNb, Ni-Hf…), the common alloys (TZM, NbTi, Ta-W,
+  C-103…) and off-spec scrap with contamination. Proposed from the standard
+  categories at IMS's request; **IMS strikes any it does not buy.** Data:
+  `accepted` in `data/portfolio.ts`.
+- **Quieter design.** Labels moved from the mono face to the text face
+  (one token — `eyebrow` and the new `label` class — across the whole
+  site); the symbol tiles, pills and threshold marks lost their borders for
+  a soft tint; the accepted-forms strip lost its cells. Mono stays for
+  data: formulas, prices, tables.
+
 One deviation from the original plan: Stainless Steel sits in a group named
 **"Ferro Alloys & Stainless"** beside FeNiCr, rather than under a bare "Ferro
 Alloys" heading — stainless is a steel, not a ferro-alloy, and the heading

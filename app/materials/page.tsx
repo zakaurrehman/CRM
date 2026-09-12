@@ -87,7 +87,7 @@ export default async function PortfolioPage() {
         />
         {reference.length > 0 ? (
           <div className="mt-12">
-            <h3 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
+            <h3 className="label text-steel-500">
               {p("Other tables")}
             </h3>
             <ul className="mt-4 grid grid-rule sm:grid-cols-2 lg:grid-cols-4">
@@ -100,7 +100,7 @@ export default async function PortfolioPage() {
                     <span className="font-display text-[0.9375rem] font-semibold text-navy-900 transition-colors group-hover:text-brand-700">
                       {category.name}
                     </span>
-                    <span className="mt-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500 tabular-nums">
+                    <span className="mt-1.5 label text-steel-500 tabular-nums">
                       {p("{n} grades", { n: category.gradeCount })}
                     </span>
                   </Link>

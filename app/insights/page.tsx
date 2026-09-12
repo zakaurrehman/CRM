@@ -58,7 +58,7 @@ export default async function InsightsPage() {
                 />
               </div>
               <div className="lg:col-span-5 lg:self-center">
-                <p className="flex items-center gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500">
+                <p className="flex items-center gap-3 label text-steel-500">
                   <span className="text-brand-700">{p("Latest")}</span>
                   <span aria-hidden className="h-px w-6 bg-steel-300" />
                   <time dateTime={lead.published}>{formatDate(lead.published, localeMeta[locale].tag)}</time>
@@ -81,7 +81,7 @@ export default async function InsightsPage() {
 
       {rest.length > 0 ? (
         <Section tone="light">
-          <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
+          <h2 className="label text-steel-500">
             {p("More insights")}
           </h2>
           <ul className="mt-8 grid grid-rule sm:grid-cols-2">
@@ -98,7 +98,7 @@ export default async function InsightsPage() {
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-7">
-                    <p className="flex items-center gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500">
+                    <p className="flex items-center gap-3 label text-steel-500">
                       <time dateTime={article.published}>{formatDate(article.published, localeMeta[locale].tag)}</time>
                       <span aria-hidden className="h-px w-5 bg-steel-300" />
                       <span>{p("{n} min read", { n: article.readingMinutes })}</span>

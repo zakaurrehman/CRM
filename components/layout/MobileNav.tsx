@@ -167,7 +167,7 @@ export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: bo
                     </Link>
                     {item.columns.map((col) => (
                       <div key={p(col.heading)} className="mb-3 last:mb-0">
-                        <p className="mb-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
+                        <p className="mb-1 label text-steel-500">
                           {p(col.heading)}
                         </p>
                         <ul>

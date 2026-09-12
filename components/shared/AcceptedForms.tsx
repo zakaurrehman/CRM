@@ -21,15 +21,10 @@ export async function AcceptedForms({ heading = "Accepted forms" }: { heading?: 
           <Reveal>
             <p className="eyebrow">{p(heading)}</p>
           </Reveal>
-          <ul className="mt-6 grid grid-cols-2 border-t border-white/10 sm:grid-cols-3 lg:grid-cols-6">
+          <ul className="mt-5 flex flex-wrap gap-x-10 gap-y-3 border-y border-white/10 py-6 lg:gap-x-14">
             {acceptedForms.map((form, i) => (
-              <Reveal
-                as="li"
-                key={form.name}
-                delay={i * 60}
-                className="border-b border-e border-white/10 px-4 py-5 sm:px-5 lg:py-6 [&:nth-child(2n)]:border-e-0 sm:[&:nth-child(2n)]:border-e sm:[&:nth-child(3n)]:border-e-0 lg:[&:nth-child(3n)]:border-e lg:last:border-e-0"
-              >
-                <span className="font-display text-lg font-semibold tracking-tight text-white lg:text-xl">
+              <Reveal as="li" key={form.name} delay={i * 60}>
+                <span className="font-display text-xl font-semibold tracking-tight text-white lg:text-2xl">
                   {p(form.name)}
                 </span>
               </Reveal>
@@ -47,7 +42,7 @@ export async function AcceptedForms({ heading = "Accepted forms" }: { heading?: 
             <dl className="mt-5 grid gap-x-8 gap-y-4 border-t border-white/10 pt-5 sm:grid-cols-2 lg:grid-cols-3">
               {acceptedForms.map((form) => (
                 <div key={form.name}>
-                  <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.13em] text-brand-300">{p(form.name)}</dt>
+                  <dt className="label text-brand-300">{p(form.name)}</dt>
                   <dd className="mt-1.5 text-[0.875rem] leading-relaxed text-steel-300">
                     {form.covers.map((c) => p(c)).join(" · ")}
                   </dd>

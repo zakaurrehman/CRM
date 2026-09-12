@@ -207,7 +207,7 @@ export function RfqForm() {
       {/* ---------- line items ---------- */}
       <fieldset>
         <div className="flex flex-wrap items-end justify-between gap-3">
-          <legend className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
+          <legend className="label text-steel-500">
             {p("Materials to quote")}
           </legend>
           {importable.length > 0 ? (
@@ -234,7 +234,7 @@ export function RfqForm() {
             return (
               <li key={i} className="rounded-md border border-steel-200 bg-white p-4 sm:p-5">
                 <div className="flex items-start justify-between gap-3">
-                  <span className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500">
+                  <span className="label text-steel-500">
                     {p("Line {n}", { n: i + 1 })}
                   </span>
                   {lines.length > 1 ? (
@@ -359,7 +359,7 @@ export function RfqForm() {
 
       {/* ---------- requester ---------- */}
       <fieldset className="space-y-6 border-t border-steel-200 pt-8">
-        <legend className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
+        <legend className="label text-steel-500">
           {p("Your details")}
         </legend>
 

@@ -27,7 +27,7 @@ export async function Footer() {
             </p>
 
             <address className="mt-8 not-italic">
-              <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-400">{p("Head office")}</p>
+              <p className="label text-steel-400">{p("Head office")}</p>
               <p className="mt-2 text-[0.9375rem] leading-relaxed text-steel-300">
                 {contact.address.street}
                 <br />
@@ -69,7 +69,7 @@ export async function Footer() {
           <div className="grid gap-10 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-4 lg:gap-8">
             {footerNavigation.map((col) => (
               <nav key={p(col.heading)} aria-label={p(col.heading)}>
-                <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-400">
+                <h2 className="label text-steel-400">
                   {p(col.heading)}
                 </h2>
                 <ul className="mt-4 space-y-2.5">

@@ -52,7 +52,11 @@ const config: Config = {
         "display-lg": ["clamp(1.625rem, 2.6vw, 2.125rem)", { lineHeight: "1.16", letterSpacing: "-0.02em", fontWeight: "600" }],
         "display-md": ["clamp(1.375rem, 2vw, 1.6875rem)", { lineHeight: "1.22", letterSpacing: "-0.016em", fontWeight: "700" }],
         "display-sm": ["clamp(1.1875rem, 1.6vw, 1.4375rem)", { lineHeight: "1.3", letterSpacing: "-0.011em", fontWeight: "700" }],
-        eyebrow: ["0.6875rem", { lineHeight: "1", letterSpacing: "0.13em", fontWeight: "600" }],
+        /* Labels are set in the text face, not the mono: mono is for data —
+           formulas, prices, tables — and a mono label reads as a readout.
+           Tracking is loose enough to read as small caps, not so loose that
+           it shouts. */
+        eyebrow: ["0.6875rem", { lineHeight: "1", letterSpacing: "0.09em", fontWeight: "500" }],
       },
       /* 13 backs the `lg` button height; 18/22/30 the section rhythm. */
       spacing: { 13: "3.25rem", 18: "4.5rem", 22: "5.5rem", 30: "7.5rem" },

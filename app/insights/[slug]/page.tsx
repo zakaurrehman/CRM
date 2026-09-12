@@ -63,7 +63,7 @@ export default async function ArticlePage({ params }: Params) {
             <div className="py-12 sm:py-16">
               <Breadcrumbs trail={trail} />
               <div className="mt-8 max-w-3xl">
-                <p className="flex items-center gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500">
+                <p className="flex items-center gap-3 label text-steel-500">
                   <time dateTime={article.published}>{formatDate(article.published, localeMeta[locale].tag)}</time>
                   <span aria-hidden className="h-px w-6 bg-steel-300" />
                   <span>{p("{n} min read", { n: article.readingMinutes })}</span>
@@ -112,7 +112,7 @@ export default async function ArticlePage({ params }: Params) {
 
             <aside className="lg:col-span-3 lg:col-start-10">
               <div className="lg:sticky lg:top-28">
-                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">{p("Talk to IMS")}</p>
+                <p className="label text-steel-500">{p("Talk to IMS")}</p>
                 <p className="mt-4 content-en text-[0.9375rem] leading-relaxed text-steel-600">
                   {p("If this touches on a material requirement of your own, our team can tell you what we can supply or recover.")}
                 </p>
@@ -128,7 +128,7 @@ export default async function ArticlePage({ params }: Params) {
 
       {more.length > 0 ? (
         <Section tone="light">
-          <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
+          <h2 className="label text-steel-500">
             {p("More insights")}
           </h2>
           <ul className="mt-8 grid grid-rule sm:grid-cols-2">
@@ -147,7 +147,7 @@ export default async function ArticlePage({ params }: Params) {
                   <div className="flex flex-1 flex-col p-7">
                     <time
                       dateTime={item.published}
-                      className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-steel-500"
+                      className="label text-steel-500"
                     >
                       {formatDate(item.published)}
                     </time>

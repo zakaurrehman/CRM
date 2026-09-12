@@ -89,7 +89,7 @@ export default async function WhatWeDoPage() {
             <ul className="mt-8 grid gap-x-8 gap-y-6 sm:grid-cols-3">
               {portfolioGroups.map((group) => (
                 <li key={group.id}>
-                  <h3 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">{p(group.name)}</h3>
+                  <h3 className="label text-steel-500">{p(group.name)}</h3>
                   <ul className="mt-3 space-y-1.5">
                     {familiesInGroup(group.id).map((family) => (
                       <li key={family.slug}>
@@ -100,7 +100,7 @@ export default async function WhatWeDoPage() {
                           {family.name}
                         </Link>
                         {family.threshold ? (
-                          <span className="ms-2 font-mono text-[0.6875rem] text-brand-700">{family.threshold}</span>
+                          <span className="ms-2 text-[0.75rem] font-medium text-steel-500">{family.threshold}</span>
                         ) : null}
                       </li>
                     ))}
@@ -108,7 +108,7 @@ export default async function WhatWeDoPage() {
                 </li>
               ))}
               <li>
-                <h3 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">{p("Also")}</h3>
+                <h3 className="label text-steel-500">{p("Also")}</h3>
                 <ul className="mt-3 space-y-1.5">
                   <li>
                     <Link href="/materials/ferro-alloys" className="text-[0.9375rem] text-navy-900 underline decoration-steel-300 underline-offset-4 transition-colors hover:text-brand-700 hover:decoration-brand-700">

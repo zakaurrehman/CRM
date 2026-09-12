@@ -96,9 +96,15 @@
   }
 
   .eyebrow {
-    @apply font-mono text-eyebrow uppercase text-brand-700;
+    @apply font-sans text-eyebrow uppercase text-brand-700;
   }
   .on-dark .eyebrow { @apply text-brand-300; }
+
+  /* The quiet sibling of the eyebrow: a section label in the neutral. */
+  .label {
+    @apply font-sans text-eyebrow uppercase text-steel-500;
+  }
+  .on-dark .label { @apply text-steel-400; }
 
   /**
    * Scroll reveal.

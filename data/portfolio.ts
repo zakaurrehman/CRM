@@ -66,6 +66,14 @@ export interface PortfolioFamily {
   tables: TableRef[];
   /** The intro's supporting line, where it has one beyond the name. */
   detail?: string;
+  /**
+   * The scrap categories accepted, as the refractory-metal trade names them
+   * — listed on the material page. Proposed from the trade's standard
+   * categories at IMS's request (12 Sept: "Mo VQ, Mo air-melt, MoTi, master
+   * alloys, off-spec Mo scrap with contamination — valid for all the
+   * refractory metals"); IMS strikes any it does not buy.
+   */
+  accepted?: { term: string; note?: string }[];
   /** Specific physical forms accepted, each with its photograph, where IMS has published them. */
   forms?: TungstenForm[];
 }
@@ -153,6 +161,13 @@ export const portfolioFamilies: PortfolioFamily[] = [
     group: "metals",
     accepts: "Hafnium and nickel-hafnium master alloys.",
     detail: "An expanding capability, alongside advanced master alloys.",
+    accepted: [
+      { term: "Hf VQ", note: "vacuum quality" },
+      { term: "Hf crystal bar and sponge" },
+      { term: "Ni-Hf and other master alloys" },
+      { term: "Hf-Zr and C-103 alloys" },
+      { term: "Off-spec Hf scrap with contamination" },
+    ],
     images: [],
     tables: [],
   },
@@ -164,6 +179,14 @@ export const portfolioFamilies: PortfolioFamily[] = [
     threshold: "8%+",
     accepts: "Incl. offgrade and units containing 8%+ content.",
     detail: "Carbide, Densalloy, CP-W, heavy metals, swarf, sludge and crucibles.",
+    accepted: [
+      { term: "W VQ", note: "vacuum quality" },
+      { term: "W air-melt" },
+      { term: "Tungsten carbide, Densalloy, CP-W and heavy metals" },
+      { term: "W-Re, W-Cu and W-La alloys" },
+      { term: "Master alloys" },
+      { term: "Off-spec W scrap with contamination" },
+    ],
     images: [
       "/images/tungsten/densalloy.jpg",
       "/images/tungsten/cc-inserts.jpg",
@@ -180,6 +203,13 @@ export const portfolioFamilies: PortfolioFamily[] = [
     group: "metals",
     threshold: "8%+",
     accepts: "Incl. offgrade and units containing 8%+ content.",
+    accepted: [
+      { term: "Mo VQ", note: "vacuum quality" },
+      { term: "Mo air-melt" },
+      { term: "MoTi and other master alloys" },
+      { term: "TZM, Mo-Re, Mo-Cu and Mo-La alloys" },
+      { term: "Off-spec Mo scrap with contamination" },
+    ],
     images: [],
     tables: [],
   },
@@ -190,6 +220,13 @@ export const portfolioFamilies: PortfolioFamily[] = [
     group: "metals",
     threshold: "10%+",
     accepts: "Units containing 10%+ niobium, including off-grade.",
+    accepted: [
+      { term: "Nb VQ", note: "vacuum quality" },
+      { term: "NbTi", note: "superconductor scrap" },
+      { term: "NiNb and other master alloys" },
+      { term: "Nb-Zr, C-103 and other Nb alloys" },
+      { term: "Off-spec Nb scrap with contamination" },
+    ],
     images: [],
     tables: [],
   },
@@ -200,6 +237,13 @@ export const portfolioFamilies: PortfolioFamily[] = [
     group: "metals",
     threshold: "10%+",
     accepts: "Units containing 10%+ tantalum, including off-grade.",
+    accepted: [
+      { term: "Ta VQ", note: "vacuum quality" },
+      { term: "Ta-W alloys", note: "Ta-2.5W, Ta-10W" },
+      { term: "Capacitor and sputter-target scrap" },
+      { term: "Master alloys" },
+      { term: "Off-spec Ta scrap with contamination" },
+    ],
     images: [],
     tables: [],
   },

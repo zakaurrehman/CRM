@@ -71,7 +71,7 @@ export function SearchResults() {
         <div className="mt-10 space-y-12">
           {grouped.map(([kind, docs]) => (
             <section key={kind}>
-              <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-steel-500">
+              <h2 className="label text-steel-500">
                 {kindLabels[kind]} <span className="text-steel-400">({docs.length})</span>
               </h2>
               <ul className={cn("mt-4", kind === "grade" ? "flex flex-wrap gap-2" : "border-t border-steel-200")}>
