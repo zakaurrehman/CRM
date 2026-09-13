@@ -23,6 +23,13 @@ export interface WelcomeSlide {
   src: string;
   /** Not rendered — decorative — but kept so the set is self-documenting. */
   subject: string;
+  /**
+   * Darkens this frame before the shade: for a bright photograph — bright
+   * alloy turnings — where the even shade alone leaves the type without a
+   * floor. 1 is unchanged; 0.55 brings a silver frame down to where the
+   * darker frames already sit.
+   */
+  brightness?: number;
 }
 
 const INTERVAL_MS = 3000;
@@ -125,6 +132,7 @@ export function WelcomeBackdrop({ slides }: { slides: WelcomeSlide[] }) {
               i === index ? "opacity-100" : "opacity-0",
               i === index && animate && "motion-safe:animate-slow-zoom",
             )}
+            style={slide.brightness !== undefined ? { filter: `brightness(${slide.brightness})` } : undefined}
           />
         ))}
       </div>

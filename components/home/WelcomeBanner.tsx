@@ -64,8 +64,10 @@ export async function WelcomeBanner() {
              download, supplied by IMS on 14 September 2026, replacing the
              watermarked preview that stood here for a day. */
           { src: "/images/hero/E101X506.jpeg", subject: "Cast turbine wheels" },
+          /* Second, on IMS's word (14 September 2026): the turnings — the
+             material itself, the form most of it arrives in. */
+          { src: "/images/hero/turnings.jpg", subject: "Bright alloy turnings", brightness: 0.55 },
           { src: "/images/hero/hot-metal-plate.jpg", subject: "Hot metal slab in the cast house" },
-          { src: "/images/turbine/turbine-manufacturing.jpg", subject: "Turbine rotor on the shop floor" },
         ]}
       />
 
