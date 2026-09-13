@@ -62,6 +62,13 @@ export async function WelcomeBanner() {
     <section className="relative isolate overflow-hidden bg-steel-950">
       <WelcomeBackdrop
         slides={[
+          /* First, so it is the frame a visitor arrives on and the one that
+             holds under reduced motion: cast turbine wheels, the kind of
+             superalloy part (713-type) the portfolio leads with.
+             This file is Envato Elements' watermarked preview, used on IMS's
+             instruction (13 September 2026) until the licensed download is
+             supplied. Replace it at the same slot; nothing else changes. */
+          { src: "/images/hero/E101X506.avif", subject: "Cast turbine wheels" },
           { src: "/images/hero/hot-metal-plate.jpg", subject: "Hot metal slab in the cast house" },
           { src: "/images/turbine/turbine-manufacturing.jpg", subject: "Turbine rotor on the shop floor" },
         ]}

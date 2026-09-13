@@ -139,6 +139,14 @@ accepted-categories pattern as hafnium. Both legacy zirconium URLs 301 to
 it. Fifteen cards; the alloys fill two rows exactly, the metals the next
 two. Photos needed: four.
 
+### Round 9 — new first frame for the opening band (13 September)
+
+Cast turbine wheels (`public/images/hero/E101X506.avif`) lead the backdrop
+sequence, ahead of the hot slab and the turbine rotor. **This is Envato
+Elements' watermarked preview — the "envato" marks are visible through the
+shade.** Used on IMS's instruction; replace with the licensed download at the
+same slot in `components/home/WelcomeBanner.tsx` when IMS supplies it.
+
 One deviation from the original plan: Stainless Steel sits in a group named
 **"Ferro Alloys & Stainless"** beside FeNiCr, rather than under a bare "Ferro
 Alloys" heading — stainless is a steel, not a ferro-alloy, and the heading
