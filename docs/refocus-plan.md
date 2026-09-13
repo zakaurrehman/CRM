@@ -147,6 +147,19 @@ Elements' watermarked preview — the "envato" marks are visible through the
 shade.** Used on IMS's instruction; replace with the licensed download at the
 same slot in `components/home/WelcomeBanner.tsx` when IMS supplies it.
 
+### Round 10 — FX rates off (13 September)
+
+IMS weighed swapping USD/ILS for a GBP/EUR pair against removing the FX
+rates altogether, since they are more use to IMS-Tech than to IMS's buyers.
+**Removed.** The strip under the header now shows metal prices only, and
+renders only when `METALS_API_KEY` is set — which it is not, so today there
+is no strip. Nothing is deleted: the rates feed, pair quoting and API are
+intact, and `<MarketBoard rates />` brings the pairs back.
+
+If the pairs return with the swap: the market writes that pair **EUR/GBP**,
+not GBP/EUR, and every pair on the board is currently quoted against the
+dollar, so a cross rate needs a small change to `toFxPair`.
+
 One deviation from the original plan: Stainless Steel sits in a group named
 **"Ferro Alloys & Stainless"** beside FeNiCr, rather than under a bare "Ferro
 Alloys" heading — stainless is a steel, not a ferro-alloy, and the heading

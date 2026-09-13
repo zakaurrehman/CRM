@@ -88,7 +88,18 @@ function useNow(everyMs: number): number {
   return now;
 }
 
-export function MarketBoard({ className }: { className?: string }) {
+export function MarketBoard({
+  className,
+  rates = false,
+}: {
+  className?: string;
+  /**
+   * Show the currency pairs. Off since 13 September 2026, on IMS's word: the
+   * FX rates served IMS-Tech rather than IMS's buyers. The feed, the pair
+   * quoting and the API are all intact; passing `rates` brings them back.
+   */
+  rates?: boolean;
+}) {
   const p = useP();
   const { locale } = useI18n();
   const [data, setData] = useState(getCachedMarket);
@@ -181,7 +192,7 @@ export function MarketBoard({ className }: { className?: string }) {
   }, [data, tag]);
 
   const rateRows = useMemo(() => {
-    if (!data?.rates) return [];
+    if (!rates || !data?.rates) return [];
     const feedChange = data.rates.change ?? {};
     return data.currencies
       .filter((c) => c !== "USD" && typeof data.rates?.rates[c] === "number")
@@ -194,7 +205,7 @@ export function MarketBoard({ className }: { className?: string }) {
         return { ...pair, change, pegged: PEGGED_TO_BASE.has(c) };
       })
       .filter((row): row is NonNullable<typeof row> => row !== null);
-  }, [data]);
+  }, [data, rates]);
 
   if (status === "loading") {
     return (

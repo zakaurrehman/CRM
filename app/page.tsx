@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { MarketBoard } from "@/components/market/MarketBoard";
+import { isMetalsConfigured } from "@/lib/market/metals";
 import { Container } from "@/components/ui/Container";
 import { WelcomeBanner } from "@/components/home/WelcomeBanner";
 import { WhatWeDo } from "@/components/home/WhatWeDo";
@@ -32,14 +33,20 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Directly under the header, where IMS wants the numbers: a thin strip
-          a reader passes over on the way in. Renders nothing when neither feed
-          has data. */}
-      <div className="on-dark border-b border-white/10 bg-navy-950">
-        <Container>
-          <MarketBoard className="py-4 lg:py-5" />
-        </Container>
-      </div>
+      {/* Metal prices, directly under the header. The FX rates that shared
+          this strip are off, on IMS's word (13 September 2026): they served
+          IMS-Tech, not IMS's buyers. The band renders only when a metals feed
+          is configured, decided here on the server — so with no key there is
+          no strip at all, rather than a loading skeleton that collapses to an
+          empty line on every visit. It returns as soon as METALS_API_KEY is
+          set. */}
+      {isMetalsConfigured() ? (
+        <div className="on-dark border-b border-white/10 bg-navy-950">
+          <Container>
+            <MarketBoard className="py-4 lg:py-5" />
+          </Container>
+        </div>
+      ) : null}
       <WelcomeBanner />
       <WhatWeDo />
       <PortfolioSection />
