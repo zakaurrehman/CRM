@@ -28,9 +28,9 @@ export async function ReferencePage({ category }: { category: AlloyCategory }) {
   return (
     <>
       <PageHero eyebrow={p("Grade reference")} title={category.name} intro={category.summary} trail={trail}>
-        <p className="max-w-2xl border-s-2 border-steel-300 ps-5 text-[0.9375rem] leading-relaxed text-steel-600">
+        <p className="max-w-2xl border-s-2 border-white/30 ps-5 text-[0.9375rem] leading-relaxed text-steel-300">
           {p("This table is kept for reference. The material families IMS currently buys, blends and supplies are on the")}{" "}
-          <Link href="/materials" className="text-navy-900 underline decoration-steel-300 underline-offset-4 hover:text-brand-700 hover:decoration-brand-700">
+          <Link href="/materials" className="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">
             {p("portfolio page")}
           </Link>
           .

@@ -37,7 +37,6 @@ export default async function FerroAlloysPage() {
         title={p("Ferroalloys")}
         intro={p("Ferro-nickel-chrome, ferro-tungsten, ferro-molybdenum, ferro-niobium and ferro-titanium — bought and supplied in all sizes, packings and specifications. FeNiCr is the blend developed for refiners, alloy producers and stainless steel mills.")}
         trail={trail}
-        tone="dark"
       />
 
       <Section tone="white">

@@ -43,6 +43,8 @@ export default async function ContactPage() {
         title={p("Contact IMS")}
         intro={p("Email for buying, selling and other material enquiries; WhatsApp for a quick question; a message form for anything else.")}
         trail={trail}
+        image="/images/hero/turnings.jpg"
+        imageAlt=""
       />
 
       <Section tone="white">

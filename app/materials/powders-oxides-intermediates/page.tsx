@@ -43,7 +43,6 @@ export default async function IntermediatesPage() {
         title={p("Powders, Oxides & Intermediates")}
         intro={p("The intermediate products of refining and tool-making that IMS takes alongside scrap — {n} products, grouped by metal, each assessed on its contained metal.", { n: count })}
         trail={trail}
-        tone="dark"
       />
 
       <Section tone="white">

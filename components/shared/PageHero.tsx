@@ -6,11 +6,10 @@ import { cn } from "@/lib/utils";
 /**
  * Interior page header.
  *
- * Two treatments share one component so every non-home page opens with the same
- * rhythm: a dark editorial band or a light typographic one. A photograph
- * makes the band dark; `tone="dark"` makes it dark without one, which is how
- * every portfolio material page opens the same way whether or not IMS has
- * supplied a photograph of it yet (IMS, 14 September 2026).
+ * Every interior page opens on the same dark band (IMS, 14 September 2026),
+ * with a photograph faintly behind it where one is given and plain where
+ * not. `tone="light"` is kept for a page that has a reason to open light;
+ * none does at present.
  */
 export function PageHero({
   eyebrow,
@@ -33,11 +32,11 @@ export function PageHero({
   image?: string;
   imageAlt?: string;
   align?: "left" | "wide";
-  /** Force the dark band. Defaults to dark with a photograph, light without. */
+  /** The band is dark by default; "light" opts out. */
   tone?: "dark" | "light";
   children?: React.ReactNode;
 }) {
-  const dark = tone ? tone === "dark" : Boolean(image);
+  const dark = tone !== "light";
 
   return (
     <section

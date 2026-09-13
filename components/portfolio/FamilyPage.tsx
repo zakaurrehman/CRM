@@ -60,7 +60,6 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
       <PageHero
         eyebrow={p("Portfolio")}
         title={p(family.name)}
-        tone="dark"
         mark={<ElementMark symbol={family.symbol} size="lg" aligned={false} tone="onDark" />}
         intro={
           <>
