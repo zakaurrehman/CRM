@@ -58,7 +58,7 @@ export default async function PortfolioPage() {
       />
 
       <Section tone="white">
-        <PortfolioGrid priority />
+        <PortfolioGrid />
       </Section>
 
       <Section tone="light" id="intermediates">

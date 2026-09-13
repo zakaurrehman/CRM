@@ -167,6 +167,20 @@ Cobalt-Based Alloys, in the menu, footer and grid. The group is renamed
 **Nickel, Cobalt, Titanium & Steels** so its heading still describes what is
 in it; **Reactive & Refractory Metals** is now Zr, Hf, W, Mo, Nb and Ta.
 
+### Round 12 — no photographs on the portfolio cards (13 September)
+
+IMS asked whether the cards need photographs. They do not, so they are off:
+eight of fifteen had none, which made the grid read as unfinished; scrap of
+one metal looks much like scrap of another, so a photo did not tell cards
+apart — the symbols do; and the rotation was the movement IMS had found too
+much. Cards are now symbol, threshold, name, one line and the link, five
+across on a wide screen (three even rows).
+
+**Photographs are not wasted.** They stay on each material's own page — the
+first in its header, the rest cross-fading under "What we accept" — so the
+Mo, Nb and W photographs already supplied are still shown, and the photo
+list is now for those pages rather than a gap on the homepage.
+
 One deviation from the original plan: Stainless Steel sits in a group named
 **"Ferro Alloys & Stainless"** beside FeNiCr, rather than under a bare "Ferro
 Alloys" heading — stainless is a steel, not a ferro-alloy, and the heading

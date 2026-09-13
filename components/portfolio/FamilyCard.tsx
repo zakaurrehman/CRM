@@ -1,86 +1,55 @@
 import Link from "next/link";
 import type { PortfolioFamily } from "@/data/portfolio";
 import { getP } from "@/lib/i18n/server";
-import { RotatingImage } from "@/components/ui/RotatingImage";
 import { cn } from "@/lib/utils";
 
 /**
  * One material in the portfolio grid.
  *
- * Symbol first, then the name — "Ti · Titanium" — as IMS asked: the symbol
- * sits in a small square, the way an element sits in a periodic table, and
- * the name follows it. Where the material is an alloy family rather than an
- * element the square holds the trade shorthand instead (HSS, 18Ni).
+ * Symbol first, then the name, as IMS asked: the symbol sits in a square the
+ * way an element sits in a periodic table. Where the material is an alloy
+ * family rather than an element the square holds the trade shorthand instead
+ * (HSS, 18Ni).
  *
- * Deliberately little else: one line on what is accepted, the threshold
- * where the intro states one, and a way in. Grade counts, property tags and
- * a paragraph of metallurgy were what made the old cards heavy — those live
- * on the material page now, below the fold.
+ * No photograph. The cards used to open with one, rotating, and it came off on
+ * 13 September 2026: scrap of one metal looks much like scrap of another, so
+ * the photo did not help anyone tell the cards apart — the symbol does that —
+ * and with half the materials still unphotographed the grid read as
+ * unfinished. Photographs live on each material's own page, where there is
+ * room to show what a lot actually looks like.
  *
- * The whole card is the link. Its label promises the page it opens — details
- * and a quotation — rather than pretending to be a quotation button itself.
+ * Deliberately little else: the threshold where the intro states one, one line
+ * on what is accepted, and a way in. The whole card is the link.
  */
-export async function FamilyCard({
-  family,
-  index = 0,
-  priority = false,
-  className,
-}: {
-  family: PortfolioFamily;
-  /** Position in the grid; staggers the photo rotation so cards do not flip together. */
-  index?: number;
-  priority?: boolean;
-  className?: string;
-}) {
+export async function FamilyCard({ family, className }: { family: PortfolioFamily; className?: string }) {
   const p = await getP();
 
   return (
     <Link
       href={"/materials/" + family.slug}
       className={cn(
-        "group relative flex h-full flex-col bg-white transition-[background-color,box-shadow] duration-300 hover:z-10 hover:bg-white hover:shadow-card",
+        "group relative flex h-full flex-col bg-white p-6 transition-[background-color,box-shadow] duration-300 hover:z-10 hover:shadow-card",
         className,
       )}
     >
-      <div className="relative aspect-[16/10] overflow-hidden bg-steel-100">
-        {family.images.length > 0 ? (
-          <RotatingImage
-            images={family.images}
-            sizes="(min-width: 1024px) 20rem, (min-width: 640px) 50vw, 100vw"
-            offsetMs={(index % 4) * 1100}
-            priority={priority}
-            className="transition-transform duration-700 ease-swift group-hover:scale-[1.04]"
-          />
-        ) : (
-          /* No honest photograph of this material yet. A quiet, light slot
-             rather than a picture of some other metal — IMS is choosing the
-             shots, and this is where they go. */
-          <div aria-hidden className="absolute inset-0 bg-gradient-to-br from-steel-50 to-steel-200">
-            <div className="tech-grid-light absolute inset-0" />
-          </div>
-        )}
+      <div className="flex items-start justify-between gap-3">
+        <SymbolBox symbol={family.symbol} size="lg" />
         {family.threshold ? (
-          <span className="absolute end-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[0.75rem] font-medium text-navy-900 backdrop-blur-sm">
+          <span className="rounded-full bg-steel-100 px-2.5 py-1 text-[0.75rem] font-medium text-navy-900">
             {family.threshold}
           </span>
         ) : null}
       </div>
-
-      <div className="flex flex-1 flex-col p-6">
-        <div className="flex items-center gap-3.5">
-          <SymbolBox symbol={family.symbol} />
-          <h3 className="font-display text-[1.0625rem] font-semibold leading-snug tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
-            {family.name}
-          </h3>
-        </div>
-        <p className="mt-4 flex-1 text-[0.875rem] leading-relaxed text-steel-600">{p(family.accepts)}</p>
-        <span className="mt-5 inline-flex items-center gap-1.5 text-[0.875rem] font-medium text-brand-700">
-          {p("Details & quotation")}
-          <span aria-hidden className="transition-transform duration-200 ease-swift group-hover:translate-x-1">
-            <span className="dir-arrow">&rarr;</span>
-          </span>
+      <h3 className="mt-5 font-display text-[1.0625rem] font-semibold leading-snug tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
+        {family.name}
+      </h3>
+      <p className="mt-2 flex-1 text-[0.875rem] leading-relaxed text-steel-600">{p(family.accepts)}</p>
+      <span className="mt-5 inline-flex items-center gap-1.5 text-[0.875rem] font-medium text-brand-700">
+        {p("Details & quotation")}
+        <span aria-hidden className="transition-transform duration-200 ease-swift group-hover:translate-x-1">
+          <span className="dir-arrow">&rarr;</span>
         </span>
-      </div>
+      </span>
     </Link>
   );
 }

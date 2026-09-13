@@ -26,10 +26,11 @@ import type { TungstenForm } from "@/types/content";
  * tables themselves are untouched — grade ids, anchors and slugs stay exactly
  * as they were, because they key the compare tray, saved list and RFQ lines.
  *
- * Images are slots. Up to four per material; frame 1 is the card at rest, the
- * rest cross-fade behind it. Materials with no honest photograph yet carry an
- * empty list and the card shows a quiet slot rather than a picture of some
- * other metal. See docs/refocus-plan.md for the shot list IMS is supplying.
+ * Images are for the material's own page: the first sets its header, the rest
+ * cross-fade in the "What we accept" section. The portfolio cards carry no
+ * photograph (13 September 2026) — the symbol identifies the material. A
+ * material with no photograph yet has an empty list, and its page simply
+ * opens without one.
  */
 
 export type PortfolioGroupId = "alloys" | "metals";
@@ -64,7 +65,7 @@ export interface PortfolioFamily {
   accepts: string;
   /** Content threshold, only where the intro states one. */
   threshold?: string;
-  /** Up to four photographs; frame 1 is the card at rest. */
+  /** Up to four photographs, on the material's page: the first in its header, the rest cross-fading below. */
   images: string[];
   /** Legacy composition tables shown on the material page, in order. */
   tables: TableRef[];
