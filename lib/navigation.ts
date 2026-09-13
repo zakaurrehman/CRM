@@ -1,5 +1,6 @@
 import { portfolioGroups } from "@/data/portfolio";
 import { familiesInGroup } from "@/lib/portfolio";
+import { routes } from "@/lib/site";
 import type { AlloyGroup } from "@/types/content";
 
 export interface NavLink {
@@ -55,10 +56,11 @@ export const alloyGroupOrder: AlloyGroup[] = ["nickel", "cobalt", "ferrous", "re
 /**
  * Three plain links and one menu.
  *
- * The menu is the portfolio: the nickel, cobalt and steel families; the
- * reactive and refractory metals, each with its content threshold; then the
- * products and resources — ferroalloys, intermediates, the grade library —
- * closed by the one commercial action. Insights lives in the footer.
+ * The menu is the portfolio in three columns (IMS, 14 September 2026): the
+ * nickel, cobalt, titanium and specialty-steel families; the reactive and
+ * refractory metals, each with its content threshold; then the products and
+ * resources — ferroalloys, intermediates, the grade library — closed by the
+ * two commercial actions. Insights is offline.
  */
 const portfolioColumns: NavColumn[] = [
   ...portfolioGroups.map((group) => ({
@@ -74,9 +76,10 @@ const portfolioColumns: NavColumn[] = [
     heading: "Products & Resources",
     links: [
       { label: "Ferroalloys", href: "/materials/ferro-alloys", description: "FeNiCr, FeW, FeMo, FeNb, FeTi" },
-      { label: "Powders, Oxides & Intermediates", href: "/materials#intermediates", description: "APT, oxides, hydroxides, filtercake" },
+      { label: "Powders, Oxides & Intermediates", href: routes.intermediates, description: "APT, oxides, hydroxides, filter cake" },
       { label: "Alloy Grade Library", href: "/materials/finder", description: "Search 295 published compositions" },
-      { label: "Offer material", href: "/rfq?direction=sell", action: true },
+      { label: "Offer material", href: routes.offer, action: true },
+      { label: "Request supply", href: routes.supply, action: true },
     ],
   },
 ];
@@ -98,8 +101,9 @@ export const footerNavigation: NavColumn[] = [
     links: [
       { label: "What we do", href: "/what-we-do" },
       { label: "About IMS", href: "/about" },
-      { label: "Insights", href: "/insights" },
       { label: "Contact", href: "/contact" },
+      { label: "Privacy policy", href: routes.privacy },
+      { label: "Legal information", href: routes.legal },
     ],
   },
   ...portfolioGroups.map((group) => ({
@@ -110,10 +114,11 @@ export const footerNavigation: NavColumn[] = [
     heading: "Products & Resources",
     links: [
       { label: "Ferroalloys", href: "/materials/ferro-alloys" },
-      { label: "Powders, Oxides & Intermediates", href: "/materials#intermediates" },
+      { label: "Powders, Oxides & Intermediates", href: routes.intermediates },
       { label: "Alloy Grade Library", href: "/materials/finder" },
       { label: "Compare grades", href: "/materials/compare" },
-      { label: "Request a quotation", href: "/rfq" },
+      { label: "Offer material", href: routes.offer },
+      { label: "Request supply", href: routes.supply },
     ],
   },
 ];

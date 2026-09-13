@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { footerNavigation } from "@/lib/navigation";
-import { contact, site } from "@/lib/site";
+import { contact, routes, site } from "@/lib/site";
 
 export async function Footer() {
   const p = await getP();
@@ -23,7 +23,7 @@ export async function Footer() {
               className="h-12 w-auto opacity-90 brightness-0 invert"
             />
             <p className="mt-6 max-w-sm text-[0.9375rem] leading-relaxed text-steel-400">
-              {p("A specialised recycler and supplier to the global nickel refinery, stainless steel, superalloy, titanium and refractory metals industries.")}
+              {p(site.shortDescription)}
             </p>
 
             <address className="mt-8 not-italic">
@@ -97,11 +97,14 @@ export async function Footer() {
             &copy; {year} {site.legalName}. {p("All rights reserved.")}
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[0.8125rem]">
+            <Link href={routes.privacy} className="inline-flex min-h-[1.75rem] items-center rounded-sm text-steel-400 transition-colors hover:text-white">
+              {p("Privacy policy")}
+            </Link>
+            <Link href={routes.legal} className="inline-flex min-h-[1.75rem] items-center rounded-sm text-steel-400 transition-colors hover:text-white">
+              {p("Legal information")}
+            </Link>
             <Link href="/contact" className="inline-flex min-h-[1.75rem] items-center rounded-sm text-steel-400 transition-colors hover:text-white">
               {p("Contact")}
-            </Link>
-            <Link href="/materials" className="inline-flex min-h-[1.75rem] items-center rounded-sm text-steel-400 transition-colors hover:text-white">
-              {p("Portfolio")}
             </Link>
           </div>
         </div>

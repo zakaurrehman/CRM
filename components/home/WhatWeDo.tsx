@@ -1,11 +1,12 @@
 import { getP } from "@/lib/i18n/server";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { ArrowLink } from "@/components/ui/Button";
-import { BlendingProgram } from "@/components/shared/BlendingProgram";
+import { BlendingProgramme } from "@/components/shared/BlendingProgramme";
 
 /**
- * What IMS does. The one section the site did not have: the blending
- * program, in the intro's own sentence, and the three beats it runs in.
+ * What IMS does: the blending programme, in IMS's own sentence, and the
+ * three steps it runs in. The words keep IMS where it is — developing and
+ * managing the routes — and the processing with the network that does it.
  */
 export async function WhatWeDo() {
   const p = await getP();
@@ -14,13 +15,13 @@ export async function WhatWeDo() {
     <Section tone="white" id="what-we-do">
       <SectionHeader
         eyebrow={p("What we do")}
-        title={p("A blending program built around complex scrap.")}
-        description={p("Through our specialised blending program, we transform complex scrap streams into high-value Ni-based blends — maximising recoverable metal content and reducing downgrading.")}
+        title={p("A blending programme built around complex materials.")}
+        description={p("Through our network of specialist processing facilities, IMS develops and manages tailored nickel-based blends for refiners, alloy producers and stainless steel mills — maximising recoverable metal content and reducing unnecessary downgrading.")}
         align="split"
-        action={<ArrowLink href="/what-we-do">{p("How the program works")}</ArrowLink>}
+        action={<ArrowLink href="/what-we-do">{p("How the programme works")}</ArrowLink>}
       />
       <div className="mt-14">
-        <BlendingProgram />
+        <BlendingProgramme />
       </div>
     </Section>
   );

@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata({
   title: p("Compare Alloy Grades"),
   description:
-    p("Line up to four alloy grades side by side and compare their nominal composition element by element. Export the comparison or send it through as a quotation request."),
+    p("Line up to four alloy grades side by side and compare their nominal composition element by element. Export the comparison or send it through as an inquiry, offering or requesting the grades."),
   path: "/materials/compare",
   // The comparison is built from a selection held in the reader's own browser,
   // so there is no stable page for a crawler to index.

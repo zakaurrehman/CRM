@@ -4,11 +4,11 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 
 /**
- * The six forms IMS accepts, as a strip — six words, set large.
+ * The eight forms IMS accepts, as a strip.
  *
  * Under it, folded away, what each form covers: the residue streams the
  * previous website listed one by one now sit under the form they are.
- * IMS's "see more" — the strip stays six words at first glance, and a
+ * IMS's "see more" — the strip stays eight names at first glance, and a
  * reader who wants to know whether AOD dust counts can open it.
  */
 export async function AcceptedForms({ heading = "Accepted forms" }: { heading?: string }) {
@@ -21,10 +21,10 @@ export async function AcceptedForms({ heading = "Accepted forms" }: { heading?: 
           <Reveal>
             <p className="eyebrow">{p(heading)}</p>
           </Reveal>
-          <ul className="mt-5 flex flex-wrap gap-x-10 gap-y-3 border-y border-white/10 py-6 lg:gap-x-14">
+          <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-3 border-y border-white/10 py-6 lg:gap-x-12">
             {acceptedForms.map((form, i) => (
               <Reveal as="li" key={form.name} delay={i * 60}>
-                <span className="font-display text-xl font-medium tracking-tight text-white lg:text-2xl">
+                <span className="font-display text-lg font-medium tracking-tight text-white lg:text-xl">
                   {p(form.name)}
                 </span>
               </Reveal>
@@ -39,7 +39,7 @@ export async function AcceptedForms({ heading = "Accepted forms" }: { heading?: 
                 <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </summary>
-            <dl className="mt-5 grid gap-x-8 gap-y-4 border-t border-white/10 pt-5 sm:grid-cols-2 lg:grid-cols-3">
+            <dl className="mt-5 grid gap-x-8 gap-y-4 border-t border-white/10 pt-5 sm:grid-cols-2 lg:grid-cols-4">
               {acceptedForms.map((form) => (
                 <div key={form.name}>
                   <dt className="label text-brand-300">{p(form.name)}</dt>

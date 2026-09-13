@@ -2,24 +2,27 @@ import { getP } from "@/lib/i18n/server";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { contact } from "@/lib/site";
+import { contact, routes } from "@/lib/site";
 
 /**
- * Closing conversion band. Used at the foot of every content page.
+ * Closing conversion band: the two commercial routes.
  *
- * The default body names who IMS supplies — the intro's five — so the last
- * thing on any page says, in one line, who this is for.
+ * Not on every page any more (IMS, 14 September 2026): it closes the
+ * homepage, the portfolio and the material pages — the pages that are about
+ * what IMS buys and supplies. The company pages, the grade library and the
+ * forms end on their own content. The default copy names the two routes and
+ * promises an assessment, not an acceptance.
  */
 export async function CtaSection({
-  title = "Tell us what you have.",
-  body = "The material, the form and the quantity are enough to start. We supply nickel refineries, stainless steel mills, superalloy producers and the titanium and refractory metals industries.",
-  primary = { href: "/rfq", label: "Request a quotation" },
-  secondary,
+  title = "Offer material, or request supply.",
+  body = "Selling complex, mixed or off-spec material, or looking for supply: the material, the form and the quantity are enough to start, and we will assess the available route.",
+  primary = { href: routes.offer, label: "Offer material" },
+  secondary = { href: routes.supply, label: "Request supply" },
 }: {
   title?: string;
   body?: string;
   primary?: { href: string; label: string };
-  secondary?: { href: string; label: string };
+  secondary?: { href: string; label: string } | null;
 }) {
   const p = await getP();
 

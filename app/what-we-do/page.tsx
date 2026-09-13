@@ -4,15 +4,14 @@ import { PageHero } from "@/components/shared/PageHero";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArrowLink } from "@/components/ui/Button";
-import { BlendingProgram } from "@/components/shared/BlendingProgram";
+import { BlendingProgramme } from "@/components/shared/BlendingProgramme";
 import { AcceptedForms } from "@/components/shared/AcceptedForms";
-import { Advantage } from "@/components/shared/Advantage";
-import { CtaSection } from "@/components/shared/CtaSection";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 import { getP } from "@/lib/i18n/server";
-import { customerSectors, portfolioGroups } from "@/data/portfolio";
+import { customerSectors, portfolioGroups, typicalMaterials } from "@/data/portfolio";
 import { familiesInGroup } from "@/lib/portfolio";
+import { routes, site } from "@/lib/site";
 
 const trail = [
   { name: "Home", href: "/" },
@@ -24,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata({
     title: p("What We Do"),
     description: p(
-      "A specialised blending program that transforms complex scrap streams into high-value Ni-based blends — maximising recoverable metal content and reducing downgrading.",
+      "How IMS assesses complex, mixed and off-spec materials and develops recovery, processing and blending routes through an international network of specialist facilities and laboratories.",
     ),
     path: "/what-we-do",
     image: "/images/hero/turnings.jpg",
@@ -32,8 +31,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /**
- * The service, on its own URL. The intro's "Who we are" and "What we do",
- * then the forms accepted, who is supplied, and the five advantages.
+ * How IMS works: the operating model in one paragraph, the programme in
+ * three steps, the lots that define the specialisation, the forms, and who
+ * is supplied. The advantages and the closing band are the homepage's; this
+ * page ends on who it is for (IMS, 14 September 2026: one purpose per page).
  */
 export default async function WhatWeDoPage() {
   const p = await getP();
@@ -42,10 +43,8 @@ export default async function WhatWeDoPage() {
     <>
       <PageHero
         eyebrow={p("What we do")}
-        title={p("Turning complex scrap into opportunity")}
-        intro={p(
-          "IMS Metals & Alloys OÜ is a specialised recycler and supplier to the global nickel refinery, stainless steel, superalloy, titanium and refractory metals industries. With advanced expertise, we provide tailored blending solutions that create efficiency and cost savings for refiners, alloy producers and the stainless-steel sector.",
-        )}
+        title={p("How the programme works")}
+        intro={p(site.description)}
         trail={trail}
         image="/images/hero/turnings.jpg"
         imageAlt=""
@@ -53,35 +52,30 @@ export default async function WhatWeDoPage() {
 
       <Section tone="white">
         <SectionHeader
-          eyebrow={p("The blending program")}
-          title={p("Complex scrap streams in. High-value Ni-based blends out.")}
-          description={p("Through our specialised blending program, we transform complex scrap streams into high-value Ni-based blends — maximising recoverable metal content and reducing downgrading.")}
+          eyebrow={p("The blending programme")}
+          title={p("A blending programme built around complex materials.")}
+          description={p("Through our network of specialist processing facilities, IMS develops and manages tailored nickel-based blends for refiners, alloy producers and stainless steel mills — maximising recoverable metal content and reducing unnecessary downgrading.")}
           align="split"
         />
         <div className="mt-14">
-          <BlendingProgram />
+          <BlendingProgramme />
         </div>
 
         {/* What "complex" means in practice — the lots conventional routes
-            downgrade or turn away. Standard categories in the trade, listed
-            at IMS's request for IMS to strike what it does not take. */}
+            downgrade or turn away. IMS's list; the closing line promises an
+            assessment, not an acceptance. */}
         <div className="mt-16 grid gap-8 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-4">
-            <h3 className="font-display text-xl font-medium tracking-tight text-navy-900">{p("Typical lots")}</h3>
+            <h3 className="font-display text-xl font-medium tracking-tight text-navy-900">{p("Typical materials")}</h3>
             <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-600">
-              {p("The material conventional routes downgrade or turn away. If yours is on this list, it has a home.")}
+              {p("The material conventional routes downgrade or turn away. If your material matches one of these descriptions, speak with us about the available route.")}
             </p>
+            <div className="mt-5">
+              <ArrowLink href={routes.offer}>{p("Offer material")}</ArrowLink>
+            </div>
           </div>
           <ul className="border-t border-steel-200 lg:col-span-7 lg:col-start-6">
-            {[
-              "Mixed 718 / 625 / Waspaloy lots",
-              "Non-vacuum-grade superalloy turnings",
-              "Contaminated or off-spec high-nickel alloys",
-              "Dusts, fines and grindings",
-              "Mixed titanium and superalloy turnings",
-              "Off-grade tungsten, molybdenum, niobium and tantalum units",
-              "Hafnium and Ni-Hf materials",
-            ].map((lot, i) => (
+            {typicalMaterials.map((lot, i) => (
               <Reveal as="li" key={lot} delay={i * 40} className="border-b border-steel-200 py-3 text-[0.9375rem] font-medium text-navy-900">
                 {p(lot)}
               </Reveal>
@@ -106,12 +100,15 @@ export default async function WhatWeDoPage() {
                 </Reveal>
               ))}
             </ul>
+            <div className="mt-8">
+              <ArrowLink href={routes.supply}>{p("Request supply")}</ArrowLink>
+            </div>
           </div>
 
           <div className="lg:col-span-6 lg:col-start-7">
             <h2 className="text-display-sm">{p("What we handle")}</h2>
             <p className="mt-5 text-base leading-relaxed text-steel-600">
-              {p("Every material in the portfolio, including off-spec grades, mixed lots and off-grade refractory units. We make sure to be able to manage each complex material.")}
+              {p("Every material in the portfolio, including off-spec grades, mixed lots and off-spec refractory-bearing materials. We assess each complex material and develop the most suitable available route.")}
             </p>
             <ul className="mt-8 grid gap-x-8 gap-y-6 sm:grid-cols-3">
               {portfolioGroups.map((group) => (
@@ -124,7 +121,7 @@ export default async function WhatWeDoPage() {
                           href={"/materials/" + family.slug}
                           className="text-[0.9375rem] text-navy-900 underline decoration-steel-300 underline-offset-4 transition-colors hover:text-brand-700 hover:decoration-brand-700"
                         >
-                          {family.name}
+                          {p(family.name)}
                         </Link>
                         {family.threshold ? (
                           <span className="ms-2 text-[0.75rem] font-medium text-steel-500">{family.threshold}</span>
@@ -143,7 +140,7 @@ export default async function WhatWeDoPage() {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/materials#intermediates" className="text-[0.9375rem] text-navy-900 underline decoration-steel-300 underline-offset-4 transition-colors hover:text-brand-700 hover:decoration-brand-700">
+                    <Link href={routes.intermediates} className="text-[0.9375rem] text-navy-900 underline decoration-steel-300 underline-offset-4 transition-colors hover:text-brand-700 hover:decoration-brand-700">
                       {p("Powders, Oxides & Intermediates")}
                     </Link>
                   </li>
@@ -156,10 +153,6 @@ export default async function WhatWeDoPage() {
           </div>
         </div>
       </Section>
-
-      <Advantage tone="white" />
-
-      <CtaSection />
 
       <JsonLd data={breadcrumbSchema(trail)} />
     </>

@@ -293,9 +293,10 @@ function MegaMenu({
                   {p(col.heading)}
                 </p>
                 <ul className="space-y-0.5">
-                  {col.links.map((link) =>
+                  {col.links.map((link, i) =>
                     link.action ? (
-                      <li key={link.href} className="mt-3 border-t border-steel-200 pt-3">
+                      /* The actions close the column; the rule sits above the first only. */
+                      <li key={link.href} className={cn(!col.links[i - 1]?.action && "mt-3 border-t border-steel-200 pt-3")}>
                         <Link
                           href={link.href}
                           onClick={onNavigate}

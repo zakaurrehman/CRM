@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Mono, Inter, Orbitron } from "next/font/google";
+import { Archivo, IBM_Plex_Mono, Inter } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
@@ -30,25 +30,9 @@ const archivo = Archivo({
   weight: ["500", "600"],
 });
 
-/*
- * Stand-in for Ethnocentric, the face the original site sets its headings in.
- * Ethnocentric is a paid commercial typeface and IMS has not confirmed a web
- * licence, so it cannot be self-hosted here; Orbitron is the nearest free
- * equivalent in the same wide, squared, technical vein. Used for the welcome
- * lockup only, which is what was asked for.
- *
- * Latin only. It has no Hebrew glyphs, so the Hebrew page falls through to the
- * display stack, which is correct rather than a gap.
- */
-const orbitron = Orbitron({
-  subsets: ["latin"],
-  variable: "--font-lockup",
-  display: "swap",
-  /* 900 only. Ethnocentric is a heavy face and 600 read as thin beside it;
-     nothing else on the page uses this family, so there is no reason to ship
-     weights that will not be drawn. */
-  weight: ["900"],
-});
+/* Orbitron, which stood in for the original site's Ethnocentric on the
+   "WELCOME TO IMS" line, is no longer loaded: that line went on 14 September
+   2026 and nothing else drew the face. */
 
 const mono = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -68,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
   metadataBase: new URL(site.url),
   title: {
-    default: p("IMS Metals & Alloys | Metals, Alloys & Recovery for Global Industry"),
+    default: p("IMS Metals & Alloys | Turning Complex Scrap into Opportunity"),
     template: "%s | IMS Metals & Alloys",
   },
   description: p(site.description),
@@ -102,7 +86,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html
       lang={localeMeta[locale].tag}
       dir={dirOf(locale)}
-      className={`${inter.variable} ${archivo.variable} ${orbitron.variable} ${mono.variable}`}
+      className={`${inter.variable} ${archivo.variable} ${mono.variable}`}
       /* The inline script below adds "js" to this element before React
          hydrates, so the class list React expects and the one it finds differ
          by design. React does not patch attributes on mismatch, so nothing is

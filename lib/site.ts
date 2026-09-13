@@ -37,8 +37,17 @@ export const site = {
   shortName: "IMS",
   url: resolveSiteUrl(),
   tagline: "Turning complex scrap into opportunity",
+  /**
+   * The company description, in IMS's words of 14 September 2026, used once
+   * per context: the site metadata, the Organization schema and the What we
+   * do page. IMS owns no plant or laboratory; it works through a network of
+   * them, and every description on the site says so.
+   */
   description:
-    "IMS Metals & Alloys OÜ is a specialised recycler and supplier to the global nickel refinery, stainless steel, superalloy, titanium and refractory metals industries, blending complex scrap streams into high-value Ni-based blends.",
+    "IMS Metals & Alloys is a specialist metals recovery and supply company serving the global nickel refining, stainless steel, superalloy, titanium and refractory-metals industries. Through an international network of specialist processing facilities and laboratories, we develop and manage tailored recovery, processing and blending routes for complex, mixed and off-spec materials.",
+  /** The one-line version, for the footer. */
+  shortDescription:
+    "A specialist metals recovery and supply company, working through an international network of processing facilities and laboratories.",
   locale: "en",
 } as const;
 
@@ -99,6 +108,25 @@ export const contact = {
 
   /** Prefilled into the WhatsApp thread so an enquiry opens with context. */
   whatsappMessage: "Hello IMS — I have a materials enquiry.",
+
+  /**
+   * A named commercial contact for the contact page, when IMS supplies one
+   * (suggested by IMS on 14 September 2026, name not yet given). Null hides
+   * the block; nothing is invented. `email` here is that person's address,
+   * shown beside the general one.
+   */
+  commercialContact: null as { name: string; role: string; email: string } | null,
+} as const;
+
+/**
+ * Data protection. The controller is the registered company; the address for
+ * data-protection matters is the general one until IMS names another.
+ */
+export const dataProtection = {
+  controller: "IMS Metals & Alloys OÜ",
+  email: "info@ims-metals.com",
+  /** Estonia's supervisory authority. */
+  authority: { name: "Estonian Data Protection Inspectorate (Andmekaitse Inspektsioon)", url: "https://www.aki.ee/en" },
 } as const;
 
 /**
@@ -121,8 +149,16 @@ export const routes = {
   finder: "/materials/finder",
   compare: "/materials/compare",
   rfq: "/rfq",
+  offer: "/rfq?direction=sell",
+  supply: "/rfq?direction=buy",
+  intermediates: "/materials/powders-oxides-intermediates",
+  /* Offline since 14 September 2026 — the three 2024 articles described the
+     previous business. next.config.ts sends the paths home until new
+     articles are written; the data and pages stay in place for that. */
   insights: "/insights",
   article: (slug: string) => `/insights/${slug}`,
   contact: "/contact",
+  privacy: "/privacy",
+  legal: "/legal",
   search: "/search",
 } as const;

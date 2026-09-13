@@ -1,9 +1,37 @@
 import Link from "next/link";
 import { intermediates, type Intermediate, type IntermediateGroup } from "@/data/portfolio";
 import { getP } from "@/lib/i18n/server";
+import { routes } from "@/lib/site";
 import { Reveal } from "@/components/ui/Reveal";
+import { Button } from "@/components/ui/Button";
 import { ElementMark } from "./FamilyCard";
 import { cn } from "@/lib/utils";
+
+/**
+ * One line and a door, for the homepage and the portfolio page: the kinds of
+ * product, not the list. The list is on its own page so those two pages
+ * stay about materials (IMS, 14 September 2026).
+ */
+export async function IntermediatesPreview() {
+  const p = await getP();
+  const kinds = ["APT", "Metal oxides", "Hydroxides", "Powders", "Filter cake", "Process residues"];
+
+  return (
+    <div className="flex flex-col gap-6 border-t border-steel-200 pt-8 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
+      <div className="max-w-2xl">
+        <h3 className="font-display text-xl font-medium tracking-tight text-navy-900 lg:text-2xl">
+          {p("Powders, Oxides & Intermediates")}
+        </h3>
+        <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-600">
+          {kinds.map((k) => p(k)).join(" · ")}
+        </p>
+      </div>
+      <Button href={routes.intermediates} variant="secondary" className="shrink-0">
+        {p("Explore Powders & Intermediates")}
+      </Button>
+    </div>
+  );
+}
 
 /**
  * Powders, oxides and intermediates, grouped by metal.
@@ -32,7 +60,7 @@ export async function Intermediates({
             {p("Powders, Oxides & Intermediates")}
           </h3>
           <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-600">
-            {p("Not only metal and alloy scrap. We also take the intermediate products of refining and tool-making — oxides, tungstates, hydroxides, powders and filtercakes — and price them on contained metal.")}
+            {p("Not only metal and alloy scrap. We also take the intermediate products of refining and tool-making — oxides, tungstates, hydroxides, powders, filter cake and process residues — assessed on contained metal.")}
           </p>
         </div>
       ) : null}

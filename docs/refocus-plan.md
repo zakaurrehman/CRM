@@ -9,8 +9,9 @@ https://claude.ai/code/artifact/b050fa36-2009-4885-99be-cd1b1248bd97_
 | Phase | State |
 | --- | --- |
 | **1 — Structure and data** | **Done** on branch `refocus-portfolio`. Everything below that needs no photographs. |
-| 2 — Photos | Waiting on IMS. Slots are in `data/portfolio.ts` (`images`, up to four per family). |
-| 3 — Translate and QA | **Done** (round 15). Every string the site uses has a ru/fr/nl/he entry; the new entries need a native reader. |
+| 2 — Photos | Waiting on IMS: photographs of the material itself, for the eleven families without one. Slots are in `data/portfolio.ts` (`images`, up to four per family). |
+| 3 — Translate and QA | **Done** (rounds 15–16). Every string the site uses has a ru/fr/nl/he entry; the new entries need a native reader. |
+| 4 — Operating model and inquiry split | **Done** (round 16). Open: a named commercial contact; new Insights articles; a mail transport configured in production so the forms deliver. |
 
 ### Round 2 — Sharoon's feedback of 12 September, 14:41
 
@@ -141,11 +142,10 @@ two. Photos needed: four.
 
 ### Round 9 — new first frame for the opening band (13 September)
 
-Cast turbine wheels (`public/images/hero/E101X506.avif`) lead the backdrop
-sequence, ahead of the hot slab and the turbine rotor. **This is Envato
-Elements' watermarked preview — the "envato" marks are visible through the
-shade.** Used on IMS's instruction; replace with the licensed download at the
-same slot in `components/home/WelcomeBanner.tsx` when IMS supplies it.
+Cast turbine wheels (`public/images/hero/E101X506.jpeg`) lead the backdrop
+sequence, ahead of the hot slab and the turbine rotor. The file was Envato
+Elements' watermarked preview for a day, on IMS's instruction; IMS supplied
+the licensed download on 14 September and it now stands in the same slot.
 
 ### Round 10 — FX rates off (13 September)
 
@@ -257,6 +257,88 @@ Open: the translations are machine-drafted and need a native reader; the
 English articles end with stray lines that are the other articles' titles
 (an artefact of the old site's "related posts"), and the translations keep
 parity with that until the English is cleaned.
+
+### Round 16 — the operating model, and the inquiry split (14 September)
+
+IMS's nineteen-point list. The thread through all of it: IMS owns no
+recycling plant, processing line or laboratory — it assesses complex
+materials and manages the processing, blending, analytical and supply route
+through a network of independent facilities — and the site must say so
+everywhere and imply the opposite nowhere.
+
+- **One company description**, IMS's, in `lib/site.ts`: site metadata,
+  Organization schema, the What we do header. A one-line version for the
+  footer. "Recycler", "we transform", "15 years", "our laboratory" are gone
+  from every page.
+- **Homepage.** The "WELCOME TO IMS" lockup is gone (Orbitron with it); the
+  H1 is the message. IMS's supporting sentence, the two doors. What we do:
+  the new heading, sentence and three steps — materials are assessed,
+  routes developed, materials directed; nothing is processed by IMS. The
+  powders and intermediates are one line and a door. Six advantages,
+  "expanding" struck. The closing band offers both routes and promises an
+  assessment, not an acceptance.
+- **What we do** carries the description once, the eight typical materials
+  with "speak with us about the available route", the eight accepted forms,
+  who is supplied. No advantages, no closing band. **About** is the
+  operating model: the two-paragraph opening, the five points, the
+  registered details. No repeat of the programme.
+- **Accepted forms**, eight: solids · turnings and swarf · runners, risers
+  and gates · grindings · fines and microgranules · AM and 3D powders ·
+  dusts · filter cake and process residues. Also the form options on the
+  offer form.
+- **Portfolio**: the menu's group is "Nickel, Cobalt, Titanium & Specialty
+  Steels"; "Other tables" is "Additional technical reference tables"; the
+  full intermediates list has its own page at
+  `/materials/powders-oxides-intermediates`. Material pages open with the
+  one-line description and say under "What we accept" the shape of the lots
+  and the condition on them (`acceptance` in `data/portfolio.ts`) — not the
+  same sentence twice. The filter reads "Filter superalloy grades by name"
+  (`noun`). Stock photographs came off the four alloy pages that had them
+  (superalloys, high-nickel, stainless, HSS): a stock turbine hall reads as
+  a claim about the alloy, or about stock. IMS's own photographs of W, Mo
+  and Nb stay. Reference categories carry no image in structured data.
+- **The disclaimer** under every composition table — material pages,
+  reference pages, the comparison — is IMS's: reference values for
+  identification only, not a purchasing or supply specification
+  (`lib/composition.ts`).
+- **Offer Material / Request Supply.** One address, `/rfq`, two pages:
+  `?direction=sell` and `?direction=buy` each have their own title,
+  introduction, next steps and button — Submit material / Request a quote.
+  The form asks "I want to:" and changes with the answer: a seller gives the
+  form, quantity and available analysis and where the material is; a buyer
+  the required chemistry, form, quantity and delivery location. Gone:
+  condition, timescale, per-line notes, the "both" option.
+- **Attachments**: up to eight files, PDF/JPG/PNG/WebP/XLS/XLSX/CSV/DOC/DOCX,
+  4 MB in total — the ceiling is Vercel's 4.5 MB request limit. Photographs
+  are reduced in the browser first (1600px JPEG; a 1.2 MB phone photograph
+  becomes ~80 KB), and the form says larger packs go by email. The route
+  re-checks every file before reading a byte, and the files ride with the
+  message on every transport (SMTP, Resend, webhook); the site keeps no copy.
+- **Contact** is the four ways in — offer, request, email, WhatsApp — the
+  registered office, and a four-field message form. A named commercial
+  contact renders when IMS supplies one (`contact.commercialContact`).
+- **Privacy policy and legal information** pages, written to be true of the
+  site as built: three forms that send email, one essential cookie, browser
+  storage that never leaves the browser, no analytics. Linked from the
+  footer and from under each form.
+- **Insights is offline.** The three 2024 articles said "15 years" and "our
+  state-of-the-art metallurgical laboratory"; `/insights*` sends home with
+  a temporary redirect, the data and pages stay for when new articles are
+  written. IMS's priority subjects: mixed superalloy scrap and downgrading;
+  sampling nickel-alloy fines and grindings; recovery routes for non-vacuum
+  superalloy turnings; mixed titanium and superalloy material; hafnium and
+  Ni-Hf master alloys.
+- **Wording** throughout as listed: programme, nickel refining, off-spec
+  refractory-bearing materials, "we will assess the available route".
+
+Two of IMS's instructions conflicted: §10 asked for "I want to:" and §14 for
+"Are you buying or selling?" as the same label. §10 is the form's own
+specification and its options — "Sell material to IMS", "Buy material from
+IMS" — read naturally under "I want to:", so that is what the form says.
+
+Every new string has a ru, fr, nl and he entry (243 per language, marked
+NEEDS NATIVE REVIEW); coverage 0 missing, 0 orphaned; no English left on
+the Russian or Hebrew pages.
 
 ## The gap
 

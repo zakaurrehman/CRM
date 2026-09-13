@@ -4,7 +4,8 @@ import { Section, SectionHeader } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 
 /**
- * "Our Advantage", the intro's five lines.
+ * "Our Advantage", IMS's six lines. On the homepage only (14 September
+ * 2026): repeated on every page, they stopped being read.
  *
  * Each is one sentence and they are not a sequence, so there are no numbers
  * and no bodies invented to pad them out — a ruled list in display type, in
@@ -17,7 +18,7 @@ export async function Advantage({ tone = "light" }: { tone?: "light" | "white" }
     <Section tone={tone} id="advantage">
       <SectionHeader
         eyebrow={p("Our advantage")}
-        title={p("Why refiners and alloy producers work with IMS.")}
+        title={p("Why refiners, alloy producers and material generators work with IMS.")}
         align="split"
       />
       <ul className="mt-12 border-t border-steel-200">

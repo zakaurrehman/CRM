@@ -2,11 +2,13 @@ import { getP } from "@/lib/i18n/server";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { PortfolioGrid } from "@/components/portfolio/PortfolioGrid";
-import { Intermediates } from "@/components/portfolio/Intermediates";
+import { IntermediatesPreview } from "@/components/portfolio/Intermediates";
 
 /**
- * The portfolio on the homepage: the twelve materials, then the ferro-alloys
- * and the intermediates — the same parts the Portfolio page opens with.
+ * The portfolio on the homepage: the fifteen materials, then one line for
+ * the powders, oxides and intermediates with the door to their own page.
+ * The full list — APT, YTO, CaWO₄ and the rest — lives there, not here
+ * (IMS, 14 September 2026).
  */
 export async function PortfolioSection() {
   const p = await getP();
@@ -23,8 +25,8 @@ export async function PortfolioSection() {
       <div className="mt-14">
         <PortfolioGrid />
       </div>
-      <div className="mt-16">
-        <Intermediates />
+      <div className="mt-14">
+        <IntermediatesPreview />
       </div>
     </Section>
   );

@@ -61,8 +61,20 @@ export interface PortfolioFamily {
    */
   symbol: string;
   group: PortfolioGroupId;
-  /** What IMS accepts, in one line. The intro's wording wherever it gives one. */
+  /** What IMS accepts, in one line. The intro's wording wherever it gives one. Opens the page. */
   accepts: string;
+  /**
+   * The material as a noun in a sentence — "superalloy", "stainless steel" —
+   * for "Filter superalloy grades by name" and the like, where the family name
+   * ("Superalloys") reads wrongly.
+   */
+  noun: string;
+  /**
+   * The "What we accept" sentence: the shape of the lots, and the condition
+   * on all of them — chemistry, form and condition. Distinct from `accepts`
+   * so the page does not say the same thing twice (IMS, 14 September 2026).
+   */
+  acceptance: string;
   /** Content threshold, only where the intro states one. */
   threshold?: string;
   /** Up to four photographs, on the material's page: the first in its header, the rest cross-fading below. */
@@ -87,7 +99,7 @@ export const portfolioGroups: PortfolioGroup[] = [
   /* Titanium sits with the alloy families, under cobalt, on IMS's word
      (13 September 2026): it is bought and blended as Ti-6/4 and CP alloy,
      alongside the superalloys, rather than as a refractory unit. */
-  { id: "alloys", name: "Nickel, Cobalt, Titanium & Steels" },
+  { id: "alloys", name: "Nickel, Cobalt, Titanium & Specialty Steels" },
   /* Zirconium and hafnium are reactive metals; W, Mo, Nb and Ta refractory. */
   { id: "metals", name: "Reactive & Refractory Metals" },
 ];
@@ -101,36 +113,47 @@ export const portfolioFamilies: PortfolioFamily[] = [
   {
     slug: "superalloys",
     name: "Superalloys",
+    noun: "superalloy",
     symbol: "Ni",
     group: "alloys",
-    accepts: "718, 625, 713, Waspaloy, Hastelloy types, René alloys, off-grade and mixes.",
-    images: ["/images/turbine/turbine-manufacturing.jpg"],
+    accepts: "718, 625, 713, Waspaloy, Hastelloy types, René alloys, off-spec and mixed lots.",
+    acceptance: "Segregated grades, mixed superalloy revert, off-spec material and non-vacuum-quality lots, subject to chemistry, form and condition.",
+    /* No photograph until IMS supplies one of the material itself: the stock
+       turbine hall that stood here read as a claim about the alloy, or about
+       stock (IMS, 14 September 2026). */
+    images: [],
     tables: [{ category: "complex-nickel-alloys", except: MARAGING }],
   },
   {
     slug: "high-nickel-alloys",
     name: "High-Nickel Alloys",
+    noun: "high-nickel alloy",
     symbol: "Ni",
     group: "alloys",
     accepts: "Inconel, Hastelloy, Incoloy and Nimonic types.",
-    images: ["/images/hero/turnings.jpg"],
+    acceptance: "Segregated grades, mixed high-nickel revert, off-spec and contaminated lots, subject to chemistry, form and condition.",
+    images: [],
     tables: [{ category: "nickel-alloys" }],
   },
   {
     slug: "cobalt-alloys",
     name: "Cobalt-Based Alloys",
+    noun: "cobalt-based alloy",
     symbol: "Co",
     group: "alloys",
     accepts: "Stellite, MAR-M and Umco types.",
+    acceptance: "Segregated grades, mixed cobalt-based revert and off-spec lots, subject to chemistry, form and condition.",
     images: [],
     tables: [{ category: "cobalt-alloys" }],
   },
   {
     slug: "titanium",
     name: "Titanium",
+    noun: "titanium",
     symbol: "Ti",
     group: "alloys",
-    accepts: "Ti-6/4, CP Ti, 3D powder.",
+    accepts: "Ti-6/4, CP Ti, AM and 3D powders.",
+    acceptance: "Segregated grades, mixed titanium and titanium-superalloy turnings, and off-spec powders, subject to chemistry, form and condition.",
     images: [],
     tables: [{ category: "titanium-alloys" }],
   },
@@ -139,28 +162,34 @@ export const portfolioFamilies: PortfolioFamily[] = [
        18Ni(250) and so on — so it is the shorthand a buyer already uses. */
     slug: "maraging-steel",
     name: "Maraging Steels",
+    noun: "maraging steel",
     symbol: "18Ni",
     group: "alloys",
     accepts: "Maraging 200, 250, 300 and 350.",
+    acceptance: "Segregated grades, mixed maraging lots and off-spec material, subject to chemistry, form and condition.",
     images: [],
     tables: [{ category: "complex-nickel-alloys", only: MARAGING }],
   },
   {
     slug: "stainless-steel",
     name: "Stainless Steels",
+    noun: "stainless steel",
     symbol: "SS",
     group: "alloys",
     accepts: "Austenitic, duplex and precipitation-hardening grades — 304, 316, Duplex, 17-4 PH.",
-    images: ["/images/metals/stamped-components.jpg"],
+    acceptance: "Segregated grades, mixed stainless lots and off-spec material, subject to chemistry, form and condition.",
+    images: [],
     tables: [{ category: "stainless-steel" }],
   },
   {
     slug: "hss-tool-steel",
     name: "High-Speed & Tool Steels",
+    noun: "high-speed and tool steel",
     symbol: "HSS",
     group: "alloys",
     accepts: "M- and T-series high speed steels; D- and H-series tool steels.",
-    images: ["/images/tungsten/drills-end-mills.jpg"],
+    acceptance: "Segregated grades, mixed tool-steel lots, grindings and off-spec material, subject to chemistry, form and condition.",
+    images: [],
     tables: [{ category: "high-speed-steels" }, { category: "tool-steels" }],
   },
   {
@@ -170,9 +199,11 @@ export const portfolioFamilies: PortfolioFamily[] = [
        for the field on 12 September. */
     slug: "cu-ni-alloys",
     name: "Copper-Nickel Alloys",
+    noun: "copper-nickel alloy",
     symbol: "CuNi",
     group: "alloys",
     accepts: "Cupro-nickels and nickel silvers — 70/30, 90/10, Kunifer — and Monel nickel-copper types.",
+    acceptance: "Segregated grades, mixed copper-nickel lots and off-spec material, subject to chemistry, form and condition.",
     images: [],
     tables: [{ category: "copper-nickel-alloys" }, { category: "nickel-copper" }],
   },
@@ -182,9 +213,11 @@ export const portfolioFamilies: PortfolioFamily[] = [
        out of the reference pile onto this page. */
     slug: "zirconium",
     name: "Zirconium",
+    noun: "zirconium",
     symbol: "Zr",
     group: "metals",
-    accepts: "Commercially pure zirconium, Zr-Nb and Zircaloy types, including off-grade.",
+    accepts: "Commercially pure zirconium, Zr-Nb and Zircaloy types, including off-spec material.",
+    acceptance: "The categories below, subject to chemistry, form and condition.",
     accepted: [
       { term: "Zr VQ", note: "vacuum quality" },
       { term: "Zircaloy types" },
@@ -199,10 +232,12 @@ export const portfolioFamilies: PortfolioFamily[] = [
   {
     slug: "hafnium",
     name: "Hafnium & Ni-Hf",
+    noun: "hafnium",
     symbol: "Hf",
     group: "metals",
     accepts: "Hafnium and nickel-hafnium master alloys.",
-    detail: "An expanding capability, alongside advanced master alloys.",
+    detail: "A specialist focus, with Ni-Hf and other advanced master alloys.",
+    acceptance: "The categories below, subject to chemistry, form and condition.",
     accepted: [
       { term: "Hf VQ", note: "vacuum quality" },
       { term: "Hf crystal bar and sponge" },
@@ -216,11 +251,13 @@ export const portfolioFamilies: PortfolioFamily[] = [
   {
     slug: "tungsten",
     name: "Tungsten",
+    noun: "tungsten",
     symbol: "W",
     group: "metals",
     threshold: "≥8%",
-    accepts: "Units containing ≥8% tungsten, including off-grade.",
+    accepts: "Materials containing ≥8% tungsten, including off-spec.",
     detail: "Carbide, Densalloy, CP-W, heavy metals, swarf, sludge and crucibles.",
+    acceptance: "The categories below, subject to chemistry, form and condition.",
     accepted: [
       { term: "W VQ", note: "vacuum quality" },
       { term: "W air-melt" },
@@ -241,10 +278,12 @@ export const portfolioFamilies: PortfolioFamily[] = [
   {
     slug: "molybdenum",
     name: "Molybdenum",
+    noun: "molybdenum",
     symbol: "Mo",
     group: "metals",
     threshold: "≥8%",
-    accepts: "Units containing ≥8% molybdenum, including off-grade.",
+    accepts: "Materials containing ≥8% molybdenum, including off-spec.",
+    acceptance: "The categories below, subject to chemistry, form and condition.",
     accepted: [
       { term: "Mo VQ", note: "vacuum quality" },
       { term: "Mo air-melt" },
@@ -265,10 +304,12 @@ export const portfolioFamilies: PortfolioFamily[] = [
   {
     slug: "niobium",
     name: "Niobium",
+    noun: "niobium",
     symbol: "Nb",
     group: "metals",
     threshold: "≥10%",
-    accepts: "Units containing ≥10% niobium, including off-grade.",
+    accepts: "Materials containing ≥10% niobium, including off-spec.",
+    acceptance: "The categories below, subject to chemistry, form and condition.",
     accepted: [
       { term: "Nb VQ", note: "vacuum quality" },
       { term: "NbTi", note: "superconductor scrap" },
@@ -282,10 +323,12 @@ export const portfolioFamilies: PortfolioFamily[] = [
   {
     slug: "tantalum",
     name: "Tantalum",
+    noun: "tantalum",
     symbol: "Ta",
     group: "metals",
     threshold: "≥10%",
-    accepts: "Units containing ≥10% tantalum, including off-grade.",
+    accepts: "Materials containing ≥10% tantalum, including off-spec.",
+    acceptance: "The categories below, subject to chemistry, form and condition.",
     accepted: [
       { term: "Ta VQ", note: "vacuum quality" },
       { term: "Ta-W alloys", note: "Ta-2.5W, Ta-10W" },
@@ -311,9 +354,11 @@ export const portfolioFamilies: PortfolioFamily[] = [
 export const ferroAlloysCard: PortfolioFamily = {
   slug: "ferro-alloys",
   name: "Ferroalloys",
+  noun: "ferroalloy",
   symbol: "Fe",
   group: "alloys",
   accepts: "FeNiCr, FeW, FeMo, FeNb and FeTi — all sizes, packings and specifications.",
+  acceptance: "All sizes, packings and specifications, subject to chemistry, form and condition.",
   images: [],
   tables: [],
 };
@@ -433,15 +478,37 @@ export interface AcceptedForm {
   covers: string[];
 }
 
-/** The six physical forms IMS accepts, in the intro's order. */
+/**
+ * The eight physical forms IMS accepts, as IMS named them on 14 September
+ * 2026 — "runners, risers and gates" rather than the trade's "runnings",
+ * "AM and 3D powders" rather than "3D powders". Also the form options on the
+ * offer form.
+ */
 export const acceptedForms: AcceptedForm[] = [
   { name: "Solids", covers: ["Nuggets", "BB's", "Cut solids and components"] },
-  { name: "Turnings", covers: ["Turnings", "Swarf"] },
-  { name: "Runnings", covers: ["Runners, risers and gates from casting"] },
+  { name: "Turnings and swarf", covers: ["Turnings", "Swarf", "Chips"] },
+  { name: "Runners, risers and gates", covers: ["Casting runners, risers and gates"] },
   { name: "Grindings", covers: ["Grindings", "Grinding sludge"] },
-  { name: "3D Powders", covers: ["Additive-manufacturing powder, used and off-spec"] },
+  { name: "Fines and microgranules", covers: ["Fines", "Microgranules", "Shot"] },
+  { name: "AM and 3D powders", covers: ["Additive-manufacturing powders — virgin, used, mixed-size or off-spec"] },
   { name: "Dusts", covers: ["AOD dust", "EAF dust", "Plasma dust", "Shot dust", "Pelletizer dust"] },
+  { name: "Filter cake and process residues", covers: ["Filter cake, wet and dried", "Mill scale", "Mill sludge"] },
 ];
+
+/**
+ * The lots that define the specialisation — what "complex" means in
+ * practice. IMS's list of 14 September 2026, verbatim.
+ */
+export const typicalMaterials = [
+  "Mixed 718, 625, Waspaloy with contamination",
+  "Non-vacuum-grade superalloy turnings",
+  "Contaminated or off-spec high-nickel alloys",
+  "Nickel-alloy dusts, fines and grindings",
+  "Mixed titanium and superalloy turnings",
+  "Off-spec tungsten, Mo, Nb & Ta-bearing materials",
+  "Hf and Hf/Ni materials",
+  "Powders, oxides and refining intermediates",
+] as const;
 
 /** Who IMS supplies, in the intro's order. */
 export const customerSectors = [
@@ -452,11 +519,12 @@ export const customerSectors = [
   "Refractory metals industry",
 ] as const;
 
-/** The intro's "Our Advantage", verbatim. */
+/** "Our Advantage" — the six points IMS set on 14 September 2026. */
 export const advantages = [
-  "Customised blends that preserve Ni value",
-  "Proven track record with global refineries and alloy producers",
-  "Expertise in managing complex scrap streams and off-spec grades",
-  "Specialised capability in handling off-grade refractory metals — W, Mo, Nb and Ta",
-  "Expanding capabilities in Hafnium and advanced master alloys",
+  "Tailored blends designed to preserve nickel value",
+  "Specialist knowledge of complex, mixed and off-spec materials",
+  "Access to an international network of processing facilities and laboratories",
+  "Commercial routes for materials conventional channels may downgrade",
+  "Experience across high-nickel, superalloy, titanium and refractory materials",
+  "Specialist focus on Hafnium, Ni-Hf and advanced master alloys",
 ] as const;

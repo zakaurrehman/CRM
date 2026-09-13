@@ -64,24 +64,17 @@ const LEGACY_MAP: [string, string][] = [
   ["/metals-alloys", "/materials"],
   ["/about-us", "/about"],
   ["/contact-us", "/contact"],
-  ["/blogs", "/insights"],
-  ["/category/blog", "/insights"],
+  /* Insights is offline (14 September 2026): the 2024 articles described the
+     previous business. These go home rather than through a second hop. */
+  ["/blogs", "/"],
+  ["/category/blog", "/"],
   // The legacy FAQ page was published but completely empty.
   ["/frequently-asked-questions", "/contact"],
   // Yoast local-SEO artefact with no equivalent.
   ["/locations.kml", "/contact"],
-  [
-    "/2024/09/the-essential-role-of-metals-in-modern-industries",
-    "/insights/the-essential-role-of-metals-in-modern-industries",
-  ],
-  [
-    "/2024/10/sustainable-metal-recovery-turning-waste-into-value",
-    "/insights/sustainable-metal-recovery-turning-waste-into-value",
-  ],
-  [
-    "/2024/10/meeting-industry-standards-with-ims-metals-alloys-ou",
-    "/insights/meeting-industry-standards-with-ims-metals-alloys-ou",
-  ],
+  ["/2024/09/the-essential-role-of-metals-in-modern-industries", "/"],
+  ["/2024/10/sustainable-metal-recovery-turning-waste-into-value", "/"],
+  ["/2024/10/meeting-industry-standards-with-ims-metals-alloys-ou", "/"],
 
   /*
    * Pages retired in the 2026-09 refocus (docs/refocus-plan.md). The
@@ -128,11 +121,19 @@ const nextConfig: NextConfig = {
 
     return [
       ...legacy,
-      // Any other dated WordPress permalink goes to the Insights index rather than a
+      /*
+       * Insights, offline for now (14 September 2026). The three articles from
+       * 2024 claimed "15 years of experience" and a laboratory of IMS's own,
+       * neither of which the site may say; they come back when new articles
+       * are written. Temporary (307), so the addresses are not written off.
+       */
+      { source: "/insights", destination: "/", permanent: false },
+      { source: "/insights/:slug*", destination: "/", permanent: false },
+      // Any other dated WordPress permalink goes home rather than to a
       // guessed slug, so a stale link never lands on a 404.
       {
         source: "/:year(\\d{4})/:month(\\d{2})/:slug*",
-        destination: "/insights",
+        destination: "/",
         statusCode: 301,
       },
       // Normalise every remaining trailing slash in a single hop.

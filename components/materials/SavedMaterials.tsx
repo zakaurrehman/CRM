@@ -38,7 +38,7 @@ export function SavedMaterials() {
       <div className="rounded-lg border border-steel-200 bg-white px-6 py-16 text-center">
         <h2 className="font-display text-xl font-medium text-navy-900">{t("savedList", "emptyTitle")}</h2>
         <p className="mx-auto mt-3 max-w-md text-[0.9375rem] leading-relaxed text-steel-600">
-          {p("Save a grade from any composition table or from the alloy finder and it will be kept here, ready to compare or send through as a quotation request.")}
+          {p("Save a grade from any composition table or from the alloy finder and it will be kept here, ready to compare or send through as an inquiry.")}
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
           <Button href="/materials/finder">{t("common", "openFinder")}</Button>
@@ -133,7 +133,7 @@ export function SavedMaterials() {
       </ul>
 
       <p className="mt-6 text-[0.8125rem] leading-relaxed text-steel-500">
-        {p("Saved materials are stored in this browser only. They are not sent to IMS and will not follow you to another device — export the list or send it as a quotation request to keep it.")}
+        {p("Saved materials are stored in this browser only. They are not sent to IMS and will not follow you to another device — export the list or send it as an inquiry to keep it.")}
       </p>
     </div>
   );

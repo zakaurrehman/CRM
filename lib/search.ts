@@ -1,12 +1,12 @@
 import { alloyCategorySummaries } from "@/data/alloy-index";
 import { portfolioFamilies, ferroAlloys, intermediates } from "@/data/portfolio";
 import { tungstenForms } from "@/data/recovery";
-import { articles } from "@/data/insights";
 import { claimedCategorySlugs, groupOf, materialHref } from "./portfolio";
+import { routes } from "./site";
 import { normalise } from "./utils";
 import { translationsOf } from "./i18n/phrases";
 
-export type SearchKind = "family" | "grade" | "material" | "tungsten" | "article" | "page";
+export type SearchKind = "family" | "grade" | "material" | "tungsten" | "page";
 
 export interface SearchDoc {
   id: string;
@@ -35,7 +35,6 @@ export const kindLabels: Record<SearchKind, string> = {
   grade: "Alloy grade",
   material: "Grade reference",
   tungsten: "Tungsten form",
-  article: "Insight",
   page: "Page",
 };
 
@@ -44,21 +43,23 @@ const staticPages: { title: string; context: string; href: string; terms: string
     title: "What we do",
     context: "Company",
     href: "/what-we-do",
-    terms: "blending program ni-based blends complex scrap off-spec off-grade downgrading refiners alloy producers stainless",
+    terms: "blending programme nickel-based blends complex mixed off-spec materials downgrading refiners alloy producers stainless mills processing network laboratories",
   },
-  { title: "About IMS", context: "Company", href: "/about", terms: "company tallinn estonia registration eori advantage" },
+  { title: "About IMS", context: "Company", href: "/about", terms: "company tallinn estonia registration eori operating model network" },
   { title: "Portfolio", context: "Portfolio", href: "/materials", terms: "materials what we buy blend supply" },
   {
     title: "Accepted forms",
     context: "Portfolio",
     href: "/materials#forms",
-    terms: "solids turnings runnings grindings 3d powders dusts",
+    terms: "solids turnings swarf runners risers gates grindings fines microgranules am 3d powders dusts filter cake process residues",
   },
   { title: "Alloy finder", context: "Grade reference", href: "/materials/finder", terms: "search by element composition" },
   { title: "Compare grades", context: "Grade reference", href: "/materials/compare", terms: "side by side" },
-  { title: "Request a quotation", context: "Contact", href: "/rfq", terms: "rfq quote price sell buy" },
-  { title: "Insights", context: "Editorial", href: "/insights", terms: "news articles" },
+  { title: "Offer material", context: "Contact", href: routes.offer, terms: "sell offer submit material analysis coa photographs attachments rfq" },
+  { title: "Request supply", context: "Contact", href: routes.supply, terms: "buy request supply quote price rfq" },
   { title: "Contact IMS", context: "Contact", href: "/contact", terms: "enquiry inquiry tallinn estonia email whatsapp" },
+  { title: "Privacy policy", context: "Legal", href: routes.privacy, terms: "personal data gdpr cookies uploaded files controller" },
+  { title: "Legal information", context: "Legal", href: routes.legal, terms: "company registration eori disclaimer trademarks governing law" },
 ];
 
 /**
@@ -100,7 +101,7 @@ export const searchIndex: SearchDoc[] = [
       title: item.name,
       prefix: item.formula,
       context: "Powders, oxides & intermediates",
-      href: g.family ? "/materials/" + g.family : "/materials#intermediates",
+      href: g.family ? "/materials/" + g.family : routes.intermediates,
       kind: "family" as const,
       haystack: normalise([item.formula ?? "", item.name, g.metal, g.symbol ?? "", "powder oxide intermediate"].join(" ")),
     })),
@@ -132,14 +133,6 @@ export const searchIndex: SearchDoc[] = [
     href: "/materials/tungsten#form-" + t.slug,
     kind: "tungsten" as const,
     haystack: normalise(t.name + " " + t.note + " tungsten"),
-  })),
-  ...articles.map((a) => ({
-    id: "article:" + a.slug,
-    title: a.title,
-    context: "Insight",
-    href: "/insights/" + a.slug,
-    kind: "article" as const,
-    haystack: normalise(a.title + " " + a.standfirst + " " + a.description),
   })),
   ...staticPages.map((p) => ({
     id: "page:" + p.href,
@@ -177,7 +170,6 @@ const kindWeight: Record<SearchKind, number> = {
   page: 0,
   material: 0.2,
   tungsten: 0.2,
-  article: 0.3,
   grade: 0.5,
 };
 

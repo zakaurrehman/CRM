@@ -93,7 +93,8 @@ export function materialSchema(input: {
   name: string;
   description: string;
   slug: string;
-  image: string;
+  /** A photograph of the material itself, when IMS has supplied one. Never a stock image. */
+  image?: string;
   gradeCount: number;
 }): Json {
   return {
@@ -101,7 +102,7 @@ export function materialSchema(input: {
     "@type": "ProductGroup",
     name: input.name,
     description: input.description,
-    image: absoluteUrl(input.image),
+    ...(input.image ? { image: absoluteUrl(input.image) } : {}),
     url: absoluteUrl(`/materials/${input.slug}`),
     brand: { "@id": `${site.url}#organization` },
     variesBy: "https://schema.org/material",

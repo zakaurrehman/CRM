@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const p = await getP();
   return pageMetadata({
   title: p("Saved Materials"),
-  description: p("The alloy grades you have saved, ready to compare, export or send through as a quotation request."),
+  description: p("The alloy grades you have saved, ready to compare, export or send through as an inquiry."),
   path: "/materials/saved",
   // The list is held in the reader's browser; there is nothing here to crawl.
   noIndex: true,

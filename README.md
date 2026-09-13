@@ -46,13 +46,21 @@ Copy `.env.example` to `.env.local`. Nothing is required for local development.
 | `INQUIRY_TO_EMAIL` | Where enquiries land. Defaults to `info@ims-metals.com`. |
 | `INQUIRY_FROM_EMAIL` | Address the notification is sent from. |
 
-**The inquiry form needs one of the three transports above before launch.** Set it in
+**The forms need one of the three transports above before launch.** Set it in
 the Vercel project settings and redeploy — no code change is required.
 
 Without one, the API returns a clear error and the form hands the visitor a **pre-filled
 email** containing everything they typed, so an enquiry is never dropped and nobody has
 to retype a long technical message. In development, submissions are logged to the server
 console instead.
+
+The offer and supply forms (`/rfq?direction=sell`, `/rfq?direction=buy`) take
+attachments — analyses, COAs, photographs, packing lists, specifications, spreadsheets,
+inspection reports — up to 8 files and 4 MB per submission. The 4 MB is Vercel's request
+body limit, not a choice; photographs are reduced in the browser before sending so a
+set of them fits, and the form points larger packs to email. Attachments travel with the
+message on every transport (mail attachments over SMTP and Resend, base64 in the webhook
+body) and are not stored by the site. Limits and accepted types are in `lib/rfq.ts`.
 
 No credential reaches the browser. Delivery lives in `lib/inquiry-delivery.ts`, which is
 kept separate from `lib/inquiry.ts` precisely so the client bundle never pulls in Node

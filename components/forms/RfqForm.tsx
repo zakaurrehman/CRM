@@ -1,70 +1,133 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
+  ATTACHMENT_ACCEPT,
+  ATTACHMENT_FORMATS,
+  ATTACHMENT_LIMITS,
   MAX_LINES,
+  attachmentProblem,
   emptyLine,
+  formatBytes,
   formatRfqText,
   hasRfqErrors,
-  rfqConditions,
+  isImageAttachment,
+  rfqDirectionLabels,
   rfqDirections,
-  rfqTimescales,
+  rfqForms,
+  rfqSubject,
   rfqUnits,
   validateRfq,
+  type RfqDirection,
   type RfqFieldErrors,
   type RfqLine,
   type RfqPayload,
 } from "@/lib/rfq";
 import { useAlloyIndex, useCompare, useSaved, formatAmount } from "@/lib/alloy-client";
 import { ButtonEl } from "@/components/ui/Button";
-import { contact } from "@/lib/site";
+import { contact, routes } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { useP } from "@/lib/i18n/phrases/client";
 
 type Status = "idle" | "submitting" | "sent" | "error";
 
+interface Attachment {
+  id: string;
+  file: File;
+  /** Set when a photograph was reduced before sending. */
+  reducedFrom?: number;
+}
+
 const inputBase =
   "h-12 w-full rounded border bg-white px-3.5 text-[0.9375rem] text-navy-900 transition-colors " +
   "placeholder:text-steel-500 hover:border-steel-400 focus:border-brand-700";
 
+/** Photographs above this are reduced before sending; below it they go as taken. */
+const IMAGE_PASS_BYTES = 600 * 1024;
+const IMAGE_MAX_EDGE = 1600;
+
 /**
- * Quotation request.
+ * Reduces a photograph in the browser: longest edge 1600px, JPEG. A phone
+ * photograph of a lot is 3–6 MB as taken and about 300 KB like this, which
+ * is what lets a set of them fit under the host's request limit. Anything
+ * that cannot be decoded is returned as it is and judged on its size.
+ */
+async function reduceImage(file: File): Promise<File> {
+  if (!isImageAttachment(file.type) || file.size <= IMAGE_PASS_BYTES) return file;
+  try {
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, IMAGE_MAX_EDGE / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(bitmap.width * scale);
+    canvas.height = Math.round(bitmap.height * scale);
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return file;
+    ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    bitmap.close();
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.82));
+    if (!blob || blob.size >= file.size) return file;
+    return new File([blob], file.name.replace(/\.[^.]+$/, "") + ".jpg", { type: "image/jpeg" });
+  } catch {
+    return file;
+  }
+}
+
+/**
+ * Offer material / request supply.
+ *
+ * One form, two journeys (IMS, 14 September 2026). The direction comes first
+ * — from the door the visitor came through, or the radio at the top — and
+ * the fields follow it: a seller is asked for the available analysis, where
+ * the material is, and to attach the COA and photographs; a buyer for the
+ * required chemistry and the delivery point. Changing the direction updates
+ * the address so the page header changes with it.
  *
  * The line items are the point. A buyer pricing four grades needs four
- * quantities against four conditions, and the usual "material" text box forces
- * that into prose which someone then has to unpick by hand.
- *
- * Lines arrive pre-filled from three places — the ?grades= parameter the
- * comparison page links with, the comparison tray, and saved materials — so the
- * path from "these four look right" to "quote me these four" is one click and
- * no retyping.
+ * quantities against four specifications, and the usual "material" text box
+ * forces that into prose which someone then has to unpick by hand. Lines
+ * arrive pre-filled from three places — the ?grades= parameter the
+ * comparison page links with, the comparison tray, and saved materials.
  */
-/**
- * `preset` answers "which way round is this?" before the visitor arrives —
- * the homepage offers two doors, Offer material and Request supply, and a
- * form that then asks the same question again would be one question too
- * many. The select stays editable; it just starts on the right answer.
- */
-export function RfqForm({ preset }: { preset?: "sell" | "buy" } = {}) {
-  const presetDirection =
-    preset === "sell" ? rfqDirections[1] : preset === "buy" ? rfqDirections[0] : "";
+export function RfqForm({ preset }: { preset?: RfqDirection } = {}) {
   const p = useP();
   const id = useId();
+  const router = useRouter();
   const params = useSearchParams();
   const { index } = useAlloyIndex();
   const compare = useCompare();
   const saved = useSaved();
 
+  const [direction, setDirection] = useState<RfqDirection | "">(preset ?? "");
   const [lines, setLines] = useState<RfqLine[]>([emptyLine()]);
+  const [files, setFiles] = useState<Attachment[]>([]);
+  const [fileNotices, setFileNotices] = useState<string[]>([]);
   const [errors, setErrors] = useState<RfqFieldErrors>({});
   const [status, setStatus] = useState<Status>("idle");
   const [formError, setFormError] = useState<string | null>(null);
   const [fallbackHref, setFallbackHref] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const fileInput = useRef<HTMLInputElement>(null);
   const seeded = useRef(false);
 
+  const selling = direction === "sell";
+  const buying = direction === "buy";
   const field = (name: string) => `${id}-${name}`;
+
+  /* The door the visitor came through wins, even after the form is open —
+     a header link to the other journey should switch it. */
+  useEffect(() => {
+    if (preset) setDirection(preset);
+  }, [preset]);
+
+  const chooseDirection = (next: RfqDirection) => {
+    setDirection(next);
+    setErrors((e) => ({ ...e, direction: undefined }));
+    const query = new URLSearchParams(params.toString());
+    query.set("direction", next);
+    router.replace(`${routes.rfq}?${query.toString()}`, { scroll: false });
+  };
 
   /* Seed once, from the URL, as soon as the catalogue is available. Guarded so
      that editing a seeded line is never undone by a re-render. */
@@ -101,19 +164,54 @@ export function RfqForm({ preset }: { preset?: "sell" | "buy" } = {}) {
   const setLine = (i: number, patch: Partial<RfqLine>) =>
     setLines((current) => current.map((l, j) => (j === i ? { ...l, ...patch } : l)));
 
+  const totalBytes = files.reduce((n, f) => n + f.file.size, 0);
+
+  async function addFiles(chosen: FileList | null) {
+    if (!chosen || chosen.length === 0) return;
+    const notices: string[] = [];
+    const next: Attachment[] = [...files];
+    let total = totalBytes;
+    for (const original of Array.from(chosen)) {
+      if (next.length >= ATTACHMENT_LIMITS.maxFiles) {
+        notices.push(p("{name}: not added — the limit is {n} files.", { name: original.name, n: ATTACHMENT_LIMITS.maxFiles }));
+        continue;
+      }
+      const file = await reduceImage(original);
+      const problem = attachmentProblem({ name: file.name, size: file.size, type: file.type });
+      if (problem) {
+        notices.push(`${original.name}: ${p(problem)}`);
+        continue;
+      }
+      if (total + file.size > ATTACHMENT_LIMITS.maxTotalBytes) {
+        notices.push(p("{name}: not added — together the files would exceed {size}. Send larger packs by email.", { name: original.name, size: formatBytes(ATTACHMENT_LIMITS.maxTotalBytes) }));
+        continue;
+      }
+      total += file.size;
+      next.push({
+        id: `${Date.now()}-${next.length}-${file.name}`,
+        file,
+        reducedFrom: file.size < original.size ? original.size : undefined,
+      });
+    }
+    setFiles(next);
+    setFileNotices(notices);
+    setErrors((e) => ({ ...e, attachments: undefined }));
+    if (fileInput.current) fileInput.current.value = "";
+  }
+
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const data: RfqPayload = {
+      direction: direction as RfqDirection,
       name: String(form.get("name") ?? ""),
       company: String(form.get("company") ?? ""),
       email: String(form.get("email") ?? ""),
       phone: String(form.get("phone") ?? "") || undefined,
-      country: String(form.get("country") ?? "") || undefined,
-      direction: String(form.get("direction") ?? ""),
-      timescale: String(form.get("timescale") ?? "") || undefined,
+      location: String(form.get("location") ?? "") || undefined,
       message: String(form.get("message") ?? "") || undefined,
       lines,
+      attachments: files.map((f) => ({ name: f.file.name, size: f.file.size, type: f.file.type })),
     };
 
     const clientErrors = validateRfq(data);
@@ -131,11 +229,10 @@ export function RfqForm({ preset }: { preset?: "sell" | "buy" } = {}) {
     setFormError(null);
 
     try {
-      const response = await fetch("/api/rfq", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, website: String(form.get("website") ?? "") }),
-      });
+      const body = new FormData();
+      body.set("payload", JSON.stringify({ ...data, website: String(form.get("website") ?? "") }));
+      for (const f of files) body.append("files", f.file, f.file.name);
+      const response = await fetch("/api/rfq", { method: "POST", body });
       const result = (await response.json()) as { ok: boolean; errors?: RfqFieldErrors; error?: string };
 
       if (result.ok) {
@@ -160,14 +257,20 @@ export function RfqForm({ preset }: { preset?: "sell" | "buy" } = {}) {
   if (status === "sent") {
     return (
       <div role="status" className="border-t-2 border-success-500 bg-success-50 p-8">
-        <h2 className="font-display text-2xl font-medium text-navy-900">{p("Quotation request received")}</h2>
+        <h2 className="font-display text-2xl font-medium text-navy-900">
+          {selling ? p("Material offer received") : p("Supply request received")}
+        </h2>
         <p className="mt-3 text-base leading-relaxed text-steel-700">
-          {p("Thank you — your request is with our team, with all {n} line(s) attached. We will come back to you with pricing and availability.", { n: lines.length })}
+          {selling
+            ? p("Thank you — your offer is with our team, with {n} line(s) and {f} file(s). We will assess the material and come back with the available route.", { n: lines.length, f: files.length })
+            : p("Thank you — your request is with our team, with {n} line(s). We will review availability and come back with a quote.", { n: lines.length })}
         </p>
         <button
           type="button"
           onClick={() => {
             setLines([emptyLine()]);
+            setFiles([]);
+            setFileNotices([]);
             setErrors({});
             setStatus("idle");
             formRef.current?.reset();
@@ -209,14 +312,49 @@ export function RfqForm({ preset }: { preset?: "sell" | "buy" } = {}) {
           >
             {p("Send it by email instead — your details are already filled in")}
           </a>
+          {files.length > 0 ? (
+            <p className="mt-2 text-[0.8125rem] text-steel-600">{p("Attach the files to that email yourself; a mail link cannot carry them.")}</p>
+          ) : null}
         </div>
       ) : null}
+
+      {/* ---------- direction ---------- */}
+      <fieldset>
+        <legend className="label text-steel-500">{p("I want to:")}</legend>
+        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          {rfqDirections.map((d) => {
+            const active = direction === d;
+            return (
+              <label
+                key={d}
+                className={cn(
+                  "flex cursor-pointer items-center gap-3 rounded-md border bg-white px-4 py-3.5 text-[0.9375rem] font-medium transition-colors",
+                  active ? "border-brand-700 text-navy-900 ring-1 ring-brand-700" : "border-steel-300 text-navy-900 hover:border-steel-400",
+                )}
+              >
+                <input
+                  type="radio"
+                  name="direction"
+                  value={d}
+                  checked={active}
+                  onChange={() => chooseDirection(d)}
+                  className="h-4 w-4 accent-brand-700"
+                />
+                {p(rfqDirectionLabels[d])}
+              </label>
+            );
+          })}
+        </div>
+        {errors.direction ? (
+          <p className="mt-2 text-[0.8125rem] text-danger-600">{p(errors.direction)}</p>
+        ) : null}
+      </fieldset>
 
       {/* ---------- line items ---------- */}
       <fieldset>
         <div className="flex flex-wrap items-end justify-between gap-3">
           <legend className="label text-steel-500">
-            {p("Materials to quote")}
+            {buying ? p("Material required") : p("Material offered")}
           </legend>
           {importable.length > 0 ? (
             <div className="flex flex-wrap items-center gap-2">
@@ -266,7 +404,7 @@ export function RfqForm({ preset }: { preset?: "sell" | "buy" } = {}) {
                       data-line-material
                       value={line.material}
                       onChange={(e) => setLine(i, { material: e.target.value, gradeId: undefined })}
-                      placeholder={p("e.g. Inconel 718, or describe the stream")}
+                      placeholder={buying ? p("e.g. Inconel 718, or the specification") : p("e.g. Inconel 718 turnings, or describe the lot")}
                       aria-invalid={Boolean(lineError?.material)}
                       aria-describedby={lineError?.material ? field(`material-${i}`) + "-error" : undefined}
                       className={cn(inputBase, "mt-2", lineError?.material ? "border-danger-500" : "border-steel-300")}
@@ -282,6 +420,23 @@ export function RfqForm({ preset }: { preset?: "sell" | "buy" } = {}) {
                         {grade.composition.slice(0, 5).map((c) => `${c.element} ${formatAmount(c)}`).join("  ")}
                       </p>
                     ) : null}
+                  </div>
+
+                  <div className="sm:col-span-2">
+                    <label htmlFor={field(`form-${i}`)} className="block text-[0.9375rem] font-medium text-navy-900">
+                      {p("Form")}
+                    </label>
+                    <select
+                      id={field(`form-${i}`)}
+                      value={line.form}
+                      onChange={(e) => setLine(i, { form: e.target.value })}
+                      className={cn(inputBase, "mt-2 border-steel-300")}
+                    >
+                      <option value="">{p("Select…")}</option>
+                      {rfqForms.map((f) => (
+                        <option key={f} value={f}>{p(f)}</option>
+                      ))}
+                    </select>
                   </div>
 
                   <div className="sm:col-span-2">
@@ -314,31 +469,16 @@ export function RfqForm({ preset }: { preset?: "sell" | "buy" } = {}) {
                     </select>
                   </div>
 
-                  <div className="sm:col-span-2">
-                    <label htmlFor={field(`cond-${i}`)} className="block text-[0.9375rem] font-medium text-navy-900">
-                      {p("Condition")}
-                    </label>
-                    <select
-                      id={field(`cond-${i}`)}
-                      value={line.condition}
-                      onChange={(e) => setLine(i, { condition: e.target.value })}
-                      className={cn(inputBase, "mt-2 border-steel-300")}
-                    >
-                      {rfqConditions.map((c) => (
-                        <option key={c} value={c}>{p(c)}</option>
-                      ))}
-                    </select>
-                  </div>
-
                   <div className="sm:col-span-6">
-                    <label htmlFor={field(`note-${i}`)} className="block text-[0.9375rem] font-medium text-navy-900">
-                      {p("Specification notes")} <span className="font-normal text-steel-500">({p("optional")})</span>
+                    <label htmlFor={field(`spec-${i}`)} className="block text-[0.9375rem] font-medium text-navy-900">
+                      {buying ? p("Required chemistry or specification") : p("Available analysis")}{" "}
+                      <span className="font-normal text-steel-500">({p("optional")})</span>
                     </label>
                     <input
-                      id={field(`note-${i}`)}
-                      value={line.note ?? ""}
-                      onChange={(e) => setLine(i, { note: e.target.value })}
-                      placeholder={p("Form, size, certification, delivery point")}
+                      id={field(`spec-${i}`)}
+                      value={line.spec ?? ""}
+                      onChange={(e) => setLine(i, { spec: e.target.value })}
+                      placeholder={buying ? p("e.g. AMS 5662, or the limits that matter") : p("e.g. Ni 52, Cr 19, Nb 5 — or attach the analysis below")}
                       className={cn(inputBase, "mt-2 border-steel-300")}
                     />
                   </div>
@@ -365,6 +505,82 @@ export function RfqForm({ preset }: { preset?: "sell" | "buy" } = {}) {
         )}
       </fieldset>
 
+      {/* ---------- attachments ---------- */}
+      <fieldset className="border-t border-steel-200 pt-8">
+        <legend className="label text-steel-500">{p("Attachments")}</legend>
+        <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-600">
+          {buying
+            ? p("Specifications, drawings, standards and any inspection requirements.")
+            : p("Laboratory analysis or COA, photographs of the material, packing lists, specifications, spreadsheets and inspection reports. An analysis and photographs are normally needed before an offer can be evaluated.")}
+        </p>
+
+        <div className="mt-4">
+          <input
+            ref={fileInput}
+            id={field("files")}
+            type="file"
+            multiple
+            accept={ATTACHMENT_ACCEPT}
+            onChange={(e) => void addFiles(e.target.files)}
+            className="sr-only"
+          />
+          <label
+            htmlFor={field("files")}
+            className="inline-flex h-11 cursor-pointer items-center gap-2 rounded border border-steel-300 bg-white px-4 text-[0.9375rem] font-medium text-navy-900 transition-colors hover:border-brand-700 hover:text-brand-700 focus-within:ring-2 focus-within:ring-brand-700"
+          >
+            <svg viewBox="0 0 16 16" aria-hidden className="h-4 w-4">
+              <path d="M8 2.5v9M4 7l4-4 4 4M3 13.5h10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            {p("Add files")}
+          </label>
+          <p className="mt-2 text-[0.8125rem] leading-relaxed text-steel-500">
+            {p("{formats} · up to {n} files, {size} in total. Photographs are reduced in size before sending; larger packs can go by email.", {
+              formats: ATTACHMENT_FORMATS,
+              n: ATTACHMENT_LIMITS.maxFiles,
+              size: formatBytes(ATTACHMENT_LIMITS.maxTotalBytes),
+            })}
+          </p>
+        </div>
+
+        {files.length > 0 ? (
+          <ul className="mt-4 divide-y divide-steel-200 rounded-md border border-steel-200 bg-white">
+            {files.map((f) => (
+              <li key={f.id} className="flex items-center justify-between gap-3 px-4 py-2.5 text-[0.875rem]">
+                <span className="min-w-0 truncate text-navy-900">{f.file.name}</span>
+                <span className="flex shrink-0 items-center gap-3">
+                  <span className="font-mono text-[0.75rem] text-steel-500 tabular-nums">
+                    {formatBytes(f.file.size)}
+                    {f.reducedFrom ? ` (${p("reduced from {size}", { size: formatBytes(f.reducedFrom) })})` : ""}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setFiles((c) => c.filter((x) => x.id !== f.id))}
+                    className="text-[0.8125rem] font-medium text-steel-600 transition-colors hover:text-danger-600"
+                  >
+                    {p("Remove")}
+                  </button>
+                </span>
+              </li>
+            ))}
+            <li className="flex items-center justify-between px-4 py-2 text-[0.75rem] text-steel-500">
+              <span>{p("{n} of {max} files", { n: files.length, max: ATTACHMENT_LIMITS.maxFiles })}</span>
+              <span className="font-mono tabular-nums">{formatBytes(totalBytes)} / {formatBytes(ATTACHMENT_LIMITS.maxTotalBytes)}</span>
+            </li>
+          </ul>
+        ) : null}
+
+        {fileNotices.length > 0 ? (
+          <ul className="mt-3 space-y-1 text-[0.8125rem] text-danger-600" role="alert">
+            {fileNotices.map((n) => (
+              <li key={n}>{n}</li>
+            ))}
+          </ul>
+        ) : null}
+        {errors.attachments ? (
+          <p className="mt-2 text-[0.8125rem] text-danger-600">{p(errors.attachments)}</p>
+        ) : null}
+      </fieldset>
+
       {/* ---------- requester ---------- */}
       <fieldset className="space-y-6 border-t border-steel-200 pt-8">
         <legend className="label text-steel-500">
@@ -376,44 +592,16 @@ export function RfqForm({ preset }: { preset?: "sell" | "buy" } = {}) {
           <Field id={field("company")} name="company" label={p("Company")} required error={errors.company} autoComplete="organization" />
           <Field id={field("email")} name="email" label={p("Email")} type="email" required error={errors.email} autoComplete="email" />
           <Field id={field("phone")} name="phone" label={p("Phone")} type="tel" error={errors.phone} autoComplete="tel" hint={p("optional")} />
-          <Field id={field("country")} name="country" label={p("Country")} error={errors.country} autoComplete="country-name" hint={p("optional")} />
-
-          <div>
-            <label htmlFor={field("timescale")} className="block text-[0.9375rem] font-medium text-navy-900">
-              {p("Timescale")} <span className="font-normal text-steel-500">({p("optional")})</span>
-            </label>
-            <select id={field("timescale")} name="timescale" className={cn(inputBase, "mt-2 border-steel-300")}>
-              <option value="">{p("Select…")}</option>
-              {rfqTimescales.map((t) => (
-                <option key={t} value={t}>{p(t)}</option>
-              ))}
-            </select>
+          <div className="sm:col-span-2 sm:max-w-md">
+            <Field
+              id={field("location")}
+              name="location"
+              label={buying ? p("Delivery location") : p("Material location")}
+              error={errors.location}
+              hint={p("optional")}
+              placeholder={p("Country, or city and country")}
+            />
           </div>
-        </div>
-
-        <div>
-          <label htmlFor={field("direction")} className="block text-[0.9375rem] font-medium text-navy-900">
-            {p("Which way round is this?")} <span className="text-danger-500">*</span>
-          </label>
-          <select
-            id={field("direction")}
-            name="direction"
-            required
-            defaultValue={presetDirection}
-            aria-invalid={Boolean(errors.direction)}
-            aria-describedby={errors.direction ? field("direction") + "-error" : undefined}
-            className={cn(inputBase, "mt-2", errors.direction ? "border-danger-500" : "border-steel-300")}
-          >
-            <option value="" disabled>{p("Select…")}</option>
-            {rfqDirections.map((d) => (
-              <option key={d} value={d}>{p(d)}</option>
-            ))}
-          </select>
-          {errors.direction ? (
-            <p id={field("direction") + "-error"} className="mt-2 text-[0.8125rem] text-danger-600">
-              {p(errors.direction)}
-            </p>
-          ) : null}
         </div>
 
         <div>
@@ -424,7 +612,7 @@ export function RfqForm({ preset }: { preset?: "sell" | "buy" } = {}) {
             id={field("message")}
             name="message"
             rows={4}
-            placeholder={p("Packaging, delivery terms, certification requirements, recurring volumes")}
+            placeholder={buying ? p("Packaging, delivery terms, certification requirements, recurring volumes") : p("Packaging, availability, how the lot was generated")}
             className={cn(
               "mt-2 w-full rounded border bg-white px-3.5 py-3 text-[0.9375rem] leading-relaxed text-navy-900 transition-colors placeholder:text-steel-500 hover:border-steel-400 focus:border-brand-700",
               errors.message ? "border-danger-500" : "border-steel-300",
@@ -438,10 +626,13 @@ export function RfqForm({ preset }: { preset?: "sell" | "buy" } = {}) {
 
       <div className="flex flex-col gap-4 border-t border-steel-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-[0.8125rem] text-steel-500">
-          <span className="text-danger-500">*</span> {p("Required. We use your details only to respond to this request.")}
+          <span className="text-danger-500">*</span> {p("Required. Your details and files are used only to assess and respond to this request.")}{" "}
+          <Link href={routes.privacy} className="underline underline-offset-2 hover:text-brand-700">
+            {p("Privacy policy")}
+          </Link>
         </p>
         <ButtonEl type="submit" size="lg" disabled={status === "submitting"}>
-          {status === "submitting" ? p("Sending…") : p("Request quotation for {n}", { n: lines.length })}
+          {status === "submitting" ? p("Sending…") : buying ? p("Request a quote") : selling ? p("Submit material") : p("Send")}
         </ButtonEl>
       </div>
     </form>
@@ -457,6 +648,7 @@ function Field({
   error,
   hint,
   autoComplete,
+  placeholder,
 }: {
   id: string;
   name: string;
@@ -466,6 +658,7 @@ function Field({
   error?: string;
   hint?: string;
   autoComplete?: string;
+  placeholder?: string;
 }) {
   const p = useP();
   return (
@@ -484,6 +677,7 @@ function Field({
         type={type}
         required={required}
         autoComplete={autoComplete}
+        placeholder={placeholder}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? id + "-error" : undefined}
         className={cn(inputBase, "mt-2", error ? "border-danger-500" : "border-steel-300")}
@@ -497,12 +691,11 @@ function Field({
   );
 }
 
-/** Same fallback as the inquiry form: a failed send should cost a click, not the whole request. */
+/** Same fallback as the contact form: a failed send should cost a click, not the whole request. */
 function composeMailto(payload: RfqPayload): string {
-  const subject = `RFQ: ${payload.lines.length} material${payload.lines.length === 1 ? "" : "s"} — ${payload.company}`;
   return (
     "mailto:" + contact.email +
-    "?subject=" + encodeURIComponent(subject) +
+    "?subject=" + encodeURIComponent(rfqSubject(payload)) +
     "&body=" + encodeURIComponent(formatRfqText(payload))
   );
 }

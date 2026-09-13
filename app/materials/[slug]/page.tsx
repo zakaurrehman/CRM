@@ -42,10 +42,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
         name: p(family.name),
         accepts: p(family.accepts),
         group: p(groupOf(family).name),
-        forms: grades > 0 ? p("{n} grades with published composition.", { n: grades }) : p("Solids, turnings, runnings, grindings, 3D powders and dusts."),
+        forms: grades > 0 ? p("{n} grades with published composition.", { n: grades }) : p("Solids, turnings, runners and risers, grindings, powders, dusts and process residues."),
       }),
       path: "/materials/" + family.slug,
-      image: family.images[0] ?? "/images/hero/turnings.jpg",
+      ...(family.images[0] ? { image: family.images[0] } : {}),
     });
   }
 
@@ -59,7 +59,6 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       name: category.name.toLowerCase(),
     }),
     path: "/materials/" + category.slug,
-    image: category.image,
   });
 }
 

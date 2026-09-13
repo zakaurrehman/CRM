@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/shared/PageHero";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { PortfolioGrid } from "@/components/portfolio/PortfolioGrid";
-import { Intermediates } from "@/components/portfolio/Intermediates";
+import { IntermediatesPreview } from "@/components/portfolio/Intermediates";
 import { AcceptedForms } from "@/components/shared/AcceptedForms";
 import { CtaSection } from "@/components/shared/CtaSection";
 import { ArrowLink } from "@/components/ui/Button";
@@ -33,7 +33,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /**
- * The portfolio: the families IMS buys, blends and supplies.
+ * The portfolio: the families IMS buys, blends and supplies, and the
+ * thresholds that apply. Materials only — the powders, oxides and
+ * intermediates are one line and a door to their own page.
  *
  * The composition tables that used to be this page are now behind each
  * family, and the legacy categories the portfolio does not claim are listed
@@ -51,7 +53,7 @@ export default async function PortfolioPage() {
       <PageHero
         eyebrow={p("Portfolio")}
         title={p("What we buy, blend and supply")}
-        intro={p("{n} materials, from superalloys to tantalum, plus the powders, oxides and intermediates around them. Open any one for what we accept, the thresholds that apply, and the published compositions behind it.", { n: portfolioFamilies.length + 1 })}
+        intro={p("{n} materials, from superalloys to tantalum, with the thresholds that apply. Open any one for what we accept, in which forms, and the published compositions behind it.", { n: portfolioFamilies.length + 1 })}
         trail={trail}
         image="/images/hero/turnings.jpg"
         imageAlt=""
@@ -59,10 +61,9 @@ export default async function PortfolioPage() {
 
       <Section tone="white">
         <PortfolioGrid />
-      </Section>
-
-      <Section tone="light" id="intermediates">
-        <Intermediates />
+        <div className="mt-14" id="intermediates">
+          <IntermediatesPreview />
+        </div>
       </Section>
 
       <AcceptedForms />
@@ -81,9 +82,11 @@ export default async function PortfolioPage() {
           }
         />
         {reference.length > 0 ? (
+          /* Reference categories, not portfolio ones: the name says so
+             (IMS, 14 September 2026). */
           <div className="mt-12">
             <h3 className="label text-steel-500">
-              {p("Other tables")}
+              {p("Additional technical reference tables")}
             </h3>
             <ul className="mt-4 grid grid-rule sm:grid-cols-2 lg:grid-cols-4">
               {reference.map((category) => (
@@ -108,8 +111,7 @@ export default async function PortfolioPage() {
 
       <CtaSection
         title={p("Have something that is not listed?")}
-        body={p("The portfolio is what we handle routinely, not the limit of it. Tell us the material and the form and we will confirm whether we can take it.")}
-        primary={{ href: "/rfq", label: "Request a quotation" }}
+        body={p("The portfolio is what we handle routinely, not the limit of it. Tell us the material and the form and we will assess whether there is a route for it.")}
       />
 
       <JsonLd data={breadcrumbSchema(trail)} />

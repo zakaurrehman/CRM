@@ -9,7 +9,7 @@ import { ElementMark } from "@/components/portfolio/FamilyCard";
 import { CtaSection } from "@/components/shared/CtaSection";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
-import { contact } from "@/lib/site";
+import { contact, routes } from "@/lib/site";
 
 const trail = [
   { name: "Home", href: "/" },
@@ -36,14 +36,19 @@ export default async function FerroAlloysPage() {
       <PageHero
         eyebrow={p("Portfolio")}
         title={p("Ferroalloys")}
-        intro={p("Ferro-nickel-chrome, ferro-tungsten, ferro-molybdenum, ferro-niobium and ferro-titanium — available in all sizes, packings and specifications. FeNiCr is the blend we build for refiners, alloy producers and the stainless-steel sector.")}
+        intro={p("Ferro-nickel-chrome, ferro-tungsten, ferro-molybdenum, ferro-niobium and ferro-titanium — bought and supplied in all sizes, packings and specifications. FeNiCr is the blend developed for refiners, alloy producers and stainless steel mills.")}
         trail={trail}
         image="/images/hero/hot-metal-plate.jpg"
         imageAlt=""
       >
-        <Button href="/rfq" variant="onDark" size="lg">
-          {p("Request a quotation")}
-        </Button>
+        <div className="flex flex-wrap gap-3">
+          <Button href={routes.offer} variant="onDark" size="lg">
+            {p("Offer material")}
+          </Button>
+          <Button href={routes.supply} variant="onDarkGhost" size="lg">
+            {p("Request supply")}
+          </Button>
+        </div>
       </PageHero>
 
       <Section tone="white">
@@ -77,13 +82,16 @@ export default async function FerroAlloysPage() {
 
           <div className="lg:col-span-4 lg:col-start-9">
             <div className="border-t-2 border-brand-700 bg-steel-50 p-6">
-              <h3 className="font-display text-lg font-medium text-navy-900">{p("Get a price")}</h3>
+              <h3 className="font-display text-lg font-medium text-navy-900">{p("Buying or selling")}</h3>
               <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-steel-600">
-                {p("Tell us the alloy, the analysis, the size and packing, and the quantity — buying or selling.")}
+                {p("Tell us the alloy, the analysis, the size and packing, and the quantity — offering material or requesting supply.")}
               </p>
-              <div className="mt-6">
-                <Button href="/rfq" variant="primary" className="w-full">
-                  {p("Request a quotation")}
+              <div className="mt-6 flex flex-col gap-3">
+                <Button href={routes.offer} variant="primary" className="w-full">
+                  {p("Offer material")}
+                </Button>
+                <Button href={routes.supply} variant="secondary" className="w-full">
+                  {p("Request supply")}
                 </Button>
               </div>
               <p className="mt-4 text-[0.8125rem] text-steel-500">
@@ -99,7 +107,8 @@ export default async function FerroAlloysPage() {
 
       <CtaSection
         title={p("Have ferroalloys to place?")}
-        secondary={{ href: "/materials", label: p("Back to the portfolio") }}
+        body={p("The alloy, the analysis, the size and packing, and the quantity are enough to start. We will assess the available route.")}
+        secondary={{ href: "/materials", label: "Back to the portfolio" }}
       />
 
       <JsonLd data={breadcrumbSchema(trail)} />

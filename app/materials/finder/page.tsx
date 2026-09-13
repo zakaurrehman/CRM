@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/shared/PageHero";
 import { Section } from "@/components/ui/Section";
 import { AlloyFinder } from "@/components/materials/AlloyFinder";
-import { CtaSection } from "@/components/shared/CtaSection";
 import { pageMetadata } from "@/lib/seo";
 import { breadcrumbSchema, JsonLd } from "@/lib/schema";
 import { totalGradeCount, alloyCategoryCount } from "@/data/alloy-index";
@@ -43,7 +42,6 @@ export default async function FinderPage() {
         <AlloyFinder />
       </Section>
 
-      <CtaSection secondary={{ href: "/materials", label: p("Browse by category") }} />
     </>
   );
 }

@@ -1,11 +1,13 @@
 import type { MetadataRoute } from "next";
 import { alloyCategories } from "@/data/alloys";
 import { portfolioFamilies } from "@/data/portfolio";
-import { articles } from "@/data/insights";
 import { claimedCategorySlugs } from "@/lib/portfolio";
-import { site } from "@/lib/site";
+import { routes, site } from "@/lib/site";
 
-/** Every indexable route. /search is excluded to match robots.ts. */
+/**
+ * Every indexable route. /search is excluded to match robots.ts; Insights
+ * is offline (see next.config.ts) and so not listed.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
   const url = (path: string) => `${site.url}${path}`;
   const now = new Date();
@@ -16,11 +18,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: url("/about"), lastModified: now, changeFrequency: "yearly", priority: 0.8 },
     { url: url("/materials"), lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: url("/materials/ferro-alloys"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: url(routes.intermediates), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: url("/materials/finder"), lastModified: now, changeFrequency: "yearly", priority: 0.5 },
     { url: url("/materials/compare"), lastModified: now, changeFrequency: "yearly", priority: 0.4 },
-    { url: url("/rfq"), lastModified: now, changeFrequency: "yearly", priority: 0.7 },
-    { url: url("/insights"), lastModified: now, changeFrequency: "weekly", priority: 0.5 },
+    { url: url(routes.offer), lastModified: now, changeFrequency: "yearly", priority: 0.7 },
+    { url: url(routes.supply), lastModified: now, changeFrequency: "yearly", priority: 0.7 },
     { url: url("/contact"), lastModified: now, changeFrequency: "yearly", priority: 0.8 },
+    { url: url(routes.privacy), lastModified: now, changeFrequency: "yearly", priority: 0.2 },
+    { url: url(routes.legal), lastModified: now, changeFrequency: "yearly", priority: 0.2 },
   ];
 
   const families: MetadataRoute.Sitemap = portfolioFamilies.map((family) => ({
@@ -40,12 +45,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.4,
     }));
 
-  const posts: MetadataRoute.Sitemap = articles.map((article) => ({
-    url: url(`/insights/${article.slug}`),
-    lastModified: new Date(article.updated ?? article.published),
-    changeFrequency: "yearly",
-    priority: 0.5,
-  }));
-
-  return [...core, ...families, ...reference, ...posts];
+  return [...core, ...families, ...reference];
 }

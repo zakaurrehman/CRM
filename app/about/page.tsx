@@ -3,12 +3,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHero } from "@/components/shared/PageHero";
 import { Section } from "@/components/ui/Section";
-import { Advantage } from "@/components/shared/Advantage";
-import { CtaSection } from "@/components/shared/CtaSection";
+import { Reveal } from "@/components/ui/Reveal";
 import { ArrowLink } from "@/components/ui/Button";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
-import { contact, registration, site } from "@/lib/site";
+import { contact, registration, routes, site } from "@/lib/site";
 
 const trail = [
   { name: "Home", href: "/" },
@@ -20,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata({
     title: p("About IMS"),
     description: p(
-      "IMS Metals & Alloys OÜ, Tallinn: a specialised recycler and supplier to the nickel refinery, stainless steel, superalloy, titanium and refractory metals industries.",
+      "IMS Metals & Alloys OÜ is an Estonia-based international metals recovery and supply company specialising in complex high-nickel, superalloy, titanium and refractory materials.",
     ),
     path: "/about",
     image: "/images/company/port-terminal.jpg",
@@ -28,12 +27,22 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /**
- * Who IMS is, in the intro's words, with the company's registered details.
+ * The operating model, in IMS's words of 14 September 2026: what IMS is, how
+ * it works, and the registered details. IMS owns no plant or laboratory —
+ * it coordinates specialist processing and analysis through independent
+ * facilities — and this page is where that is said plainly.
  *
- * What is no longer here — the six-step process, the metallurgical
- * laboratory, the differentiators — was the previous website's description of
- * the business. See docs/refocus-plan.md §8 for the items IMS is confirming.
+ * Not repeated here: the programme (What we do), the advantages and the
+ * closing band (homepage).
  */
+const model = [
+  "IMS is registered in Estonia and operates internationally.",
+  "IMS coordinates specialist processing and analytical services through independent facilities.",
+  "IMS focuses on complex, mixed and off-spec materials.",
+  "IMS supplies refiners, alloy producers and stainless steel mills.",
+  "IMS preserves recoverable metal value wherever technically and commercially possible.",
+];
+
 export default async function AboutPage() {
   const p = await getP();
 
@@ -43,7 +52,7 @@ export default async function AboutPage() {
         eyebrow={p("About")}
         title={p("Who we are")}
         intro={p(
-          "IMS Metals & Alloys OÜ is a specialised recycler and supplier to the global nickel refinery, stainless steel, superalloy, titanium and refractory metals industries. With advanced expertise, we provide tailored blending solutions that create efficiency and cost savings for refiners, alloy producers and the stainless-steel sector.",
+          "IMS Metals & Alloys OÜ is an Estonia-based international metals recovery and supply company specialising in complex high-nickel, superalloy, titanium and refractory materials.",
         )}
         trail={trail}
         image="/images/company/port-terminal.jpg"
@@ -53,18 +62,21 @@ export default async function AboutPage() {
       <Section tone="white">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
-            <h2 className="text-display-sm">{p("What we do")}</h2>
-            <div className="mt-6 space-y-5 text-base leading-relaxed text-steel-700">
-              <p>
-                {p("Through our specialised blending program, we transform complex scrap streams into high-value Ni-based blends — maximising recoverable metal content and reducing downgrading.")}
-              </p>
-              <p>
-                {p("We make sure to be able to manage each complex material: off-spec grades, mixed lots, and off-grade refractory metals — tungsten, molybdenum, niobium and tantalum — alongside an expanding capability in hafnium and advanced master alloys.")}
-              </p>
-            </div>
+            <p className="max-w-2xl text-lg leading-relaxed text-navy-900 sm:text-xl">
+              {p("We connect material generators, specialist processors, laboratories, refiners and alloy producers to develop commercially and metallurgically suitable routes for materials that conventional channels may reject or downgrade.")}
+            </p>
+
+            <h2 className="mt-12 text-display-sm">{p("How we operate")}</h2>
+            <ul className="mt-6 border-t border-steel-200">
+              {model.map((line, i) => (
+                <Reveal as="li" key={line} delay={i * 50} className="border-b border-steel-200 py-4 text-base leading-relaxed text-navy-900">
+                  {p(line)}
+                </Reveal>
+              ))}
+            </ul>
             <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
-              <ArrowLink href="/what-we-do">{p("How the program works")}</ArrowLink>
-              <ArrowLink href="/materials">{p("Open the portfolio")}</ArrowLink>
+              <ArrowLink href={routes.whatWeDo}>{p("How the programme works")}</ArrowLink>
+              <ArrowLink href={routes.materials}>{p("Open the portfolio")}</ArrowLink>
             </div>
           </div>
 
@@ -72,7 +84,7 @@ export default async function AboutPage() {
             <figure className="relative aspect-[3/4] overflow-hidden">
               <Image
                 src="/images/company/scrap-yard.jpg"
-                alt={p("Sorted metal arisings staged for processing")}
+                alt={p("Mixed metal scrap")}
                 fill
                 sizes="(min-width: 1024px) 30vw, 100vw"
                 className="object-cover"
@@ -82,9 +94,7 @@ export default async function AboutPage() {
         </div>
       </Section>
 
-      <Advantage />
-
-      <Section tone="white">
+      <Section tone="light">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <h2 className="text-display-sm">{p("The company")}</h2>
@@ -125,8 +135,6 @@ export default async function AboutPage() {
           </dl>
         </div>
       </Section>
-
-      <CtaSection secondary={{ href: "/materials", label: p("See our portfolio") }} />
 
       <JsonLd data={breadcrumbSchema(trail)} />
     </>

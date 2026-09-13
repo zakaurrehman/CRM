@@ -64,12 +64,6 @@ export async function POST(request: Request) {
     name: str(body.name),
     company: str(body.company),
     email: str(body.email),
-    phone: str(body.phone),
-    country: str(body.country),
-    requirementType: str(body.requirementType),
-    material: str(body.material),
-    industry: str(body.industry),
-    quantity: str(body.quantity),
     message: str(body.message),
   };
 

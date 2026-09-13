@@ -16,21 +16,18 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata({
     title: p("Turning Complex Scrap into Opportunity"),
     description: p(
-      "Specialised recycler and supplier to the nickel refinery, stainless steel, superalloy, titanium and refractory metals industries. Complex scrap streams blended into high-value Ni-based blends.",
+      "IMS specialises in complex high-nickel, superalloy, titanium and refractory materials. Through our international processing network, we develop tailored recovery and supply routes that preserve valuable metal content and reduce unnecessary downgrading.",
     ),
     path: "/",
   });
 }
 
 /**
- * The homepage follows the company intro's five headings — who we are, what
- * we do, portfolio, accepted forms, our advantage — and nothing else. Who we
- * are opens it, in the welcome band under the market strip: one dark band,
- * not two.
+ * The homepage: the positioning and the two commercial routes. The company
+ * intro's headings — what we do, portfolio, accepted forms, our advantage —
+ * and nothing else; the operating model is told on What we do and About.
  */
 export default async function HomePage() {
-  const p = await getP();
-
   return (
     <>
       {/* Metal prices, directly under the header. The FX rates that shared
@@ -52,7 +49,7 @@ export default async function HomePage() {
       <PortfolioSection />
       <AcceptedForms />
       <Advantage tone="white" />
-      <CtaSection secondary={{ href: "/materials", label: p("See our portfolio") }} />
+      <CtaSection />
     </>
   );
 }

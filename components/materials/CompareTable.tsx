@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n/provider";
 import { categoryNameFor } from "@/lib/i18n/content";
 import { useP } from "@/lib/i18n/phrases/client";
+import { compositionDisclaimer } from "@/lib/composition";
 
 /**
  * Side-by-side composition comparison.
@@ -213,13 +214,14 @@ export function CompareTable() {
       </div>
 
       <p className="mt-4 text-[0.8125rem] leading-relaxed text-steel-500">
-        {p("Percentage by weight. “max” is an upper limit rather than a nominal figure, and “Bal.” is the balance of the alloy. A dash means the source table did not specify that element. Rows shaded grey are identical across every grade shown. Confirm the specification against your own requirement before ordering.")}
+        {p("Percentage by weight. “max” is an upper limit rather than a nominal figure, and “Bal.” is the balance of the alloy. A dash means the source table did not specify that element. Rows shaded grey are identical across every grade shown.")}{" "}
+        {p(compositionDisclaimer)}
       </p>
 
       <div className="mt-8 rounded-lg border border-brand-200 bg-brand-50 p-6 print:hidden">
         <h2 className="font-display text-lg font-medium text-navy-900">{t("compare", "readyTitle")}</h2>
         <p className="mt-2 max-w-2xl text-[0.9375rem] leading-relaxed text-steel-700">
-          {p("Send the selection straight through as a quotation request — the grades below travel with it, so nobody has to retype a composition.")}
+          {p("Send the selection straight through to the inquiry form — offering or requesting — and the grades below travel with it, so nobody has to retype a composition.")}
         </p>
         <div className="mt-5">
           <Button href={`/rfq?grades=${encodeURIComponent(ids.join(","))}`}>{t("common", "requestQuotation")}</Button>

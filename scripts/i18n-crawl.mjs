@@ -21,14 +21,17 @@ if (!base) {
 const EXTRAS = [
   "/materials/saved",
   "/search?q=titanium",
-  "/rfq?direction=sell",
-  "/rfq?direction=buy",
+  "/rfq",
   "/this-page-does-not-exist",
 ];
 
 const xml = await (await fetch(base + "/sitemap.xml")).text();
-/* The sitemap carries the production origin; only the path is wanted. */
-const fromSitemap = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname);
+/* The sitemap carries the production origin; only the path is wanted — with
+   its query, which is what tells the offer form from the supply form. */
+const fromSitemap = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => {
+  const u = new URL(m[1].replace(/&amp;/g, "&"));
+  return u.pathname + u.search;
+});
 const paths = [...new Set([...fromSitemap, ...EXTRAS])];
 
 if (listOnly) {

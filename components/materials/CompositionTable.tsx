@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { compositionFootnote } from "@/data/alloy-index";
+import { compositionDisclaimer, compositionLegend } from "@/lib/composition";
 import type { AlloyCategory } from "@/types/content";
 import { cn, normalise } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n/provider";
@@ -31,12 +31,19 @@ export function CompositionTable({
   category,
   heading,
   id = "composition",
+  filterLabel,
 }: {
   category: AlloyCategory;
   /** Overrides the "Composition" heading — a family page with two tables names each by its source. */
   heading?: string;
   /** Anchor for the heading and a suffix for the filter control, so two tables on one page stay distinct. */
   id?: string;
+  /**
+   * The filter's accessible name — "Filter superalloy grades by name" on a
+   * material page. The default names no material: the source table's
+   * category ("Complex Nickel Alloys") is not what the page is about.
+   */
+  filterLabel?: string;
 }) {
   const p = useP();
   const { t } = useI18n();
@@ -67,7 +74,7 @@ export function CompositionTable({
           {category.grades.length > 8 ? (
             <div className="sm:w-72">
               <label htmlFor={id + "-filter"} className="sr-only">
-                {t("table", "filterLabel", { category: category.name })}
+                {filterLabel ?? t("table", "filterLabel")}
               </label>
               <div className="relative">
                 <svg
@@ -176,9 +183,9 @@ export function CompositionTable({
         <div className="scroll-x max-h-[min(70vh,44rem)] overflow-y-auto xl:max-h-none xl:overflow-visible">
           <table className="w-full min-w-[46rem] border-collapse text-start">
             <caption className="sr-only">
-              {p("Nominal chemical composition of {name} grades handled by IMS, in percentage by weight.", { name: category.name })}
+              {p("Nominal chemical composition of {name} grades, in percentage by weight.", { name: category.name })}
               {" "}
-              {p(compositionFootnote)}
+              {p(compositionLegend)}
             </caption>
             <thead>
               <tr>
@@ -243,7 +250,7 @@ export function CompositionTable({
 
         {rows.length === 0 ? (
           <p className="border-t border-steel-200 bg-steel-50 px-4 py-8 text-center text-sm text-steel-600">
-            No grade matches &ldquo;{query}&rdquo;.{" "}
+            {t("table", "noGradeMatch", { query })}{" "}
             <button type="button" onClick={() => setQuery("")} className="font-medium text-brand-700 hover:underline">
               {t("table", "clearFilter")}
             </button>
@@ -261,8 +268,8 @@ export function CompositionTable({
       </div>
 
       <p className="mt-4 text-[0.8125rem] leading-relaxed text-steel-500">
-        {p(compositionFootnote)}{" "}
-        {p("Values are reproduced from IMS technical data and are provided for identification purposes; confirm the specification against your own requirement before ordering.")}
+        {p(compositionLegend)}{" "}
+        {p(compositionDisclaimer)}
       </p>
       <p className="mt-2 text-[0.8125rem] text-steel-500 sm:hidden">
         {p("Scroll the table sideways to see all elements, or switch to cards above.")}

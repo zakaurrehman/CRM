@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { AlloyCategory } from "@/types/content";
-import { compositionFootnote } from "@/data/alloy-index";
 import { getP } from "@/lib/i18n/server";
 import { PageHero } from "@/components/shared/PageHero";
 import { Section } from "@/components/ui/Section";
@@ -40,23 +39,23 @@ export async function ReferencePage({ category }: { category: AlloyCategory }) {
 
       <Section tone="light">
         <CompositionTable category={category} />
-        <p className="mt-6 text-[0.875rem] text-steel-500">{p(compositionFootnote)}</p>
       </Section>
 
       <CtaSection
         title={p("Have {nameLower} to place?", { name: category.name, nameLower: category.name.toLowerCase() })}
-        body={p("The portfolio is what we handle routinely, not the limit of it. Tell us the material and the form and we will confirm whether we can take it.")}
-        secondary={{ href: "/materials", label: p("Back to the portfolio") }}
+        body={p("The portfolio is what we handle routinely, not the limit of it. Tell us the material and the form and we will assess whether there is a route for it.")}
+        secondary={{ href: "/materials", label: "Back to the portfolio" }}
       />
 
       <JsonLd
         data={[
           breadcrumbSchema(trail),
+          /* No image: the category's stock photograph would read as the
+             material, or as stock. */
           materialSchema({
             name: category.name,
             description: category.summary,
             slug: category.slug,
-            image: category.image,
             gradeCount: category.grades.length,
           }),
         ]}

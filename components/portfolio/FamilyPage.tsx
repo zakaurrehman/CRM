@@ -3,7 +3,6 @@ import Link from "next/link";
 import type { AlloyCategory } from "@/types/content";
 import type { PortfolioFamily } from "@/data/portfolio";
 import { acceptedForms, intermediates } from "@/data/portfolio";
-import { compositionFootnote } from "@/data/alloy-index";
 import { alloyCategoryBySlug } from "@/data/alloys";
 import { familiesInGroup } from "@/lib/portfolio";
 import { ElementMark } from "./FamilyCard";
@@ -18,7 +17,7 @@ import { RotatingImage } from "@/components/ui/RotatingImage";
 import { CompositionTable } from "@/components/materials/CompositionTable";
 import { CtaSection } from "@/components/shared/CtaSection";
 import { JsonLd, breadcrumbSchema, materialSchema } from "@/lib/schema";
-import { contact } from "@/lib/site";
+import { contact, routes } from "@/lib/site";
 
 /**
  * Resolves a family's table references into categories the composition
@@ -77,8 +76,8 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
         {...(family.images[0] ? { image: family.images[0], imageAlt: "" } : {})}
       >
         <div className="flex flex-wrap items-center gap-4">
-          <Button href="/rfq" variant={family.images[0] ? "onDark" : "primary"} size="lg">
-            {p("Request a quotation")}
+          <Button href={routes.offer} variant={family.images[0] ? "onDark" : "primary"} size="lg">
+            {p("Offer material")}
           </Button>
           {family.threshold ? (
             <span className="inline-flex items-center gap-2 text-[0.875rem] text-steel-500 [.on-dark_&]:text-steel-300">
@@ -89,15 +88,14 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
         </div>
       </PageHero>
 
-      {/* What is accepted, and how to ask */}
+      {/* What is accepted, and how to ask. The header already carries the
+          one-line description; this says the shape of the lots and the
+          condition on them, once (IMS, 14 September 2026). */}
       <Section tone="white">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <h2 className="text-display-sm">{p("What we accept")}</h2>
-            <p className="mt-5 text-base leading-relaxed text-steel-700">
-              {p(family.accepts)}
-              {family.detail ? <> {p(family.detail)}</> : null}
-            </p>
+            <p className="mt-5 text-base leading-relaxed text-steel-700">{p(family.acceptance)}</p>
 
             {family.accepted ? (
               /* The trade's categories for this metal, one per line — the
@@ -141,13 +139,13 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
 
           <div className="lg:col-span-4 lg:col-start-9">
             <div className="border-t-2 border-brand-700 bg-steel-50 p-6">
-              <h3 className="font-display text-lg font-medium text-navy-900">{p("Get a price")}</h3>
+              <h3 className="font-display text-lg font-medium text-navy-900">{p("Offer material")}</h3>
               <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-steel-600">
-                {p("Tell us the grade or analysis, the form and the quantity. Off-spec and mixed lots are welcome — say what you know and we will take it from there.")}
+                {p("Send the grade or analysis, the form and the quantity, with any analysis or photographs attached. Off-spec and mixed lots are welcome — say what you know and we will assess the available route.")}
               </p>
               <div className="mt-6">
-                <Button href="/rfq" variant="primary" className="w-full">
-                  {p("Request a quotation")}
+                <Button href={routes.offer} variant="primary" className="w-full">
+                  {p("Offer material")}
                 </Button>
               </div>
               <p className="mt-4 text-[0.8125rem] text-steel-500">
@@ -155,6 +153,12 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
                 <a href={"mailto:" + contact.email} className="text-navy-900 underline decoration-steel-300 underline-offset-4 hover:decoration-brand-700">
                   {contact.email}
                 </a>
+              </p>
+              <p className="mt-4 border-t border-steel-200 pt-4 text-[0.8125rem] text-steel-500">
+                {p("Looking for supply instead?")}{" "}
+                <Link href={routes.supply} className="font-medium text-navy-900 underline decoration-steel-300 underline-offset-4 hover:decoration-brand-700">
+                  {p("Request supply")}
+                </Link>
               </p>
             </div>
           </div>
@@ -198,7 +202,9 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
           <div className="max-w-2xl">
             <p className="eyebrow mb-4">{p("Grade reference")}</p>
             <h2 className="text-display-md">{p("{n} grades, with nominal composition as published.", { n: gradeCount })}</h2>
-            <p className="mt-4 text-[0.9375rem] text-steel-600">{p(compositionFootnote)}</p>
+            <p className="mt-4 text-[0.9375rem] text-steel-600">
+              {p("Reference values for identifying material, not a purchasing or supply specification — see the note under each table.")}
+            </p>
           </div>
           <div className="mt-12 space-y-16">
             {tables.map((table) => (
@@ -207,6 +213,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
                 category={table}
                 heading={tables.length > 1 ? table.name : undefined}
                 id={tables.length > 1 ? "composition-" + table.slug : "composition"}
+                filterLabel={p("Filter {noun} grades by name", { noun: p(family.noun) })}
               />
             ))}
           </div>
@@ -239,7 +246,8 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
 
       <CtaSection
         title={p("Have {nameLower} to place?", { name: p(family.name), nameLower: p(family.name).toLowerCase() })}
-        secondary={{ href: "/materials", label: p("Back to the portfolio") }}
+        body={p("The grade or analysis, the form and the quantity are enough to start. We will assess the available route.")}
+        secondary={{ href: "/materials", label: "Back to the portfolio" }}
       />
 
       <JsonLd
@@ -249,7 +257,9 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
             name: family.name,
             description: family.accepts,
             slug: family.slug,
-            image: family.images[0] ?? "/images/hero/turnings.jpg",
+            /* Only a photograph of the material itself; no stock image
+               stands in for one. */
+            image: family.images[0],
             gradeCount,
           }),
         ]}
