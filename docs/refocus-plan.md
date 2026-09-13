@@ -94,6 +94,31 @@ generic — IMS approved that band deliberately, so it stands until IMS says
 otherwise. And it suggests fresh Insights articles (the visible ones are
 from 2024); five titles are in the review, all writable from the intro.
 
+### Round 6 — second ChatGPT review, of the Portfolio menu
+
+Adopted:
+
+- **Intermediaries → Intermediates** everywhere. "Intermediaries" are
+  middlemen; intermediate *products* are intermediates.
+- One naming rule: elements as elements (Titanium, Tungsten), alloy families
+  as hyphenated plurals — **High-Nickel Alloys, Cobalt-Based Alloys,
+  Maraging Steels, Stainless Steels, High-Speed & Tool Steels** (was "HSS ·
+  HSS & Tool Steel"), **Copper-Nickel Alloys, Ferroalloys, Hafnium & Ni-Hf**.
+- Thresholds as **≥8% / ≥10%**, and "offgrade" → "off-grade".
+- Groups renamed **Nickel, Cobalt & Specialty Steels** and **Reactive &
+  Refractory Metals** (Ti and Hf are reactive; W, Mo, Nb, Ta refractory).
+- **Superalloys first** — Ni-based blends are the core of the business. The
+  grid follows the menu order, with Ferroalloys closing the alloy run, so the
+  break between the two groups lands on a row boundary.
+- Menu: "Also" → **Products & Resources**, "Grade reference" → **Alloy Grade
+  Library**, an **Offer material →** action at its foot; panel width capped,
+  titles heavier, descriptions smaller.
+
+Not adopted: combining High-Nickel Alloys and Superalloys (the review's own
+final structure keeps them apart, as IMS asked). **Open question for IMS:**
+add **Zr · Zirconium** as a material? Six zirconium grades are already
+published in the grade reference.
+
 One deviation from the original plan: Stainless Steel sits in a group named
 **"Ferro Alloys & Stainless"** beside FeNiCr, rather than under a bare "Ferro
 Alloys" heading — stainless is a steel, not a ferro-alloy, and the heading

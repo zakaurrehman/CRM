@@ -281,7 +281,9 @@ function MegaMenu({
         <div className={cn("grid gap-x-10 gap-y-8 py-10", item.feature ? "lg:grid-cols-4" : "lg:grid-cols-3")}>
           <div
             className={cn(
-              "grid gap-x-10 gap-y-8 lg:col-span-3",
+              /* Capped: three short lists spread across the full container
+                 left most of the panel empty. */
+              "grid max-w-5xl gap-x-12 gap-y-8 lg:col-span-3",
               wide ? "sm:grid-cols-3" : "sm:grid-cols-2",
             )}
           >
@@ -291,24 +293,39 @@ function MegaMenu({
                   {p(col.heading)}
                 </p>
                 <ul className="space-y-0.5">
-                  {col.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        onClick={onNavigate}
-                        className="group -mx-2 block rounded px-2 py-1.5 transition-colors hover:bg-steel-50"
-                      >
-                        <span className="block text-[0.9375rem] font-medium text-navy-900 group-hover:text-brand-700">
+                  {col.links.map((link) =>
+                    link.action ? (
+                      <li key={link.href} className="mt-3 border-t border-steel-200 pt-3">
+                        <Link
+                          href={link.href}
+                          onClick={onNavigate}
+                          className="group -mx-2 inline-flex items-center gap-1.5 rounded px-2 py-1.5 text-[0.9375rem] font-semibold text-brand-700 transition-colors hover:bg-brand-50"
+                        >
                           {p(link.label)}
-                        </span>
-                        {link.description ? (
-                          <span className="mt-0.5 block text-[0.8125rem] leading-snug text-steel-500">
-                            {p(link.description)}
+                          <span aria-hidden className="transition-transform duration-200 ease-swift group-hover:translate-x-0.5">
+                            <span className="dir-arrow">&rarr;</span>
                           </span>
-                        ) : null}
-                      </Link>
-                    </li>
-                  ))}
+                        </Link>
+                      </li>
+                    ) : (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          onClick={onNavigate}
+                          className="group -mx-2 block rounded px-2 py-1.5 transition-colors hover:bg-steel-50"
+                        >
+                          <span className="block text-[0.9375rem] font-semibold text-navy-900 group-hover:text-brand-700">
+                            {p(link.label)}
+                          </span>
+                          {link.description ? (
+                            <span className="mt-0.5 block text-[0.75rem] leading-snug text-steel-500">
+                              {p(link.description)}
+                            </span>
+                          ) : null}
+                        </Link>
+                      </li>
+                    ),
+                  )}
                 </ul>
               </div>
             ))}

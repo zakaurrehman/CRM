@@ -6,6 +6,8 @@ export interface NavLink {
   label: string;
   href: string;
   description?: string;
+  /** A commercial action rather than a destination; set apart at the foot of its column. */
+  action?: boolean;
 }
 
 export interface NavColumn {
@@ -47,9 +49,10 @@ export const alloyGroupOrder: AlloyGroup[] = ["nickel", "cobalt", "ferrous", "re
 /**
  * Three plain links and one menu.
  *
- * The menu is the portfolio: the twelve materials in two columns, then the
- * ferro-alloys, the intermediaries and the grade reference. Nothing promoted
- * beside it. Insights lives in the footer.
+ * The menu is the portfolio: the nickel, cobalt and steel families; the
+ * reactive and refractory metals, each with its content threshold; then the
+ * products and resources — ferroalloys, intermediates, the grade library —
+ * closed by the one commercial action. Insights lives in the footer.
  */
 const portfolioColumns: NavColumn[] = [
   ...portfolioGroups.map((group) => ({
@@ -57,15 +60,16 @@ const portfolioColumns: NavColumn[] = [
     links: familiesInGroup(group.id).map((f) => ({
       label: `${f.symbol} · ${f.name}`,
       href: `/materials/${f.slug}`,
-      description: f.threshold ? `${f.threshold} content` : undefined,
+      description: f.threshold ? `${f.threshold} ${f.symbol} content` : undefined,
     })),
   })),
   {
-    heading: "Also",
+    heading: "Products & Resources",
     links: [
-      { label: "Ferro Alloys", href: "/materials/ferro-alloys", description: "FeNiCr, FeW, FeMo, FeNb, FeTi" },
-      { label: "Powders, Oxides & Intermediaries", href: "/materials#intermediates", description: "APT, oxides, hydroxides, filtercake" },
-      { label: "Grade reference", href: "/materials#reference", description: "295 published compositions" },
+      { label: "Ferroalloys", href: "/materials/ferro-alloys", description: "FeNiCr, FeW, FeMo, FeNb, FeTi" },
+      { label: "Powders, Oxides & Intermediates", href: "/materials#intermediates", description: "APT, oxides, hydroxides, filtercake" },
+      { label: "Alloy Grade Library", href: "/materials/finder", description: "Search 295 published compositions" },
+      { label: "Offer material", href: "/rfq?direction=sell", action: true },
     ],
   },
 ];
@@ -96,11 +100,11 @@ export const footerNavigation: NavColumn[] = [
     links: familiesInGroup(group.id).map((f) => ({ label: f.name, href: `/materials/${f.slug}` })),
   })),
   {
-    heading: "Also",
+    heading: "Products & Resources",
     links: [
-      { label: "Ferro Alloys", href: "/materials/ferro-alloys" },
-      { label: "Powders, Oxides & Intermediaries", href: "/materials#intermediates" },
-      { label: "Alloy finder", href: "/materials/finder" },
+      { label: "Ferroalloys", href: "/materials/ferro-alloys" },
+      { label: "Powders, Oxides & Intermediates", href: "/materials#intermediates" },
+      { label: "Alloy Grade Library", href: "/materials/finder" },
       { label: "Compare grades", href: "/materials/compare" },
       { label: "Request a quotation", href: "/rfq" },
     ],

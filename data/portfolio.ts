@@ -7,14 +7,18 @@ import type { TungstenForm } from "@/types/content";
  *
  * Three parts:
  *
- * 1. Twelve materials, one card each, in the intro's order — no group
- *    headings at first glance. Each carries a symbol (Ti, Hf, W…) or the
- *    trade shorthand where it is an alloy (HSS, 18Ni), then its name.
- *    Tungsten and molybdenum are separate. Groups exist only to organise the
- *    menu and the footer.
- * 2. Ferro alloys — the five the previous website listed, as a section.
- * 3. Powders, oxides and intermediaries — the refining and tool-making
- *    intermediates IMS takes, grouped by metal, with their formulas.
+ * 1. Thirteen materials, one card each — no group headings at first
+ *    glance. Superalloys lead: Ni-based blends are the core of the business.
+ *    Each carries a symbol (Ti, Hf, W…) or the trade shorthand where it is an
+ *    alloy (HSS, 18Ni), then its name. Groups organise the menu and footer.
+ * 2. Ferroalloys — the five the previous website listed, as one card.
+ * 3. Powders, oxides and intermediates — the refining and tool-making
+ *    intermediate products IMS takes, grouped by metal, with their formulas.
+ *    ("Intermediates", not "intermediaries": the latter are middlemen.)
+ *
+ * Naming follows one rule: elements are named as elements (Titanium,
+ * Tungsten), alloy families as plural nouns with hyphenated compounds
+ * (High-Nickel Alloys, High-Speed & Tool Steels).
  *
  * This sits over, not instead of, the 295-grade composition tables in
  * data/alloys.ts. Each material names the legacy categories whose tables
@@ -79,19 +83,29 @@ export interface PortfolioFamily {
 }
 
 export const portfolioGroups: PortfolioGroup[] = [
-  { id: "alloys", name: "Nickel, cobalt & steel alloys" },
-  { id: "metals", name: "Titanium & refractory metals" },
+  { id: "alloys", name: "Nickel, Cobalt & Specialty Steels" },
+  /* Titanium and hafnium are reactive metals; W, Mo, Nb and Ta refractory. */
+  { id: "metals", name: "Reactive & Refractory Metals" },
 ];
 
 export const MAX_FAMILY_IMAGES = 4;
 
 const MARAGING = ["MARAGING 200", "MARAGING 250", "MARAGING 300", "MARAGING 350"];
 
-/** The intro's order, with stainless where FeNiCr was (FeNiCr now leads the ferro-alloys section). */
+/** Superalloys first; then the rest of the nickel, cobalt and steel families; then the reactive and refractory metals. */
 export const portfolioFamilies: PortfolioFamily[] = [
   {
+    slug: "superalloys",
+    name: "Superalloys",
+    symbol: "Ni",
+    group: "alloys",
+    accepts: "718, 625, 713, Waspaloy, Hastelloy types, René alloys, off-grade and mixes.",
+    images: ["/images/turbine/turbine-manufacturing.jpg"],
+    tables: [{ category: "complex-nickel-alloys", except: MARAGING }],
+  },
+  {
     slug: "high-nickel-alloys",
-    name: "High Nickel Alloys",
+    name: "High-Nickel Alloys",
     symbol: "Ni",
     group: "alloys",
     accepts: "Inconel, Hastelloy, Incoloy and Nimonic types.",
@@ -99,17 +113,8 @@ export const portfolioFamilies: PortfolioFamily[] = [
     tables: [{ category: "nickel-alloys" }],
   },
   {
-    slug: "stainless-steel",
-    name: "Stainless Steel",
-    symbol: "SS",
-    group: "alloys",
-    accepts: "Austenitic, duplex and precipitation-hardening grades — 304, 316, Duplex, 17-4 PH.",
-    images: ["/images/metals/stamped-components.jpg"],
-    tables: [{ category: "stainless-steel" }],
-  },
-  {
     slug: "cobalt-alloys",
-    name: "Cobalt Based Alloys",
+    name: "Cobalt-Based Alloys",
     symbol: "Co",
     group: "alloys",
     accepts: "Stellite, MAR-M and Umco types.",
@@ -117,28 +122,10 @@ export const portfolioFamilies: PortfolioFamily[] = [
     tables: [{ category: "cobalt-alloys" }],
   },
   {
-    slug: "superalloys",
-    name: "Superalloys",
-    symbol: "Ni",
-    group: "alloys",
-    accepts: "718, 625, 713, Waspaloy, Hastelloy-types, Rene's, offgrade / mixes.",
-    images: ["/images/turbine/turbine-manufacturing.jpg"],
-    tables: [{ category: "complex-nickel-alloys", except: MARAGING }],
-  },
-  {
-    slug: "hss-tool-steel",
-    name: "HSS & Tool Steel",
-    symbol: "HSS",
-    group: "alloys",
-    accepts: "M- and T-series high speed steels; D- and H-series tool steels.",
-    images: ["/images/tungsten/drills-end-mills.jpg"],
-    tables: [{ category: "high-speed-steels" }, { category: "tool-steels" }],
-  },
-  {
     /* "18Ni" is the standard designation of the maraging family — 18Ni(200),
        18Ni(250) and so on — so it is the shorthand a buyer already uses. */
     slug: "maraging-steel",
-    name: "Maraging Steel",
+    name: "Maraging Steels",
     symbol: "18Ni",
     group: "alloys",
     accepts: "Maraging 200, 250, 300 and 350.",
@@ -146,12 +133,30 @@ export const portfolioFamilies: PortfolioFamily[] = [
     tables: [{ category: "complex-nickel-alloys", only: MARAGING }],
   },
   {
+    slug: "stainless-steel",
+    name: "Stainless Steels",
+    symbol: "SS",
+    group: "alloys",
+    accepts: "Austenitic, duplex and precipitation-hardening grades — 304, 316, Duplex, 17-4 PH.",
+    images: ["/images/metals/stamped-components.jpg"],
+    tables: [{ category: "stainless-steel" }],
+  },
+  {
+    slug: "hss-tool-steel",
+    name: "High-Speed & Tool Steels",
+    symbol: "HSS",
+    group: "alloys",
+    accepts: "M- and T-series high speed steels; D- and H-series tool steels.",
+    images: ["/images/tungsten/drills-end-mills.jpg"],
+    tables: [{ category: "high-speed-steels" }, { category: "tool-steels" }],
+  },
+  {
     /* Both sides of the family: cupro-nickels (copper base — Kunifer, 70/30)
        and the Monels (nickel base). The trade buys them together, and the
        two legacy tables were sitting in the reference pile until IMS asked
        for the field on 12 September. */
     slug: "cu-ni-alloys",
-    name: "Cu-Ni Alloys",
+    name: "Copper-Nickel Alloys",
     symbol: "CuNi",
     group: "alloys",
     accepts: "Cupro-nickels and nickel silvers — 70/30, 90/10, Kunifer — and Monel nickel-copper types.",
@@ -169,7 +174,7 @@ export const portfolioFamilies: PortfolioFamily[] = [
   },
   {
     slug: "hafnium",
-    name: "Hafnium & Ni-Hf master alloys",
+    name: "Hafnium & Ni-Hf",
     symbol: "Hf",
     group: "metals",
     accepts: "Hafnium and nickel-hafnium master alloys.",
@@ -189,8 +194,8 @@ export const portfolioFamilies: PortfolioFamily[] = [
     name: "Tungsten",
     symbol: "W",
     group: "metals",
-    threshold: "8%+",
-    accepts: "Incl. offgrade and units containing 8%+ content.",
+    threshold: "≥8%",
+    accepts: "Units containing ≥8% tungsten, including off-grade.",
     detail: "Carbide, Densalloy, CP-W, heavy metals, swarf, sludge and crucibles.",
     accepted: [
       { term: "W VQ", note: "vacuum quality" },
@@ -214,8 +219,8 @@ export const portfolioFamilies: PortfolioFamily[] = [
     name: "Molybdenum",
     symbol: "Mo",
     group: "metals",
-    threshold: "8%+",
-    accepts: "Incl. offgrade and units containing 8%+ content.",
+    threshold: "≥8%",
+    accepts: "Units containing ≥8% molybdenum, including off-grade.",
     accepted: [
       { term: "Mo VQ", note: "vacuum quality" },
       { term: "Mo air-melt" },
@@ -238,8 +243,8 @@ export const portfolioFamilies: PortfolioFamily[] = [
     name: "Niobium",
     symbol: "Nb",
     group: "metals",
-    threshold: "10%+",
-    accepts: "Units containing 10%+ niobium, including off-grade.",
+    threshold: "≥10%",
+    accepts: "Units containing ≥10% niobium, including off-grade.",
     accepted: [
       { term: "Nb VQ", note: "vacuum quality" },
       { term: "NbTi", note: "superconductor scrap" },
@@ -255,8 +260,8 @@ export const portfolioFamilies: PortfolioFamily[] = [
     name: "Tantalum",
     symbol: "Ta",
     group: "metals",
-    threshold: "10%+",
-    accepts: "Units containing 10%+ tantalum, including off-grade.",
+    threshold: "≥10%",
+    accepts: "Units containing ≥10% tantalum, including off-grade.",
     accepted: [
       { term: "Ta VQ", note: "vacuum quality" },
       { term: "Ta-W alloys", note: "Ta-2.5W, Ta-10W" },
@@ -281,7 +286,7 @@ export const portfolioFamilies: PortfolioFamily[] = [
  */
 export const ferroAlloysCard: PortfolioFamily = {
   slug: "ferro-alloys",
-  name: "Ferro Alloys",
+  name: "Ferroalloys",
   symbol: "Fe",
   group: "alloys",
   accepts: "FeNiCr, FeW, FeMo, FeNb and FeTi — all sizes, packings and specifications.",
@@ -311,7 +316,7 @@ export const ferroAlloys: FerroAlloy[] = [
   { mark: "FeTi", name: "Ferro-titanium" },
 ];
 
-/* ── Powders, oxides & intermediaries ─────────────────────────────────── */
+/* ── Powders, oxides & intermediates ─────────────────────────────────── */
 
 export interface Intermediate {
   name: string;

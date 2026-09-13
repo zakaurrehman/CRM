@@ -14,14 +14,14 @@ import { contact } from "@/lib/site";
 const trail = [
   { name: "Home", href: "/" },
   { name: "Portfolio", href: "/materials" },
-  { name: "Ferro Alloys", href: "/materials/ferro-alloys" },
+  { name: "Ferroalloys", href: "/materials/ferro-alloys" },
 ];
 
 export async function generateMetadata(): Promise<Metadata> {
   const p = await getP();
   return pageMetadata({
-    title: p("Ferro Alloys"),
-    description: p("FeNiCr, FeW, FeMo, FeNb and FeTi — ferro-alloys bought and supplied in all sizes, packings and specifications."),
+    title: p("Ferroalloys"),
+    description: p("FeNiCr, FeW, FeMo, FeNb and FeTi — ferroalloys bought and supplied in all sizes, packings and specifications."),
     path: "/materials/ferro-alloys",
     image: "/images/hero/hot-metal-plate.jpg",
   });
@@ -35,7 +35,7 @@ export default async function FerroAlloysPage() {
     <>
       <PageHero
         eyebrow={p("Portfolio")}
-        title={p("Ferro Alloys")}
+        title={p("Ferroalloys")}
         intro={p("Ferro-nickel-chrome, ferro-tungsten, ferro-molybdenum, ferro-niobium and ferro-titanium — available in all sizes, packings and specifications. FeNiCr is the blend we build for refiners, alloy producers and the stainless-steel sector.")}
         trail={trail}
         image="/images/hero/hot-metal-plate.jpg"
@@ -98,7 +98,7 @@ export default async function FerroAlloysPage() {
       </Section>
 
       <CtaSection
-        title={p("Have ferro-alloys to place?")}
+        title={p("Have ferroalloys to place?")}
         secondary={{ href: "/materials", label: p("Back to the portfolio") }}
       />
 

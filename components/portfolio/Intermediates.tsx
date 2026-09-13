@@ -6,7 +6,7 @@ import { SymbolBox } from "./FamilyCard";
 import { cn } from "@/lib/utils";
 
 /**
- * Powders, oxides and intermediaries, grouped by metal.
+ * Powders, oxides and intermediates, grouped by metal.
  *
  * One ruled row per metal: its symbol, its name, then the products as
  * formula-and-name pairs. The formula is the mark — APT, WO₃, Ta₂O₅ — because
@@ -29,7 +29,7 @@ export async function Intermediates({
       {heading ? (
         <div className="max-w-3xl">
           <h3 className="font-display text-xl font-semibold tracking-tight text-navy-900 lg:text-2xl">
-            {p("Powders, Oxides & Intermediaries")}
+            {p("Powders, Oxides & Intermediates")}
           </h3>
           <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-600">
             {p("Not only metal and alloy scrap. We also take the intermediate products of refining and tool-making — oxides, tungstates, hydroxides, powders and filtercakes — and price them on contained metal.")}

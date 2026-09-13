@@ -82,7 +82,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
           {family.threshold ? (
             <span className="inline-flex items-center gap-2 text-[0.875rem] text-steel-500 [.on-dark_&]:text-steel-300">
               <span className="rounded-full bg-steel-100 px-2.5 py-1 font-medium text-navy-900 [.on-dark_&]:bg-white/15 [.on-dark_&]:text-white">{family.threshold}</span>
-              {p("minimum content")}
+              {p("{metal} content", { metal: family.name.toLowerCase() })}
             </span>
           ) : null}
         </div>
@@ -100,7 +100,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
 
             {family.accepted ? (
               /* The trade's categories for this metal, one per line — the
-                 same quiet list the intermediaries use. */
+                 same quiet list the intermediates use. */
               <ul className="mt-8 border-t border-steel-200">
                 {family.accepted.map((entry, i) => (
                   <Reveal as="li" key={entry.term} delay={i * 40} className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 border-b border-steel-200 py-3">
@@ -125,7 +125,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
             {ownIntermediates.length > 0 ? (
               <div className="mt-10">
                 <h3 className="label text-steel-500">
-                  {p("Powders, oxides & intermediaries")}
+                  {p("Powders, oxides & intermediates")}
                 </h3>
                 <IntermediatesList items={ownIntermediates} className="mt-4" />
               </div>

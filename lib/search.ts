@@ -68,7 +68,7 @@ export const searchIndex: SearchDoc[] = [
   })),
   {
     id: "family:ferro-alloys",
-    title: "Ferro Alloys",
+    title: "Ferroalloys",
     context: "Portfolio",
     href: "/materials/ferro-alloys",
     kind: "family" as const,
@@ -86,7 +86,7 @@ export const searchIndex: SearchDoc[] = [
     g.items.map((item) => ({
       id: "intermediate:" + g.metal + ":" + item.name,
       title: item.formula ? item.formula + " · " + item.name : item.name,
-      context: g.metal + " · " + "Powders, oxides & intermediaries",
+      context: g.metal + " · " + "Powders, oxides & intermediates",
       href: g.family ? "/materials/" + g.family : "/materials#intermediates",
       kind: "family" as const,
       haystack: normalise([item.formula ?? "", item.name, g.metal, g.symbol ?? "", "powder oxide intermediate"].join(" ")),

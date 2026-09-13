@@ -6,7 +6,7 @@ import { Intermediates } from "@/components/portfolio/Intermediates";
 
 /**
  * The portfolio on the homepage: the twelve materials, then the ferro-alloys
- * and the intermediaries — the same three parts the Portfolio page opens with.
+ * and the intermediates — the same parts the Portfolio page opens with.
  */
 export async function PortfolioSection() {
   const p = await getP();

@@ -5,13 +5,18 @@ import { FamilyCard } from "./FamilyCard";
 /**
  * Every material, one card each, flat.
  *
- * No group headings: IMS asked for each material separate at first glance,
- * and the intro's own order — nickel and cobalt alloys, then steels, then
- * titanium and the refractory metals — already reads left to right without
- * them. Ferro alloys sits second, where the intro puts FeNiCr. Four across
- * on desktop; fourteen cards fill the rows.
+ * No group headings: IMS asked for each material separate at first glance.
+ * The order does the grouping instead. Superalloys lead; the nickel, cobalt
+ * and steel families follow, closed by ferroalloys; the reactive and
+ * refractory metals take the rows after. Four across on desktop, that puts
+ * the break between the two groups on a row boundary — fourteen cards,
+ * 4/4/4/2 — without a heading to say so.
  */
-const cards = [portfolioFamilies[0], ferroAlloysCard, ...portfolioFamilies.slice(1)];
+const cards = [
+  ...portfolioFamilies.filter((f) => f.group === "alloys"),
+  ferroAlloysCard,
+  ...portfolioFamilies.filter((f) => f.group === "metals"),
+];
 
 export async function PortfolioGrid({ priority = false }: { priority?: boolean }) {
   return (

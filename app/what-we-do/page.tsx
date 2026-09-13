@@ -139,12 +139,12 @@ export default async function WhatWeDoPage() {
                 <ul className="mt-3 space-y-1.5">
                   <li>
                     <Link href="/materials/ferro-alloys" className="text-[0.9375rem] text-navy-900 underline decoration-steel-300 underline-offset-4 transition-colors hover:text-brand-700 hover:decoration-brand-700">
-                      {p("Ferro Alloys")}
+                      {p("Ferroalloys")}
                     </Link>
                   </li>
                   <li>
                     <Link href="/materials#intermediates" className="text-[0.9375rem] text-navy-900 underline decoration-steel-300 underline-offset-4 transition-colors hover:text-brand-700 hover:decoration-brand-700">
-                      {p("Powders, Oxides & Intermediaries")}
+                      {p("Powders, Oxides & Intermediates")}
                     </Link>
                   </li>
                 </ul>

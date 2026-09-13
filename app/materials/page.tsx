@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata({
     title: p("Portfolio"),
     description: p(
-      "High nickel alloys, superalloys, cobalt, stainless, HSS and tool steel, maraging, titanium, hafnium, tungsten, molybdenum, niobium and tantalum; ferro-alloys; and the powders, oxides and intermediaries around them.",
+      "Superalloys, high-nickel and cobalt-based alloys, maraging, stainless, high-speed and tool steels, copper-nickel, ferroalloys, titanium, hafnium, tungsten, molybdenum, niobium and tantalum — and the powders, oxides and intermediates around them.",
     ),
     path: "/materials",
     image: "/images/hero/turnings.jpg",
@@ -51,7 +51,7 @@ export default async function PortfolioPage() {
       <PageHero
         eyebrow={p("Portfolio")}
         title={p("What we buy, blend and supply")}
-        intro={p("{n} materials, from high nickel alloys to tantalum, plus the powders, oxides and intermediaries around them. Open any one for what we accept, the thresholds that apply, and the published compositions behind it.", { n: portfolioFamilies.length + 1 })}
+        intro={p("{n} materials, from superalloys to tantalum, plus the powders, oxides and intermediates around them. Open any one for what we accept, the thresholds that apply, and the published compositions behind it.", { n: portfolioFamilies.length + 1 })}
         trail={trail}
         image="/images/hero/turnings.jpg"
         imageAlt=""
