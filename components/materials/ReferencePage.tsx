@@ -44,7 +44,6 @@ export async function ReferencePage({ category }: { category: AlloyCategory }) {
       <CtaSection
         title={p("Have {nameLower} to place?", { name: category.name, nameLower: category.name.toLowerCase() })}
         body={p("The portfolio is what we handle routinely, not the limit of it. Tell us the material and the form and we will assess whether there is a route for it.")}
-        secondary={{ href: "/materials", label: "Back to the portfolio" }}
       />
 
       <JsonLd

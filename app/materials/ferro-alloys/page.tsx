@@ -108,7 +108,6 @@ export default async function FerroAlloysPage() {
       <CtaSection
         title={p("Have ferroalloys to place?")}
         body={p("The alloy, the analysis, the size and packing, and the quantity are enough to start. We will assess the available route.")}
-        secondary={{ href: "/materials", label: "Back to the portfolio" }}
       />
 
       <JsonLd data={breadcrumbSchema(trail)} />

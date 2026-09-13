@@ -38,8 +38,6 @@ export const frPhrases: PhraseTable = {
   "Notes on metal recovery, material standards and the alloys that global industry depends on.": "Notes sur la valorisation des métaux, les normes matière et les alliages dont dépend l’industrie mondiale.",
   "Composition lined up element by element, with the rows that differ marked so the trade-offs are obvious.": "La composition alignée élément par élément, les lignes qui diffèrent étant signalées pour rendre les compromis évidents.",
   "Grades you have kept while working through the catalogue — compare them, export the data, or send the list straight through for pricing.": "Les nuances que vous avez retenues en parcourant le catalogue — comparez-les, exportez les données, ou envoyez la liste directement pour chiffrage.",
-  "All insights": "Toutes les publications",
-  "Explore materials": "Voir les matériaux",
   "Send an inquiry": "Envoyer une demande",
   "About IMS": "À propos d’IMS",
   "Alloy Finder — Search by Composition": "Sélecteur d’alliages — recherche par composition",
@@ -228,7 +226,6 @@ export const frPhrases: PhraseTable = {
   "Ammonium paratungstate": "Paratungstate d'ammonium",
   "Ask our team about this material": "Interrogez notre équipe sur ce matériau",
   "Austenitic, duplex and precipitation-hardening grades — 304, 316, Duplex, 17-4 PH.": "Nuances austénitiques, duplex et à durcissement par précipitation — 304, 316, Duplex, 17-4 PH.",
-  "Back to the portfolio": "Retour à la gamme",
   "Blends are built for the melt they are going into. These are the industries we build them for.": "Chaque mélange est conçu pour la fusion à laquelle il est destiné. Voici les industries pour lesquelles nous les préparons.",
   "Calcium tungstate": "Tungstate de calcium",
   "Capacitor and sputter-target scrap": "Déchets de condensateurs et de cibles de pulvérisation",
@@ -623,4 +620,5 @@ export const frPhrases: PhraseTable = {
   "{name}: not added — together the files would exceed {size}. Send larger packs by email.": "{name} : non ajouté — ensemble, les fichiers dépasseraient {size}. Envoyez les lots volumineux par e-mail.",
   "{n} materials, from superalloys to tantalum, with the thresholds that apply. Open any one for what we accept, in which forms, and the published compositions behind it.": "{n} matériaux, des superalliages au tantale, avec les seuils applicables. Ouvrez-en un pour voir ce que nous acceptons, sous quelles formes, et les compositions publiées qui s’y rattachent.",
   "{n} of {max} files": "{n} fichier(s) sur {max}",
+  "For buying, selling and other material enquiries, contact us at": "Pour vos demandes d’achat, de vente et toute autre question sur les matériaux, contactez-nous à",
 };

@@ -39,8 +39,6 @@ export const hePhrases: PhraseTable = {
   "Notes on metal recovery, material standards and the alloys that global industry depends on.": "הערות על השבת מתכות, תקני חומרים והסגסוגות שהתעשייה העולמית נשענת עליהן.",
   "Composition lined up element by element, with the rows that differ marked so the trade-offs are obvious.": "ההרכב מיושר יסוד אחר יסוד, והשורות שנבדלות מסומנות כדי שהפשרות יהיו ברורות.",
   "Grades you have kept while working through the catalogue — compare them, export the data, or send the list straight through for pricing.": "סגסוגות ששמרתם תוך עיון בקטלוג — השוו ביניהן, ייצאו את הנתונים, או שלחו את הרשימה ישירות לתמחור.",
-  "All insights": "כל המאמרים",
-  "Explore materials": "לצפייה בחומרים",
   "Send an inquiry": "שליחת פנייה",
   "About IMS": "אודות IMS",
   "Alloy Finder — Search by Composition": "מאתר סגסוגות — חיפוש לפי הרכב",
@@ -235,7 +233,6 @@ export const hePhrases: PhraseTable = {
   "Ammonium paratungstate": "אמוניום פרה-טונגסטט",
   "Ask our team about this material": "שאלו את הצוות שלנו על החומר הזה",
   "Austenitic, duplex and precipitation-hardening grades — 304, 316, Duplex, 17-4 PH.": "סוגים אוסטניטיים, דופלקס ומוקשים בשיקוע — 304, 316, Duplex, 17-4 PH.",
-  "Back to the portfolio": "חזרה לתיק החומרים",
   "Blends are built for the melt they are going into. These are the industries we build them for.": "כל תערובת נבנית עבור ההתכה שאליה היא מיועדת. אלה התעשיות שעבורן אנחנו בונים אותן.",
   "Calcium tungstate": "סידן טונגסטט",
   "Capacitor and sputter-target scrap": "גרוטאות קבלים ומטרות ריסוס",
@@ -625,4 +622,5 @@ export const hePhrases: PhraseTable = {
   "{name}: not added — together the files would exceed {size}. Send larger packs by email.": "{name}: לא נוסף — יחד הקבצים היו חורגים מ-{size}. שלחו חבילות גדולות באימייל.",
   "{n} materials, from superalloys to tantalum, with the thresholds that apply. Open any one for what we accept, in which forms, and the published compositions behind it.": "{n} חומרים, מסגסוגות-על ועד טנטלום, עם הספים החלים. פתחו כל אחד כדי לראות מה אנחנו מקבלים, באילו צורות, ואת ההרכבים המפורסמים שמאחוריו.",
   "{n} of {max} files": "{n} מתוך {max} קבצים",
+  "For buying, selling and other material enquiries, contact us at": "לפניות בנושא קנייה, מכירה ושאלות אחרות על חומרים, פנו אלינו בכתובת",
 };

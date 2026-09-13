@@ -36,8 +36,6 @@ export const nlPhrases: PhraseTable = {
   "Notes on metal recovery, material standards and the alloys that global industry depends on.": "Notities over metaalterugwinning, materiaalnormen en de legeringen waarvan de wereldindustrie afhankelijk is.",
   "Composition lined up element by element, with the rows that differ marked so the trade-offs are obvious.": "Samenstelling element voor element uitgelijnd, met de rijen die verschillen gemarkeerd zodat de afwegingen duidelijk zijn.",
   "Grades you have kept while working through the catalogue — compare them, export the data, or send the list straight through for pricing.": "Kwaliteiten die u hebt bewaard tijdens het doornemen van de catalogus — vergelijk ze, exporteer de gegevens, of stuur de lijst direct door voor prijsopgave.",
-  "All insights": "Alle publicaties",
-  "Explore materials": "Bekijk materialen",
   "Send an inquiry": "Aanvraag versturen",
   "About IMS": "Over IMS",
   "Alloy Finder — Search by Composition": "Legeringzoeker — zoeken op samenstelling",
@@ -229,7 +227,6 @@ export const nlPhrases: PhraseTable = {
   "Ammonium paratungstate": "Ammoniumparawolframaat",
   "Ask our team about this material": "Vraag ons team naar dit materiaal",
   "Austenitic, duplex and precipitation-hardening grades — 304, 316, Duplex, 17-4 PH.": "Austenitische, duplex- en precipitatieharde kwaliteiten — 304, 316, Duplex, 17-4 PH.",
-  "Back to the portfolio": "Terug naar het portfolio",
   "Blends are built for the melt they are going into. These are the industries we build them for.": "Elk mengsel wordt samengesteld voor de smelt waarin het terechtkomt. Dit zijn de industrieën waarvoor we ze maken.",
   "Calcium tungstate": "Calciumwolframaat",
   "Capacitor and sputter-target scrap": "Schroot van condensatoren en sputtertargets",
@@ -623,4 +620,5 @@ export const nlPhrases: PhraseTable = {
   "{name}: not added — together the files would exceed {size}. Send larger packs by email.": "{name}: niet toegevoegd — samen zouden de bestanden {size} overschrijden. Stuur grotere pakketten per e-mail.",
   "{n} materials, from superalloys to tantalum, with the thresholds that apply. Open any one for what we accept, in which forms, and the published compositions behind it.": "{n} materialen, van superlegeringen tot tantaal, met de geldende drempelwaarden. Open er een voor wat we accepteren, in welke vormen, en de gepubliceerde samenstellingen erachter.",
   "{n} of {max} files": "{n} van {max} bestanden",
+  "For buying, selling and other material enquiries, contact us at": "Voor koop-, verkoop- en andere materiaalvragen kunt u ons bereiken op",
 };

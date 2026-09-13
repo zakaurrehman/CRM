@@ -78,7 +78,6 @@ export default async function IntermediatesPage() {
 
       <CtaSection
         title={p("Have powders, oxides or intermediates to place?")}
-        secondary={{ href: "/materials", label: "Back to the portfolio" }}
       />
 
       <JsonLd data={breadcrumbSchema(trail)} />

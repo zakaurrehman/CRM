@@ -117,7 +117,7 @@ export default async function InsightsPage() {
         </Section>
       ) : null}
 
-      <CtaSection secondary={{ href: "/materials", label: p("Explore materials") }} />
+      <CtaSection />
 
       <JsonLd data={breadcrumbSchema(trail)} />
     </>

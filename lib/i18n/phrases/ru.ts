@@ -39,8 +39,6 @@ export const ruPhrases: PhraseTable = {
   "Notes on metal recovery, material standards and the alloys that global industry depends on.": "Заметки об извлечении металлов, стандартах на материалы и сплавах, на которые опирается мировая промышленность.",
   "Composition lined up element by element, with the rows that differ marked so the trade-offs are obvious.": "Состав выстроен поэлементно, а строки с различиями отмечены, чтобы компромиссы были очевидны.",
   "Grades you have kept while working through the catalogue — compare them, export the data, or send the list straight through for pricing.": "Марки, которые вы сохранили при работе с каталогом — сравните их, выгрузите данные или отправьте список сразу на расчёт цены.",
-  "All insights": "Все публикации",
-  "Explore materials": "Смотреть материалы",
   "Send an inquiry": "Отправить запрос",
   "About IMS": "О компании IMS",
   "Alloy Finder — Search by Composition": "Подбор сплавов — поиск по составу",
@@ -234,7 +232,6 @@ export const ruPhrases: PhraseTable = {
   "Ammonium paratungstate": "Паравольфрамат аммония",
   "Ask our team about this material": "Спросите нашу команду об этом материале",
   "Austenitic, duplex and precipitation-hardening grades — 304, 316, Duplex, 17-4 PH.": "Аустенитные, дуплексные и дисперсионно-твердеющие марки — 304, 316, Duplex, 17-4 PH.",
-  "Back to the portfolio": "Вернуться к ассортименту",
   "Blends are built for the melt they are going into. These are the industries we build them for.": "Смесь составляется под плавку, в которую она пойдёт. Вот отрасли, для которых мы их готовим.",
   "Calcium tungstate": "Вольфрамат кальция",
   "Capacitor and sputter-target scrap": "Лом конденсаторов и мишеней для напыления",
@@ -624,4 +621,5 @@ export const ruPhrases: PhraseTable = {
   "{name}: not added — together the files would exceed {size}. Send larger packs by email.": "{name}: не добавлен — суммарный размер файлов превысил бы {size}. Большие пакеты отправляйте по email.",
   "{n} materials, from superalloys to tantalum, with the thresholds that apply. Open any one for what we accept, in which forms, and the published compositions behind it.": "Материалов: {n} — от жаропрочных сплавов до тантала, с действующими пороговыми значениями. Откройте любой, чтобы узнать, что мы принимаем, в каких формах и какие опубликованные составы за этим стоят.",
   "{n} of {max} files": "Файлов: {n} из {max}",
+  "For buying, selling and other material enquiries, contact us at": "По вопросам покупки, продажи и другим запросам о материалах пишите нам на",
 };

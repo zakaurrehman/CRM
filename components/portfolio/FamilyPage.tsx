@@ -247,7 +247,6 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
       <CtaSection
         title={p("Have {nameLower} to place?", { name: p(family.name), nameLower: p(family.name).toLowerCase() })}
         body={p("The grade or analysis, the form and the quantity are enough to start. We will assess the available route.")}
-        secondary={{ href: "/materials", label: "Back to the portfolio" }}
       />
 
       <JsonLd

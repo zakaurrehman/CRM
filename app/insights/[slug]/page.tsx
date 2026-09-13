@@ -168,7 +168,7 @@ export default async function ArticlePage({ params }: Params) {
         </Section>
       ) : null}
 
-      <CtaSection secondary={{ href: "/insights", label: p("All insights") }} />
+      <CtaSection />
 
       <JsonLd data={[breadcrumbSchema(trail), articleSchema(article)]} />
     </>
