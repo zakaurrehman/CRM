@@ -116,7 +116,7 @@ export async function WelcomeBanner() {
               in every language rather than leaving one word on the second
               line. */}
           <h1
-            className="reveal-sweep metal-text mt-10 max-w-4xl text-balance font-display text-[clamp(2.125rem,4.4vw,3.75rem)] font-medium leading-[1.08] tracking-tight text-white"
+            className="reveal-sweep metal-text mt-10 max-w-4xl text-balance font-display text-[clamp(1.625rem,3.3vw,2.8125rem)] font-normal leading-[1.12] tracking-tight text-white"
             style={{ animationDelay: "1100ms" }}
           >
             {p("Turning Complex Scrap into Opportunity")}

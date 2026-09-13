@@ -25,9 +25,10 @@ const archivo = Archivo({
   subsets: ["latin"],
   variable: "--font-archivo",
   display: "swap",
-  /* 500 and 600 only. Headings and titles came down a step on 13 September
-     2026 and nothing draws Archivo at 700 now, so it is not shipped. */
-  weight: ["500", "600"],
+  /* 400 for the homepage headline (IMS, 14 September 2026: "less bold"),
+     500 and 600 for every other heading. Nothing draws Archivo at 700, so
+     it is not shipped. */
+  weight: ["400", "500", "600"],
 });
 
 
