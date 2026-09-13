@@ -3,7 +3,7 @@
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useAlloyIndex, formatAmount, type ClientGrade } from "@/lib/alloy-client";
-import { parseQuery, matchGrades, exampleQueries, type ElementConstraint, type Comparator } from "@/lib/alloy-query";
+import { parseQuery, matchGrades, exampleQueries, symbolicExampleQueries, type ElementConstraint, type Comparator } from "@/lib/alloy-query";
 import { alloyGroupLabels, alloyGroupOrder } from "@/lib/navigation";
 import { downloadCsv, gradesToCsv } from "@/lib/export";
 import type { AlloyGroup } from "@/types/content";
@@ -117,8 +117,8 @@ export function AlloyFinder() {
 
         {!text ? (
           <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span className="text-[0.8125rem] text-steel-500">Try:</span>
-            {exampleQueries.slice(0, 4).map((q) => (
+            <span className="text-[0.8125rem] text-steel-500">{t("finder", "try")}</span>
+            {(locale === "en" ? exampleQueries.slice(0, 4) : symbolicExampleQueries).map((q) => (
               <button
                 key={q}
                 type="button"

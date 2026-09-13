@@ -96,7 +96,7 @@ export default async function WhatWeDoPage() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <h2 className="text-display-sm">{p("Who we supply")}</h2>
-            <p className="mt-5 content-en text-base leading-relaxed text-steel-600">
+            <p className="mt-5 text-base leading-relaxed text-steel-600">
               {p("Blends are built for the melt they are going into. These are the industries we build them for.")}
             </p>
             <ul className="mt-8 border-t border-steel-200">
@@ -110,7 +110,7 @@ export default async function WhatWeDoPage() {
 
           <div className="lg:col-span-6 lg:col-start-7">
             <h2 className="text-display-sm">{p("What we handle")}</h2>
-            <p className="mt-5 content-en text-base leading-relaxed text-steel-600">
+            <p className="mt-5 text-base leading-relaxed text-steel-600">
               {p("Every material in the portfolio, including off-spec grades, mixed lots and off-grade refractory units. We make sure to be able to manage each complex material.")}
             </p>
             <ul className="mt-8 grid gap-x-8 gap-y-6 sm:grid-cols-3">

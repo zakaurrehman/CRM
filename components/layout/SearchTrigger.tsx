@@ -41,7 +41,7 @@ export function SearchTrigger() {
         onClick={() => setOpen(true)}
         aria-label={p("Search materials and pages")}
         aria-expanded={open}
-        title="Search (Ctrl+K)"
+        title={p("Search") + " (Ctrl+K)"}
         className="inline-flex h-10 w-10 items-center justify-center rounded text-steel-600 transition-colors hover:bg-steel-100 hover:text-brand-700"
       >
         <svg viewBox="0 0 18 18" aria-hidden className="h-[1.125rem] w-[1.125rem]">

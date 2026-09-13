@@ -105,7 +105,7 @@ export function CompositionTable({
                     : "border-steel-300 bg-white text-steel-700",
                 )}
               >
-                {v === "table" ? "Table" : "Cards"}
+                {v === "table" ? p("Table") : p("Cards")}
               </button>
             ))}
           </div>

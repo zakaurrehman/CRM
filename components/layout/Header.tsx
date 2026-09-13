@@ -108,7 +108,7 @@ export function Header({ items }: { items: NavItem[] }) {
             <Link
               href="/"
               className="group/logo shrink-0 rounded-sm"
-              aria-label="IMS Metals and Alloys, home"
+              aria-label={p("IMS Metals and Alloys, home")}
             >
               <Image
                 src="/images/branding/ims-logo.png"
@@ -318,6 +318,7 @@ function MegaMenu({
                               heavier weight in a blue ink renders soft, and on
                               Windows ClearType it thickens further. */}
                           <span className="block text-[0.9375rem] font-medium text-navy-950 group-hover:text-brand-700">
+                            {link.symbol ? `${link.symbol} · ` : null}
                             {p(link.label)}
                           </span>
                           {link.description ? (

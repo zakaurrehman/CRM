@@ -37,7 +37,7 @@ export function SavedMaterials() {
     return (
       <div className="rounded-lg border border-steel-200 bg-white px-6 py-16 text-center">
         <h2 className="font-display text-xl font-medium text-navy-900">{t("savedList", "emptyTitle")}</h2>
-        <p className="mx-auto mt-3 max-w-md content-en text-[0.9375rem] leading-relaxed text-steel-600">
+        <p className="mx-auto mt-3 max-w-md text-[0.9375rem] leading-relaxed text-steel-600">
           {p("Save a grade from any composition table or from the alloy finder and it will be kept here, ready to compare or send through as a quotation request.")}
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">

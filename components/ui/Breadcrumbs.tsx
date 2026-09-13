@@ -17,7 +17,7 @@ export async function Breadcrumbs({ trail, tone = "light" }: { trail: Crumb[]; t
   const p = await getP();
 
   return (
-    <nav aria-label="Breadcrumb">
+    <nav aria-label={p("Breadcrumb")}>
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8125rem]">
         {trail.map((crumb, i) => {
           const last = i === trail.length - 1;

@@ -95,7 +95,7 @@ export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: bo
         )}
       >
         <div className="flex h-[var(--header-h)] shrink-0 items-center justify-between border-b border-steel-200 px-5">
-          <Link href="/" onClick={onClose} aria-label="IMS Metals and Alloys, home">
+          <Link href="/" onClick={onClose} aria-label={p("IMS Metals and Alloys, home")}>
             <Image
               src="/images/branding/ims-logo.png"
               alt="IMS Metals &amp; Alloys"
@@ -178,6 +178,7 @@ export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: bo
                                 onClick={onClose}
                                 className="flex min-h-[2.75rem] items-center text-[0.9375rem] text-steel-700 hover:text-brand-700"
                               >
+                                {link.symbol ? `${link.symbol} · ` : null}
                                 {p(link.label)}
                               </Link>
                             </li>

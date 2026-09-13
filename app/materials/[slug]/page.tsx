@@ -37,10 +37,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (family) {
     const grades = tablesFor(family, locale).reduce((n, t) => n + t.grades.length, 0);
     return pageMetadata({
-      title: family.name,
+      title: p(family.name),
       description: p("{name} — {accepts} {group}. {forms}", {
-        name: family.name,
-        accepts: family.accepts,
+        name: p(family.name),
+        accepts: p(family.accepts),
         group: p(groupOf(family).name),
         forms: grades > 0 ? p("{n} grades with published composition.", { n: grades }) : p("Solids, turnings, runnings, grindings, 3D powders and dusts."),
       }),

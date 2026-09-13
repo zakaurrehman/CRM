@@ -40,11 +40,11 @@ export async function ReferencePage({ category }: { category: AlloyCategory }) {
 
       <Section tone="light">
         <CompositionTable category={category} />
-        <p className="mt-6 text-[0.875rem] text-steel-500">{compositionFootnote}</p>
+        <p className="mt-6 text-[0.875rem] text-steel-500">{p(compositionFootnote)}</p>
       </Section>
 
       <CtaSection
-        title={p("Have {name} to place?", { name: category.name.toLowerCase() })}
+        title={p("Have {nameLower} to place?", { name: category.name, nameLower: category.name.toLowerCase() })}
         body={p("The portfolio is what we handle routinely, not the limit of it. Tell us the material and the form and we will confirm whether we can take it.")}
         secondary={{ href: "/materials", label: p("Back to the portfolio") }}
       />

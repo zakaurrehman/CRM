@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { PortfolioFamily } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
+import { getP } from "@/lib/i18n/server";
 
 /**
  * One material, as a tile on the navy board.
@@ -16,7 +17,9 @@ import { cn } from "@/lib/utils";
  * quotation" text moved off with the change; the whole tile is the link, and
  * the detail is on the material's page one click in.
  */
-export function FamilyCard({ family, className }: { family: PortfolioFamily; className?: string }) {
+export async function FamilyCard({ family, className }: { family: PortfolioFamily; className?: string }) {
+  const p = await getP();
+
   return (
     <Link
       href={"/materials/" + family.slug}
@@ -39,7 +42,7 @@ export function FamilyCard({ family, className }: { family: PortfolioFamily; cla
         ) : null}
       </div>
       <h3 className="mt-4 font-mono text-[0.625rem] uppercase leading-snug tracking-[0.12em] text-brand-300 transition-colors duration-300 group-hover:text-white sm:text-[0.6875rem] sm:tracking-[0.14em]">
-        {family.name}
+        {p(family.name)}
       </h3>
     </Link>
   );

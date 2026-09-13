@@ -8,6 +8,12 @@ export interface NavLink {
   description?: string;
   /** A commercial action rather than a destination; set apart at the foot of its column. */
   action?: boolean;
+  /**
+   * Element symbol or trade shorthand shown before the label — "Ni · Superalloys".
+   * Kept apart from the label so the label alone is the translation key; a
+   * combined "Ni · Superalloys" would never match an entry in a phrase table.
+   */
+  symbol?: string;
 }
 
 export interface NavColumn {
@@ -58,9 +64,10 @@ const portfolioColumns: NavColumn[] = [
   ...portfolioGroups.map((group) => ({
     heading: group.name,
     links: familiesInGroup(group.id).map((f) => ({
-      label: `${f.symbol} · ${f.name}`,
+      symbol: f.symbol,
+      label: f.name,
       href: `/materials/${f.slug}`,
-      description: f.threshold ? `${f.threshold} ${f.symbol} content` : undefined,
+      description: f.threshold ? `${f.threshold} ${f.symbol}` : undefined,
     })),
   })),
   {

@@ -60,7 +60,7 @@ export function CompareTable() {
     return (
       <div className="rounded-lg border border-steel-200 bg-white px-6 py-16 text-center">
         <h2 className="font-display text-xl font-medium text-navy-900">{t("compare", "emptyTitle")}</h2>
-        <p className="mx-auto mt-3 max-w-md content-en text-[0.9375rem] leading-relaxed text-steel-600">
+        <p className="mx-auto mt-3 max-w-md text-[0.9375rem] leading-relaxed text-steel-600">
           {p("Add up to four grades from any category or from the alloy finder, and their compositions will line up here for comparison.")}
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">

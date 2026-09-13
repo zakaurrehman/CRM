@@ -10,7 +10,7 @@ https://claude.ai/code/artifact/b050fa36-2009-4885-99be-cd1b1248bd97_
 | --- | --- |
 | **1 — Structure and data** | **Done** on branch `refocus-portfolio`. Everything below that needs no photographs. |
 | 2 — Photos | Waiting on IMS. Slots are in `data/portfolio.ts` (`images`, up to four per family). |
-| 3 — Translate and QA | Not started. ~70 new English phrases fall back to English in ru/fr/nl/he until translated. |
+| 3 — Translate and QA | **Done** (round 15). Every string the site uses has a ru/fr/nl/he entry; the new entries need a native reader. |
 
 ### Round 2 — Sharoon's feedback of 12 September, 14:41
 
@@ -215,6 +215,48 @@ One deviation from the original plan: Stainless Steel sits in a group named
 Alloys" heading — stainless is a steel, not a ferro-alloy, and the heading
 should not claim otherwise. The group still answers "where is the Ferro
 Alloys section". Pending Q1.
+
+### Round 15 — the whole site in five languages (13 September)
+
+IMS: "when I change language it changes only the navbar text, not all the
+page." The switch itself was sound — the middleware, the cookie and the
+server render were all in place, and the live site sets `lang="ru"` — but
+the refocused copy from rounds 1–14 had no translations, so everything
+except the navigation fell back to English.
+
+- **Coverage.** A crawl of every page under a traced server, unioned with
+  every literal passed to `p()` and the client-only strings (search results,
+  form errors), gives 492 English sources in use. Each of ru, fr, nl and he
+  now has all of them and nothing else: ~330 dead entries pruned per
+  language, ~230 added, under a comment marked **NEEDS NATIVE REVIEW**. The
+  three articles have full bodies in all four languages.
+- **Text that never went through `p()`.** The logo and social-link labels,
+  the breadcrumb landmark, the composition footnote on material pages, the
+  search tooltip and the finder's "Try:" — found by scanning the Russian and
+  Hebrew HTML for English prose (`scripts/i18n-residue.mjs`) and fixed.
+- **Hebrew layout.** The `.content-en` rule that kept body copy LTR inside
+  the RTL page was right when that copy was English and wrong now that it
+  is Hebrew; removed, along with the class.
+- **The finder** reads English and symbols only. On the other four
+  languages its example chips are now the symbolic forms (`Cr >= 20 no Co`,
+  `Ni > 60 Mo > 15`) and its hint says so, rather than promising it reads
+  Russian.
+- **One latent client fault fixed.** Storage outlives the cookie by design;
+  when they disagreed the client switched its own islands to the stored
+  language and left the server-rendered page alone — the exact symptom
+  reported. The server is now the single source of truth: a stale storage
+  value restores the cookie and refreshes, and the islands always follow
+  what the server rendered.
+
+Verified by driving the real menu in headless Chrome: title, navigation,
+headings, body and footer change together for each of the five languages,
+the choice carries to other pages, and the stale-storage case renders the
+whole page in Hebrew. Recipe in `scripts/README.md`.
+
+Open: the translations are machine-drafted and need a native reader; the
+English articles end with stray lines that are the other articles' titles
+(an artefact of the old site's "related posts"), and the translations keep
+parity with that until the English is cleaned.
 
 ## The gap
 

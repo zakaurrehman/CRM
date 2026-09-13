@@ -4,12 +4,18 @@ import { tungstenForms } from "@/data/recovery";
 import { articles } from "@/data/insights";
 import { claimedCategorySlugs, groupOf, materialHref } from "./portfolio";
 import { normalise } from "./utils";
+import { translationsOf } from "./i18n/phrases";
 
 export type SearchKind = "family" | "grade" | "material" | "tungsten" | "article" | "page";
 
 export interface SearchDoc {
   id: string;
   title: string;
+  /**
+   * Shown before the title and never translated: a formula or symbol, "APT".
+   * Kept out of the title so the title alone is the translation key.
+   */
+  prefix?: string;
   /** Short qualifier shown under the title, e.g. the parent category. */
   context: string;
   href: string;
@@ -17,6 +23,12 @@ export interface SearchDoc {
   /** Pre-normalised haystack. */
   haystack: string;
 }
+
+/**
+ * Quick searches offered before anything is typed. Designations stay as they
+ * are; words are shown, and searched, in the visitor's language.
+ */
+export const searchSuggestions = ["Inconel 718", "Stellite", "Tungsten", "FeNiCr", "APT"];
 
 export const kindLabels: Record<SearchKind, string> = {
   family: "Portfolio",
@@ -85,8 +97,9 @@ export const searchIndex: SearchDoc[] = [
   ...intermediates.flatMap((g) =>
     g.items.map((item) => ({
       id: "intermediate:" + g.metal + ":" + item.name,
-      title: item.formula ? item.formula + " · " + item.name : item.name,
-      context: g.metal + " · " + "Powders, oxides & intermediates",
+      title: item.name,
+      prefix: item.formula,
+      context: "Powders, oxides & intermediates",
       href: g.family ? "/materials/" + g.family : "/materials#intermediates",
       kind: "family" as const,
       haystack: normalise([item.formula ?? "", item.name, g.metal, g.symbol ?? "", "powder oxide intermediate"].join(" ")),
@@ -97,7 +110,7 @@ export const searchIndex: SearchDoc[] = [
     .map((c) => ({
       id: "material:" + c.slug,
       title: c.name,
-      context: c.gradeCount + " grades · reference",
+      context: "Grade reference",
       href: "/materials/" + c.slug,
       kind: "material" as const,
       haystack: normalise([c.name, c.summary, c.properties.join(" "), c.applications.join(" ")].join(" ")),
@@ -137,6 +150,15 @@ export const searchIndex: SearchDoc[] = [
     haystack: normalise(p.title + " " + p.context + " " + p.terms),
   })),
 ];
+
+/* Translated names join the haystack, so a visitor searching in their own
+   language finds the page — "вольфрам" finds Tungsten. Grade designations read
+   the same in every language and are left as they are. */
+for (const doc of searchIndex) {
+  if (doc.kind === "grade") continue;
+  const translated = [...translationsOf(doc.title), ...translationsOf(doc.context)];
+  if (translated.length) doc.haystack += " " + normalise(translated.join(" "));
+}
 
 /** Relevance ordering: exact title, then title prefix, then word-start, then anywhere. */
 function score(doc: SearchDoc, q: string): number {

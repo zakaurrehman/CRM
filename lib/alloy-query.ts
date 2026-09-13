@@ -321,6 +321,13 @@ export function matchGrades<T extends QueryableGrade>(
   return out;
 }
 
+/**
+ * The same in symbols, for pages in a language the parser does not read. The
+ * prose forms are English only, so "cobalt free" on a Russian page would be a
+ * chip in the wrong language; "Cr >= 20 no Co" reads the same everywhere.
+ */
+export const symbolicExampleQueries = ["Cr >= 20 no Co", "Ni > 60 Mo > 15", "Inconel", "Ta"];
+
 /** Ready-made queries that show what the finder can do without a tutorial. */
 export const exampleQueries = [
   "cobalt free nickel alloy with chromium above 20",

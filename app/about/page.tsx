@@ -54,7 +54,7 @@ export default async function AboutPage() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <h2 className="text-display-sm">{p("What we do")}</h2>
-            <div className="mt-6 space-y-5 content-en text-base leading-relaxed text-steel-700">
+            <div className="mt-6 space-y-5 text-base leading-relaxed text-steel-700">
               <p>
                 {p("Through our specialised blending program, we transform complex scrap streams into high-value Ni-based blends — maximising recoverable metal content and reducing downgrading.")}
               </p>
@@ -88,7 +88,7 @@ export default async function AboutPage() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <h2 className="text-display-sm">{p("The company")}</h2>
-            <p className="mt-5 content-en text-base leading-relaxed text-steel-600">
+            <p className="mt-5 text-base leading-relaxed text-steel-600">
               {p("Registered in Estonia and trading internationally.")}
             </p>
           </div>

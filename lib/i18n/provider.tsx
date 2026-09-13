@@ -51,6 +51,24 @@ function readStoredLocale(): Locale | null {
   }
 }
 
+function storeLocale(locale: Locale) {
+  try {
+    window.localStorage.setItem(LOCALE_STORAGE_KEY, locale);
+  } catch {
+    // Non-fatal; the cookie still carries the choice.
+  }
+}
+
+/** The locale cookie as the browser currently holds it, or null. */
+function readCookieLocale(): Locale | null {
+  const match = document.cookie.match(new RegExp(`(?:^|;\\s*)${LOCALE_COOKIE}=([^;]*)`));
+  return match && isLocale(match[1]) ? match[1] : null;
+}
+
+function writeCookieLocale(locale: Locale) {
+  document.cookie = `${LOCALE_COOKIE}=${locale};path=/;max-age=31536000;samesite=lax`;
+}
+
 /**
  * Translation for client components.
  *
@@ -83,31 +101,44 @@ export function I18nProvider({
   const [locale, setLocaleState] = useState<Locale>(initialLocale);
   const router = useRouter();
 
+  /* Whatever language the server rendered, the client islands follow — after a
+     refresh as much as on first paint — so the page always agrees with itself. */
+  useEffect(() => {
+    setLocaleState(initialLocale);
+  }, [initialLocale]);
+
   /*
    * Reconcile with storage.
    *
-   * Only an actual stored preference may override the server. Treating "nothing
-   * stored" as "English chosen" made every fresh visit with a language cookie
-   * render Russian on the server and then snap back to English on hydration —
-   * the navbar-and-content mismatch this whole system exists to prevent.
+   * Storage outlives the cookie (a year), so the two can disagree. The client
+   * used to resolve that by switching its own islands to the stored language,
+   * which produced the navigation in Russian over a page in English: exactly the
+   * fault this system exists to prevent. The server renders the page, so the
+   * choice goes back to the server instead — restore the cookie and refresh.
    *
-   * When storage is empty and the cookie is not English, the cookie is mirrored
-   * into storage so the two agree from then on.
+   * If the cookie already says what storage says and the server still rendered
+   * something else, the server has overruled it (cookies blocked, a cached
+   * response); storage then follows the server rather than fighting it, which
+   * also rules out a refresh loop.
+   *
+   * "Nothing stored" is not "English chosen": treating it so made every fresh
+   * visit with a language cookie render Russian on the server and snap back to
+   * English on hydration. An empty storage is filled from the cookie instead.
    */
   useEffect(() => {
     const stored = readStoredLocale();
-    if (stored && stored !== initialLocale) {
-      setLocaleState(stored);
+    if (!stored) {
+      if (initialLocale !== DEFAULT_LOCALE) storeLocale(initialLocale);
       return;
     }
-    if (!stored && initialLocale !== DEFAULT_LOCALE) {
-      try {
-        window.localStorage.setItem(LOCALE_STORAGE_KEY, initialLocale);
-      } catch {
-        // Non-fatal; the cookie still carries the choice.
-      }
+    if (stored === initialLocale) return;
+    if (readCookieLocale() === stored) {
+      storeLocale(initialLocale);
+      return;
     }
-  }, [initialLocale]);
+    writeCookieLocale(stored);
+    router.refresh();
+  }, [initialLocale, router]);
 
   // Keep the document in step, for assistive tech, hyphenation and bidi.
   useEffect(() => {
@@ -119,14 +150,10 @@ export function I18nProvider({
   const setLocale = useCallback(
     (next: Locale) => {
       setLocaleState(next);
-      try {
-        window.localStorage.setItem(LOCALE_STORAGE_KEY, next);
-      } catch {
-        // Non-fatal: the choice simply will not survive this session.
-      }
+      storeLocale(next);
       /* The cookie is what the middleware reads, so it has to be written before
          the refresh below or the server would render the previous language. */
-      document.cookie = `${LOCALE_COOKIE}=${next};path=/;max-age=31536000;samesite=lax`;
+      writeCookieLocale(next);
 
       /* Most of the page is server-rendered, so switching language has to ask
          the server for it again. Without this the client components would

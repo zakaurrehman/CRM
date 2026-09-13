@@ -22,6 +22,10 @@ export function normalise(value: string): string {
     .toLowerCase()
     .normalize("NFD")
     .replace(/\p{M}/gu, "")
-    .replace(/[^a-z0-9]+/g, " ")
+    /* Letters and digits in any script, not only a-z: a Russian or Hebrew
+       search otherwise normalised to an empty string and matched nothing.
+       Every grade designation is Latin, so grade ids and anchors, which key
+       the compare tray, saved list and RFQ lines, come out unchanged. */
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
     .trim();
 }

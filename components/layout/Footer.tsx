@@ -54,7 +54,7 @@ export async function Footer() {
                       href={profile.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={"IMS on " + profile.label}
+                      aria-label={p("IMS on {network}", { network: profile.label })}
                       title={profile.label}
                       className="inline-flex h-10 w-10 items-center justify-center rounded border border-white/15 text-steel-300 transition-colors hover:border-white/40 hover:text-white"
                     >

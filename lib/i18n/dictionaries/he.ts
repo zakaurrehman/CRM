@@ -69,8 +69,8 @@ export const he: Dictionary = {
   finder: {
     title: "מאתר סגסוגות",
     describe: "תארו מה דרוש לכם",
-    hint: "בשפה חופשית או בסימנים — ‏„ללא קובלט, כרום מעל 20” ו‑„Cr >= 20 no Co” מתפרשים באותו אופן.",
-    placeholder: "לדוגמה: עתיר ניקל, עמיד בפני קורוזיה, ללא קובלט",
+    hint: "בסימנים — ‏„Cr >= 20 no Co”, ‏„Ni > 60” — או באנגלית: ‏„cobalt free, chromium above 20” מתפרש באותו אופן.",
+    placeholder: "לדוגמה: Ni > 60 Mo > 15, Inconel, Ta",
     try: "לדוגמה:",
     readingAs: "הבקשה מתפרשת כך",
     nameContains: "השם מכיל „{term}”",

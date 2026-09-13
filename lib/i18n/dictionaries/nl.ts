@@ -64,8 +64,8 @@ export const nl: Dictionary = {
   finder: {
     title: "Legeringzoeker",
     describe: "Beschrijf wat u nodig hebt",
-    hint: "In gewone taal of met symbolen — “kobaltvrij, chroom boven 20” en “Cr >= 20 no Co” worden hetzelfde gelezen.",
-    placeholder: "bijv. hoog nikkel, corrosiebestendig, kobaltvrij",
+    hint: "Met symbolen — “Cr >= 20 no Co”, “Ni > 60” — of in het Engels: “cobalt free, chromium above 20” wordt hetzelfde gelezen.",
+    placeholder: "bijv. Ni > 60 Mo > 15, Inconel, Ta",
     try: "Voorbeelden:",
     readingAs: "Uw zoekopdracht wordt gelezen als",
     nameContains: "naam bevat “{term}”",

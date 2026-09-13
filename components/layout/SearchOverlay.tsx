@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { searchSite, kindLabels, type SearchDoc } from "@/lib/search";
+import { searchSite, kindLabels, searchSuggestions, type SearchDoc } from "@/lib/search";
 import { cn } from "@/lib/utils";
 import { useP } from "@/lib/i18n/phrases/client";
 
@@ -87,7 +87,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
             aria-autocomplete="list"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder={p("Search alloys, grades, streams and pages")}
+            placeholder={p("Search materials, grades and pages")}
             className="h-14 w-full border-0 bg-transparent text-base text-navy-900 outline-none placeholder:text-steel-500 focus-visible:border-0 focus-visible:ring-0"
           />
           <button
@@ -103,17 +103,17 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
           {query.trim().length < 2 ? (
             <div className="px-5 py-8">
               <p className="text-sm text-steel-500">
-                {p("Search 295 alloy grades, 15 material categories, recovery streams and every page.")}
+                {p("Search every material in the portfolio, 295 published alloy grades and every page.")}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
-                {["Inconel 718", "Hastelloy", "Tungsten", "EAF Dust", "Aerospace"].map((suggestion) => (
+                {searchSuggestions.map((suggestion) => (
                   <button
                     key={suggestion}
                     type="button"
-                    onClick={() => setQuery(suggestion)}
+                    onClick={() => setQuery(p(suggestion))}
                     className="rounded-sm border border-steel-200 px-2.5 py-1 text-[0.8125rem] text-steel-600 transition-colors hover:border-brand-700 hover:text-brand-700"
                   >
-                    {suggestion}
+                    {p(suggestion)}
                   </button>
                 ))}
               </div>
@@ -121,14 +121,14 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
           ) : results.length === 0 ? (
             <div className="px-5 py-10 text-center">
               <p className="text-sm text-steel-600">
-                No matches for <span className="font-medium text-navy-900">{query}</span>.
+                {p("No matches for")} <span className="font-medium text-navy-900">{query}</span>.
               </p>
               <Link
                 href="/contact"
                 onClick={onClose}
                 className="mt-3 inline-block text-sm font-medium text-brand-700 hover:text-brand-900"
               >
-                Ask our team about this material <span className="dir-arrow">&rarr;</span>
+                {p("Ask our team about this material")} <span className="dir-arrow">&rarr;</span>
               </Link>
             </div>
           ) : (
@@ -145,11 +145,11 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
                     )}
                   >
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[0.9375rem] font-medium text-navy-900">{doc.title}</span>
-                      <span className="block truncate text-[0.8125rem] text-steel-500">{doc.context}</span>
+                      <span className="block truncate text-[0.9375rem] font-medium text-navy-900">{doc.prefix ? doc.prefix + " · " : null}{p(doc.title)}</span>
+                      <span className="block truncate text-[0.8125rem] text-steel-500">{p(doc.context)}</span>
                     </span>
                     <span className="shrink-0 font-mono text-[0.625rem] uppercase tracking-[0.1em] text-steel-500">
-                      {kindLabels[doc.kind]}
+                      {p(kindLabels[doc.kind])}
                     </span>
                   </button>
                 </li>

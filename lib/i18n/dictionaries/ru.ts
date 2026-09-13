@@ -18,7 +18,7 @@ export const ru: Dictionary = {
 
   nav: {
     about: "О компании",
-    portfolio: "Портфель",
+    portfolio: "Ассортимент",
     whatWeDo: "Чем мы занимаемся",
     insights: "Публикации",
     contact: "Контакты",
@@ -65,8 +65,8 @@ export const ru: Dictionary = {
   finder: {
     title: "Подбор сплавов",
     describe: "Опишите, что вам нужно",
-    hint: "Обычным языком или символами — «без кобальта, хром выше 20» и «Cr >= 20 no Co» распознаются одинаково.",
-    placeholder: "например: высоконикелевый коррозионностойкий, без кобальта",
+    hint: "Символами — «Cr >= 20 no Co», «Ni > 60» — или по-английски: «cobalt free, chromium above 20» распознаётся так же.",
+    placeholder: "например: Ni > 60 Mo > 15, Inconel, Ta",
     try: "Примеры:",
     readingAs: "Запрос понят как",
     nameContains: "название содержит «{term}»",

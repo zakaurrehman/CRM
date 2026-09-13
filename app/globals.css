@@ -212,21 +212,6 @@
     direction: ltr;
   }
 
-  /**
-   * English prose inside an RTL page.
-   *
-   * The technical content stays in English, and an English sentence sitting in
-   * an RTL paragraph gets its trailing punctuation moved to the front by the
-   * bidi algorithm — "…occur together." renders as ".…occur together". The
-   * paragraph is English, so it should lay out as English; only the interface
-   * around it mirrors.
-   */
-  [dir="rtl"] .content-en,
-  [dir="rtl"] .prose-ims {
-    direction: ltr;
-    text-align: left;
-  }
-
   /* Fine technical grid, used sparingly behind dark industrial sections. */
   .tech-grid {
     background-image:

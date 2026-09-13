@@ -53,7 +53,13 @@ export default async function ArticlePage({ params }: Params) {
     { name: article.title, href: "/insights/" + article.slug },
   ];
 
-  const more = articlesByDate.filter((a) => a.slug !== article.slug).slice(0, 2);
+  const more = articlesByDate
+    .filter((a) => a.slug !== article.slug)
+    .slice(0, 2)
+    .map((a) => localiseArticle(a, locale));
+  /* The packs translate titles but not alt text; a translated title is a
+     better description than English alt text on a translated page. */
+  const imageAlt = article.imageAlt === base.imageAlt && article.title !== base.title ? article.title : article.imageAlt;
 
   return (
     <>
@@ -79,7 +85,7 @@ export default async function ArticlePage({ params }: Params) {
           <figure className="relative -mt-px aspect-[16/9] overflow-hidden bg-steel-100 sm:aspect-[21/9]">
             <Image
               src={article.image}
-              alt={article.imageAlt}
+              alt={imageAlt}
               fill
               priority
               sizes="100vw"
@@ -91,7 +97,7 @@ export default async function ArticlePage({ params }: Params) {
         <Container>
           <div className="grid gap-12 py-14 sm:py-18 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-7 lg:col-start-2">
-              <div className="prose-ims content-en max-w-prose">
+              <div className="prose-ims max-w-prose">
                 {article.body.map((block, i) => {
                   if (block.type === "h2") {
                     return <h2 key={i}>{block.text}</h2>;
@@ -113,7 +119,7 @@ export default async function ArticlePage({ params }: Params) {
             <aside className="lg:col-span-3 lg:col-start-10">
               <div className="lg:sticky lg:top-28">
                 <p className="label text-steel-500">{p("Talk to IMS")}</p>
-                <p className="mt-4 content-en text-[0.9375rem] leading-relaxed text-steel-600">
+                <p className="mt-4 text-[0.9375rem] leading-relaxed text-steel-600">
                   {p("If this touches on a material requirement of your own, our team can tell you what we can supply or recover.")}
                 </p>
                 <Link
@@ -149,7 +155,7 @@ export default async function ArticlePage({ params }: Params) {
                       dateTime={item.published}
                       className="label text-steel-500"
                     >
-                      {formatDate(item.published)}
+                      {formatDate(item.published, localeMeta[locale].tag)}
                     </time>
                     <h3 className="mt-3 font-display text-xl font-medium leading-snug tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
                       {item.title}

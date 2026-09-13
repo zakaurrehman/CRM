@@ -55,7 +55,7 @@ export function SearchResults() {
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder={p("Search alloys, grades, streams and pages")}
+            placeholder={p("Search materials, grades and pages")}
             className="h-14 w-full rounded border border-steel-300 bg-white ps-12 pe-4 text-base text-navy-900 transition-colors placeholder:text-steel-400 hover:border-steel-400 focus:border-brand-700"
           />
         </div>
@@ -72,7 +72,7 @@ export function SearchResults() {
           {grouped.map(([kind, docs]) => (
             <section key={kind}>
               <h2 className="label text-steel-500">
-                {kindLabels[kind]} <span className="text-steel-400">({docs.length})</span>
+                {p(kindLabels[kind])} <span className="text-steel-400">({docs.length})</span>
               </h2>
               <ul className={cn("mt-4", kind === "grade" ? "flex flex-wrap gap-2" : "border-t border-steel-200")}>
                 {docs.map((doc) =>
@@ -82,8 +82,8 @@ export function SearchResults() {
                         href={doc.href}
                         className="inline-flex items-center gap-2 rounded-sm border border-steel-200 px-3 py-1.5 text-[0.875rem] transition-colors hover:border-brand-700"
                       >
-                        <span className="font-medium text-navy-900">{doc.title}</span>
-                        <span className="text-steel-500">{doc.context}</span>
+                        <span className="font-medium text-navy-900">{doc.prefix ? doc.prefix + " · " : null}{p(doc.title)}</span>
+                        <span className="text-steel-500">{p(doc.context)}</span>
                       </Link>
                     </li>
                   ) : (
@@ -94,9 +94,9 @@ export function SearchResults() {
                       >
                         <span>
                           <span className="block text-base font-medium text-navy-900 transition-colors group-hover:text-brand-700">
-                            {doc.title}
+                            {doc.prefix ? doc.prefix + " · " : null}{p(doc.title)}
                           </span>
-                          <span className="mt-0.5 block text-[0.875rem] text-steel-500">{doc.context}</span>
+                          <span className="mt-0.5 block text-[0.875rem] text-steel-500">{p(doc.context)}</span>
                         </span>
                         <span
                           aria-hidden

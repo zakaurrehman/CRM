@@ -37,9 +37,24 @@ const tables: Record<Locale, PhraseTable> = {
 
 export type Phrase = (english: string, vars?: Record<string, string | number>) => string;
 
+/*
+ * Coverage tracing. With I18N_TRACE=1 on the server, each distinct English key
+ * looked up is written once to the server log as `[i18n-key] "<key>"`. A crawl
+ * of the site then yields the exact set of strings in use — including the ones
+ * passed in from data files, which no search of the source can see. Read by
+ * scripts/i18n-coverage.ts. Off unless set; the client bundle never has the
+ * variable, so the browser never logs.
+ */
+const TRACE = typeof process !== "undefined" && process.env.I18N_TRACE === "1";
+const traced = new Set<string>();
+
 export function phraseFor(locale: Locale): Phrase {
   const table = tables[locale] ?? {};
   return (english, vars) => {
+    if (TRACE && !traced.has(english)) {
+      traced.add(english);
+      console.log("[i18n-key] " + JSON.stringify(english));
+    }
     let text = table[english] ?? english;
     if (vars) {
       for (const [name, value] of Object.entries(vars)) {
@@ -48,6 +63,16 @@ export function phraseFor(locale: Locale): Phrase {
     }
     return text;
   };
+}
+
+/**
+ * Every translation of an English string. Search uses it so a visitor typing
+ * in their own language — "вольфрам", "titane" — finds the English-keyed page.
+ */
+export function translationsOf(english: string): string[] {
+  return (Object.keys(tables) as Locale[])
+    .map((locale) => tables[locale][english])
+    .filter((text): text is string => Boolean(text));
 }
 
 /** Every English source string a locale has a translation for. */

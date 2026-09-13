@@ -16,7 +16,7 @@ export const fr: Dictionary = {
 
   nav: {
     about: "À propos",
-    portfolio: "Portefeuille",
+    portfolio: "Gamme",
     whatWeDo: "Ce que nous faisons",
     insights: "Publications",
     contact: "Contact",
@@ -63,8 +63,8 @@ export const fr: Dictionary = {
   finder: {
     title: "Sélecteur d’alliages",
     describe: "Décrivez votre besoin",
-    hint: "En langage courant ou en symboles — « sans cobalt, chrome au-dessus de 20 » et « Cr >= 20 no Co » sont interprétés de la même façon.",
-    placeholder: "ex. : forte teneur en nickel, résistant à la corrosion, sans cobalt",
+    hint: "En symboles — « Cr >= 20 no Co », « Ni > 60 » — ou en anglais : « cobalt free, chromium above 20 » est interprété de la même façon.",
+    placeholder: "ex. : Ni > 60 Mo > 15, Inconel, Ta",
     try: "Exemples :",
     readingAs: "Votre requête est interprétée comme",
     nameContains: "le nom contient « {term} »",

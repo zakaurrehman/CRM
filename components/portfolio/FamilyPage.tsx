@@ -58,7 +58,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
     <>
       <PageHero
         eyebrow={p("Portfolio")}
-        title={family.name}
+        title={p(family.name)}
         mark={
           <ElementMark
             symbol={family.symbol}
@@ -83,7 +83,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
           {family.threshold ? (
             <span className="inline-flex items-center gap-2 text-[0.875rem] text-steel-500 [.on-dark_&]:text-steel-300">
               <span className="rounded-full bg-steel-100 px-2.5 py-1 font-medium text-navy-900 [.on-dark_&]:bg-white/15 [.on-dark_&]:text-white">{family.threshold}</span>
-              {p("{metal} content", { metal: family.name.toLowerCase() })}
+              {p("metal content")}
             </span>
           ) : null}
         </div>
@@ -94,7 +94,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <h2 className="text-display-sm">{p("What we accept")}</h2>
-            <p className="mt-5 content-en text-base leading-relaxed text-steel-700">
+            <p className="mt-5 text-base leading-relaxed text-steel-700">
               {p(family.accepts)}
               {family.detail ? <> {p(family.detail)}</> : null}
             </p>
@@ -198,7 +198,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
           <div className="max-w-2xl">
             <p className="eyebrow mb-4">{p("Grade reference")}</p>
             <h2 className="text-display-md">{p("{n} grades, with nominal composition as published.", { n: gradeCount })}</h2>
-            <p className="mt-4 text-[0.9375rem] text-steel-600">{compositionFootnote}</p>
+            <p className="mt-4 text-[0.9375rem] text-steel-600">{p(compositionFootnote)}</p>
           </div>
           <div className="mt-12 space-y-16">
             {tables.map((table) => (
@@ -223,7 +223,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
                   <div className="flex items-center gap-3">
                     <ElementMark symbol={item.symbol} />
                     <h3 className="font-display text-[1.0625rem] font-medium leading-snug text-navy-900 transition-colors group-hover:text-brand-700">
-                      {item.name}
+                      {p(item.name)}
                     </h3>
                   </div>
                   <p className="mt-4 flex-1 text-[0.875rem] leading-relaxed text-steel-600">{p(item.accepts)}</p>
@@ -238,7 +238,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
       ) : null}
 
       <CtaSection
-        title={p("Have {name} to place?", { name: family.name })}
+        title={p("Have {nameLower} to place?", { name: p(family.name), nameLower: p(family.name).toLowerCase() })}
         secondary={{ href: "/materials", label: p("Back to the portfolio") }}
       />
 
