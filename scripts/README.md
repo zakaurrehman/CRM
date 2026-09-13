@@ -14,6 +14,7 @@ Run with `npx tsx scripts/<name>.ts`.
 | `verify-query2.ts` | The per-element thresholds derived from the catalogue's own distribution, and that a bare element name does not match everything. |
 | `i18n-coverage.ts` | Which English strings the site uses, and which each language lacks or no longer needs. Unions a crawl trace, every literal passed to `p()`, and client-only strings (search results, form errors). |
 | `i18n-crawl.mjs` | Visits every page in one language — sitemap plus the pages left out of it — so a traced server logs every key. |
+| `og-card.mjs` | Renders `og-card.html` — the homepage opening at 1200×630 — to `public/images/og/site.jpg`, the share card every page points to. Run after changing the headline or the photograph. |
 | `i18n-residue.mjs` | Lists English prose still showing on a translated page: text that never went through `p()`. Meaningful for ru and he. |
 
 ### Translation coverage

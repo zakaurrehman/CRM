@@ -24,15 +24,23 @@ export interface WelcomeSlide {
   /** Not rendered — decorative — but kept so the set is self-documenting. */
   subject: string;
   /**
-   * Darkens this frame before the shade: for a bright photograph — bright
-   * alloy turnings — where the even shade alone leaves the type without a
-   * floor. 1 is unchanged; 0.55 brings a silver frame down to where the
-   * darker frames already sit.
+   * Darkens this frame before the shade. Every frame is taken down a little
+   * and drained a little (see FRAME_FILTER); a bright photograph — silver
+   * turnings, pale powder — is taken down further so the type keeps its
+   * floor. 0.5 brings a silver frame to where the darker frames sit.
    */
   brightness?: number;
 }
 
 const INTERVAL_MS = 3000;
+
+/**
+ * Every frame, before the shade: a little darker and a little drained, so
+ * the photograph reads as ground rather than subject and the type sits
+ * calmly on it (IMS, 14 September 2026: "a bit faded, darkened").
+ */
+const FRAME_BRIGHTNESS = 0.8;
+const FRAME_SATURATION = 0.8;
 
 /**
  * How far the picture lags the scroll, as a fraction of scroll distance. 0.22
@@ -132,7 +140,7 @@ export function WelcomeBackdrop({ slides }: { slides: WelcomeSlide[] }) {
               i === index ? "opacity-100" : "opacity-0",
               i === index && animate && "motion-safe:animate-slow-zoom",
             )}
-            style={slide.brightness !== undefined ? { filter: `brightness(${slide.brightness})` } : undefined}
+            style={{ filter: `brightness(${slide.brightness ?? FRAME_BRIGHTNESS}) saturate(${FRAME_SATURATION})` }}
           />
         ))}
       </div>
@@ -153,7 +161,7 @@ export function WelcomeBackdrop({ slides }: { slides: WelcomeSlide[] }) {
         Strengths are set by measurement — backdrop-contrast.mjs hides the text
         and samples the real pixels behind it across every frame — not by eye.
       */}
-      <div className="absolute inset-0 bg-black/25" />
+      <div className="absolute inset-0 bg-black/35" />
       <div className="welcome-vignette absolute inset-0" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50" />
 

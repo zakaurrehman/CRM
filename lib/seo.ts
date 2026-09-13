@@ -14,7 +14,13 @@ interface PageMetaInput {
   titleAbsolute?: boolean;
 }
 
-export const DEFAULT_OG_IMAGE = "/images/hero/turnings.jpg";
+/**
+ * The share card: the homepage opening composed for 1200×630, so a pasted
+ * link shows the mark and the headline rather than a bare photograph (IMS,
+ * 14 September 2026). Rendered by scripts/og-card.mjs. Every page uses it;
+ * a page passes its own image only when it has a real reason to.
+ */
+export const DEFAULT_OG_IMAGE = "/images/og/site.jpg";
 
 export function absoluteUrl(path: string): string {
   return new URL(path, site.url).toString();

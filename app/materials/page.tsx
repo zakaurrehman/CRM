@@ -28,7 +28,6 @@ export async function generateMetadata(): Promise<Metadata> {
       "Superalloys, high-nickel and cobalt-based alloys, maraging, stainless, high-speed and tool steels, copper-nickel, ferroalloys, titanium, zirconium, hafnium, tungsten, molybdenum, niobium and tantalum — and the powders, oxides and intermediates around them.",
     ),
     path: "/materials",
-    image: "/images/hero/turnings.jpg",
   });
 }
 

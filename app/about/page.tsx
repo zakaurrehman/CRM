@@ -22,7 +22,6 @@ export async function generateMetadata(): Promise<Metadata> {
       "IMS Metals & Alloys OÜ is an Estonia-based international metals recovery and supply company specialising in complex high-nickel, superalloy, titanium and refractory materials.",
     ),
     path: "/about",
-    image: "/images/company/port-terminal.jpg",
   });
 }
 

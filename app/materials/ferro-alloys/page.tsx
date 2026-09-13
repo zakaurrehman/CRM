@@ -22,7 +22,6 @@ export async function generateMetadata(): Promise<Metadata> {
     title: p("Ferroalloys"),
     description: p("FeNiCr, FeW, FeMo, FeNb and FeTi — ferroalloys bought and supplied in all sizes, packings and specifications."),
     path: "/materials/ferro-alloys",
-    image: "/images/hero/hot-metal-plate.jpg",
   });
 }
 

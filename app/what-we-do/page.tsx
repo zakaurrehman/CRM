@@ -26,7 +26,6 @@ export async function generateMetadata(): Promise<Metadata> {
       "How IMS assesses complex, mixed and off-spec materials and develops recovery, processing and blending routes through an international network of specialist facilities and laboratories.",
     ),
     path: "/what-we-do",
-    image: "/images/hero/turnings.jpg",
   });
 }
 
