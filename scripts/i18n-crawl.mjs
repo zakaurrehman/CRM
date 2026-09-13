@@ -22,6 +22,8 @@ const EXTRAS = [
   "/materials/saved",
   "/search?q=titanium",
   "/rfq",
+  "/rfq?direction=sell",
+  "/rfq?direction=buy",
   "/this-page-does-not-exist",
 ];
 

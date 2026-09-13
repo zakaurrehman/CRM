@@ -55,8 +55,6 @@ const staticPages: { title: string; context: string; href: string; terms: string
   },
   { title: "Alloy finder", context: "Grade reference", href: "/materials/finder", terms: "search by element composition" },
   { title: "Compare grades", context: "Grade reference", href: "/materials/compare", terms: "side by side" },
-  { title: "Offer material", context: "Contact", href: routes.offer, terms: "sell offer submit material analysis coa photographs attachments rfq" },
-  { title: "Request supply", context: "Contact", href: routes.supply, terms: "buy request supply quote price rfq" },
   { title: "Contact IMS", context: "Contact", href: "/contact", terms: "enquiry inquiry tallinn estonia email whatsapp" },
   { title: "Privacy policy", context: "Legal", href: routes.privacy, terms: "personal data gdpr cookies uploaded files controller" },
   { title: "Legal information", context: "Legal", href: routes.legal, terms: "company registration eori disclaimer trademarks governing law" },

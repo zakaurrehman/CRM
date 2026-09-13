@@ -59,8 +59,9 @@ export const alloyGroupOrder: AlloyGroup[] = ["nickel", "cobalt", "ferrous", "re
  * The menu is the portfolio in three columns (IMS, 14 September 2026): the
  * nickel, cobalt, titanium and specialty-steel families; the reactive and
  * refractory metals, each with its content threshold; then the products and
- * resources — ferroalloys, intermediates, the grade library — closed by the
- * two commercial actions. Insights is offline.
+ * resources — ferroalloys, intermediates, the grade library. No commercial
+ * action here: email is the one door (IMS, 14 September 2026), and the
+ * header's Contact button is it. Insights is offline.
  */
 const portfolioColumns: NavColumn[] = [
   ...portfolioGroups.map((group) => ({
@@ -78,8 +79,6 @@ const portfolioColumns: NavColumn[] = [
       { label: "Ferroalloys", href: "/materials/ferro-alloys", description: "FeNiCr, FeW, FeMo, FeNb, FeTi" },
       { label: "Powders, Oxides & Intermediates", href: routes.intermediates, description: "APT, oxides, hydroxides, filter cake" },
       { label: "Alloy Grade Library", href: "/materials/finder", description: "Search 295 published compositions" },
-      { label: "Offer material", href: routes.offer, action: true },
-      { label: "Request supply", href: routes.supply, action: true },
     ],
   },
 ];
@@ -117,8 +116,6 @@ export const footerNavigation: NavColumn[] = [
       { label: "Powders, Oxides & Intermediates", href: routes.intermediates },
       { label: "Alloy Grade Library", href: "/materials/finder" },
       { label: "Compare grades", href: "/materials/compare" },
-      { label: "Offer material", href: routes.offer },
-      { label: "Request supply", href: routes.supply },
     ],
   },
 ];
