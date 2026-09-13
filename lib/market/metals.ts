@@ -286,7 +286,9 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
     quotes,
     fetchedAt: Date.now(),
     unit: data.unit,
-    asOf: typeof data.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(data.date) ? data.date : undefined,
+    /* The provider stamps a weekend quote with the weekend's date; it is
+       Friday's close, and is dated as such. */
+    asOf: typeof data.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(data.date) ? lastTradingDayOnOrBefore(data.date) : undefined,
   };
 }
 
@@ -318,6 +320,13 @@ function isoDaysAgo(days: number): string {
  * the day it moved against is Thursday. The caller steps back once more
  * when a comparison comes out flat, which is what a holiday looks like.
  */
+/** `isoDate` itself on a weekday; the Friday before it at the weekend. */
+function lastTradingDayOnOrBefore(isoDate: string): string {
+  const d = new Date(isoDate + "T12:00:00Z");
+  while (d.getUTCDay() === 0 || d.getUTCDay() === 6) d.setUTCDate(d.getUTCDate() - 1);
+  return d.toISOString().slice(0, 10);
+}
+
 function previousTradingDay(isoDate: string, back = 1): string {
   const d = new Date(isoDate + "T12:00:00Z");
   let steps = back;
