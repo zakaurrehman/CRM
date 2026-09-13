@@ -55,7 +55,8 @@ check(familyForCategory("complex-nickel-alloys", "Waspaloy")?.slug === "superall
 check(familyForCategory("complex-nickel-alloys")?.slug === "superalloys", "bare complex-nickel-alloys -> superalloys");
 check(familyForCategory("nickel-copper")?.slug === "cu-ni-alloys", "nickel-copper -> cu-ni-alloys");
 check(familyForCategory("copper-nickel-alloys")?.slug === "cu-ni-alloys", "copper-nickel-alloys -> cu-ni-alloys");
-check(familyForCategory("zirconium-alloys") === undefined, "zirconium-alloys is reference, not a family");
+check(familyForCategory("zirconium-alloys")?.slug === "zirconium", "zirconium-alloys -> zirconium");
+check(familyForCategory("magnet-alloys") === undefined, "magnet-alloys is reference, not a family");
 
 /* Search carries every family. */
 for (const f of portfolioFamilies) {

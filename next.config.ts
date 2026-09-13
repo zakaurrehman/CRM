@@ -40,6 +40,7 @@ const CATEGORY_TO_FAMILY: Record<string, string> = {
   "tungsten-alloys": "tungsten",
   "copper-nickel-alloys": "cu-ni-alloys",
   "nickel-copper": "cu-ni-alloys",
+  "zirconium-alloys": "zirconium",
 };
 
 const REFERENCE_SLUGS = [
@@ -47,7 +48,6 @@ const REFERENCE_SLUGS = [
   "alloy-irons",
   "nickel-iron-alloys",
   "magnet-alloys",
-  "zirconium-alloys",
 ];
 
 /** Legacy path -> new path. Registered with and without a trailing slash. */

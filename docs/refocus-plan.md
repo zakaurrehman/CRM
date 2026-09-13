@@ -130,6 +130,15 @@ source the commodities which supplement our everyday life") is removed, as
 the review suggested. The "We supply" strip went with the hero — it repeated
 the description sentence word for word. The homepage is seven sections now.
 
+### Round 8 — zirconium (13 September)
+
+IMS confirmed zirconium. **Zr · Zirconium** is a material in the reactive
+metals, between titanium and hafnium, with the six grades of the legacy
+zirconium table (C.P., Zr-Nb, the Zircaloy types) on its page and the same
+accepted-categories pattern as hafnium. Both legacy zirconium URLs 301 to
+it. Fifteen cards; the alloys fill two rows exactly, the metals the next
+two. Photos needed: four.
+
 One deviation from the original plan: Stainless Steel sits in a group named
 **"Ferro Alloys & Stainless"** beside FeNiCr, rather than under a bare "Ferro
 Alloys" heading — stainless is a steel, not a ferro-alloy, and the heading

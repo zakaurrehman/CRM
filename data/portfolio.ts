@@ -7,7 +7,7 @@ import type { TungstenForm } from "@/types/content";
  *
  * Three parts:
  *
- * 1. Thirteen materials, one card each — no group headings at first
+ * 1. Fourteen materials, one card each — no group headings at first
  *    glance. Superalloys lead: Ni-based blends are the core of the business.
  *    Each carries a symbol (Ti, Hf, W…) or the trade shorthand where it is an
  *    alloy (HSS, 18Ni), then its name. Groups organise the menu and footer.
@@ -84,7 +84,7 @@ export interface PortfolioFamily {
 
 export const portfolioGroups: PortfolioGroup[] = [
   { id: "alloys", name: "Nickel, Cobalt & Specialty Steels" },
-  /* Titanium and hafnium are reactive metals; W, Mo, Nb and Ta refractory. */
+  /* Titanium, zirconium and hafnium are reactive metals; W, Mo, Nb and Ta refractory. */
   { id: "metals", name: "Reactive & Refractory Metals" },
 ];
 
@@ -171,6 +171,26 @@ export const portfolioFamilies: PortfolioFamily[] = [
     accepts: "Ti-6/4, CP Ti, 3D powder.",
     images: [],
     tables: [{ category: "titanium-alloys" }],
+  },
+  {
+    /* Added at IMS's request, 13 September 2026. The six grades in the
+       legacy zirconium table — C.P., Zr-Nb and the Zircaloy types — move
+       out of the reference pile onto this page. */
+    slug: "zirconium",
+    name: "Zirconium",
+    symbol: "Zr",
+    group: "metals",
+    accepts: "Commercially pure zirconium, Zr-Nb and Zircaloy types, including off-grade.",
+    accepted: [
+      { term: "Zr VQ", note: "vacuum quality" },
+      { term: "Zircaloy types" },
+      { term: "Zr-Nb alloys" },
+      { term: "Zr sponge and crystal bar" },
+      { term: "Master alloys" },
+      { term: "Off-spec Zr scrap with contamination" },
+    ],
+    images: [],
+    tables: [{ category: "zirconium-alloys" }],
   },
   {
     slug: "hafnium",
