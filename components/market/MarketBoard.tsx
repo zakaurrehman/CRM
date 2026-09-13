@@ -185,9 +185,11 @@ export function MarketBoard({
     if (!data?.metals) return [];
     return data.metals.quotes.map((q) => ({
       ...q,
-      /* A plain number. The currency is stated once in the heading, which is
-         what lets nine of these sit on one line. */
-      display: new Intl.NumberFormat(tag, { maximumFractionDigits: 0 }).format(q.price),
+      /* "$16,270": the dollar sign on the figure, on IMS's word (14 September
+         2026). A bare "$" rather than "US$" so nine still fit on one line;
+         the heading says USD / tonne once for the rest. Grouping follows the
+         page's language; the sign is the same in all of them. */
+      display: "$" + new Intl.NumberFormat(tag, { maximumFractionDigits: 0 }).format(q.price),
     }));
   }, [data, tag]);
 
@@ -266,9 +268,9 @@ export function MarketBoard({
 
           {hasMetals ? p("Metals prices") : p("FX rates")}
 
-          {/* Said once, in the heading, rather than nine times in the grid:
-              "US$" in front of every price and a whole cell spent on the unit
-              are what made the strip two rows deep. */}
+          {/* The unit, once, in the heading; the figures carry the "$". A
+              whole cell spent on the unit is what made the strip two rows
+              deep. */}
           {hasMetals ? (
             <span className="text-steel-400">
               <span aria-hidden>{" · "}</span>
