@@ -1,55 +1,46 @@
 import Link from "next/link";
 import type { PortfolioFamily } from "@/data/portfolio";
-import { getP } from "@/lib/i18n/server";
 import { cn } from "@/lib/utils";
 
 /**
- * One material in the portfolio grid.
+ * One material, as a tile on the navy board.
  *
- * Symbol first, then the name, as IMS asked: the symbol sits in a square the
- * way an element sits in a periodic table. Where the material is an alloy
- * family rather than an element the square holds the trade shorthand instead
- * (HSS, 18Ni).
+ * Built to match the market board IMS pointed to (13 September 2026): navy
+ * cells, hairline rules, one large white figure and a spaced mono label. Here
+ * the figure is the symbol — Ni, Ti, HSS — and the label is the name. The
+ * symbol sits on top, where the reference has its label, for two reasons: it
+ * is the order IMS asked for ("the letters, then the name"), and a long name
+ * that wraps to two lines would otherwise push its row's symbols out of line.
  *
- * No photograph. The cards used to open with one, rotating, and it came off on
- * 13 September 2026: scrap of one metal looks much like scrap of another, so
- * the photo did not help anyone tell the cards apart — the symbol does that —
- * and with half the materials still unphotographed the grid read as
- * unfinished. Photographs live on each material's own page, where there is
- * room to show what a lot actually looks like.
- *
- * Deliberately little else: the threshold where the intro states one, one line
- * on what is accepted, and a way in. The whole card is the link.
+ * Nothing else on the tile. The one-line description and the "Details &
+ * quotation" text moved off with the change; the whole tile is the link, and
+ * the detail is on the material's page one click in.
  */
-export async function FamilyCard({ family, className }: { family: PortfolioFamily; className?: string }) {
-  const p = await getP();
-
+export function FamilyCard({ family, className }: { family: PortfolioFamily; className?: string }) {
   return (
     <Link
       href={"/materials/" + family.slug}
       className={cn(
-        "group relative flex h-full flex-col bg-white p-6 transition-[background-color,box-shadow] duration-300 hover:z-10 hover:shadow-card",
+        /* The focus ring is inset: the board clips its outer edge, and a ring
+           drawn outside the tile would be cut off on the edge tiles. */
+        "group relative flex h-full flex-col px-4 py-5 transition-colors duration-300 hover:bg-navy-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-300 sm:px-6 sm:py-7",
         className,
       )}
     >
-      <div className="flex items-start justify-between gap-3">
-        <SymbolBox symbol={family.symbol} size="lg" />
+      <div className="flex items-start justify-between gap-2">
+        <span
+          aria-hidden
+          className="font-display text-[1.75rem] font-semibold leading-none tracking-tight text-white sm:text-[2.25rem]"
+        >
+          {family.symbol}
+        </span>
         {family.threshold ? (
-          <span className="rounded-full bg-steel-100 px-2.5 py-1 text-[0.75rem] font-medium text-navy-900">
-            {family.threshold}
-          </span>
+          <span className="font-mono text-[0.6875rem] tabular-nums text-steel-400">{family.threshold}</span>
         ) : null}
       </div>
-      <h3 className="mt-5 font-display text-[1.0625rem] font-semibold leading-snug tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
+      <h3 className="mt-4 font-mono text-[0.625rem] uppercase leading-snug tracking-[0.12em] text-brand-300 transition-colors duration-300 group-hover:text-white sm:text-[0.6875rem] sm:tracking-[0.14em]">
         {family.name}
       </h3>
-      <p className="mt-2 flex-1 text-[0.875rem] leading-relaxed text-steel-600">{p(family.accepts)}</p>
-      <span className="mt-5 inline-flex items-center gap-1.5 text-[0.875rem] font-medium text-brand-700">
-        {p("Details & quotation")}
-        <span aria-hidden className="transition-transform duration-200 ease-swift group-hover:translate-x-1">
-          <span className="dir-arrow">&rarr;</span>
-        </span>
-      </span>
     </Link>
   );
 }

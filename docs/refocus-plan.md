@@ -181,6 +181,20 @@ first in its header, the rest cross-fading under "What we accept" — so the
 Mo, Nb and W photographs already supplied are still shown, and the photo
 list is now for those pages rather than a gap on the homepage.
 
+### Round 13 — the portfolio as a board (13 September)
+
+IMS pointed to the metals price board as the look for the portfolio. The
+grid is now a navy board: hairline rules between tiles, the symbol as the
+large white figure, the name as a spaced mono label beneath, the threshold
+in the corner. Symbol above name, not below as on the price board — IMS's
+"letters, then the name", and it keeps symbols level when a long name
+wraps. Three across below large screens, five from there: fifteen tiles
+always fill their rows.
+
+The one-line descriptions and "Details & quotation" came off the tiles; the
+tile is the link, and the description is the first line of each material's
+page.
+
 One deviation from the original plan: Stainless Steel sits in a group named
 **"Ferro Alloys & Stainless"** beside FeNiCr, rather than under a bare "Ferro
 Alloys" heading — stainless is a steel, not a ferro-alloy, and the heading
