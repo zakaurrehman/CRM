@@ -41,6 +41,12 @@ export interface MetalsPayload {
   unit?: string;
   quotes: MetalQuote[];
   fetchedAt: number;
+  /**
+   * The date the provider stamps on the quotes (YYYY-MM-DD), when it gives
+   * one. Over a weekend that is Friday, and the board says so rather than
+   * implying the exchange traded on a Sunday.
+   */
+  asOf?: string;
 }
 
 let cache: MetalsPayload | null = null;
@@ -69,6 +75,8 @@ interface ProviderResponse {
   success?: boolean;
   /** The quote unit the provider applied, when it reports one. */
   unit?: string;
+  /** The quote date, YYYY-MM-DD, on the latest and dated endpoints. */
+  date?: string;
   rates?: Record<string, number>;
   /* Both providers report failures in an `error` object rather than an HTTP
      status, so a 200 can still be a rejection. */
@@ -273,7 +281,13 @@ async function fetchQuotes(): Promise<MetalsPayload | null> {
   }
 
   lastError = null;
-  return { base: BASE_CURRENCY, quotes, fetchedAt: Date.now(), unit: data.unit };
+  return {
+    base: BASE_CURRENCY,
+    quotes,
+    fetchedAt: Date.now(),
+    unit: data.unit,
+    asOf: typeof data.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(data.date) ? data.date : undefined,
+  };
 }
 
 /* ---------------------------------------------------------------- history */
@@ -295,6 +309,24 @@ export function getHistoryNote(): string | null {
 
 function isoDaysAgo(days: number): string {
   return new Date(Date.now() - days * 86400000).toISOString().slice(0, 10);
+}
+
+/**
+ * The trading day `back` sessions before `isoDate`, stepping over Saturdays
+ * and Sundays. The exchange does not trade at the weekend, so "yesterday"
+ * on a Monday is Friday — and a Monday-morning quote *is* Friday's close, so
+ * the day it moved against is Thursday. The caller steps back once more
+ * when a comparison comes out flat, which is what a holiday looks like.
+ */
+function previousTradingDay(isoDate: string, back = 1): string {
+  const d = new Date(isoDate + "T12:00:00Z");
+  let steps = back;
+  while (steps > 0) {
+    d.setUTCDate(d.getUTCDate() - 1);
+    const day = d.getUTCDay();
+    if (day !== 0 && day !== 6) steps--;
+  }
+  return d.toISOString().slice(0, 10);
 }
 
 /**
@@ -429,8 +461,12 @@ export async function getMetals(): Promise<MetalsPayload | null> {
  * Two routes, cheapest first:
  *
  *   1. /fluctuation, which returns change and change_pct per symbol directly.
- *   2. failing that, yesterday's close from the dated endpoint, compared with
- *      the price already in hand.
+ *   2. failing that, the previous trading day's close from the dated
+ *      endpoint, compared with the price already in hand — the previous
+ *      *trading* day: on a Monday morning the quote is still Friday's close,
+ *      and comparing it with Sunday's (also Friday's) made every change 0 and
+ *      the board arrowless all weekend. Flat again means a holiday, and one
+ *      more day back is tried.
  *
  * Percentages are unit-independent, so nothing here needs the troy-ounce
  * conversion: as long as both sides of the comparison are extracted the same
@@ -534,19 +570,26 @@ export async function getMetalsChange(): Promise<Record<string, number> | null> 
     notes.push(`fluctuation threw: ${e instanceof Error ? e.message : String(e)}`);
   }
 
-  // ---- 2. yesterday's close against the price already in hand
+  // ---- 2. the previous trading day's close against the price already in hand
   try {
     const current = await getMetals();
     if (!current) {
       notes.push("no current prices to compare against");
     } else {
-      const url =
-        `https://metals-api.com/api/${isoDaysAgo(1)}?access_key=${encodeURIComponent(key)}` +
-        `&base=${BASE_CURRENCY}&symbols=${symbols}`;
-      const response = await fetch(url, { cache: "no-store" });
-      if (!response.ok) {
-        notes.push(`historical HTTP ${response.status}`);
-      } else {
+      const quoteDate = current.asOf ?? isoDaysAgo(0);
+      /* Two attempts: the previous trading day, then the one before it. The
+         second is for a holiday, and for a Monday-morning quote that is still
+         Friday's close (so Friday against Friday is flat). */
+      for (let back = 1; back <= 2; back++) {
+        const compareDate = previousTradingDay(quoteDate, back);
+        const url =
+          `https://metals-api.com/api/${compareDate}?access_key=${encodeURIComponent(key)}` +
+          `&base=${BASE_CURRENCY}&symbols=${symbols}`;
+        const response = await fetch(url, { cache: "no-store" });
+        if (!response.ok) {
+          notes.push(`historical ${compareDate} HTTP ${response.status}`);
+          break;
+        }
         const inner = envelope<{
           success?: boolean;
           error?: { type?: string };
@@ -554,30 +597,29 @@ export async function getMetalsChange(): Promise<Record<string, number> | null> 
         }>(await response.json());
 
         if (inner.success === false || inner.error) {
-          notes.push(`historical rejected${inner.error?.type ? ": " + inner.error.type : ""}`);
-        } else {
-          const change: Record<string, number> = {};
-          for (const quote of current.quotes) {
-            const then = perOunceFrom(inner.rates, quote.symbol);
-            /* current.quotes carry tonnes; the historical block is ounces.
-               Undo the conversion rather than scaling the old figure up, so
-               both sides are the provider's own numbers. */
-            const now = quote.price / TROY_OUNCES_PER_TONNE;
-            if (then !== null && then > 0 && now > 0) change[quote.symbol] = now / then - 1;
-          }
-          if (isStatic(change)) {
-            notes.push(
-              `yesterday's close is identical to today for all ${Object.keys(change).length} symbols — ` +
-                "the plan is serving a static snapshot, not live prices",
-            );
-          } else if (Object.keys(change).length > 0) {
-            changeNote = `historical: ${Object.keys(change).length} of ${wanted.length} symbols`;
-            changeCache = { at: Date.now(), change };
-            return change;
-          } else {
-            notes.push("historical returned no usable rows");
-          }
+          notes.push(`historical ${compareDate} rejected${inner.error?.type ? ": " + inner.error.type : ""}`);
+          break;
         }
+        const change: Record<string, number> = {};
+        for (const quote of current.quotes) {
+          const then = perOunceFrom(inner.rates, quote.symbol);
+          /* current.quotes carry tonnes; the historical block is ounces.
+             Undo the conversion rather than scaling the old figure up, so
+             both sides are the provider's own numbers. */
+          const now = quote.price / TROY_OUNCES_PER_TONNE;
+          if (then !== null && then > 0 && now > 0) change[quote.symbol] = now / then - 1;
+        }
+        if (Object.keys(change).length === 0) {
+          notes.push(`historical ${compareDate} returned no usable rows`);
+          break;
+        }
+        if (isStatic(change)) {
+          notes.push(`${compareDate} is identical to the ${quoteDate} quote for all ${Object.keys(change).length} symbols`);
+          continue;
+        }
+        changeNote = `historical: ${Object.keys(change).length} of ${wanted.length} symbols, ${quoteDate} against ${compareDate}`;
+        changeCache = { at: Date.now(), change };
+        return change;
       }
     }
   } catch (e) {

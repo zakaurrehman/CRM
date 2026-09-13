@@ -24,7 +24,7 @@ export interface Quote {
 }
 
 export interface MarketPayload {
-  metals: { base: string; quotes: Quote[]; fetchedAt: number } | null;
+  metals: { base: string; quotes: Quote[]; fetchedAt: number; asOf?: string } | null;
   metalsConfigured: boolean;
   rates: {
     base: string;

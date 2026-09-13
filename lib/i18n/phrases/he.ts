@@ -617,4 +617,5 @@ export const hePhrases: PhraseTable = {
   "Selling complex, mixed or off-spec material, or looking for supply: send the material, the form, the quantity and any analysis or photographs, and we will assess the available route.": "מוכרים חומר מורכב, מעורב או מחוץ למפרט, או מחפשים אספקה: שלחו את החומר, הצורה, הכמות וכל אנליזה או תמונה, ואנחנו נעריך את המסלול הזמין.",
   "Send the grade or analysis, the form and the quantity, with any analysis or photographs. Off-spec and mixed lots are welcome — say what you know and we will assess the available route.": "שלחו את הסוג או האנליזה, הצורה והכמות, עם כל אנליזה או תמונה. מנות מחוץ למפרט ומעורבות יתקבלו בברכה — ספרו מה שאתם יודעים ואנחנו נעריך את המסלול הזמין.",
   "Send the product, the analysis, the form and the quantity, with any available assay or COA, and we will assess the available route.": "שלחו את המוצר, האנליזה, הצורה והכמות, עם כל בדיקה או תעודת אנליזה (COA) זמינה, ואנחנו נעריך את המסלול הזמין.",
+  "Close of {date}": "סגירת {date}",
 };

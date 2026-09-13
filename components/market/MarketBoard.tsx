@@ -237,6 +237,16 @@ export function MarketBoard({
       }).format(new Date(stamp))
     : null;
 
+  /* The date the quotes are for, when the provider gives one and it is not
+     today: over a weekend the board is showing Friday's close, and says so
+     rather than letting "checked 3 min ago" imply the exchange is trading. */
+  const asOf = (() => {
+    const date = data.metals?.asOf;
+    if (!date) return null;
+    if (date === new Date(now).toISOString().slice(0, 10)) return null;
+    return new Intl.DateTimeFormat(tag, { weekday: "short", day: "numeric", month: "short" }).format(new Date(date + "T12:00:00Z"));
+  })();
+
   /* "3 min ago", in the reader's language, from Intl rather than a phrase
      table. Under a minute it says "now". */
   const ago = (() => {
@@ -275,6 +285,12 @@ export function MarketBoard({
             <span className="text-steel-400">
               <span aria-hidden>{" · "}</span>
               {p("USD / tonne")}
+            </span>
+          ) : null}
+          {asOf ? (
+            <span className="text-steel-400">
+              <span aria-hidden>{" · "}</span>
+              {p("Close of {date}", { date: asOf })}
             </span>
           ) : null}
         </h2>

@@ -616,4 +616,5 @@ export const ruPhrases: PhraseTable = {
   "Selling complex, mixed or off-spec material, or looking for supply: send the material, the form, the quantity and any analysis or photographs, and we will assess the available route.": "Продаёте сложный, смешанный или некондиционный материал или ищете поставку: пришлите материал, форму, количество и имеющиеся анализы или фотографии — мы оценим доступный маршрут.",
   "Send the grade or analysis, the form and the quantity, with any analysis or photographs. Off-spec and mixed lots are welcome — say what you know and we will assess the available route.": "Укажите марку или анализ, форму и количество, приложив имеющиеся анализы или фотографии. Некондиционные и смешанные партии приветствуются — сообщите, что знаете, а мы оценим доступный маршрут.",
   "Send the product, the analysis, the form and the quantity, with any available assay or COA, and we will assess the available route.": "Укажите продукт, анализ, форму и количество, приложив имеющийся анализ или сертификат (COA), — и мы оценим доступный маршрут.",
+  "Close of {date}": "Закрытие {date}",
 };

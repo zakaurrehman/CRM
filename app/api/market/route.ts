@@ -48,6 +48,7 @@ export async function GET() {
               change: change?.[q.symbol] ?? q.change,
             })),
             fetchedAt: metals.fetchedAt,
+            asOf: metals.asOf,
           }
         : null,
       /* Distinguishes "no key configured" from "configured but the provider is

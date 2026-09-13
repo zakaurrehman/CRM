@@ -615,4 +615,5 @@ export const nlPhrases: PhraseTable = {
   "Selling complex, mixed or off-spec material, or looking for supply: send the material, the form, the quantity and any analysis or photographs, and we will assess the available route.": "Verkoopt u complex, gemengd of off-spec materiaal, of zoekt u levering: stuur het materiaal, de vorm, de hoeveelheid en eventuele analyses of foto's, en wij beoordelen de beschikbare route.",
   "Send the grade or analysis, the form and the quantity, with any analysis or photographs. Off-spec and mixed lots are welcome — say what you know and we will assess the available route.": "Stuur de kwaliteit of analyse, de vorm en de hoeveelheid, met eventuele analyses of foto's. Off-spec en gemengde partijen zijn welkom — vertel wat u weet en wij beoordelen de beschikbare route.",
   "Send the product, the analysis, the form and the quantity, with any available assay or COA, and we will assess the available route.": "Stuur het product, de analyse, de vorm en de hoeveelheid, met een beschikbare assay of COA, en wij beoordelen de beschikbare route.",
+  "Close of {date}": "Slot van {date}",
 };
