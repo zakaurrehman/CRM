@@ -322,7 +322,7 @@ export const hePhrases: PhraseTable = {
   "See what each form covers": "מה כוללת כל צורה",
   "Shot dust": "אבק התזה",
   "Sinter powder": "אבקת סינטור",
-  "Solid tooling, inserts, rolls and crucibles through to swarf and grinding sludge. Each is a distinct stream, and each is priced on what is actually recoverable.": "מכלים שלמים, תותבים, גלילים וכורי היתוך ועד שבבים ובוצת השחזה. כל אחד מהם הוא זרם נפרד, וכל אחד מתומחר לפי מה שניתן להשיב בפועל.",
+  "Solid tooling, inserts, rolls and crucibles through to swarf and grinding sludge. Each is a distinct stream, and each is assessed on what is actually recoverable.": "מכלים שלמים, תותבים, גלילים וכורי היתוך ועד שבבים ובוצת השחזה. כל אחד מהם הוא זרם נפרד, וכל אחד מוערך לפי מה שניתן להשיב בפועל.",
   "Stainless Steels": "פלדות אל‑חלד",
   "Stainless steel mills": "מפעלי פלדת אל‑חלד",
   "Stellite, MAR-M and Umco types.": "סגסוגות מסוג Stellite, MAR-M ו-Umco.",

@@ -320,7 +320,7 @@ export const nlPhrases: PhraseTable = {
   "See what each form covers": "Bekijk wat elke vorm omvat",
   "Shot dust": "Straalstof",
   "Sinter powder": "Sinterpoeder",
-  "Solid tooling, inserts, rolls and crucibles through to swarf and grinding sludge. Each is a distinct stream, and each is priced on what is actually recoverable.": "Van massief gereedschap, wisselplaten, walsen en smeltkroezen tot spanen en slijpslib. Elk is een aparte stroom, en elk wordt geprijsd op wat werkelijk terug te winnen is.",
+  "Solid tooling, inserts, rolls and crucibles through to swarf and grinding sludge. Each is a distinct stream, and each is assessed on what is actually recoverable.": "Van massief gereedschap, wisselplaten, walsen en smeltkroezen tot spanen en slijpslib. Elk is een aparte stroom, en elk wordt beoordeeld op wat werkelijk terug te winnen is.",
   "Stainless Steels": "Roestvast staal",
   "Stainless steel mills": "Roestvaststaalfabrieken",
   "Stellite, MAR-M and Umco types.": "Stellite-, MAR-M- en Umco-typen.",

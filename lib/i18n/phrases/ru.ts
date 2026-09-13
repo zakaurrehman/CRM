@@ -321,7 +321,7 @@ export const ruPhrases: PhraseTable = {
   "See what each form covers": "Что входит в каждую форму",
   "Shot dust": "Дробеструйная пыль",
   "Sinter powder": "Спечённый порошок",
-  "Solid tooling, inserts, rolls and crucibles through to swarf and grinding sludge. Each is a distinct stream, and each is priced on what is actually recoverable.": "От цельного инструмента, пластин, валков и тиглей до стружки и шлифовального шлама. Каждый — отдельный поток, и каждый оценивается по тому, что реально можно извлечь.",
+  "Solid tooling, inserts, rolls and crucibles through to swarf and grinding sludge. Each is a distinct stream, and each is assessed on what is actually recoverable.": "От цельного инструмента, пластин, валков и тиглей до стружки и шлифовального шлама. Каждый — отдельный поток, и каждый оценивается по тому, что реально извлекаемо.",
   "Stainless Steels": "Нержавеющие стали",
   "Stainless steel mills": "Заводы нержавеющей стали",
   "Stellite, MAR-M and Umco types.": "Сплавы типа Stellite, MAR-M и Umco.",

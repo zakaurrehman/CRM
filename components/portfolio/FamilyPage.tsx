@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { AlloyCategory } from "@/types/content";
 import type { PortfolioFamily } from "@/data/portfolio";
@@ -12,7 +11,6 @@ import { localiseCategory, localiseTungstenForm } from "@/lib/i18n/content";
 import { PageHero } from "@/components/shared/PageHero";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
-import { RotatingImage } from "@/components/ui/RotatingImage";
 import { CompositionTable } from "@/components/materials/CompositionTable";
 import { CtaSection } from "@/components/shared/CtaSection";
 import { ContactIms } from "@/components/shared/ContactIms";
@@ -122,11 +120,9 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
               </div>
             ) : null}
 
-            {family.images.length > 0 ? (
-              <div className="relative mt-10 aspect-[16/9] overflow-hidden bg-navy-950">
-                <RotatingImage images={family.images} sizes="(min-width: 1024px) 58vw, 100vw" />
-              </div>
-            ) : null}
+            {/* No photographs on the material pages for now (IMS, 14 September
+                2026: cleaner without them until IMS's own are in). The
+                `images` on each family stay in data/portfolio.ts for then. */}
           </div>
 
           <div className="lg:col-span-4 lg:col-start-9">
@@ -141,31 +137,28 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
         </div>
       </Section>
 
-      {/* Specific forms with photographs — the tungsten page, folded in */}
+      {/* Specific forms — the tungsten page, folded in. As a ruled list, not a
+          gallery: the photographs come off with the rest for now (IMS,
+          14 September 2026); `image` on each form stays in data/recovery.ts. */}
       {forms && forms.length > 0 ? (
         <Section tone="light">
           <SectionHeader
             eyebrow={p("Forms we take")}
             title={p("Tungsten arrives in more shapes than any other metal we take.")}
-            description={p("Solid tooling, inserts, rolls and crucibles through to swarf and grinding sludge. Each is a distinct stream, and each is priced on what is actually recoverable.")}
+            description={p("Solid tooling, inserts, rolls and crucibles through to swarf and grinding sludge. Each is a distinct stream, and each is assessed on what is actually recoverable.")}
             align="split"
           />
-          <ul className="mt-12 grid grid-rule sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-12 border-t border-steel-200">
             {forms.map((form, i) => (
-              <Reveal as="li" key={form.slug} id={"form-" + form.slug} delay={(i % 3) * 70} className="bg-white">
-                <div className="relative aspect-[4/3] overflow-hidden bg-steel-100">
-                  <Image
-                    src={form.image}
-                    alt={form.name}
-                    fill
-                    sizes="(min-width: 1024px) 28rem, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-5">
-                  <h3 className="font-display text-base font-medium text-navy-900">{form.name}</h3>
-                  <p className="mt-1.5 text-[0.875rem] leading-relaxed text-steel-600">{form.note}</p>
-                </div>
+              <Reveal
+                as="li"
+                key={form.slug}
+                id={"form-" + form.slug}
+                delay={i * 40}
+                className="grid gap-1 border-b border-steel-200 py-4 sm:grid-cols-12 sm:gap-6"
+              >
+                <h3 className="font-display text-[0.9375rem] font-medium text-navy-900 sm:col-span-4">{form.name}</h3>
+                <p className="text-[0.875rem] leading-relaxed text-steel-600 sm:col-span-8">{form.note}</p>
               </Reveal>
             ))}
           </ul>

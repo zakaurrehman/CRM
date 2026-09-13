@@ -319,7 +319,7 @@ export const frPhrases: PhraseTable = {
   "See what each form covers": "Voir ce que couvre chaque forme",
   "Shot dust": "Poussières de grenaillage",
   "Sinter powder": "Poudre de frittage",
-  "Solid tooling, inserts, rolls and crucibles through to swarf and grinding sludge. Each is a distinct stream, and each is priced on what is actually recoverable.": "De l'outillage massif, des plaquettes, des cylindres et des creusets jusqu'aux copeaux et aux boues de meulage. Chacun est un flux distinct, valorisé selon ce qui est réellement récupérable.",
+  "Solid tooling, inserts, rolls and crucibles through to swarf and grinding sludge. Each is a distinct stream, and each is assessed on what is actually recoverable.": "De l’outillage massif, des plaquettes, des cylindres et des creusets jusqu’aux copeaux et aux boues de meulage. Chacun est un flux distinct, évalué selon ce qui est réellement récupérable.",
   "Stainless Steels": "Aciers inoxydables",
   "Stainless steel mills": "Aciéries inox",
   "Stellite, MAR-M and Umco types.": "Types Stellite, MAR-M et Umco.",

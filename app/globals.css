@@ -447,26 +447,26 @@
     to { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
   }
 
-  /* 3. The metal — currently unused. The heading reverted to plain white on
-     IMS's instruction, so nothing in the markup applies this class. Left here
-     rather than deleted: it is a working blue brushed-metal treatment for the
-     heading, clipped to the letters with a highlight band that travels once
-     as the heading is revealed, in case IMS wants it back. `color` is set to
-     the darkest stop so a contrast check that reads the colour property
-     measures the worst case the gradient can produce. */
+  /* 3. The metal. A brushed-steel treatment for the headline, clipped to
+     the letters: white with a band of pale steel that travels across once as
+     the heading is revealed and settles as a faint grain at the trailing
+     end. Nothing glows; the darkest stop is steel-200, which keeps the line
+     above 10:1 on the shaded photograph. `color` is set to that stop so a
+     contrast check that reads the colour property measures the worst case
+     the gradient can produce. (IMS asked for a better face and effect for
+     the line, 14 September 2026.) */
   .metal-text {
-    color: theme(colors.brand.500);
+    color: theme(colors.steel.200);
   }
   @supports (-webkit-background-clip: text) or (background-clip: text) {
     .metal-text {
       background-image: linear-gradient(
         105deg,
-        theme(colors.brand.500) 0%,
-        theme(colors.brand.400) 22%,
-        theme(colors.brand.300) 38%,
-        theme(colors.brand.500) 56%,
-        theme(colors.brand.400) 78%,
-        theme(colors.brand.500) 100%
+        #fff 0%,
+        #fff 32%,
+        theme(colors.steel.200) 46%,
+        #fff 60%,
+        #fff 100%
       );
       background-size: 220% 100%;
       background-position: 0 0;
