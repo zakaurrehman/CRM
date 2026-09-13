@@ -108,8 +108,8 @@ export function CompositionTable({
                 className={cn(
                   "h-9 rounded border px-3 text-[0.8125rem] font-medium capitalize transition-colors",
                   view === v
-                    ? "border-brand-700 bg-brand-700 text-white"
-                    : "border-steel-300 bg-white text-steel-700",
+                    ? "border-navy-950 bg-navy-950 text-white"
+                    : "border-steel-300 bg-white text-steel-700 hover:border-navy-950 hover:text-navy-950",
                 )}
               >
                 {v === "table" ? p("Table") : p("Cards")}
@@ -135,7 +135,7 @@ export function CompositionTable({
               <li
                 key={grade.name}
                 id={"grade-" + normalise(grade.name).replace(/ /g, "-")}
-                className="rounded-md border border-steel-200 bg-white p-4"
+                className="rounded-md border border-steel-200 bg-white p-4 shadow-subtle"
               >
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="font-display text-[1rem] font-medium leading-tight text-navy-900">{grade.name}</h3>
@@ -144,7 +144,7 @@ export function CompositionTable({
                 <dl className="mt-3 grid grid-cols-3 gap-x-3 gap-y-2">
                   {filled.map((v) => (
                     <div key={v.element}>
-                      <dt className="font-mono text-[0.625rem] tracking-[0.1em] text-steel-500">
+                      <dt className="font-mono text-[0.625rem] tracking-[0.1em] text-brand-700">
                         {v.element}
                       </dt>
                       <dd className="font-mono text-[0.8125rem] tabular-nums text-navy-900">{v.value}</dd>
@@ -176,7 +176,7 @@ export function CompositionTable({
       */}
       <div
         className={cn(
-          "mt-6 rounded-md border border-steel-200 overflow-hidden xl:overflow-visible",
+          "mt-6 overflow-hidden rounded-md border border-navy-950/15 bg-white shadow-subtle xl:overflow-visible",
           view === "cards" && "hidden sm:block",
         )}
       >
@@ -191,7 +191,7 @@ export function CompositionTable({
               <tr>
                 <th
                   scope="col"
-                  className="sticky start-0 top-0 z-30 min-w-[15rem] border-b border-e border-steel-200 bg-steel-100 px-4 py-3 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-steel-600 xl:top-[var(--header-h)]"
+                  className="sticky start-0 top-0 z-30 min-w-[11rem] border-e border-navy-800 bg-navy-950 px-4 py-3 text-start font-mono text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-brand-300 sm:min-w-[15rem] xl:top-[var(--header-h)]"
                 >
              {p("Grade")}
                 </th>
@@ -201,7 +201,7 @@ export function CompositionTable({
                     scope="col"
                     className={cn(
                       /* No `uppercase` here: element symbols are case-significant — Co is cobalt, CO is carbon monoxide. */
-                      "sticky top-0 z-20 border-b border-steel-200 bg-steel-100 px-3 py-3 font-mono text-[0.6875rem] font-medium tracking-[0.1em] text-steel-600 xl:top-[var(--header-h)]",
+                      "sticky top-0 z-20 bg-navy-950 px-3 py-3 font-mono text-[0.6875rem] font-medium tracking-[0.1em] text-brand-300 xl:top-[var(--header-h)]",
                       el === "Others" ? "min-w-[10rem] text-start" : "min-w-[4.25rem] text-end",
                     )}
                   >
@@ -215,13 +215,13 @@ export function CompositionTable({
                 <tr key={grade.name} id={"grade-" + normalise(grade.name).replace(/ /g, "-")} className="group">
                   <th
                     scope="row"
-                    className="sticky start-0 z-10 border-b border-e border-steel-200 bg-white px-4 py-2 text-[0.875rem] font-medium text-navy-900 transition-colors group-hover:bg-brand-50"
+                    className="sticky start-0 z-10 border-b border-e border-steel-100 bg-white px-4 py-2.5 text-start text-[0.875rem] font-medium text-navy-900 transition-colors group-hover:bg-steel-50"
                   >
                     {/* In the sticky column rather than a trailing one, so the
                         controls stay on screen while the table is scrolled
                         sideways — and so the table gains no twelfth column. */}
-                    <span className="flex items-center justify-between gap-3">
-                      <span className="min-w-0">{grade.name}</span>
+                    <span className="flex flex-col items-start gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+                      <span className="min-w-0 leading-snug">{grade.name}</span>
                       <GradeActions
                         id={makeGradeId(category.slug, grade.name)}
                         name={grade.name}
@@ -234,7 +234,7 @@ export function CompositionTable({
                     <td
                       key={category.elements[i]}
                       className={cn(
-                        "border-b border-steel-100 px-3 py-2.5 font-mono text-[0.8125rem] tabular-nums transition-colors group-hover:bg-brand-50/50",
+                        "border-b border-steel-100 px-3 py-2.5 font-mono text-[0.8125rem] tabular-nums transition-colors group-hover:bg-steel-50",
                         category.elements[i] === "Others" ? "text-start text-steel-600" : "text-end",
                         value ? "text-steel-800" : "text-steel-500",
                       )}

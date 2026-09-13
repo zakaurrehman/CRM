@@ -107,7 +107,7 @@ export function CompareTable() {
         </div>
       </div>
 
-      <div className="mt-6 overflow-hidden rounded-md border border-steel-200 bg-white">
+      <div className="mt-6 overflow-hidden rounded-md border border-navy-950/15 bg-white shadow-subtle">
         <div className="scroll-x">
           <table className="w-full border-collapse text-start">
             <caption className="sr-only">
@@ -117,7 +117,7 @@ export function CompareTable() {
               <tr>
                 <th
                   scope="col"
-                  className="sticky start-0 z-20 min-w-[7rem] border-b border-e border-steel-200 bg-steel-100 px-4 py-3 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-steel-600"
+                  className="sticky start-0 z-20 min-w-[7rem] border-e border-navy-800 bg-navy-950 px-4 py-3 text-start align-top font-mono text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-brand-300"
                 >
                {p("Element")}
                 </th>
@@ -125,14 +125,14 @@ export function CompareTable() {
                   <th
                     key={g.id}
                     scope="col"
-                    className="min-w-[11rem] border-b border-steel-200 bg-steel-100 px-4 py-3 align-top"
+                    className="min-w-[11rem] bg-navy-950 px-4 py-3 text-start align-top"
                   >
-                    <span className="block font-display text-[0.9375rem] font-medium leading-tight text-navy-900">
-                      <Link href={g.href} className="transition-colors hover:text-brand-700">
+                    <span className="block font-display text-[0.9375rem] font-medium leading-tight text-white">
+                      <Link href={g.href} className="transition-colors hover:text-brand-300">
                         {g.name}
                       </Link>
                     </span>
-                    <span className="mt-1 block text-[0.75rem] font-normal text-steel-500">{categoryNameFor(g.categorySlug, g.categoryName, locale)}</span>
+                    <span className="mt-1 block text-[0.75rem] font-normal text-steel-400">{categoryNameFor(g.categorySlug, g.categoryName, locale)}</span>
                     <span className="mt-2 flex items-center gap-1.5 print:hidden">
                       <button
                         type="button"
@@ -141,8 +141,8 @@ export function CompareTable() {
                         className={cn(
                           "rounded-sm px-1.5 py-0.5 text-[0.6875rem] font-medium transition-colors",
                           saved.has(g.id)
-                            ? "bg-brand-50 text-brand-700 ring-1 ring-brand-200"
-                            : "text-steel-600 hover:bg-white hover:text-brand-700",
+                            ? "bg-white/15 text-white"
+                            : "text-steel-300 hover:bg-white/10 hover:text-white",
                         )}
                       >
                         {saved.has(g.id) ? "Saved" : "Save"}
@@ -150,7 +150,7 @@ export function CompareTable() {
                       <button
                         type="button"
                         onClick={() => remove(g.id)}
-                        className="rounded-sm px-1.5 py-0.5 text-[0.6875rem] font-medium text-steel-600 transition-colors hover:bg-white hover:text-danger-600"
+                        className="rounded-sm px-1.5 py-0.5 text-[0.6875rem] font-medium text-steel-300 transition-colors hover:bg-white/10 hover:text-white"
                       >
                     {p("Remove")}
                       </button>
@@ -167,7 +167,7 @@ export function CompareTable() {
                     /* The sticky column paints over the row, so it has to carry
                        the shading itself rather than inherit it. */
                     className={cn(
-                      "sticky start-0 z-10 border-b border-e border-steel-200 px-4 py-2.5",
+                      "sticky start-0 z-10 border-b border-e border-steel-100 px-4 py-2.5 text-start",
                       row.differs ? "bg-white" : "bg-steel-50",
                     )}
                   >
@@ -197,7 +197,7 @@ export function CompareTable() {
                 <tr>
                   <th
                     scope="row"
-                    className="sticky start-0 z-10 border-t border-e border-steel-200 bg-white px-4 py-2.5 font-mono text-[0.8125rem] font-medium text-navy-900"
+                    className="sticky start-0 z-10 border-t border-e border-steel-100 bg-white px-4 py-2.5 text-start font-mono text-[0.8125rem] font-medium text-navy-900"
                   >
                     {t("compare", "compounds")}
                   </th>

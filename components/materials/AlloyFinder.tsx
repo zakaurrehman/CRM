@@ -246,8 +246,8 @@ export function AlloyFinder() {
                     className={cn(
                       "h-9 shrink-0 rounded border px-3.5 text-[0.875rem] font-medium transition-colors",
                       on
-                        ? "border-brand-700 bg-brand-700 text-white"
-                        : "border-steel-300 bg-white text-steel-700 hover:border-brand-700 hover:text-brand-700",
+                        ? "border-navy-950 bg-navy-950 text-white"
+                        : "border-steel-300 bg-white text-steel-700 hover:border-navy-950 hover:text-navy-950",
                     )}
                   >
                     {p(alloyGroupLabels[g])}

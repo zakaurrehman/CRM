@@ -36,7 +36,7 @@ export function GradeActions({
   const icon = size === "sm" ? "h-3.5 w-3.5" : "h-4 w-4";
 
   return (
-    <div className={cn("flex items-center gap-1.5", className)}>
+    <div className={cn("flex items-center gap-0.5", className)}>
       <button
         type="button"
         onClick={() => compare.toggle(id)}
@@ -50,12 +50,12 @@ export function GradeActions({
               : t("compare", "addToComparison", { name })
         }
         className={cn(
-          "inline-flex items-center justify-center rounded border transition-colors duration-200",
+          "inline-flex items-center justify-center rounded transition-colors duration-200",
           box,
           inCompare
-            ? "border-brand-700 bg-brand-700 text-white"
-            : "border-steel-300 bg-white text-steel-600 hover:border-brand-700 hover:text-brand-700",
-          compareBlocked && "cursor-not-allowed opacity-40 hover:border-steel-300 hover:text-steel-600",
+            ? "bg-navy-950 text-white"
+            : "text-steel-400 hover:bg-steel-100 hover:text-navy-950",
+          compareBlocked && "cursor-not-allowed opacity-40 hover:bg-transparent hover:text-steel-400",
         )}
       >
         <span className="sr-only">
@@ -74,11 +74,11 @@ export function GradeActions({
         aria-pressed={isSaved}
         title={isSaved ? t("savedList", "removeName", { name }) : t("savedList", "saveName", { name })}
         className={cn(
-          "inline-flex items-center justify-center rounded border transition-colors duration-200",
+          "inline-flex items-center justify-center rounded transition-colors duration-200",
           box,
           isSaved
-            ? "border-brand-700 bg-brand-50 text-brand-700"
-            : "border-steel-300 bg-white text-steel-600 hover:border-brand-700 hover:text-brand-700",
+            ? "text-navy-950 hover:bg-steel-100"
+            : "text-steel-400 hover:bg-steel-100 hover:text-navy-950",
         )}
       >
         <span className="sr-only">{isSaved ? t("savedList", "removeName", { name }) : t("savedList", "saveName", { name })}</span>
