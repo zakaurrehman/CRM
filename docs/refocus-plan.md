@@ -160,6 +160,13 @@ If the pairs return with the swap: the market writes that pair **EUR/GBP**,
 not GBP/EUR, and every pair on the board is currently quoted against the
 dollar, so a cross rate needs a small change to `toFxPair`.
 
+### Round 11 — titanium with the alloys (13 September)
+
+At IMS's request **Ti · Titanium** moves to the first group, directly under
+Cobalt-Based Alloys, in the menu, footer and grid. The group is renamed
+**Nickel, Cobalt, Titanium & Steels** so its heading still describes what is
+in it; **Reactive & Refractory Metals** is now Zr, Hf, W, Mo, Nb and Ta.
+
 One deviation from the original plan: Stainless Steel sits in a group named
 **"Ferro Alloys & Stainless"** beside FeNiCr, rather than under a bare "Ferro
 Alloys" heading — stainless is a steel, not a ferro-alloy, and the heading

@@ -6,11 +6,9 @@ import { FamilyCard } from "./FamilyCard";
  * Every material, one card each, flat.
  *
  * No group headings: IMS asked for each material separate at first glance.
- * The order does the grouping instead. Superalloys lead; the nickel, cobalt
- * and steel families follow, closed by ferroalloys; the reactive and
- * refractory metals take the rows after. Four across on desktop, that puts
- * the break between the two groups on a row boundary — eight cards, then
- * seven — without a heading to say so.
+ * The order does the grouping instead. Superalloys lead; the nickel, cobalt,
+ * titanium and steel families follow, closed by ferroalloys; the reactive and
+ * refractory metals come after. Four across on desktop.
  */
 const cards = [
   ...portfolioFamilies.filter((f) => f.group === "alloys"),

@@ -83,8 +83,11 @@ export interface PortfolioFamily {
 }
 
 export const portfolioGroups: PortfolioGroup[] = [
-  { id: "alloys", name: "Nickel, Cobalt & Specialty Steels" },
-  /* Titanium, zirconium and hafnium are reactive metals; W, Mo, Nb and Ta refractory. */
+  /* Titanium sits with the alloy families, under cobalt, on IMS's word
+     (13 September 2026): it is bought and blended as Ti-6/4 and CP alloy,
+     alongside the superalloys, rather than as a refractory unit. */
+  { id: "alloys", name: "Nickel, Cobalt, Titanium & Steels" },
+  /* Zirconium and hafnium are reactive metals; W, Mo, Nb and Ta refractory. */
   { id: "metals", name: "Reactive & Refractory Metals" },
 ];
 
@@ -92,7 +95,7 @@ export const MAX_FAMILY_IMAGES = 4;
 
 const MARAGING = ["MARAGING 200", "MARAGING 250", "MARAGING 300", "MARAGING 350"];
 
-/** Superalloys first; then the rest of the nickel, cobalt and steel families; then the reactive and refractory metals. */
+/** Superalloys first; then the nickel, cobalt, titanium and steel families; then the reactive and refractory metals. */
 export const portfolioFamilies: PortfolioFamily[] = [
   {
     slug: "superalloys",
@@ -120,6 +123,15 @@ export const portfolioFamilies: PortfolioFamily[] = [
     accepts: "Stellite, MAR-M and Umco types.",
     images: [],
     tables: [{ category: "cobalt-alloys" }],
+  },
+  {
+    slug: "titanium",
+    name: "Titanium",
+    symbol: "Ti",
+    group: "alloys",
+    accepts: "Ti-6/4, CP Ti, 3D powder.",
+    images: [],
+    tables: [{ category: "titanium-alloys" }],
   },
   {
     /* "18Ni" is the standard designation of the maraging family — 18Ni(200),
@@ -162,15 +174,6 @@ export const portfolioFamilies: PortfolioFamily[] = [
     accepts: "Cupro-nickels and nickel silvers — 70/30, 90/10, Kunifer — and Monel nickel-copper types.",
     images: [],
     tables: [{ category: "copper-nickel-alloys" }, { category: "nickel-copper" }],
-  },
-  {
-    slug: "titanium",
-    name: "Titanium",
-    symbol: "Ti",
-    group: "metals",
-    accepts: "Ti-6/4, CP Ti, 3D powder.",
-    images: [],
-    tables: [{ category: "titanium-alloys" }],
   },
   {
     /* Added at IMS's request, 13 September 2026. The six grades in the
