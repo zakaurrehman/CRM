@@ -476,7 +476,6 @@ export const nlPhrases: PhraseTable = {
   "Mill scale": "Walshuid",
   "Mixed 718, 625, Waspaloy with contamination": "Gemengd 718, 625, Waspaloy met verontreiniging",
   "Mixed lots, off-spec alloys and difficult-to-place metal-bearing materials are assessed according to chemistry, form and condition.": "Gemengde partijen, off-spec legeringen en moeilijk te plaatsen metaalhoudende materialen worden beoordeeld op chemie, vorm en toestand.",
-  "Mixed metal scrap": "Gemengd metaalschroot",
   "Mixed or other": "Gemengd of anders",
   "Nickel, Cobalt, Titanium & Specialty Steels": "Nikkel, kobalt, titaan en speciaalstaal",
   "Nickel-alloy dusts, fines and grindings": "Stof, fijn materiaal en slijpsel van nikkellegeringen",
@@ -616,4 +615,5 @@ export const nlPhrases: PhraseTable = {
   "Send the grade or analysis, the form and the quantity, with any analysis or photographs. Off-spec and mixed lots are welcome — say what you know and we will assess the available route.": "Stuur de kwaliteit of analyse, de vorm en de hoeveelheid, met eventuele analyses of foto's. Off-spec en gemengde partijen zijn welkom — vertel wat u weet en wij beoordelen de beschikbare route.",
   "Send the product, the analysis, the form and the quantity, with any available assay or COA, and we will assess the available route.": "Stuur het product, de analyse, de vorm en de hoeveelheid, met een beschikbare assay of COA, en wij beoordelen de beschikbare route.",
   "Close of {date}": "Slot van {date}",
+  "Cast alloy components in a bulk bag": "Gegoten legeringsonderdelen in een bigbag",
 };

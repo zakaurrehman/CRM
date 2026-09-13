@@ -477,7 +477,6 @@ export const ruPhrases: PhraseTable = {
   "Mill scale": "Окалина",
   "Mixed 718, 625, Waspaloy with contamination": "Смешанные 718, 625, Waspaloy с загрязнениями",
   "Mixed lots, off-spec alloys and difficult-to-place metal-bearing materials are assessed according to chemistry, form and condition.": "Смешанные партии, некондиционные сплавы и трудноразмещаемые металлосодержащие материалы оцениваются по химическому составу, форме и состоянию.",
-  "Mixed metal scrap": "Смешанный металлический лом",
   "Mixed or other": "Смешанная или другая",
   "Nickel, Cobalt, Titanium & Specialty Steels": "Никель, кобальт, титан и специальные стали",
   "Nickel-alloy dusts, fines and grindings": "Пыль, мелочь и шлифовальные отходы никелевых сплавов",
@@ -617,4 +616,5 @@ export const ruPhrases: PhraseTable = {
   "Send the grade or analysis, the form and the quantity, with any analysis or photographs. Off-spec and mixed lots are welcome — say what you know and we will assess the available route.": "Укажите марку или анализ, форму и количество, приложив имеющиеся анализы или фотографии. Некондиционные и смешанные партии приветствуются — сообщите, что знаете, а мы оценим доступный маршрут.",
   "Send the product, the analysis, the form and the quantity, with any available assay or COA, and we will assess the available route.": "Укажите продукт, анализ, форму и количество, приложив имеющийся анализ или сертификат (COA), — и мы оценим доступный маршрут.",
   "Close of {date}": "Закрытие {date}",
+  "Cast alloy components in a bulk bag": "Литые детали из сплава в биг-бэге",
 };

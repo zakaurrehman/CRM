@@ -478,7 +478,6 @@ export const hePhrases: PhraseTable = {
   "Mill scale": "קשקשת עירגול",
   "Mixed 718, 625, Waspaloy with contamination": "‏718, 625, Waspaloy מעורבים עם זיהום",
   "Mixed lots, off-spec alloys and difficult-to-place metal-bearing materials are assessed according to chemistry, form and condition.": "מנות מעורבות, סגסוגות מחוץ למפרט וחומרים מכילי מתכת שקשה למקם מוערכים לפי הרכב כימי, צורה ומצב.",
-  "Mixed metal scrap": "גרוטאות מתכת מעורבות",
   "Mixed or other": "מעורב או אחר",
   "Nickel, Cobalt, Titanium & Specialty Steels": "ניקל, קובלט, טיטניום ופלדות מיוחדות",
   "Nickel-alloy dusts, fines and grindings": "אבק, דקים ושאריות השחזה של סגסוגות ניקל",
@@ -618,4 +617,5 @@ export const hePhrases: PhraseTable = {
   "Send the grade or analysis, the form and the quantity, with any analysis or photographs. Off-spec and mixed lots are welcome — say what you know and we will assess the available route.": "שלחו את הסוג או האנליזה, הצורה והכמות, עם כל אנליזה או תמונה. מנות מחוץ למפרט ומעורבות יתקבלו בברכה — ספרו מה שאתם יודעים ואנחנו נעריך את המסלול הזמין.",
   "Send the product, the analysis, the form and the quantity, with any available assay or COA, and we will assess the available route.": "שלחו את המוצר, האנליזה, הצורה והכמות, עם כל בדיקה או תעודת אנליזה (COA) זמינה, ואנחנו נעריך את המסלול הזמין.",
   "Close of {date}": "סגירת {date}",
+  "Cast alloy components in a bulk bag": "רכיבי סגסוגת יצוקים בשק גדול",
 };

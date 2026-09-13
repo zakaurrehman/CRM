@@ -82,9 +82,11 @@ export default async function AboutPage() {
 
           <div className="lg:col-span-4 lg:col-start-9">
             <figure className="relative aspect-[3/4] overflow-hidden">
+              {/* IMS's own photograph (14 September 2026): cast alloy
+                  components in a bulk bag, the material as it arrives. */}
               <Image
-                src="/images/company/scrap-yard.jpg"
-                alt={p("Mixed metal scrap")}
+                src="/images/news/scrap.jpeg"
+                alt={p("Cast alloy components in a bulk bag")}
                 fill
                 sizes="(min-width: 1024px) 30vw, 100vw"
                 className="object-cover"

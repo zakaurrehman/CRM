@@ -476,7 +476,6 @@ export const frPhrases: PhraseTable = {
   "Mill scale": "Calamine",
   "Mixed 718, 625, Waspaloy with contamination": "718, 625, Waspaloy mélangés avec contamination",
   "Mixed lots, off-spec alloys and difficult-to-place metal-bearing materials are assessed according to chemistry, form and condition.": "Les lots mélangés, les alliages hors spécification et les matériaux métallifères difficiles à placer sont évalués selon leur chimie, leur forme et leur état.",
-  "Mixed metal scrap": "Déchets métalliques mélangés",
   "Mixed or other": "Mélangé ou autre",
   "Nickel, Cobalt, Titanium & Specialty Steels": "Nickel, cobalt, titane et aciers spéciaux",
   "Nickel-alloy dusts, fines and grindings": "Poussières, fines et boues de rectification d’alliages de nickel",
@@ -616,4 +615,5 @@ export const frPhrases: PhraseTable = {
   "Send the grade or analysis, the form and the quantity, with any analysis or photographs. Off-spec and mixed lots are welcome — say what you know and we will assess the available route.": "Indiquez la nuance ou l’analyse, la forme et la quantité, avec les analyses ou photos disponibles. Les lots hors spécification et mélangés sont bienvenus — dites ce que vous savez et nous évaluerons la voie disponible.",
   "Send the product, the analysis, the form and the quantity, with any available assay or COA, and we will assess the available route.": "Indiquez le produit, l’analyse, la forme et la quantité, avec l’essai ou le certificat d’analyse disponible, et nous évaluerons la voie disponible.",
   "Close of {date}": "Clôture du {date}",
+  "Cast alloy components in a bulk bag": "Pièces moulées en alliage dans un big-bag",
 };
