@@ -108,8 +108,9 @@ export const MAX_FAMILY_IMAGES = 4;
 
 const MARAGING = ["MARAGING 200", "MARAGING 250", "MARAGING 300", "MARAGING 350"];
 
-/** Superalloys first; then the nickel, cobalt, titanium and steel families; then the reactive and refractory metals. */
-export const portfolioFamilies: PortfolioFamily[] = [
+/** Superalloys first; then the nickel, cobalt, titanium and steel families; then the refractory metals W, Mo, Nb, Ta and the reactive Hf and Zr — that order on IMS's word (14 September 2026). */
+export const portfolioFamilies: PortfolioFamily[
+] = [
   {
     slug: "superalloys",
     name: "Superalloys",
@@ -208,47 +209,6 @@ export const portfolioFamilies: PortfolioFamily[] = [
     tables: [{ category: "copper-nickel-alloys" }, { category: "nickel-copper" }],
   },
   {
-    /* Added at IMS's request, 13 September 2026. The six grades in the
-       legacy zirconium table — C.P., Zr-Nb and the Zircaloy types — move
-       out of the reference pile onto this page. */
-    slug: "zirconium",
-    name: "Zirconium",
-    noun: "zirconium",
-    symbol: "Zr",
-    group: "metals",
-    accepts: "Commercially pure zirconium, Zr-Nb and Zircaloy types, including off-spec material.",
-    acceptance: "The categories below, subject to chemistry, form and condition.",
-    accepted: [
-      { term: "Zr VQ", note: "vacuum quality" },
-      { term: "Zircaloy types" },
-      { term: "Zr-Nb alloys" },
-      { term: "Zr sponge and crystal bar" },
-      { term: "Master alloys" },
-      { term: "Off-spec Zr scrap with contamination" },
-    ],
-    images: [],
-    tables: [{ category: "zirconium-alloys" }],
-  },
-  {
-    slug: "hafnium",
-    name: "Hafnium & Ni-Hf",
-    noun: "hafnium",
-    symbol: "Hf",
-    group: "metals",
-    accepts: "Hafnium and nickel-hafnium master alloys.",
-    detail: "A specialist focus, with Ni-Hf and other advanced master alloys.",
-    acceptance: "The categories below, subject to chemistry, form and condition.",
-    accepted: [
-      { term: "Hf VQ", note: "vacuum quality" },
-      { term: "Hf crystal bar and sponge" },
-      { term: "Ni-Hf and other master alloys" },
-      { term: "Hf-Zr and C-103 alloys" },
-      { term: "Off-spec Hf scrap with contamination" },
-    ],
-    images: [],
-    tables: [],
-  },
-  {
     slug: "tungsten",
     name: "Tungsten",
     noun: "tungsten",
@@ -338,6 +298,47 @@ export const portfolioFamilies: PortfolioFamily[] = [
     ],
     images: [],
     tables: [],
+  },
+  {
+    slug: "hafnium",
+    name: "Hafnium & Ni-Hf",
+    noun: "hafnium",
+    symbol: "Hf",
+    group: "metals",
+    accepts: "Hafnium and nickel-hafnium master alloys.",
+    detail: "A specialist focus, with Ni-Hf and other advanced master alloys.",
+    acceptance: "The categories below, subject to chemistry, form and condition.",
+    accepted: [
+      { term: "Hf VQ", note: "vacuum quality" },
+      { term: "Hf crystal bar and sponge" },
+      { term: "Ni-Hf and other master alloys" },
+      { term: "Hf-Zr and C-103 alloys" },
+      { term: "Off-spec Hf scrap with contamination" },
+    ],
+    images: [],
+    tables: [],
+  },
+  {
+    /* Added at IMS's request, 13 September 2026. The six grades in the
+       legacy zirconium table — C.P., Zr-Nb and the Zircaloy types — move
+       out of the reference pile onto this page. */
+    slug: "zirconium",
+    name: "Zirconium",
+    noun: "zirconium",
+    symbol: "Zr",
+    group: "metals",
+    accepts: "Commercially pure zirconium, Zr-Nb and Zircaloy types, including off-spec material.",
+    acceptance: "The categories below, subject to chemistry, form and condition.",
+    accepted: [
+      { term: "Zr VQ", note: "vacuum quality" },
+      { term: "Zircaloy types" },
+      { term: "Zr-Nb alloys" },
+      { term: "Zr sponge and crystal bar" },
+      { term: "Master alloys" },
+      { term: "Off-spec Zr scrap with contamination" },
+    ],
+    images: [],
+    tables: [{ category: "zirconium-alloys" }],
   },
 ];
 
