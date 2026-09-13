@@ -1,8 +1,7 @@
 import Image from "next/image";
-import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { ContactIms } from "@/components/shared/ContactIms";
 import { getP } from "@/lib/i18n/server";
-import { routes } from "@/lib/site";
 import { WelcomeBackdrop } from "./WelcomeBackdrop";
 
 /**
@@ -14,7 +13,7 @@ import { WelcomeBackdrop } from "./WelcomeBackdrop";
  * (13 September 2026), and then for the "WELCOME TO IMS / Metals & Alloys"
  * lockup to go (14 September): the logo already says who this is, so the
  * heading is the message itself — "Turning Complex Scrap into Opportunity."
- * — with the supporting sentence and the two doors under it.
+ * — with the supporting sentence and the one door, an email, under it.
  *
  * The ground and the arrival: there is no panel — the type sits on the photograph, which keeps
  * its own colours under a neutral shade rather than being bleached or tinted,
@@ -35,7 +34,7 @@ import { WelcomeBackdrop } from "./WelcomeBackdrop";
  *   1.1s  the heading, the same sweep
  *   1.75s a rule draws itself under the heading
  *   1.9s  the supporting sentence rises into focus
- *   2.1s  the two doors
+ *   2.1s  the door
  *
  * and then the picture drifts — a slow zoom that was already there, and a
  * parallax against the scroll that was not. Nothing loops, nothing sparkles,
@@ -131,19 +130,11 @@ export async function WelcomeBanner() {
             )}
           </p>
 
-          {/* Two doors, for the two people who arrive here: one has material
-              and wants a route for it, the other needs supply. Each opens the
-              form on its own side. */}
-          <div
-            className="rise-in mt-9 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row"
-            style={{ animationDelay: "2100ms" }}
-          >
-            <Button href={routes.offer} size="lg" className="w-full sm:w-auto">
-              {p("Offer material")}
-            </Button>
-            <Button href={routes.supply} variant="onDarkGhost" size="lg" className="w-full sm:w-auto">
-              {p("Request supply")}
-            </Button>
+          {/* One door: an email to IMS, and the address under it (IMS,
+              14 September 2026). The two form buttons that stood here came
+              off at IMS's request. */}
+          <div className="rise-in mt-9 w-full sm:w-auto" style={{ animationDelay: "2100ms" }}>
+            <ContactIms tone="dark" align="center" size="lg" />
           </div>
         </div>
       </Container>

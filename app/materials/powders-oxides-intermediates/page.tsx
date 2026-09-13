@@ -3,12 +3,12 @@ import { getP } from "@/lib/i18n/server";
 import { intermediates } from "@/data/portfolio";
 import { PageHero } from "@/components/shared/PageHero";
 import { Section } from "@/components/ui/Section";
-import { Button } from "@/components/ui/Button";
 import { Intermediates } from "@/components/portfolio/Intermediates";
 import { CtaSection } from "@/components/shared/CtaSection";
+import { ContactIms } from "@/components/shared/ContactIms";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
-import { contact, routes } from "@/lib/site";
+import { routes } from "@/lib/site";
 
 const trail = [
   { name: "Home", href: "/" },
@@ -53,21 +53,11 @@ export default async function IntermediatesPage() {
           </div>
           <div className="lg:col-span-4">
             <div className="border-t-2 border-brand-700 bg-steel-50 p-6 lg:sticky lg:top-28">
-              <h3 className="font-display text-lg font-medium text-navy-900">{p("Offer material")}</h3>
+              <h3 className="font-display text-lg font-medium text-navy-900">{p("Contact IMS")}</h3>
               <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-steel-600">
-                {p("Send the product, the analysis, the form and the quantity, with any available assay or COA attached, and we will assess the available route.")}
+                {p("Send the product, the analysis, the form and the quantity, with any available assay or COA, and we will assess the available route.")}
               </p>
-              <div className="mt-6">
-                <Button href={routes.offer} variant="primary" className="w-full">
-                  {p("Offer material")}
-                </Button>
-              </div>
-              <p className="mt-4 text-[0.8125rem] text-steel-500">
-                {p("Or email")}{" "}
-                <a href={"mailto:" + contact.email} className="text-navy-900 underline decoration-steel-300 underline-offset-4 hover:decoration-brand-700">
-                  {contact.email}
-                </a>
-              </p>
+              <ContactIms className="mt-6" />
             </div>
           </div>
         </div>

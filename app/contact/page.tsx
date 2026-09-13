@@ -1,12 +1,12 @@
 import { getP } from "@/lib/i18n/server";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { PageHero } from "@/components/shared/PageHero";
 import { Section } from "@/components/ui/Section";
 import { InquiryForm } from "@/components/forms/InquiryForm";
+import { ContactIms } from "@/components/shared/ContactIms";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
-import { contact, routes } from "@/lib/site";
+import { contact } from "@/lib/site";
 
 const trail = [
   { name: "Home", href: "/" },
@@ -23,9 +23,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /**
- * Direct communication (IMS, 14 September 2026): the four ways in, each
- * plainly labelled, then the office and a short message form for anything
- * that is not an offer or a supply request.
+ * Direct communication (IMS, 14 September 2026): email for every material
+ * enquiry, WhatsApp for a quick one, then the office and a short message
+ * form. The offer and supply forms are no longer offered here — IMS asked
+ * for the one email door everywhere — but stay reachable from the header
+ * menu and the footer.
  */
 export default async function ContactPage() {
   const p = await getP();
@@ -33,80 +35,46 @@ export default async function ContactPage() {
     ? "https://wa.me/" + contact.whatsapp.replace(/\D/g, "") + "?text=" + encodeURIComponent(p(contact.whatsappMessage))
     : null;
 
-  const ways: { title: string; body: string; href: string; label: string; external?: boolean }[] = [
-    {
-      title: "Offer material",
-      body: "Selling complex, mixed or off-spec material to IMS. Attach the analysis and photographs.",
-      href: routes.offer,
-      label: "Submit material",
-    },
-    {
-      title: "Request supply",
-      body: "Buying material from IMS: the grade or chemistry, form, quantity and delivery location.",
-      href: routes.supply,
-      label: "Request a quote",
-    },
-    {
-      title: "Email IMS",
-      body: "For anything else, or to send larger files.",
-      href: "mailto:" + contact.email,
-      label: contact.email,
-    },
-    ...(whatsappHref
-      ? [{
-          title: "Contact IMS on WhatsApp",
-          body: "A quick question, or a photograph of a lot from the yard.",
-          href: whatsappHref,
-          label: "Open WhatsApp",
-          external: true,
-        }]
-      : []),
-  ];
 
   return (
     <>
       <PageHero
         eyebrow={p("Contact")}
         title={p("Contact IMS")}
-        intro={p("Four ways to reach us. Offers and supply requests have their own forms, so the right details arrive first time.")}
+        intro={p("Email for buying, selling and other material enquiries; WhatsApp for a quick question; a message form for anything else.")}
         trail={trail}
       />
 
       <Section tone="white">
-        <ul className="grid grid-rule sm:grid-cols-2 lg:grid-cols-4">
-          {ways.map((way) => (
-            <li key={way.title} className="bg-white">
+        <ul className="grid grid-rule sm:grid-cols-2">
+          <li className="bg-white">
+            <div className="flex h-full flex-col p-6">
+              <h2 className="font-display text-lg font-medium text-navy-900">{p("Contact IMS")}</h2>
+              <p className="mt-2 flex-1 text-[0.9375rem] leading-relaxed text-steel-600">
+                {p("Selling complex, mixed or off-spec material, or looking for supply: send the material, the form, the quantity and any analysis or photographs, and we will assess the available route.")}
+              </p>
+              <ContactIms className="mt-5" />
+            </div>
+          </li>
+          {whatsappHref ? (
+            <li className="bg-white">
               <div className="flex h-full flex-col p-6">
-                <h2 className="font-display text-lg font-medium text-navy-900">{p(way.title)}</h2>
-                <p className="mt-2 flex-1 text-[0.9375rem] leading-relaxed text-steel-600">{p(way.body)}</p>
-                {way.external ? (
-                  <a
-                    href={way.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-5 inline-flex items-center gap-2 self-start text-[0.9375rem] font-medium text-brand-700 underline decoration-brand-300 underline-offset-4 hover:decoration-brand-700"
-                  >
-                    <WhatsAppGlyph />
-                    {p(way.label)}
-                  </a>
-                ) : way.href.startsWith("mailto:") ? (
-                  <a
-                    href={way.href}
-                    className="mt-5 self-start break-all text-[0.9375rem] font-medium text-brand-700 underline decoration-brand-300 underline-offset-4 hover:decoration-brand-700"
-                  >
-                    {way.label}
-                  </a>
-                ) : (
-                  <Link
-                    href={way.href}
-                    className="mt-5 inline-flex h-11 items-center self-start rounded bg-brand-700 px-5 text-[0.9375rem] font-medium text-white transition-colors hover:bg-brand-800"
-                  >
-                    {p(way.label)}
-                  </Link>
-                )}
+                <h2 className="font-display text-lg font-medium text-navy-900">{p("Contact IMS on WhatsApp")}</h2>
+                <p className="mt-2 flex-1 text-[0.9375rem] leading-relaxed text-steel-600">
+                  {p("A quick question, or a photograph of a lot from the yard.")}
+                </p>
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-flex items-center gap-2 self-start text-[0.9375rem] font-medium text-brand-700 underline decoration-brand-300 underline-offset-4 hover:decoration-brand-700"
+                >
+                  <WhatsAppGlyph />
+                  {p("Open WhatsApp")}
+                </a>
               </div>
             </li>
-          ))}
+          ) : null}
         </ul>
       </Section>
 

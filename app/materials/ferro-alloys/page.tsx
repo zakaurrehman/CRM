@@ -3,13 +3,12 @@ import { ferroAlloys, acceptedForms } from "@/data/portfolio";
 import { getP } from "@/lib/i18n/server";
 import { PageHero } from "@/components/shared/PageHero";
 import { Section } from "@/components/ui/Section";
-import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ElementMark } from "@/components/portfolio/FamilyCard";
 import { CtaSection } from "@/components/shared/CtaSection";
+import { ContactIms } from "@/components/shared/ContactIms";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
-import { contact, routes } from "@/lib/site";
 
 const trail = [
   { name: "Home", href: "/" },
@@ -76,20 +75,7 @@ export default async function FerroAlloysPage() {
               <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-steel-600">
                 {p("Tell us the alloy, the analysis, the size and packing, and the quantity — offering material or requesting supply.")}
               </p>
-              <div className="mt-6 flex flex-col gap-3">
-                <Button href={routes.offer} variant="primary" className="w-full">
-                  {p("Offer material")}
-                </Button>
-                <Button href={routes.supply} variant="secondary" className="w-full">
-                  {p("Request supply")}
-                </Button>
-              </div>
-              <p className="mt-4 text-[0.8125rem] text-steel-500">
-                {p("Or email")}{" "}
-                <a href={"mailto:" + contact.email} className="text-navy-900 underline decoration-steel-300 underline-offset-4 hover:decoration-brand-700">
-                  {contact.email}
-                </a>
-              </p>
+              <ContactIms className="mt-6" />
             </div>
           </div>
         </div>

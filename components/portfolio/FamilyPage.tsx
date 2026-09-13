@@ -11,13 +11,13 @@ import { getLocale, getP } from "@/lib/i18n/server";
 import { localiseCategory, localiseTungstenForm } from "@/lib/i18n/content";
 import { PageHero } from "@/components/shared/PageHero";
 import { Section, SectionHeader } from "@/components/ui/Section";
-import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { RotatingImage } from "@/components/ui/RotatingImage";
 import { CompositionTable } from "@/components/materials/CompositionTable";
 import { CtaSection } from "@/components/shared/CtaSection";
+import { ContactIms } from "@/components/shared/ContactIms";
 import { JsonLd, breadcrumbSchema, materialSchema } from "@/lib/schema";
-import { contact, routes } from "@/lib/site";
+
 
 /**
  * Resolves a family's table references into categories the composition
@@ -131,27 +131,11 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
 
           <div className="lg:col-span-4 lg:col-start-9">
             <div className="border-t-2 border-brand-700 bg-steel-50 p-6">
-              <h3 className="font-display text-lg font-medium text-navy-900">{p("Offer material")}</h3>
+              <h3 className="font-display text-lg font-medium text-navy-900">{p("Contact IMS")}</h3>
               <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-steel-600">
-                {p("Send the grade or analysis, the form and the quantity, with any analysis or photographs attached. Off-spec and mixed lots are welcome — say what you know and we will assess the available route.")}
+                {p("Send the grade or analysis, the form and the quantity, with any analysis or photographs. Off-spec and mixed lots are welcome — say what you know and we will assess the available route.")}
               </p>
-              <div className="mt-6">
-                <Button href={routes.offer} variant="primary" className="w-full">
-                  {p("Offer material")}
-                </Button>
-              </div>
-              <p className="mt-4 text-[0.8125rem] text-steel-500">
-                {p("Or email")}{" "}
-                <a href={"mailto:" + contact.email} className="text-navy-900 underline decoration-steel-300 underline-offset-4 hover:decoration-brand-700">
-                  {contact.email}
-                </a>
-              </p>
-              <p className="mt-4 border-t border-steel-200 pt-4 text-[0.8125rem] text-steel-500">
-                {p("Looking for supply instead?")}{" "}
-                <Link href={routes.supply} className="font-medium text-navy-900 underline decoration-steel-300 underline-offset-4 hover:decoration-brand-700">
-                  {p("Request supply")}
-                </Link>
-              </p>
+              <ContactIms className="mt-6" />
             </div>
           </div>
         </div>

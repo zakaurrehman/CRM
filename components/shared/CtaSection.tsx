@@ -1,18 +1,10 @@
 import { getP } from "@/lib/i18n/server";
 import Image from "next/image";
-import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { contact } from "@/lib/site";
+import { ContactIms } from "@/components/shared/ContactIms";
 
 /**
- * Closing conversion band.
- *
- * One neutral door (IMS, 14 September 2026): "Contact IMS" opens an email
- * to the general address, and the sentence under it says the address for
- * anyone who would rather copy it. The two form buttons that stood here —
- * Offer material, Request supply — came off at IMS's request; the forms
- * themselves stay reachable from the header, the material pages and the
- * contact page.
+ * Closing conversion band: the title, the sentence, and the one door.
  *
  * It closes the homepage, the portfolio and the material pages — the pages
  * about what IMS buys and supplies. The company pages, the grade library and
@@ -26,7 +18,6 @@ export async function CtaSection({
   body?: string;
 }) {
   const p = await getP();
-  const mailto = "mailto:" + contact.email;
 
   return (
     <section className="on-dark relative isolate overflow-hidden bg-navy-950 text-white">
@@ -45,19 +36,7 @@ export async function CtaSection({
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-steel-300">{p(body)}</p>
           </div>
           <div className="lg:col-span-4 lg:col-start-9">
-            <Button href={mailto} variant="onDark" size="lg" className="w-full sm:w-auto lg:w-full">
-              {p("Contact IMS")}
-            </Button>
-            <p className="mt-6 text-sm leading-relaxed text-steel-400">
-              {p("For buying, selling and other material enquiries, contact us at")}{" "}
-              <a
-                href={mailto}
-                className="rounded-sm text-white underline decoration-brand-500/60 underline-offset-4 hover:decoration-brand-300"
-              >
-                {contact.email}
-              </a>
-              .
-            </p>
+            <ContactIms tone="dark" size="lg" />
           </div>
         </div>
       </Container>

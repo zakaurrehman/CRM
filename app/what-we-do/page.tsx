@@ -11,7 +11,7 @@ import { pageMetadata } from "@/lib/seo";
 import { getP } from "@/lib/i18n/server";
 import { customerSectors, portfolioGroups, typicalMaterials } from "@/data/portfolio";
 import { familiesInGroup } from "@/lib/portfolio";
-import { routes, site } from "@/lib/site";
+import { contact, routes, site } from "@/lib/site";
 
 const trail = [
   { name: "Home", href: "/" },
@@ -71,7 +71,7 @@ export default async function WhatWeDoPage() {
               {p("The material conventional routes downgrade or turn away. If your material matches one of these descriptions, speak with us about the available route.")}
             </p>
             <div className="mt-5">
-              <ArrowLink href={routes.offer}>{p("Offer material")}</ArrowLink>
+              <ArrowLink href={"mailto:" + contact.email}>{p("Contact IMS")}</ArrowLink>
             </div>
           </div>
           <ul className="border-t border-steel-200 lg:col-span-7 lg:col-start-6">
@@ -101,7 +101,7 @@ export default async function WhatWeDoPage() {
               ))}
             </ul>
             <div className="mt-8">
-              <ArrowLink href={routes.supply}>{p("Request supply")}</ArrowLink>
+              <ArrowLink href={"mailto:" + contact.email}>{p("Contact IMS")}</ArrowLink>
             </div>
           </div>
 
