@@ -42,9 +42,8 @@ import { WelcomeBackdrop } from "./WelcomeBackdrop";
  * All of it is CSS; see the welcome block in globals.css, which also handles
  * right-to-left, where every sweep runs the other way.
  *
- * The heading is in the headline serif (Instrument Serif, see app/layout.tsx)
- * — the one place on the site that uses it — with the steel sheen. The
- * heading and the sentence are IMS's own words.
+ * The heading is in the display face, like every heading on the site, with
+ * the steel sheen. The heading and the sentence are IMS's own words.
  */
 export async function WelcomeBanner() {
   const p = await getP();
@@ -110,13 +109,14 @@ export async function WelcomeBanner() {
             </div>
           </div>
 
-          {/* The message as the heading, in the headline serif, with a faint
+          {/* The message as the heading, in the site's own heading face —
+              IMS chose it over a serif (14 September 2026) — with a faint
               brushed-steel sheen that passes once as it arrives (metal-text,
               in globals.css). text-balance so a two-line break falls evenly
               in every language rather than leaving one word on the second
               line. */}
           <h1
-            className="reveal-sweep metal-text mt-10 max-w-4xl text-balance font-headline text-[clamp(2.75rem,6vw,5.25rem)] font-normal leading-[1.02] tracking-[-0.01em] text-white"
+            className="reveal-sweep metal-text mt-10 max-w-4xl text-balance font-display text-[clamp(2.125rem,4.4vw,3.75rem)] font-medium leading-[1.08] tracking-tight text-white"
             style={{ animationDelay: "1100ms" }}
           >
             {p("Turning Complex Scrap into Opportunity")}

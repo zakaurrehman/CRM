@@ -42,9 +42,6 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
         display: ["var(--font-archivo)", "var(--font-inter)", "system-ui", "sans-serif"],
-        /* The homepage headline only. Falls through to the display stack for
-           scripts Instrument Serif does not cover. */
-        headline: ["var(--font-headline)", "Georgia", "serif"],
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       fontSize: {

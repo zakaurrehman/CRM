@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Mono, Instrument_Serif, Inter } from "next/font/google";
+import { Archivo, IBM_Plex_Mono, Inter } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
@@ -28,23 +28,6 @@ const archivo = Archivo({
   /* 500 and 600 only. Headings and titles came down a step on 13 September
      2026 and nothing draws Archivo at 700 now, so it is not shipped. */
   weight: ["500", "600"],
-});
-
-/*
- * The headline face, for the one line on the homepage — "Turning Complex
- * Scrap into Opportunity." An editorial serif against the technical sans
- * everywhere else, so the sentence reads as a statement rather than a label
- * (IMS asked for a better face for it, 14 September 2026). Regular only;
- * nothing else on the site draws it.
- *
- * Latin only. Cyrillic and Hebrew fall through to the display stack, which
- * is correct rather than a gap.
- */
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  variable: "--font-headline",
-  display: "swap",
-  weight: "400",
 });
 
 
@@ -100,7 +83,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html
       lang={localeMeta[locale].tag}
       dir={dirOf(locale)}
-      className={`${inter.variable} ${archivo.variable} ${instrumentSerif.variable} ${mono.variable}`}
+      className={`${inter.variable} ${archivo.variable} ${mono.variable}`}
       /* The inline script below adds "js" to this element before React
          hydrates, so the class list React expects and the one it finds differ
          by design. React does not patch attributes on mismatch, so nothing is
