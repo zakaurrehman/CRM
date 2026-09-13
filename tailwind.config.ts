@@ -56,7 +56,9 @@ const config: Config = {
            formulas, prices, tables — and a mono label reads as a readout.
            Tracking is loose enough to read as small caps, not so loose that
            it shouts. */
-        eyebrow: ["0.6875rem", { lineHeight: "1", letterSpacing: "0.09em", fontWeight: "500" }],
+        /* Line height 1.5, not 1: a label that wraps — the footer's column
+           headings — needs air between its lines (IMS, 14 September 2026). */
+        eyebrow: ["0.6875rem", { lineHeight: "1.5", letterSpacing: "0.09em", fontWeight: "500" }],
       },
       /* 13 backs the `lg` button height; 18/22/30 the section rhythm. */
       spacing: { 13: "3.25rem", 18: "4.5rem", 22: "5.5rem", 30: "7.5rem" },
