@@ -66,7 +66,7 @@ export default async function AboutPage() {
               {p("We connect material generators, specialist processors, laboratories, refiners and alloy producers to develop commercially and metallurgically suitable routes for materials that conventional channels may reject or downgrade.")}
             </p>
 
-            <h2 className="mt-12 text-display-sm">{p("How we operate")}</h2>
+            <h2 className="mt-9 text-display-sm">{p("How we operate")}</h2>
             <ul className="mt-6 border-t border-steel-200">
               {model.map((line, i) => (
                 <Reveal as="li" key={line} delay={i * 50} className="border-b border-steel-200 py-4 text-base leading-relaxed text-navy-900">

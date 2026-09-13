@@ -12,7 +12,7 @@ export async function Footer() {
   return (
     <footer className="on-dark bg-navy-950 text-steel-300">
       <Container>
-        <div className="grid gap-12 py-16 lg:grid-cols-12 lg:gap-8 lg:py-20">
+        <div className="grid gap-10 py-12 lg:grid-cols-12 lg:gap-8 lg:py-14">
           <div className="lg:col-span-4">
             <Image
               src="/images/branding/ims-logo.png"
@@ -92,7 +92,7 @@ export async function Footer() {
         {/* The floating WhatsApp button sits over the bottom-right corner and
             covered the last link in this row at 1024px. The reserve is on the
             row rather than the button so the button stays where it is. */}
-        <div className="flex flex-col gap-4 border-t border-white/10 py-7 sm:flex-row sm:items-center sm:justify-between sm:pe-16">
+        <div className="flex flex-col gap-4 border-t border-white/10 py-5 sm:flex-row sm:items-center sm:justify-between sm:pe-16">
           <p className="text-[0.8125rem] text-steel-400">
             &copy; {year} {site.legalName}. {p("All rights reserved.")}
           </p>

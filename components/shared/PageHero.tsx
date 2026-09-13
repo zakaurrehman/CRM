@@ -68,9 +68,9 @@ export function PageHero({
 
       <Container>
         {/* The extra height is for a photograph; a plain band stays slim. */}
-        <div className={cn("py-10 sm:py-12 lg:py-14", image && "sm:py-14 lg:py-20")}>
+        <div className={cn("py-8 sm:py-10 lg:py-12", image && "sm:py-12 lg:py-16")}>
           <Breadcrumbs trail={trail} tone={dark ? "dark" : "light"} />
-          <div className={cn("mt-7", align === "left" ? "max-w-3xl" : "max-w-4xl")}>
+          <div className={cn("mt-5", align === "left" ? "max-w-3xl" : "max-w-4xl")}>
             {eyebrow ? (
               <p className={cn("eyebrow mb-4 animate-fade-up", dark && "text-brand-300")}>{eyebrow}</p>
             ) : null}
@@ -85,14 +85,14 @@ export function PageHero({
             {intro ? (
               <div
                 className={cn(
-                  "mt-6 animate-fade-up text-lg leading-relaxed [animation-delay:140ms] sm:text-xl",
+                  "mt-5 animate-fade-up text-lg leading-relaxed [animation-delay:140ms] sm:text-xl",
                   dark ? "text-steel-300" : "text-steel-600",
                 )}
               >
                 {intro}
               </div>
             ) : null}
-            {children ? <div className="mt-9 animate-fade-up [animation-delay:210ms]">{children}</div> : null}
+            {children ? <div className="mt-7 animate-fade-up [animation-delay:210ms]">{children}</div> : null}
           </div>
         </div>
       </Container>

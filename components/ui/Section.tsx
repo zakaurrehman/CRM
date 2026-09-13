@@ -26,7 +26,7 @@ export function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className={cn("py-16 sm:py-20 lg:py-24", tones[tone], className)}>
+    <section id={id} className={cn("py-12 sm:py-14 lg:py-16", tones[tone], className)}>
       {bleed ? children : <Container>{children}</Container>}
     </section>
   );
@@ -65,7 +65,7 @@ export function SectionHeader({
         {(description || action) && (
           <Reveal delay={120} className="lg:col-span-5 lg:col-start-8 lg:pt-2">
             {description ? <div className="text-lg leading-relaxed opacity-80">{description}</div> : null}
-            {action ? <div className="mt-7">{action}</div> : null}
+            {action ? <div className="mt-5">{action}</div> : null}
           </Reveal>
         )}
       </div>
@@ -81,7 +81,7 @@ export function SectionHeader({
           {description}
         </div>
       ) : null}
-      {action ? <div className="mt-7">{action}</div> : null}
+      {action ? <div className="mt-5">{action}</div> : null}
     </Reveal>
   );
 }

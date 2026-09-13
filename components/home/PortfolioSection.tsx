@@ -22,10 +22,10 @@ export async function PortfolioSection() {
         align="split"
         action={<Button href="/materials" variant="secondary">{p("Open the portfolio")}</Button>}
       />
-      <div className="mt-14">
+      <div className="mt-10">
         <PortfolioGrid />
       </div>
-      <div className="mt-14">
+      <div className="mt-10">
         <IntermediatesPreview />
       </div>
     </Section>

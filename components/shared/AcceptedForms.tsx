@@ -17,11 +17,11 @@ export async function AcceptedForms({ heading = "Accepted forms" }: { heading?: 
   return (
     <section id="forms" className="on-dark bg-navy-950 text-white">
       <Container>
-        <div className="py-12 lg:py-14">
+        <div className="py-9 lg:py-10">
           <Reveal>
             <p className="eyebrow">{p(heading)}</p>
           </Reveal>
-          <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-3 border-y border-white/10 py-6 lg:gap-x-12">
+          <ul className="mt-4 flex flex-wrap gap-x-8 gap-y-2 border-y border-white/10 py-5 lg:gap-x-12">
             {acceptedForms.map((form, i) => (
               <Reveal as="li" key={form.name} delay={i * 60}>
                 <span className="font-display text-lg font-medium tracking-tight text-white lg:text-xl">

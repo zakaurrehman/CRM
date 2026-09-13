@@ -70,7 +70,7 @@ export async function WelcomeBanner() {
       />
 
       <Container>
-        <div className="flex min-h-[34rem] flex-col items-center justify-center py-20 text-center sm:min-h-[38rem] lg:min-h-[42rem] lg:py-24">
+        <div className="flex min-h-[28rem] flex-col items-center justify-center py-14 text-center sm:min-h-[30rem] lg:min-h-[34rem] lg:py-16">
           {/*
             The mark, in its own colours, standing in light.
 
@@ -109,7 +109,7 @@ export async function WelcomeBanner() {
               in every language rather than leaving one word on the second
               line. */}
           <h1
-            className="reveal-sweep metal-text mt-14 max-w-4xl text-balance font-headline text-[clamp(2.75rem,6vw,5.25rem)] font-normal leading-[1.02] tracking-[-0.01em] text-white"
+            className="reveal-sweep metal-text mt-10 max-w-4xl text-balance font-headline text-[clamp(2.75rem,6vw,5.25rem)] font-normal leading-[1.02] tracking-[-0.01em] text-white"
             style={{ animationDelay: "1100ms" }}
           >
             {p("Turning Complex Scrap into Opportunity.")}
@@ -119,12 +119,12 @@ export async function WelcomeBanner() {
               line. Silver like the type. */}
           <span
             aria-hidden
-            className="rule-draw mt-8 h-px w-20 bg-white/40"
+            className="rule-draw mt-6 h-px w-20 bg-white/40"
             style={{ animationDelay: "1750ms" }}
           />
 
           <p
-            className="rise-in mt-8 max-w-2xl text-balance text-base leading-relaxed text-white/85 sm:text-[1.125rem]"
+            className="rise-in mt-6 max-w-2xl text-balance text-base leading-relaxed text-white/85 sm:text-[1.125rem]"
             style={{ animationDelay: "1900ms" }}
           >
             {p(
@@ -135,7 +135,7 @@ export async function WelcomeBanner() {
           {/* One door: an email to IMS, and the address under it (IMS,
               14 September 2026). The two form buttons that stood here came
               off at IMS's request. */}
-          <div className="rise-in mt-9 w-full sm:w-auto" style={{ animationDelay: "2100ms" }}>
+          <div className="rise-in mt-7 w-full sm:w-auto" style={{ animationDelay: "2100ms" }}>
             <ContactIms tone="dark" align="center" size="lg" />
           </div>
         </div>

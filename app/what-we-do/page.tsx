@@ -57,14 +57,14 @@ export default async function WhatWeDoPage() {
           description={p("Through our network of specialist processing facilities, IMS develops and manages tailored nickel-based blends for refiners, alloy producers and stainless steel mills — maximising recoverable metal content and reducing unnecessary downgrading.")}
           align="split"
         />
-        <div className="mt-14">
+        <div className="mt-10">
           <BlendingProgramme />
         </div>
 
         {/* What "complex" means in practice — the lots conventional routes
             downgrade or turn away. IMS's list; the closing line promises an
             assessment, not an acceptance. */}
-        <div className="mt-16 grid gap-8 lg:grid-cols-12 lg:gap-16">
+        <div className="mt-12 grid gap-8 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-4">
             <h3 className="font-display text-xl font-medium tracking-tight text-navy-900">{p("Typical materials")}</h3>
             <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-600">

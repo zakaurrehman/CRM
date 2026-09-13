@@ -20,7 +20,7 @@ export async function WhatWeDo() {
         align="split"
         action={<ArrowLink href="/what-we-do">{p("How the programme works")}</ArrowLink>}
       />
-      <div className="mt-14">
+      <div className="mt-10">
         <BlendingProgramme />
       </div>
     </Section>

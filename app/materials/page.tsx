@@ -61,7 +61,7 @@ export default async function PortfolioPage() {
 
       <Section tone="white">
         <PortfolioGrid />
-        <div className="mt-14" id="intermediates">
+        <div className="mt-10" id="intermediates">
           <IntermediatesPreview />
         </div>
       </Section>
@@ -84,7 +84,7 @@ export default async function PortfolioPage() {
         {reference.length > 0 ? (
           /* Reference categories, not portfolio ones: the name says so
              (IMS, 14 September 2026). */
-          <div className="mt-12">
+          <div className="mt-9">
             <h3 className="label text-steel-500">
               {p("Additional technical reference tables")}
             </h3>

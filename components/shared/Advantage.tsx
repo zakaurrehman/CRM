@@ -21,9 +21,9 @@ export async function Advantage({ tone = "light" }: { tone?: "light" | "white" }
         title={p("Why refiners, alloy producers and material generators work with IMS.")}
         align="split"
       />
-      <ul className="mt-12 border-t border-steel-200">
+      <ul className="mt-9 border-t border-steel-200">
         {advantages.map((line, i) => (
-          <Reveal as="li" key={line} delay={i * 60} className="border-b border-steel-200 py-5 lg:py-6">
+          <Reveal as="li" key={line} delay={i * 60} className="border-b border-steel-200 py-4 lg:py-5">
             <p className="max-w-3xl font-display text-lg font-medium leading-snug tracking-tight text-navy-900 lg:text-xl">
               {p(line)}
             </p>

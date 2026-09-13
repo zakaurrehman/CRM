@@ -30,13 +30,13 @@ export async function CtaSection({
       />
       <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950 via-navy-950/90 to-navy-900/60" />
       <Container>
-        <div className="grid gap-10 py-18 sm:py-22 lg:grid-cols-12 lg:items-center lg:gap-16">
+        <div className="grid gap-8 py-12 sm:py-14 lg:grid-cols-12 lg:items-center lg:gap-16">
           <div className="lg:col-span-7">
             <h2 className="text-display-md text-white">{p(title)}</h2>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-steel-300">{p(body)}</p>
           </div>
           <div className="lg:col-span-4 lg:col-start-9">
-            <ContactIms tone="dark" size="lg" />
+            <ContactIms tone="dark" />
           </div>
         </div>
       </Container>

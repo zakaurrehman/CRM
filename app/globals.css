@@ -11,6 +11,11 @@
   * { @apply border-steel-200; }
 
   html {
+    /* 14px root: the whole site 12.5% smaller, so a page scrolls shorter
+       (IMS, 14 September 2026). Everything is set in rem, so type, spacing
+       and the header height come down together and nothing falls out of
+       proportion. */
+    font-size: 87.5%;
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
     scroll-padding-top: calc(var(--header-h) + 1.5rem);

@@ -148,7 +148,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
             description={p("Solid tooling, inserts, rolls and crucibles through to swarf and grinding sludge. Each is a distinct stream, and each is assessed on what is actually recoverable.")}
             align="split"
           />
-          <ul className="mt-12 border-t border-steel-200">
+          <ul className="mt-9 border-t border-steel-200">
             {forms.map((form, i) => (
               <Reveal
                 as="li"
@@ -175,7 +175,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
               {p("Reference values for identifying material, not a purchasing or supply specification — see the note under each table.")}
             </p>
           </div>
-          <div className="mt-12 space-y-16">
+          <div className="mt-9 space-y-12">
             {tables.map((table) => (
               <CompositionTable
                 key={table.slug}
