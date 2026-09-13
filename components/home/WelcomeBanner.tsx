@@ -68,6 +68,7 @@ export async function WelcomeBanner() {
              material itself, the form most of it arrives in. */
           { src: "/images/hero/turnings.jpg", subject: "Bright alloy turnings", brightness: 0.55 },
           { src: "/images/hero/hot-metal-plate.jpg", subject: "Hot metal slab in the cast house" },
+          { src: "/images/turbine/turbine-manufacturing.jpg", subject: "Turbine rotor on the shop floor" },
         ]}
       />
 
