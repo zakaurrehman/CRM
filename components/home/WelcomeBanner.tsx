@@ -115,7 +115,7 @@ export async function WelcomeBanner() {
             className="reveal-sweep metal-text mt-10 max-w-4xl text-balance font-headline text-[clamp(2.75rem,6vw,5.25rem)] font-normal leading-[1.02] tracking-[-0.01em] text-white"
             style={{ animationDelay: "1100ms" }}
           >
-            {p("Turning Complex Scrap into Opportunity.")}
+            {p("Turning Complex Scrap into Opportunity")}
           </h1>
 
           {/* A rule that draws itself: the one piece of ornament, and it is a

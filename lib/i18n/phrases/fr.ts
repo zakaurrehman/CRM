@@ -565,7 +565,6 @@ export const frPhrases: PhraseTable = {
   "Ti-6/4, CP Ti, AM and 3D powders.": "Ti-6/4, Ti CP, poudres de fabrication additive et 3D.",
   "Too many files attached.": "Trop de fichiers joints.",
   "Trademarks": "Marques",
-  "Turning Complex Scrap into Opportunity.": "Transformer les déchets métalliques complexes en opportunité.",
   "Turnings and swarf": "Copeaux et tournures",
   "Typical materials": "Matériaux typiques",
   "Under the GDPR you may ask for access to your personal data, its correction or erasure, restriction of its processing, objection to processing based on our legitimate interest, and portability. Write to": "En vertu du RGPD, vous pouvez demander l’accès à vos données personnelles, leur rectification ou leur effacement, la limitation de leur traitement, vous opposer au traitement fondé sur notre intérêt légitime, et demander leur portabilité. Écrivez à",

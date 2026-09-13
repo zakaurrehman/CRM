@@ -565,7 +565,6 @@ export const nlPhrases: PhraseTable = {
   "Ti-6/4, CP Ti, AM and 3D powders.": "Ti-6/4, CP Ti, AM- en 3D-poeders.",
   "Too many files attached.": "Te veel bestanden toegevoegd.",
   "Trademarks": "Handelsmerken",
-  "Turning Complex Scrap into Opportunity.": "Van complex schroot naar kansen.",
   "Turnings and swarf": "Spanen en verspaningsafval",
   "Typical materials": "Typische materialen",
   "Under the GDPR you may ask for access to your personal data, its correction or erasure, restriction of its processing, objection to processing based on our legitimate interest, and portability. Write to": "Onder de AVG kunt u inzage in uw persoonsgegevens vragen, rectificatie of wissing, beperking van de verwerking, bezwaar tegen verwerking op grond van ons gerechtvaardigd belang, en overdraagbaarheid. Schrijf naar",

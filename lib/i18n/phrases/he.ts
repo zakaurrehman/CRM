@@ -567,7 +567,6 @@ export const hePhrases: PhraseTable = {
   "Ti-6/4, CP Ti, AM and 3D powders.": "Ti-6/4, טיטניום טהור מסחרית, אבקות לייצור בתוספת ולהדפסה תלת-ממדית.",
   "Too many files attached.": "צורפו יותר מדי קבצים.",
   "Trademarks": "סימני מסחר",
-  "Turning Complex Scrap into Opportunity.": "הופכים גרוטאות מורכבות להזדמנות.",
   "Turnings and swarf": "שבבים",
   "Typical materials": "חומרים טיפוסיים",
   "Under the GDPR you may ask for access to your personal data, its correction or erasure, restriction of its processing, objection to processing based on our legitimate interest, and portability. Write to": "על פי ה-GDPR אתם רשאים לבקש גישה לנתוניכם האישיים, את תיקונם או מחיקתם, הגבלת עיבודם, להתנגד לעיבוד המבוסס על האינטרס הלגיטימי שלנו, ולבקש את ניידותם. כתבו אל",

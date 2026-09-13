@@ -566,7 +566,6 @@ export const ruPhrases: PhraseTable = {
   "Ti-6/4, CP Ti, AM and 3D powders.": "Ti-6/4, технически чистый Ti, порошки для аддитивного производства и 3D-печати.",
   "Too many files attached.": "Прикреплено слишком много файлов.",
   "Trademarks": "Товарные знаки",
-  "Turning Complex Scrap into Opportunity.": "Превращаем сложный лом в возможности.",
   "Turnings and swarf": "Стружка",
   "Typical materials": "Типичные материалы",
   "Under the GDPR you may ask for access to your personal data, its correction or erasure, restriction of its processing, objection to processing based on our legitimate interest, and portability. Write to": "В соответствии с GDPR вы можете запросить доступ к своим персональным данным, их исправление или удаление, ограничение обработки, возразить против обработки на основании нашего законного интереса, а также запросить перенос данных. Пишите на",
