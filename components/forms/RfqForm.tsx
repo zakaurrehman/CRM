@@ -160,7 +160,7 @@ export function RfqForm({ preset }: { preset?: "sell" | "buy" } = {}) {
   if (status === "sent") {
     return (
       <div role="status" className="border-t-2 border-success-500 bg-success-50 p-8">
-        <h2 className="font-display text-2xl font-semibold text-navy-900">{p("Quotation request received")}</h2>
+        <h2 className="font-display text-2xl font-medium text-navy-900">{p("Quotation request received")}</h2>
         <p className="mt-3 content-en text-base leading-relaxed text-steel-700">
           {p("Thank you — your request is with our team, with all {n} line(s) attached. We will come back to you with pricing and availability.", { n: lines.length })}
         </p>

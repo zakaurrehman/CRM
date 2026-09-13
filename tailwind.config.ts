@@ -48,10 +48,13 @@ const config: Config = {
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       fontSize: {
-        "display-xl": ["clamp(1.875rem, 3.3vw, 2.75rem)", { lineHeight: "1.1", letterSpacing: "-0.024em", fontWeight: "600" }],
-        "display-lg": ["clamp(1.625rem, 2.6vw, 2.125rem)", { lineHeight: "1.16", letterSpacing: "-0.02em", fontWeight: "600" }],
-        "display-md": ["clamp(1.375rem, 2vw, 1.6875rem)", { lineHeight: "1.22", letterSpacing: "-0.016em", fontWeight: "700" }],
-        "display-sm": ["clamp(1.1875rem, 1.6vw, 1.4375rem)", { lineHeight: "1.3", letterSpacing: "-0.011em", fontWeight: "700" }],
+        /* One step lighter than they were (13 September 2026): IMS found the
+           headings heavy. Large sizes carry weight on size alone, so they sit
+           at 500; the smaller two keep a little more at 600. */
+        "display-xl": ["clamp(1.875rem, 3.3vw, 2.75rem)", { lineHeight: "1.1", letterSpacing: "-0.024em", fontWeight: "500" }],
+        "display-lg": ["clamp(1.625rem, 2.6vw, 2.125rem)", { lineHeight: "1.16", letterSpacing: "-0.02em", fontWeight: "500" }],
+        "display-md": ["clamp(1.375rem, 2vw, 1.6875rem)", { lineHeight: "1.22", letterSpacing: "-0.016em", fontWeight: "600" }],
+        "display-sm": ["clamp(1.1875rem, 1.6vw, 1.4375rem)", { lineHeight: "1.3", letterSpacing: "-0.011em", fontWeight: "600" }],
         /* Labels are set in the text face, not the mono: mono is for data —
            formulas, prices, tables — and a mono label reads as a readout.
            Tracking is loose enough to read as small caps, not so loose that

@@ -195,6 +195,21 @@ The one-line descriptions and "Details & quotation" came off the tiles; the
 tile is the link, and the description is the first line of each material's
 page.
 
+### Round 14 — fewer cubes, lighter type (13 September)
+
+IMS asked for "less of these cubes and bold font text". Two changes, made
+across the site rather than on one card:
+
+- **No more symbol squares.** Wherever a symbol still sat in a tinted square
+  — the material page header, "Also in the portfolio", the powders and oxides
+  rows, the ferroalloys list — it is now plain type (`ElementMark`).
+- **The heading face one step lighter.** Heading tokens 700 → 600 and 600 →
+  500; every small semibold title in the display face → medium. Archivo now
+  ships 500 and 600. The WELCOME TO IMS lockup is unchanged.
+
+The phone screenshot that prompted this showed a cached copy of the older
+cards; the live site was already serving the board.
+
 One deviation from the original plan: Stainless Steel sits in a group named
 **"Ferro Alloys & Stainless"** beside FeNiCr, rather than under a bare "Ferro
 Alloys" heading — stainless is a steel, not a ferro-alloy, and the heading

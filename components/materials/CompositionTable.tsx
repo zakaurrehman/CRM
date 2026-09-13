@@ -131,7 +131,7 @@ export function CompositionTable({
                 className="rounded-md border border-steel-200 bg-white p-4"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <h3 className="font-display text-[1rem] font-semibold leading-tight text-navy-900">{grade.name}</h3>
+                  <h3 className="font-display text-[1rem] font-medium leading-tight text-navy-900">{grade.name}</h3>
                   <GradeActions id={id} name={grade.name} size="sm" className="shrink-0" />
                 </div>
                 <dl className="mt-3 grid grid-cols-3 gap-x-3 gap-y-2">

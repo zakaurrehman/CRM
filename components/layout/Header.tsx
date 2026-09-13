@@ -352,7 +352,7 @@ function MegaMenu({
                 className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/70 to-transparent"
               />
               <div className="relative">
-                <p className="font-display text-lg font-semibold leading-tight text-white">{p(item.feature.title)}</p>
+                <p className="font-display text-lg font-medium leading-tight text-white">{p(item.feature.title)}</p>
                 <p className="mt-2 text-[0.8125rem] leading-snug text-steel-300">{p(item.feature.body)}</p>
                 <p className="mt-4 inline-flex items-center gap-1.5 text-[0.8125rem] font-medium text-brand-300">
                   {p(item.feature.cta)}

@@ -30,7 +30,7 @@ export function FamilyCard({ family, className }: { family: PortfolioFamily; cla
       <div className="flex items-start justify-between gap-2">
         <span
           aria-hidden
-          className="font-display text-[1.75rem] font-semibold leading-none tracking-tight text-white sm:text-[2.25rem]"
+          className="font-display text-[1.75rem] font-medium leading-none tracking-tight text-white sm:text-[2.25rem]"
         >
           {family.symbol}
         </span>
@@ -46,17 +46,41 @@ export function FamilyCard({ family, className }: { family: PortfolioFamily; cla
 }
 
 /**
- * The symbol in its square. Sized for two letters; a longer shorthand widens
- * the box rather than shrinking the type, so "HSS" and "Ti" sit on the same
- * baseline at the same size.
+ * An element symbol or trade shorthand, set as type — Mo, FeNiCr, 18Ni.
+ *
+ * It used to sit in a tinted square; the squares came off on 13 September
+ * 2026, when IMS asked for "less of these cubes".
+ *
+ * Colour and width are props, not classes a caller layers on top. `cn` joins
+ * classes without resolving conflicts, so a caller's `text-*` or `min-w-*`
+ * ties with the default here and loses on stylesheet order — which is how the
+ * first version drew a navy mark on the navy page header.
  */
-export function SymbolBox({ symbol, size = "md", className }: { symbol: string; size?: "md" | "lg"; className?: string }) {
+export function ElementMark({
+  symbol,
+  size = "md",
+  tone = "ink",
+  aligned = true,
+  className,
+}: {
+  symbol: string;
+  size?: "md" | "lg";
+  /** ink: navy, blue on hover, for lists. accent: brand blue on a light ground. onDark: light blue on navy. */
+  tone?: "ink" | "accent" | "onDark";
+  /** Reserve a fixed width so a column of marks keeps its names aligned. Off for a lone mark beside a title. */
+  aligned?: boolean;
+  className?: string;
+}) {
   return (
     <span
       aria-hidden
       className={cn(
-        "inline-flex shrink-0 items-center justify-center rounded-md bg-steel-100 font-display font-semibold tracking-tight text-navy-900 transition-colors duration-300 group-hover:bg-brand-50 group-hover:text-brand-700",
-        size === "md" ? "h-11 min-w-11 px-2 text-[1.125rem]" : "h-14 min-w-14 px-2.5 text-[1.5rem]",
+        "inline-block shrink-0 font-display font-medium tracking-tight transition-colors duration-300",
+        size === "md" ? "text-[1.125rem]" : "text-[1.5rem]",
+        aligned && (size === "md" ? "min-w-[3rem]" : "min-w-[5.5rem]"),
+        tone === "ink" && "text-navy-900 group-hover:text-brand-700",
+        tone === "accent" && "text-brand-700",
+        tone === "onDark" && "text-brand-300",
         className,
       )}
     >

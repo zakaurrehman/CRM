@@ -5,7 +5,7 @@ import { PageHero } from "@/components/shared/PageHero";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
-import { SymbolBox } from "@/components/portfolio/FamilyCard";
+import { ElementMark } from "@/components/portfolio/FamilyCard";
 import { CtaSection } from "@/components/shared/CtaSection";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
@@ -59,8 +59,8 @@ export default async function FerroAlloysPage() {
                   delay={i * 50}
                   className="flex items-center gap-5 border-b border-steel-200 py-4"
                 >
-                  <SymbolBox symbol={alloy.mark} size="lg" />
-                  <span className="font-display text-lg font-semibold tracking-tight text-navy-900">{p(alloy.name)}</span>
+                  <ElementMark symbol={alloy.mark} size="lg" />
+                  <span className="font-display text-lg font-medium tracking-tight text-navy-900">{p(alloy.name)}</span>
                 </Reveal>
               ))}
             </ul>
@@ -77,7 +77,7 @@ export default async function FerroAlloysPage() {
 
           <div className="lg:col-span-4 lg:col-start-9">
             <div className="border-t-2 border-brand-700 bg-steel-50 p-6">
-              <h3 className="font-display text-lg font-semibold text-navy-900">{p("Get a price")}</h3>
+              <h3 className="font-display text-lg font-medium text-navy-900">{p("Get a price")}</h3>
               <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-steel-600">
                 {p("Tell us the alloy, the analysis, the size and packing, and the quantity — buying or selling.")}
               </p>

@@ -151,7 +151,7 @@ export default async function ArticlePage({ params }: Params) {
                     >
                       {formatDate(item.published)}
                     </time>
-                    <h3 className="mt-3 font-display text-xl font-semibold leading-snug tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
+                    <h3 className="mt-3 font-display text-xl font-medium leading-snug tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
                       {item.title}
                     </h3>
                   </div>

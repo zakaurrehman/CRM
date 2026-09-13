@@ -36,7 +36,7 @@ export function SavedMaterials() {
   if (saved.ids.length === 0) {
     return (
       <div className="rounded-lg border border-steel-200 bg-white px-6 py-16 text-center">
-        <h2 className="font-display text-xl font-semibold text-navy-900">{t("savedList", "emptyTitle")}</h2>
+        <h2 className="font-display text-xl font-medium text-navy-900">{t("savedList", "emptyTitle")}</h2>
         <p className="mx-auto mt-3 max-w-md content-en text-[0.9375rem] leading-relaxed text-steel-600">
           {p("Save a grade from any composition table or from the alloy finder and it will be kept here, ready to compare or send through as a quotation request.")}
         </p>
@@ -83,7 +83,7 @@ export function SavedMaterials() {
             <li key={grade.id} className="flex flex-col bg-white p-5">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <h2 className="font-display text-base font-semibold leading-tight text-navy-900">
+                  <h2 className="font-display text-base font-medium leading-tight text-navy-900">
                     <Link href={grade.href} className="transition-colors hover:text-brand-700">
                       {grade.name}
                     </Link>

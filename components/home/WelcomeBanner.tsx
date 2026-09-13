@@ -139,7 +139,7 @@ export async function WelcomeBanner() {
               A paragraph, not a heading — it is the h1's subtitle, not the
               start of a section. */}
           <p
-            className="rise-in mt-8 max-w-3xl text-balance font-display text-[clamp(1.5rem,2.6vw,2.125rem)] font-semibold leading-tight tracking-tight text-white"
+            className="rise-in mt-8 max-w-3xl text-balance font-display text-[clamp(1.5rem,2.6vw,2.125rem)] font-medium leading-tight tracking-tight text-white"
             style={{ animationDelay: "1900ms" }}
           >
             {p("Turning complex scrap into opportunity.")}

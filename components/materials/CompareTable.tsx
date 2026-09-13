@@ -59,7 +59,7 @@ export function CompareTable() {
   if (ids.length === 0) {
     return (
       <div className="rounded-lg border border-steel-200 bg-white px-6 py-16 text-center">
-        <h2 className="font-display text-xl font-semibold text-navy-900">{t("compare", "emptyTitle")}</h2>
+        <h2 className="font-display text-xl font-medium text-navy-900">{t("compare", "emptyTitle")}</h2>
         <p className="mx-auto mt-3 max-w-md content-en text-[0.9375rem] leading-relaxed text-steel-600">
           {p("Add up to four grades from any category or from the alloy finder, and their compositions will line up here for comparison.")}
         </p>
@@ -126,7 +126,7 @@ export function CompareTable() {
                     scope="col"
                     className="min-w-[11rem] border-b border-steel-200 bg-steel-100 px-4 py-3 align-top"
                   >
-                    <span className="block font-display text-[0.9375rem] font-semibold leading-tight text-navy-900">
+                    <span className="block font-display text-[0.9375rem] font-medium leading-tight text-navy-900">
                       <Link href={g.href} className="transition-colors hover:text-brand-700">
                         {g.name}
                       </Link>
@@ -217,7 +217,7 @@ export function CompareTable() {
       </p>
 
       <div className="mt-8 rounded-lg border border-brand-200 bg-brand-50 p-6 print:hidden">
-        <h2 className="font-display text-lg font-semibold text-navy-900">{t("compare", "readyTitle")}</h2>
+        <h2 className="font-display text-lg font-medium text-navy-900">{t("compare", "readyTitle")}</h2>
         <p className="mt-2 max-w-2xl text-[0.9375rem] leading-relaxed text-steel-700">
           {p("Send the selection straight through as a quotation request — the grades below travel with it, so nobody has to retype a composition.")}
         </p>

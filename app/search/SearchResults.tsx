@@ -114,7 +114,7 @@ export function SearchResults() {
         </div>
       ) : query.trim().length >= 2 ? (
         <div className="mt-10 border border-steel-200 bg-steel-50 px-6 py-16 text-center">
-          <p className="font-display text-lg font-semibold text-navy-900">{p("Nothing matched that search")}</p>
+          <p className="font-display text-lg font-medium text-navy-900">{p("Nothing matched that search")}</p>
           <p className="mx-auto mt-2 max-w-md text-[0.9375rem] text-steel-600">
             {p("We handle a wider range of material than the site documents. Tell us what you are looking for and we will confirm whether we can source or recover it.")}
           </p>

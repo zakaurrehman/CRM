@@ -23,7 +23,7 @@ export async function Advantage({ tone = "light" }: { tone?: "light" | "white" }
       <ul className="mt-12 border-t border-steel-200">
         {advantages.map((line, i) => (
           <Reveal as="li" key={line} delay={i * 60} className="border-b border-steel-200 py-5 lg:py-6">
-            <p className="max-w-3xl font-display text-lg font-semibold leading-snug tracking-tight text-navy-900 lg:text-xl">
+            <p className="max-w-3xl font-display text-lg font-medium leading-snug tracking-tight text-navy-900 lg:text-xl">
               {p(line)}
             </p>
           </Reveal>

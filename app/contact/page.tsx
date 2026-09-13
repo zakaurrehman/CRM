@@ -114,7 +114,7 @@ export default async function ContactPage() {
                 <ul className="mt-5 space-y-6">
                   {routes.map((route) => (
                     <li key={p(route.title)}>
-                      <h3 className="font-display text-base font-semibold text-navy-900">{p(route.title)}</h3>
+                      <h3 className="font-display text-base font-medium text-navy-900">{p(route.title)}</h3>
                       <p className="mt-1.5 text-[0.875rem] leading-relaxed text-steel-600">{p(route.body)}</p>
                     </li>
                   ))}

@@ -92,7 +92,7 @@ export default async function PortfolioPage() {
                     href={"/materials/" + category.slug}
                     className="group flex h-full flex-col p-5 transition-colors hover:bg-steel-50"
                   >
-                    <span className="font-display text-[0.9375rem] font-semibold text-navy-900 transition-colors group-hover:text-brand-700">
+                    <span className="font-display text-[0.9375rem] font-medium text-navy-900 transition-colors group-hover:text-brand-700">
                       {category.name}
                     </span>
                     <span className="mt-1.5 label text-steel-500 tabular-nums">

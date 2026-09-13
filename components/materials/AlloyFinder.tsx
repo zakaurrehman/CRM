@@ -88,7 +88,7 @@ export function AlloyFinder() {
     <div>
       {/* ---------- query ---------- */}
       <div className="rounded-lg border border-steel-200 bg-white p-5 shadow-subtle sm:p-6">
-        <label htmlFor="finder-q" className="block font-display text-[0.9375rem] font-semibold text-navy-900">
+        <label htmlFor="finder-q" className="block font-display text-[0.9375rem] font-medium text-navy-900">
           {t("finder", "describe")}
         </label>
         <p className="mt-1 text-[0.875rem] text-steel-600">
@@ -158,7 +158,7 @@ export function AlloyFinder() {
         {/* ---------- element rows ---------- */}
         <div className="mt-5 border-t border-steel-200 pt-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="font-display text-[0.9375rem] font-semibold text-navy-900">{t("finder", "compositionFilters")}</p>
+            <p className="font-display text-[0.9375rem] font-medium text-navy-900">{t("finder", "compositionFilters")}</p>
             <ButtonEl type="button" variant="secondary" size="sm" onClick={addRow} disabled={!index}>
               {t("finder", "addElement")}
             </ButtonEl>
@@ -232,7 +232,7 @@ export function AlloyFinder() {
 
         {/* ---------- groups ---------- */}
         <div className="mt-5 border-t border-steel-200 pt-5">
-          <p className="font-display text-[0.9375rem] font-semibold text-navy-900">{t("finder", "materialGroup")}</p>
+          <p className="font-display text-[0.9375rem] font-medium text-navy-900">{t("finder", "materialGroup")}</p>
           <div className="scroll-x -mx-1 mt-3 px-1">
             <div role="group" aria-label={t("finder", "filterByGroup")} className="flex w-max gap-2 pb-1 sm:w-auto sm:flex-wrap">
               {alloyGroupOrder.map((g) => {
@@ -345,7 +345,7 @@ function GradeResult({ grade, reasons }: { grade: ClientGrade; reasons: string[]
     <div className="flex h-full flex-col p-5">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <h3 className="font-display text-base font-semibold leading-tight text-navy-900">
+          <h3 className="font-display text-base font-medium leading-tight text-navy-900">
             <Link href={grade.href} className="transition-colors hover:text-brand-700">
               {grade.name}
             </Link>

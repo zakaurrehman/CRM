@@ -2,7 +2,7 @@ import Link from "next/link";
 import { intermediates, type Intermediate, type IntermediateGroup } from "@/data/portfolio";
 import { getP } from "@/lib/i18n/server";
 import { Reveal } from "@/components/ui/Reveal";
-import { SymbolBox } from "./FamilyCard";
+import { ElementMark } from "./FamilyCard";
 import { cn } from "@/lib/utils";
 
 /**
@@ -28,7 +28,7 @@ export async function Intermediates({
     <div className={className}>
       {heading ? (
         <div className="max-w-3xl">
-          <h3 className="font-display text-xl font-semibold tracking-tight text-navy-900 lg:text-2xl">
+          <h3 className="font-display text-xl font-medium tracking-tight text-navy-900 lg:text-2xl">
             {p("Powders, Oxides & Intermediates")}
           </h3>
           <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-600">
@@ -47,21 +47,19 @@ export async function Intermediates({
           >
             <div className="flex items-center gap-3 sm:col-span-3">
               {group.symbol ? (
-                <SymbolBox symbol={group.symbol} />
+                <ElementMark symbol={group.symbol} />
               ) : (
-                <span aria-hidden className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-steel-100 text-steel-400">
-                  ·
-                </span>
+                <span aria-hidden className="inline-block min-w-[3rem] shrink-0" />
               )}
               {group.family ? (
                 <Link
                   href={"/materials/" + group.family}
-                  className="font-display text-[0.9375rem] font-semibold text-navy-900 underline decoration-steel-300 underline-offset-4 transition-colors hover:text-brand-700 hover:decoration-brand-700"
+                  className="font-display text-[0.9375rem] font-medium text-navy-900 underline decoration-steel-300 underline-offset-4 transition-colors hover:text-brand-700 hover:decoration-brand-700"
                 >
                   {p(group.metal)}
                 </Link>
               ) : (
-                <span className="font-display text-[0.9375rem] font-semibold text-navy-900">{p(group.metal)}</span>
+                <span className="font-display text-[0.9375rem] font-medium text-navy-900">{p(group.metal)}</span>
               )}
             </div>
             <ul className="flex flex-wrap gap-2 sm:col-span-9">

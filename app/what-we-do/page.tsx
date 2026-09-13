@@ -67,7 +67,7 @@ export default async function WhatWeDoPage() {
             at IMS's request for IMS to strike what it does not take. */}
         <div className="mt-16 grid gap-8 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-4">
-            <h3 className="font-display text-xl font-semibold tracking-tight text-navy-900">{p("Typical lots")}</h3>
+            <h3 className="font-display text-xl font-medium tracking-tight text-navy-900">{p("Typical lots")}</h3>
             <p className="mt-3 text-[0.9375rem] leading-relaxed text-steel-600">
               {p("The material conventional routes downgrade or turn away. If yours is on this list, it has a home.")}
             </p>
@@ -102,7 +102,7 @@ export default async function WhatWeDoPage() {
             <ul className="mt-8 border-t border-steel-200">
               {customerSectors.map((sector, i) => (
                 <Reveal as="li" key={sector} delay={i * 50} className="border-b border-steel-200 py-3.5">
-                  <span className="font-display text-lg font-semibold tracking-tight text-navy-900">{p(sector)}</span>
+                  <span className="font-display text-lg font-medium tracking-tight text-navy-900">{p(sector)}</span>
                 </Reveal>
               ))}
             </ul>

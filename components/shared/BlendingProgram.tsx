@@ -45,7 +45,7 @@ export async function BlendingProgram({ tone = "light" }: { tone?: "light" | "da
               <span className="dir-arrow">&rarr;</span>
             </span>
           ) : null}
-          <h3 className={cn("font-display text-xl font-semibold tracking-tight", dark ? "text-white" : "text-navy-900")}>
+          <h3 className={cn("font-display text-xl font-medium tracking-tight", dark ? "text-white" : "text-navy-900")}>
             {p(beat.title)}
           </h3>
           <p className={cn("mt-3 max-w-sm text-[0.9375rem] leading-relaxed", dark ? "text-steel-300" : "text-steel-600")}>

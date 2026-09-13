@@ -6,7 +6,7 @@ import { acceptedForms, intermediates } from "@/data/portfolio";
 import { compositionFootnote } from "@/data/alloy-index";
 import { alloyCategoryBySlug } from "@/data/alloys";
 import { familiesInGroup } from "@/lib/portfolio";
-import { SymbolBox } from "./FamilyCard";
+import { ElementMark } from "./FamilyCard";
 import { IntermediatesList } from "./Intermediates";
 import { getLocale, getP } from "@/lib/i18n/server";
 import { localiseCategory, localiseTungstenForm } from "@/lib/i18n/content";
@@ -60,10 +60,11 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
         eyebrow={p("Portfolio")}
         title={family.name}
         mark={
-          <SymbolBox
+          <ElementMark
             symbol={family.symbol}
             size="lg"
-            className={family.images[0] ? "bg-white/15 text-white" : undefined}
+            aligned={false}
+            tone={family.images[0] ? "onDark" : "accent"}
           />
         }
         intro={
@@ -140,7 +141,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
 
           <div className="lg:col-span-4 lg:col-start-9">
             <div className="border-t-2 border-brand-700 bg-steel-50 p-6">
-              <h3 className="font-display text-lg font-semibold text-navy-900">{p("Get a price")}</h3>
+              <h3 className="font-display text-lg font-medium text-navy-900">{p("Get a price")}</h3>
               <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-steel-600">
                 {p("Tell us the grade or analysis, the form and the quantity. Off-spec and mixed lots are welcome — say what you know and we will take it from there.")}
               </p>
@@ -182,7 +183,7 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
                   />
                 </div>
                 <div className="p-5">
-                  <h3 className="font-display text-base font-semibold text-navy-900">{form.name}</h3>
+                  <h3 className="font-display text-base font-medium text-navy-900">{form.name}</h3>
                   <p className="mt-1.5 text-[0.875rem] leading-relaxed text-steel-600">{form.note}</p>
                 </div>
               </Reveal>
@@ -220,8 +221,8 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
               <li key={item.slug} className="bg-white">
                 <Link href={"/materials/" + item.slug} className="group flex h-full flex-col p-6 transition-colors hover:bg-steel-50">
                   <div className="flex items-center gap-3">
-                    <SymbolBox symbol={item.symbol} />
-                    <h3 className="font-display text-[1.0625rem] font-semibold leading-snug text-navy-900 transition-colors group-hover:text-brand-700">
+                    <ElementMark symbol={item.symbol} />
+                    <h3 className="font-display text-[1.0625rem] font-medium leading-snug text-navy-900 transition-colors group-hover:text-brand-700">
                       {item.name}
                     </h3>
                   </div>

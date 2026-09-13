@@ -54,7 +54,7 @@ export default async function RfqPage({
           <aside className="lg:col-span-5 xl:col-span-4">
             <div className="sticky top-24 space-y-6">
               <div className="rounded-lg border border-steel-200 bg-white p-6">
-                <h2 className="font-display text-lg font-semibold text-navy-900">{p("What happens next")}</h2>
+                <h2 className="font-display text-lg font-medium text-navy-900">{p("What happens next")}</h2>
                 <ol className="mt-4 space-y-4">
                   {[
                     { t: "We read the specification", b: "Each line is checked against what we can source or recover, including material that is not published on the site." },
@@ -66,7 +66,7 @@ export default async function RfqPage({
                         {i + 1}
                       </span>
                       <div>
-                        <p className="font-display text-[0.9375rem] font-semibold text-navy-900">{p(step.t)}</p>
+                        <p className="font-display text-[0.9375rem] font-medium text-navy-900">{p(step.t)}</p>
                         <p className="mt-1 text-[0.875rem] leading-relaxed text-steel-600">{p(step.b)}</p>
                       </div>
                     </li>
@@ -75,7 +75,7 @@ export default async function RfqPage({
               </div>
 
               <div className="rounded-lg border border-steel-200 bg-white p-6">
-                <h2 className="font-display text-lg font-semibold text-navy-900">{p("Rather send it by email?")}</h2>
+                <h2 className="font-display text-lg font-medium text-navy-900">{p("Rather send it by email?")}</h2>
                 <p className="mt-3 text-[0.875rem] leading-relaxed text-steel-600">
                   {p("Attach an analysis, a drawing or a specification sheet and send it straight to us.")}
                 </p>

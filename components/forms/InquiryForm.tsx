@@ -79,7 +79,7 @@ export function InquiryForm({ materialNames = [] }: { materialNames?: string[] }
   if (status === "sent") {
     return (
       <div role="status" className="border-t-2 border-success-500 bg-success-50 p-8">
-        <h2 className="font-display text-2xl font-semibold text-navy-900">{p("Inquiry received")}</h2>
+        <h2 className="font-display text-2xl font-medium text-navy-900">{p("Inquiry received")}</h2>
         <p className="mt-3 content-en text-base leading-relaxed text-steel-700">
           {p("Thank you — your inquiry is with our team. We will come back to you with a route for your material.")}
         </p>

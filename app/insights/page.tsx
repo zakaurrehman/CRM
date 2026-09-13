@@ -103,7 +103,7 @@ export default async function InsightsPage() {
                       <span aria-hidden className="h-px w-5 bg-steel-300" />
                       <span>{p("{n} min read", { n: article.readingMinutes })}</span>
                     </p>
-                    <h3 className="mt-4 font-display text-xl font-semibold leading-snug tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
+                    <h3 className="mt-4 font-display text-xl font-medium leading-snug tracking-tight text-navy-900 transition-colors group-hover:text-brand-700">
                       {article.title}
                     </h3>
                     <p className="mt-3 flex-1 content-en text-[0.9375rem] leading-relaxed text-steel-600">

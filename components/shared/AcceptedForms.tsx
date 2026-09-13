@@ -24,7 +24,7 @@ export async function AcceptedForms({ heading = "Accepted forms" }: { heading?: 
           <ul className="mt-5 flex flex-wrap gap-x-10 gap-y-3 border-y border-white/10 py-6 lg:gap-x-14">
             {acceptedForms.map((form, i) => (
               <Reveal as="li" key={form.name} delay={i * 60}>
-                <span className="font-display text-xl font-semibold tracking-tight text-white lg:text-2xl">
+                <span className="font-display text-xl font-medium tracking-tight text-white lg:text-2xl">
                   {p(form.name)}
                 </span>
               </Reveal>
