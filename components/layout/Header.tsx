@@ -299,7 +299,7 @@ function MegaMenu({
                         <Link
                           href={link.href}
                           onClick={onNavigate}
-                          className="group -mx-2 inline-flex items-center gap-1.5 rounded px-2 py-1.5 text-[0.9375rem] font-semibold text-brand-700 transition-colors hover:bg-brand-50"
+                          className="group -mx-2 inline-flex items-center gap-1.5 rounded px-2 py-1.5 text-[0.9375rem] font-medium text-brand-700 transition-colors hover:bg-brand-50"
                         >
                           {p(link.label)}
                           <span aria-hidden className="transition-transform duration-200 ease-swift group-hover:translate-x-0.5">
@@ -314,7 +314,10 @@ function MegaMenu({
                           onClick={onNavigate}
                           className="group -mx-2 block rounded px-2 py-1.5 transition-colors hover:bg-steel-50"
                         >
-                          <span className="block text-[0.9375rem] font-semibold text-navy-900 group-hover:text-brand-700">
+                          {/* Medium, not semibold, and the deepest navy: at this size a
+                              heavier weight in a blue ink renders soft, and on
+                              Windows ClearType it thickens further. */}
+                          <span className="block text-[0.9375rem] font-medium text-navy-950 group-hover:text-brand-700">
                             {p(link.label)}
                           </span>
                           {link.description ? (
