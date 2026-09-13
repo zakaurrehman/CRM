@@ -7,9 +7,15 @@ import { WelcomeBackdrop } from "./WelcomeBackdrop";
 /**
  * The welcome, as a cinematic industrial opening rather than a card.
  *
- * Content is the original's, unchanged: logo, "WELCOME TO IMS / Metals &
- * Alloys", the company objective, Contact Us. What changed is the ground and
- * the arrival. There is no panel — the type sits on the photograph, which keeps
+ * The opening of the homepage, and the only one. It used to be followed by a
+ * separate hero that said the company's message a second time on a second
+ * dark band; IMS asked for the two to be one (13 September 2026). So the
+ * original's lockup — logo, "WELCOME TO IMS / Metals & Alloys" — now carries
+ * the intro's tagline, its one-sentence description and the two doors,
+ * where the company objective and "Contact us" used to be. The objective
+ * sentence is gone, on IMS's word: it read as generic beside the tagline.
+ *
+ * What changed before that is the ground and the arrival. There is no panel — the type sits on the photograph, which keeps
  * its own colours under a neutral shade rather than being bleached or tinted,
  * so a hot slab still glows orange and a turbine hall still has depth.
  *
@@ -27,8 +33,9 @@ import { WelcomeBackdrop } from "./WelcomeBackdrop";
  *   0.6s  the logo is revealed by a soft-edged sweep, reading-side first
  *   1.1s  the heading, the same sweep
  *   1.75s a rule draws itself under the heading
- *   1.9s  the objective rises into focus
- *   2.15s the button follows
+ *   1.9s  the tagline rises into focus
+ *   2.05s the description follows
+ *   2.25s the two doors
  *
  * and then the picture drifts — a slow zoom that was already there, and a
  * parallax against the scroll that was not. Nothing loops, nothing sparkles,
@@ -41,10 +48,7 @@ import { WelcomeBackdrop } from "./WelcomeBackdrop";
  * licence; Orbitron is the nearest free face and this is the closest match
  * available without one.
  *
- * The original's second sentence ("Our long standing and established
- * relationships with suppliers.") is an incomplete fragment on the live site,
- * so only the first, complete sentence is carried over. Nothing is invented:
- * this is the objective statement IMS publishes about itself.
+ * The tagline and the description are the company intro's own words.
  */
 export async function WelcomeBanner() {
   const p = await getP();
@@ -123,16 +127,38 @@ export async function WelcomeBanner() {
             style={{ animationDelay: "1750ms" }}
           />
 
+          {/* The tagline, in the text face rather than the lockup's: the
+              lockup is the name, and this is the sentence that follows it.
+              A paragraph, not a heading — it is the h1's subtitle, not the
+              start of a section. */}
           <p
-            className="rise-in mt-8 max-w-xl text-base leading-relaxed text-white/85 sm:text-[1.0625rem]"
+            className="rise-in mt-8 max-w-3xl text-balance font-display text-[clamp(1.5rem,2.6vw,2.125rem)] font-semibold leading-tight tracking-tight text-white"
             style={{ animationDelay: "1900ms" }}
           >
-            {p("Our objective is to responsibly source the commodities which supplement our everyday life.")}
+            {p("Turning complex scrap into opportunity.")}
           </p>
 
-          <div className="rise-in mt-9" style={{ animationDelay: "2150ms" }}>
-            <Button href="/contact" size="lg">
-              {p("Contact us")}
+          <p
+            className="rise-in mt-4 max-w-2xl text-base leading-relaxed text-white/80 sm:text-[1.0625rem]"
+            style={{ animationDelay: "2050ms" }}
+          >
+            {p(
+              "IMS Metals & Alloys is a specialised recycler and supplier to the global nickel refinery, stainless steel, superalloy, titanium and refractory metals industries.",
+            )}
+          </p>
+
+          {/* Two doors, for the two people who arrive here: one has material
+              and wants a route for it, the other needs supply. Each opens the
+              quotation form with that already answered. */}
+          <div
+            className="rise-in mt-9 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row"
+            style={{ animationDelay: "2250ms" }}
+          >
+            <Button href="/rfq?direction=sell" size="lg" className="w-full sm:w-auto">
+              {p("Offer material")}
+            </Button>
+            <Button href="/rfq?direction=buy" variant="onDarkGhost" size="lg" className="w-full sm:w-auto">
+              {p("Request supply")}
             </Button>
           </div>
         </div>

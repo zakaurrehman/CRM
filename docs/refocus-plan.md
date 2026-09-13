@@ -119,6 +119,17 @@ final structure keeps them apart, as IMS asked). **Open question for IMS:**
 add **Zr · Zirconium** as a material? Six zirconium grades are already
 published in the grade reference.
 
+### Round 7 — one opening band (13 September)
+
+The welcome and the hero were two dark bands saying the company's message
+twice. At IMS's request they are one: the welcome band keeps its logo,
+lockup, rule and entrance, and carries the tagline, the one-sentence
+description and the two doors (Offer material / Request supply) where the
+objective sentence and "Contact us" were. The objective sentence ("responsibly
+source the commodities which supplement our everyday life") is removed, as
+the review suggested. The "We supply" strip went with the hero — it repeated
+the description sentence word for word. The homepage is seven sections now.
+
 One deviation from the original plan: Stainless Steel sits in a group named
 **"Ferro Alloys & Stainless"** beside FeNiCr, rather than under a bare "Ferro
 Alloys" heading — stainless is a steel, not a ferro-alloy, and the heading

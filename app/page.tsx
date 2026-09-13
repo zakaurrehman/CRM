@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { MarketBoard } from "@/components/market/MarketBoard";
 import { Container } from "@/components/ui/Container";
 import { WelcomeBanner } from "@/components/home/WelcomeBanner";
-import { Hero } from "@/components/home/Hero";
 import { WhatWeDo } from "@/components/home/WhatWeDo";
 import { PortfolioSection } from "@/components/home/PortfolioSection";
 import { AcceptedForms } from "@/components/shared/AcceptedForms";
@@ -24,8 +23,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /**
  * The homepage follows the company intro's five headings — who we are, what
- * we do, portfolio, accepted forms, our advantage — and nothing else. The
- * market strip and the welcome above them are as IMS approved them.
+ * we do, portfolio, accepted forms, our advantage — and nothing else. Who we
+ * are opens it, in the welcome band under the market strip: one dark band,
+ * not two.
  */
 export default async function HomePage() {
   const p = await getP();
@@ -41,7 +41,6 @@ export default async function HomePage() {
         </Container>
       </div>
       <WelcomeBanner />
-      <Hero />
       <WhatWeDo />
       <PortfolioSection />
       <AcceptedForms />
