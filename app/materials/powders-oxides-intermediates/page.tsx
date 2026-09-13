@@ -43,11 +43,8 @@ export default async function IntermediatesPage() {
         title={p("Powders, Oxides & Intermediates")}
         intro={p("The intermediate products of refining and tool-making that IMS takes alongside scrap — {n} products, grouped by metal, each assessed on its contained metal.", { n: count })}
         trail={trail}
-      >
-        <Button href={routes.offer} size="lg">
-          {p("Offer material")}
-        </Button>
-      </PageHero>
+        tone="dark"
+      />
 
       <Section tone="white">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">

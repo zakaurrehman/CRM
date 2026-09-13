@@ -55,17 +55,15 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
 
   return (
     <>
+      {/* The dark band, plain — no photograph behind it and no button in it
+          — so every material opens the same way and the band stays slim
+          (IMS, 14 September 2026). The photographs, where IMS has supplied
+          them, are in the section below. */}
       <PageHero
         eyebrow={p("Portfolio")}
         title={p(family.name)}
-        mark={
-          <ElementMark
-            symbol={family.symbol}
-            size="lg"
-            aligned={false}
-            tone={family.images[0] ? "onDark" : "accent"}
-          />
-        }
+        tone="dark"
+        mark={<ElementMark symbol={family.symbol} size="lg" aligned={false} tone="onDark" />}
         intro={
           <>
             {p(family.accepts)}
@@ -73,19 +71,13 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
           </>
         }
         trail={trail}
-        {...(family.images[0] ? { image: family.images[0], imageAlt: "" } : {})}
       >
-        <div className="flex flex-wrap items-center gap-4">
-          <Button href={routes.offer} variant={family.images[0] ? "onDark" : "primary"} size="lg">
-            {p("Offer material")}
-          </Button>
-          {family.threshold ? (
-            <span className="inline-flex items-center gap-2 text-[0.875rem] text-steel-500 [.on-dark_&]:text-steel-300">
-              <span className="rounded-full bg-steel-100 px-2.5 py-1 font-medium text-navy-900 [.on-dark_&]:bg-white/15 [.on-dark_&]:text-white">{family.threshold}</span>
-              {p("metal content")}
-            </span>
-          ) : null}
-        </div>
+        {family.threshold ? (
+          <span className="inline-flex items-center gap-2 text-[0.875rem] text-steel-300">
+            <span className="rounded-full bg-white/15 px-2.5 py-1 font-medium text-white">{family.threshold}</span>
+            {p("metal content")}
+          </span>
+        ) : null}
       </PageHero>
 
       {/* What is accepted, and how to ask. The header already carries the
@@ -130,9 +122,9 @@ export async function FamilyPage({ family }: { family: PortfolioFamily }) {
               </div>
             ) : null}
 
-            {family.images.length > 1 ? (
+            {family.images.length > 0 ? (
               <div className="relative mt-10 aspect-[16/9] overflow-hidden bg-navy-950">
-                <RotatingImage images={family.images.slice(1)} sizes="(min-width: 1024px) 58vw, 100vw" />
+                <RotatingImage images={family.images} sizes="(min-width: 1024px) 58vw, 100vw" />
               </div>
             ) : null}
           </div>

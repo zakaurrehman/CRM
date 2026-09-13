@@ -7,7 +7,10 @@ import { cn } from "@/lib/utils";
  * Interior page header.
  *
  * Two treatments share one component so every non-home page opens with the same
- * rhythm: `image` gives a dark editorial band, `plain` a light typographic one.
+ * rhythm: a dark editorial band or a light typographic one. A photograph
+ * makes the band dark; `tone="dark"` makes it dark without one, which is how
+ * every portfolio material page opens the same way whether or not IMS has
+ * supplied a photograph of it yet (IMS, 14 September 2026).
  */
 export function PageHero({
   eyebrow,
@@ -17,6 +20,7 @@ export function PageHero({
   image,
   imageAlt = "",
   align = "left",
+  tone,
   mark,
   children,
 }: {
@@ -29,9 +33,11 @@ export function PageHero({
   image?: string;
   imageAlt?: string;
   align?: "left" | "wide";
+  /** Force the dark band. Defaults to dark with a photograph, light without. */
+  tone?: "dark" | "light";
   children?: React.ReactNode;
 }) {
-  const dark = Boolean(image);
+  const dark = tone ? tone === "dark" : Boolean(image);
 
   return (
     <section
@@ -40,16 +46,18 @@ export function PageHero({
         dark ? "on-dark bg-navy-950 text-white" : "border-b border-steel-200 bg-steel-50",
       )}
     >
-      {image ? (
+      {dark ? (
         <>
-          <Image
-            src={image}
-            alt={imageAlt}
-            fill
-            priority
-            sizes="100vw"
-            className="-z-10 object-cover opacity-[0.28]"
-          />
+          {image ? (
+            <Image
+              src={image}
+              alt={imageAlt}
+              fill
+              priority
+              sizes="100vw"
+              className="-z-10 object-cover opacity-[0.28]"
+            />
+          ) : null}
           <div
             aria-hidden
             className="absolute inset-0 -z-10 bg-gradient-to-br from-navy-950 via-navy-950/85 to-brand-950/70"
@@ -59,7 +67,8 @@ export function PageHero({
       ) : null}
 
       <Container>
-        <div className={cn("py-10 sm:py-14 lg:py-16", dark && "lg:py-20")}>
+        {/* The extra height is for a photograph; a plain band stays slim. */}
+        <div className={cn("py-10 sm:py-12 lg:py-14", image && "sm:py-14 lg:py-20")}>
           <Breadcrumbs trail={trail} tone={dark ? "dark" : "light"} />
           <div className={cn("mt-7", align === "left" ? "max-w-3xl" : "max-w-4xl")}>
             {eyebrow ? (
