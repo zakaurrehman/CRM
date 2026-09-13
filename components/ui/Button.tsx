@@ -9,8 +9,11 @@ const base =
   "disabled:pointer-events-none disabled:opacity-50 whitespace-nowrap";
 
 const variants: Record<Variant, string> = {
+  /* Navy at rest, the same navy as the bands and the board, and the brand
+     blue on hover — so the one bright blue on a light page is the button
+     you are reaching for, not every button (IMS, 14 September 2026). */
   primary:
-    "bg-brand-700 text-white shadow-subtle hover:bg-brand-800 hover:shadow-card active:bg-brand-900 " +
+    "bg-navy-950 text-white shadow-subtle hover:bg-brand-700 hover:shadow-card active:bg-brand-800 " +
     "motion-safe:hover:-translate-y-px motion-safe:active:translate-y-0",
   secondary:
     "border border-steel-300 bg-white text-navy-900 hover:border-brand-700 hover:text-brand-700 hover:shadow-subtle " +

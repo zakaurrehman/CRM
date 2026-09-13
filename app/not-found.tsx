@@ -15,7 +15,7 @@ export default async function NotFound() {
         <div className="mt-10 flex flex-wrap gap-3">
           <Link
             href="/materials"
-            className="inline-flex h-12 items-center rounded bg-brand-700 px-6 text-[0.9375rem] font-medium text-white transition-colors hover:bg-brand-800"
+            className="inline-flex h-12 items-center rounded bg-navy-950 px-6 text-[0.9375rem] font-medium text-white transition-colors hover:bg-brand-700"
           >
             {p("Materials directory")}
           </Link>

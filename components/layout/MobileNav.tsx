@@ -197,7 +197,7 @@ export function MobileNav({ items, open, onClose }: { items: NavItem[]; open: bo
           <Link
             href="/contact"
             onClick={onClose}
-            className="flex h-12 w-full items-center justify-center rounded bg-brand-700 text-[0.9375rem] font-medium text-white"
+            className="flex h-12 w-full items-center justify-center rounded bg-navy-950 text-[0.9375rem] font-medium text-white"
           >{p("Talk to IMS")}</Link>
           <a
             href="mailto:info@ims-metals.com"

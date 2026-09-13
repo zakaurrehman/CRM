@@ -120,7 +120,7 @@ export function SearchResults() {
           </p>
           <Link
             href="/contact"
-            className="mt-6 inline-flex h-11 items-center rounded bg-brand-700 px-5 text-[0.9375rem] font-medium text-white transition-colors hover:bg-brand-800"
+            className="mt-6 inline-flex h-11 items-center rounded bg-navy-950 px-5 text-[0.9375rem] font-medium text-white transition-colors hover:bg-brand-700"
           >
             {p("Ask our team")}
           </Link>

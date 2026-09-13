@@ -198,7 +198,7 @@ export function Header({ items }: { items: NavItem[] }) {
               <SearchTrigger />
               <Link
                 href="/contact"
-                className="hidden h-10 items-center rounded bg-brand-700 px-4 text-[0.9375rem] font-medium text-white shadow-subtle transition-colors hover:bg-brand-800 sm:inline-flex"
+                className="hidden h-10 items-center rounded bg-navy-950 px-4 text-[0.9375rem] font-medium text-white shadow-subtle transition-colors hover:bg-brand-700 sm:inline-flex"
               >
                 {t("nav", "talkToIms")}
               </Link>
