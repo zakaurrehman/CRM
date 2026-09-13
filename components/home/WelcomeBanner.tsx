@@ -67,6 +67,10 @@ export async function WelcomeBanner() {
           /* Second, on IMS's word (14 September 2026): the turnings — the
              material itself, the form most of it arrives in. */
           { src: "/images/hero/turnings.jpg", subject: "Bright alloy turnings", brightness: 0.55 },
+          /* Third, IMS's own photograph (14 September 2026) of a powder lot:
+             the other form the material arrives in. Light like the turnings,
+             so shaded like them. */
+          { src: "/images/hero/powder.jpeg", subject: "Metal powder lot", brightness: 0.55 },
           { src: "/images/hero/hot-metal-plate.jpg", subject: "Hot metal slab in the cast house" },
           { src: "/images/turbine/turbine-manufacturing.jpg", subject: "Turbine rotor on the shop floor" },
         ]}
